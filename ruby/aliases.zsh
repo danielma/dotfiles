@@ -1,3 +1,5 @@
-alias sc='script/console'
-alias sg='script/generate'
-alias sd='script/destroy'
+alias rc='rails c'
+alias rg='rails g'
+alias rd='rails d'
+alias rs='rails s'
+alias rss='rvmsudo rails s -p 80'
