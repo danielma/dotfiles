@@ -2,7 +2,7 @@
 export ZSH=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
-export PROJECTS=~/Code
+export PROJECTS=~/Work
 
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
@@ -36,5 +36,16 @@ for file in ${(M)config_files:#*/completion.zsh}
 do
   source $file
 done
+
+# my things
+eval `dircolors -b ~/Work/dircolors-solarized/dircolors.ansi-dark`
+alias ls="ls --color=always"
+
+makeandgo() {
+	mkdir -p $1
+	cd $1
+}
+
+alias md=makeandgo
 
 unset config_files
