@@ -39,8 +39,6 @@ do
 done
 
 # my things
-eval `dircolors -b ~/Work/dircolors-solarized/dircolors.ansi-dark`
-alias ls="ls --color=always"
 
 makeandgo() {
 	mkdir -p $1
@@ -50,3 +48,5 @@ makeandgo() {
 alias md=makeandgo
 
 unset config_files
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
