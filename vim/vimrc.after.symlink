@@ -1,10 +1,7 @@
 set relativenumber
-set cursorline
 set foldcolumn=4
-set foldenable
 set foldlevel=2
-set foldmethod=syntax
-set foldnestmax=3
+set foldmethod=manual
 
 set colorcolumn=80
 
@@ -26,8 +23,8 @@ set ai
 set si
 set wrap
 
-color twilight
 set guifont=Menlo:h12
+colors solarized
 
 inoremap <// </<C-X><C-O>
 
@@ -35,3 +32,10 @@ let g:ctrlp_custom_ignore = { 'dir' : 'node_modules$' }
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
+
+nmap <Leader>f :set foldmethod=syntax<CR>:set foldmethod=manual<CR>
+
+autocmd BufNewFile,BufReadPost *.haml setl foldmethod=indent
+autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent
+
+nnoremap <silent> <Leader>rr :TagbarOpenAutoClose<CR>
