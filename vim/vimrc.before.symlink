@@ -1,5 +1,4 @@
 call janus#disable_plugin('youcompleteme')
-call janus#disable_plugin('nerdtree')
 call janus#disable_plugin('snipmate')
 call janus#disable_plugin('fugitive')
 call janus#disable_plugin('zoomwin')
