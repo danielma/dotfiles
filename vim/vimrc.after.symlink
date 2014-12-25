@@ -24,7 +24,7 @@ set si
 set wrap
 
 set guifont=Fira\ Mono:h12
-colors solarized
+colors tomorrow-night
 
 let g:ctrlp_custom_ignore = { 'dir' : 'node_modules$' }
 
@@ -35,9 +35,23 @@ nmap <Leader>b :BuffergatorToggle<CR>
 
 nmap <Leader>f :set foldmethod=syntax<CR>:set foldmethod=manual<CR>
 
+map <D-s> :w
+
 autocmd BufNewFile,BufReadPost *.haml setl foldmethod=indent
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent
+
+call add(g:extra_whitespace_ignored_filetypes, 'esv')
+autocmd Filetype esv call SetupESV()
+
+function! SetupESV()
+  setl listchars=""
+  setl laststatus=1
+endfunction
 
 nnoremap <silent> <Leader>rr :TagbarOpenAutoClose<CR>
 
 let g:ctrlp_root_markers = '.project'
+
+source ~/.simplenoterc
+
+let g:SimplenoteFiletype= "markdown"
