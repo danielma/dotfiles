@@ -20,3 +20,4 @@ alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias ga='git add'
 alias gst='git stash'
 alias gsl='git stash list'
+alias gcb='git branch --merged | grep -v \* | xargs git branch -d'

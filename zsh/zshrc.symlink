@@ -46,8 +46,10 @@ makeandgo() {
 
 alias md=makeandgo
 
+alias up="cd .."
+
 unset config_files
 
-export PATH="$HOME/.rbenv/bin:$PATH" # Add rbenv to PATH for scripting
+export PATH="$HOME/.rbenv/bin:$HOME/bin:$PATH" # Add rbenv to PATH for scripting
 
 eval "$(rbenv init -)"
