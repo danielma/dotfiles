@@ -1,7 +1,11 @@
 call janus#disable_plugin('youcompleteme')
-call janus#disable_plugin('snipmate')
-call janus#disable_plugin('fugitive')
 call janus#disable_plugin('zoomwin')
 call janus#disable_plugin('vroom')
+call janus#disable_plugin('supertab')
+call janus#disable_plugin('snipmate')
 
 let mapleader=","
+
+let g:airline_powerline_fonts = 1
+
+source ~/.dotfiles/vim/neocomplcache.vim
