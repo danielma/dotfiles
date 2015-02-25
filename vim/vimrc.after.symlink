@@ -26,7 +26,7 @@ set wrap
 
 function SetDefaultVisualOptions()
   set guifont=Fira\ Mono\ For\ Powerline:h12
-  colors tomorrow-night
+  colors solarized
 endfunction
 
 call SetDefaultVisualOptions()
