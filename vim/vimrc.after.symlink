@@ -60,6 +60,7 @@ endfunction
 nnoremap <silent> <Leader>rr :TagbarOpenAutoClose<CR>
 
 let g:ctrlp_root_markers = ['.project']
+let g:ctrlp_switch_buffer = 0
 
 source ~/.simplenoterc
 source ~/.dotfiles/vim/neocomplcache.vim
