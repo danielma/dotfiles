@@ -31,7 +31,7 @@ endfunction
 
 call SetDefaultVisualOptions()
 
-let g:ctrlp_custom_ignore = { 'dir' : '\v(node_modules|bower_components)$' }
+let g:ctrlp_custom_ignore = { 'dir' : '\v(node_modules|bower_components|dist)$' }
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
