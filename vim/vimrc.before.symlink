@@ -1,5 +1,4 @@
 call janus#disable_plugin('youcompleteme')
-call janus#disable_plugin('zoomwin')
 call janus#disable_plugin('vroom')
 call janus#disable_plugin('supertab')
 call janus#disable_plugin('snipmate')
