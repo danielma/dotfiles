@@ -27,7 +27,8 @@ set wrap
 function SetDefaultVisualOptions()
   set guifont=InputMono:h11
   set linespace=3
-  colors tomorrow
+  colors base16-ocean
+  set background=dark
 endfunction
 
 call SetDefaultVisualOptions()
