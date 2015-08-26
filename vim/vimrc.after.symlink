@@ -27,8 +27,8 @@ set wrap
 function SetDefaultVisualOptions()
   set guifont=InputMono:h11
   set linespace=3
-  colors base16-ocean
-  set background=dark
+  colors Tomorrow-Night
+  set bg=dark
 endfunction
 
 call SetDefaultVisualOptions()
@@ -47,7 +47,9 @@ endfunction
 command TogglePHPMode call TogglePHPMode()
 nmap <Leader>p :TogglePHPMode<CR>
 
-let g:ctrlp_custom_ignore = { 'dir' : '\v(node_modules|bower_components|dist)$' }
+let g:ctrlp_custom_ignore = { 'dir' : '\v(node_modules|bower_components|dist|deps|_build)$' }
+
+let g:user_emmet_settings = { 'indentation': '  ' }
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
