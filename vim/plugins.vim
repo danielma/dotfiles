@@ -14,11 +14,12 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'qpkorr/vim-bufkill'
-Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'Yggdroot/indentLine'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'bling/vim-airline'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'rking/ag.vim'
+Plugin 'rgarver/Kwbd.vim'
 
 " Themes
 Plugin 'chriskempson/vim-tomorrow-theme'
