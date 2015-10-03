@@ -1,0 +1,16 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+source ~/.dotfiles/vim/vundle.vim
+source ~/.dotfiles/vim/plugins.vim
+source ~/.dotfiles/vim/general.vim
+
+for f in split(glob('~/.dotfiles/vim/autoload/*.vim'), '\n')
+  exe 'source' f
+endfor
+
+if has('nvim')
+  for f in split(glob('~/.dotfiles/vim/nvim-autoload/*.vim'), '\n')
+    exe 'source' f
+  endfor
+end

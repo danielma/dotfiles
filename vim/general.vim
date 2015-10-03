@@ -1,3 +1,6 @@
+let mapleader=","
+syntax enable
+
 set relativenumber
 set foldcolumn=4
 set foldlevel=2
@@ -5,11 +8,6 @@ set foldmethod=manual
 set encoding=utf-8
 
 set colorcolumn=80
-
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-H> <C-W>h
-map <C-L> <C-W>l
 
 set noswapfile
 set nobackup
@@ -23,31 +21,6 @@ set tabstop=2
 set ai
 set si
 set wrap
-
-function SetDefaultVisualOptions()
-  set guifont=InputMono:h11
-  set linespace=3
-  colors Tomorrow-Night
-  set bg=dark
-endfunction
-
-call SetDefaultVisualOptions()
-
-let g:php_mode = 'php'
-function TogglePHPMode()
-  if g:php_mode == 'php'
-    let g:php_mode = 'html'
-    set filetype=html
-    set syntax=php
-  else
-    let g:php_mode = 'php'
-    set filetype=php
-  endif
-endfunction
-command TogglePHPMode call TogglePHPMode()
-nmap <Leader>p :TogglePHPMode<CR>
-
-let g:ctrlp_custom_ignore = { 'dir' : '\v(node_modules|bower_components|dist|deps|_build)$' }
 
 let g:user_emmet_settings = { 'indentation': '  ' }
 
@@ -67,23 +40,19 @@ autocmd BufNewFile,BufReadPost *.haml setl foldmethod=indent
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 
-call add(g:extra_whitespace_ignored_filetypes, 'esv')
-autocmd Filetype esv call SetupESV()
-
-function! SetupESV()
-  setl listchars=""
-  setl laststatus=1
-endfunction
+" call add(g:extra_whitespace_ignored_filetypes, 'esv')
+" autocmd Filetype esv call SetupESV()
+" 
+" function! SetupESV()
+"   setl listchars=""
+"   setl laststatus=1
+" endfunction
 
 nnoremap <silent> <Leader>rr :TagbarOpenAutoClose<CR>
-
-let g:ctrlp_root_markers = ['.project']
-let g:ctrlp_switch_buffer = 0
 
 if filereadable('~/.simplenoterc')
   source ~/.simplenoterc
 endif
-source ~/.dotfiles/vim/neocomplcache.vim
 let g:SimplenoteFiletype= "markdown"
 
 let g:pencil_neutral_headings = 1
