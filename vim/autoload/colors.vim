@@ -1,4 +1,4 @@
 set guifont=FiraCode:h11
-set linespace=3
 colors Tomorrow-Night
 set bg=dark
+highlight Search ctermbg=NONE ctermfg=NONE cterm=underline
