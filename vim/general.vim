@@ -2,6 +2,7 @@ let mapleader=","
 syntax enable
 
 set relativenumber
+set number
 set foldcolumn=4
 set foldlevel=2
 set foldmethod=manual

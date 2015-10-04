@@ -26,3 +26,5 @@ Plugin 'chriskempson/vim-tomorrow-theme'
 
 " Languages
 Plugin 'vim-ruby/vim-ruby'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
