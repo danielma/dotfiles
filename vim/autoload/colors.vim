@@ -1,4 +1,4 @@
-set guifont=FiraCode:h11
-colors Tomorrow-Night
+set guifont=InputMono:h11
+colors solarized
 set bg=dark
 highlight Search ctermbg=NONE ctermfg=NONE cterm=underline

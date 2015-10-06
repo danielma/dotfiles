@@ -21,8 +21,9 @@ Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'rking/ag.vim'
 Plugin 'rgarver/Kwbd.vim'
 
-" Themes
+" Colors
 Plugin 'chriskempson/vim-tomorrow-theme'
+Plugin 'altercation/vim-colors-solarized'
 
 " Languages
 Plugin 'vim-ruby/vim-ruby'
