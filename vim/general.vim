@@ -45,13 +45,13 @@ autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 
 " call add(g:extra_whitespace_ignored_filetypes, 'esv')
 " autocmd Filetype esv call SetupESV()
-" 
+"
 " function! SetupESV()
 "   setl listchars=""
 "   setl laststatus=1
 " endfunction
 
-nnoremap <silent> <Leader>rr :TagbarOpenAutoClose<CR>
+" nnoremap <silent> <Leader>rr :TagbarOpenAutoClose<CR>
 
 if filereadable('~/.simplenoterc')
   source ~/.simplenoterc
