@@ -1,5 +1,6 @@
 let mapleader=","
 syntax enable
+filetype plugin indent on
 
 set relativenumber
 set number
