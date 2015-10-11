@@ -7,6 +7,7 @@ map <Leader>= <C-W>=
 
 " Saving
 map <C-s> :w<CR>
+imap <C-S> <C-O><C-S>
 
 " Insert mode
 imap <C-d> <Esc>ddi

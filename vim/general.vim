@@ -39,6 +39,7 @@ map <D-s> :w
 
 autocmd BufNewFile,BufReadPost *.haml setl foldmethod=indent
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent
+au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 
 " call add(g:extra_whitespace_ignored_filetypes, 'esv')
