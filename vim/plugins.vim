@@ -24,6 +24,7 @@ Plugin 'rgarver/Kwbd.vim'
 " Colors
 Plugin 'chriskempson/vim-tomorrow-theme'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'chriskempson/base16-vim'
 
 " Languages
 Plugin 'vim-ruby/vim-ruby'
