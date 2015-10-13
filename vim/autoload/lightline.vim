@@ -7,11 +7,14 @@ let g:lightline = {
       \   'readonly': '%{&filetype=="help"?"":&readonly?"⦼":""}',
       \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
       \ },
+      \ 'component_expand': {
+      \   'neomake': 'NeomakeStatus'
+      \ },
       \ 'component_function': {
       \   'neomake': 'NeomakeStatus'
       \ },
       \ 'component_type': {
-      \   'neomake': 'error'
+      \   'neomake': 'error',
       \ },
       \ 'active': {
       \   'right': [ [ 'neomake', 'lineinfo' ],
