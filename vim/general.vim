@@ -40,8 +40,6 @@ map <D-s> :w
 
 autocmd BufNewFile,BufReadPost *.haml setl foldmethod=indent
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent
-au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 
 " call add(g:extra_whitespace_ignored_filetypes, 'esv')
 " autocmd Filetype esv call SetupESV()
@@ -103,11 +101,3 @@ let g:SimplenoteFiletype= "markdown"
 "autocmd  User GoyoEnter nested call <SID>goyo_enter()
 "autocmd  User GoyoLeave nested call <SID>goyo_leave()
 
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exec = '/Users/danielma/Work/danielma/better/frontend/node_modules/.bin/eslint'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-let g:jsx_ext_required = 0

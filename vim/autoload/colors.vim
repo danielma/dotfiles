@@ -5,4 +5,3 @@ set bg=dark
 
 " Customizations
 hi Search guibg=NONE guifg=NONE gui=underline
-hi Normal guibg=NONE
