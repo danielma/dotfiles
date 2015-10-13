@@ -1,0 +1,14 @@
+windows:
+  - name: jobs
+    root: ~/Code/
+    layout: main-vertical
+    panes:
+      - commands:
+        - cd accounts
+        - pco box foreman start
+      - commands:
+        - cd people
+        - pco box foreman start
+      - commands:
+        - cd giving
+        - pco box foreman start -f Procfile.dev -c all=1,web=0
