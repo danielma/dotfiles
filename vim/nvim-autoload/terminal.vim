@@ -1,1 +1,1 @@
-tnoremap <Esc> <c-\><c-n>
+" tnoremap <Esc> <c-\><c-n>

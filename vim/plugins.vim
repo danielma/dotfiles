@@ -20,6 +20,7 @@ Plugin 'bling/vim-airline'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'rking/ag.vim'
 Plugin 'rgarver/Kwbd.vim'
+Plugin 'christoomey/vim-tmux-navigator'
 
 " Colors
 Plugin 'chriskempson/vim-tomorrow-theme'
