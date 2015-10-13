@@ -1,5 +1,5 @@
 let g:php_mode = 'php'
-function TogglePHPMode()
+function! TogglePHPMode()
   if g:php_mode == 'php'
     let g:php_mode = 'html'
     set filetype=html
@@ -9,5 +9,5 @@ function TogglePHPMode()
     set filetype=php
   endif
 endfunction
-command TogglePHPMode call TogglePHPMode()
+command! TogglePHPMode call TogglePHPMode()
 nmap <Leader>p :TogglePHPMode<CR>
