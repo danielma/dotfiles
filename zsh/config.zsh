@@ -6,6 +6,7 @@ fi
 
 export LSCOLORS="exfxcxdxbxegedabagacad"
 export CLICOLOR=true
+export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 fpath=($ZSH/functions $fpath)
 

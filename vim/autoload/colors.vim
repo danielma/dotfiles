@@ -1,9 +1,8 @@
 set guifont=InputMono:h11
-set linespace=2
-set t_Co=256
+set cursorline
 colors base16-tomorrow
 set bg=dark
 
 " Customizations
-hi Search ctermbg=NONE ctermfg=NONE cterm=underline
-hi Normal ctermbg=NONE
+hi Search guibg=NONE guifg=NONE gui=underline
+hi Normal guibg=NONE
