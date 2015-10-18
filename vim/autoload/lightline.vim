@@ -21,7 +21,7 @@ let g:lightline = {
       \              [ 'percent' ],
       \              [ 'filetype' ] ],
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified' ] ]
+      \             [ 'readonly', 'relativepath', 'modified' ] ]
       \ },
       \ }
 

@@ -9,7 +9,7 @@ set foldlevel=2
 set foldmethod=manual
 set encoding=utf-8
 
-set colorcolumn=80
+set colorcolumn=100
 
 set noswapfile
 set nobackup

@@ -21,6 +21,7 @@ Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'rking/ag.vim'
 Plugin 'rgarver/Kwbd.vim'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'tpope/vim-fugitive'
 
 " Colors
 Plugin 'chriskempson/vim-tomorrow-theme'
