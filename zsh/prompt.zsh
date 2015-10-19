@@ -71,12 +71,32 @@ directory_name() {
   echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(rb_prompt)in $(directory_name) $(git_dirty)$(need_push)\n› '
-set_prompt () {
-  export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
-}
+export PROMPT=$'\n$(directory_name) \n⚡︎ '
 
 precmd() {
+  function async() {
+    # save to tmp file
+    printf "%s" "$(rb_prompt)$(git_dirty)$(need_push)" > "${HOME}/.zsh_tmp_prompt"
+
+    # signal parent
+    kill -s USR1 $$
+  }
+
+  # kill child
+  if [[ "${ASYNC_PROC}" != 0 ]]; then
+    kill -s HUP $ASYNC_PROC >/dev/null 2>&1 || :
+  fi
+
+  async &!
+  ASYNC_PROC=$!
+
   title "zsh" "%m" "%55<...<%~"
-  set_prompt
+}
+
+function TRAPUSR1() {
+  RPROMPT="$(cat ${HOME}/.zsh_tmp_prompt)"
+
+  ASYNC_PROC=0
+
+  zle && zle reset-prompt
 }
