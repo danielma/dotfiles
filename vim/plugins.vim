@@ -20,7 +20,6 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'rking/ag.vim'
 Plugin 'rgarver/Kwbd.vim'
-Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tpope/vim-fugitive'
 
 " Colors
