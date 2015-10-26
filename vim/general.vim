@@ -24,6 +24,8 @@ set ai
 set si
 set wrap
 
+set exrc " Allow for custom config
+
 let g:user_emmet_settings = { 'indentation': '  ' }
 
 vmap <Enter> <Plug>(EasyAlign)

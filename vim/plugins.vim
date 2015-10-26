@@ -3,12 +3,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 
-if has('nvim')
-  Plugin 'benekastah/neomake'
-else
-  Plugin 'scrooloose/syntastic'
-end
-
+Plugin 'benekastah/neomake'
 Plugin 'Shougo/neocomplcache.vim'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'junegunn/vim-easy-align'
@@ -21,6 +16,7 @@ Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'rking/ag.vim'
 Plugin 'rgarver/Kwbd.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-endwise'
 
 " Colors
 Plugin 'chriskempson/vim-tomorrow-theme'
