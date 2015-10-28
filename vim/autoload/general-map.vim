@@ -8,6 +8,7 @@ map <Leader>= <C-W>=
 " Saving
 map <C-s> :w<CR>
 imap <C-S> <C-O><C-S>
+noremap <D-s> :w<CR>
 
 " Close file
 map <C-Q> :q<CR>

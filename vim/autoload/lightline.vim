@@ -2,7 +2,7 @@
 "{(1)*((1))?('|'):''}%( %{strlen(&fenc)?&fenc:&enc} %)%{(1)*((1)+(1))?('|'):''}%( %{strlen(&filetype)?&filetype:"no ft"} %)%#LightLineRight_active_1_2#%#LightLineRight_active_1#%( %3p%% %)%#LightLineRight_active_0_1#%#LightLineRight_active_0#%( %3l:%-2v %)
 
 let g:lightline = {
-      \ 'colorscheme': 'Tomorrow_Night',
+      \ 'colorscheme': 'jellybeans',
       \ 'component': {
       \   'readonly': '%{&filetype=="help"?"":&readonly?"⦼":""}',
       \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
@@ -28,3 +28,8 @@ let g:lightline = {
 function! NeomakeStatus()
   return neomake#statusline#LoclistStatus()
 endfunc
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
