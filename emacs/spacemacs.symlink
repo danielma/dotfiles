@@ -40,6 +40,7 @@ values."
      ruby
      ruby-on-rails
      html
+     javascript
      emacs-lisp
      react
      elixir
@@ -257,20 +258,29 @@ layers configuration. You are free to put any user code."
   (setq-default evil-shift-width 2)
 
   (setq-default
+   sgml-basic-offset 2
+   js-indent-level 2
    js2-basic-offset 2
+   js2-bounce-indent-p t
    css-indent-offset 2
    web-mode-markup-indent-offset 2
    web-mode-css-indent-offset 2
    web-mode-code-indent-offset 2
    web-mode-attr-indent-offset 2
+   setq web-mode-code-indent-offset 2
    js2-mode-show-strict-warnings nil)
 )
 
 (add-hook 'web-mode-hook
           (function (lambda()
-                      (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
-                      (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
-                      (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))))
+                      ;; (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+                      ;; (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+                      ;; (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+                      (add-to-list 'auto-mode-alist '("\\.js\\'" . react-mode)))))
+
+(add-hook 'js2-mode-hook
+          (function (lambda()
+                      (setq evil-shift-width js-indent-level))))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -311,6 +321,10 @@ layers configuration. You are free to put any user code."
  '(hl-fg-colors
    (quote
     ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+ '(js2-basic-offset 2)
+ '(js2-bounce-indent t)
+ '(js2-bounce-indent-p t)
+ '(js2-mode-indent-ignore-first-tab t)
  '(js2-mode-show-strict-warnings nil)
  '(mac-mouse-wheel-mode t)
  '(mac-mouse-wheel-smooth-scroll nil)
@@ -347,6 +361,8 @@ layers configuration. You are free to put any user code."
      (340 . "#2790C3")
      (360 . "#66D9EF"))))
  '(vc-annotate-very-old-color nil)
+ '(web-mode-code-indent-offset 2)
+ '(web-mode-markup-indent-offset 2)
  '(weechat-color-list
    (unspecified "#272822" "#49483E" "#A20C41" "#F92672" "#67930F" "#A6E22E" "#968B26" "#E6DB74" "#21889B" "#66D9EF" "#A41F99" "#FD5FF0" "#349B8D" "#A1EFE4" "#F8F8F2" "#F8F8F0")))
 (custom-set-faces
