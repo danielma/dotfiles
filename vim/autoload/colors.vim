@@ -1,6 +1,6 @@
 set guifont=InputMono:h11
 set cursorline
-colors base16-railscasts
+colors base16-tomorrow
 set bg=dark
 
 " Customizations

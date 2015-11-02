@@ -18,6 +18,7 @@ Plugin 'rking/ag.vim'
 Plugin 'rgarver/Kwbd.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-endwise'
+Plugin 'mattn/emmet-vim'
 
 " Colors
 Plugin 'chriskempson/vim-tomorrow-theme'
