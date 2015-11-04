@@ -41,6 +41,7 @@ values."
      ruby-on-rails
      html
      javascript
+     yaml
      emacs-lisp
      react
      elixir
@@ -298,6 +299,7 @@ layers configuration. You are free to put any user code."
  '(cua-normal-cursor-color "#839496")
  '(cua-overwrite-cursor-color "#b58900")
  '(cua-read-only-cursor-color "#859900")
+ '(evil-shift-width 2)
  '(highlight-changes-colors (quote ("#FD5FF0" "#AE81FF")))
  '(highlight-symbol-colors
    (--map
@@ -321,10 +323,12 @@ layers configuration. You are free to put any user code."
  '(hl-fg-colors
    (quote
     ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+ '(js-indent-level 2)
  '(js2-basic-offset 2)
  '(js2-bounce-indent t)
  '(js2-bounce-indent-p t)
  '(js2-mode-indent-ignore-first-tab t)
+ '(js2-mode-show-parse-errors nil)
  '(js2-mode-show-strict-warnings nil)
  '(mac-mouse-wheel-mode t)
  '(mac-mouse-wheel-smooth-scroll nil)
@@ -333,7 +337,7 @@ layers configuration. You are free to put any user code."
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
  '(package-selected-packages
    (quote
-    (smart-tabs-mode web-beautify json-mode js2-refactor js2-mode js-doc company-tern coffee-mode persp-projectile smeargle magit-gitflow magit helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-commit perspective eyebrowse evil-tabs tabbar ruby-end alchemist zenburn-theme monokai-theme yafolding ruby-tools ruby-test-mode robe projectile-rails feature-mode enh-ruby-mode bundler reveal-in-osx-finder pbcopy launchctl helm-c-yasnippet flycheck-pos-tip flycheck company-statistics company-quickhelp company auto-yasnippet ac-ispell window-numbering volatile-highlights vi-tilde-fringe spray smooth-scrolling rainbow-delimiters powerline popwin popup pcre2el paradox page-break-lines open-junk-file neotree move-text macrostep linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-descbinds helm-ag helm google-translate golden-ratio flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-jumper evil-indent-textobject evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu elisp-slime-nav define-word clean-aindent-mode buffer-move auto-highlight-symbol auto-dictionary aggressive-indent adaptive-wrap ace-window ace-link evil-leader evil which-key quelpa package-build use-package bind-key s dash spacemacs-theme)))
+    (yaml-mode smart-tabs-mode web-beautify json-mode js2-refactor js2-mode js-doc company-tern coffee-mode persp-projectile smeargle magit-gitflow magit helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-commit perspective eyebrowse evil-tabs tabbar ruby-end alchemist zenburn-theme monokai-theme yafolding ruby-tools ruby-test-mode robe projectile-rails feature-mode enh-ruby-mode bundler reveal-in-osx-finder pbcopy launchctl helm-c-yasnippet flycheck-pos-tip flycheck company-statistics company-quickhelp company auto-yasnippet ac-ispell window-numbering volatile-highlights vi-tilde-fringe spray smooth-scrolling rainbow-delimiters powerline popwin popup pcre2el paradox page-break-lines open-junk-file neotree move-text macrostep linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-descbinds helm-ag helm google-translate golden-ratio flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-jumper evil-indent-textobject evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu elisp-slime-nav define-word clean-aindent-mode buffer-move auto-highlight-symbol auto-dictionary aggressive-indent adaptive-wrap ace-window ace-link evil-leader evil which-key quelpa package-build use-package bind-key s dash spacemacs-theme)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
