@@ -255,10 +255,11 @@ layers configuration. You are free to put any user code."
   (set-fill-mode t)
   (toggle-fill-column-indicator)
 
-  (setq system-uses-terminfo nil)
-  (setq-default evil-shift-width 2)
+  (custom-set-variables
+   '(js2-basic-offset 2))
 
   (setq-default
+   evil-shift-width 2
    sgml-basic-offset 2
    js-indent-level 2
    js2-basic-offset 2
@@ -270,14 +271,16 @@ layers configuration. You are free to put any user code."
    web-mode-attr-indent-offset 2
    setq web-mode-code-indent-offset 2
    js2-mode-show-strict-warnings nil)
-)
+
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
+  )
 
 (add-hook 'web-mode-hook
           (function (lambda()
                       ;; (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
                       ;; (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
                       ;; (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
-                      (add-to-list 'auto-mode-alist '("\\.js\\'" . react-mode)))))
+                      )))
 
 (add-hook 'js2-mode-hook
           (function (lambda()
@@ -294,6 +297,7 @@ layers configuration. You are free to put any user code."
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#272822" "#F92672" "#A6E22E" "#E6DB74" "#66D9EF" "#FD5FF0" "#A1EFE4" "#F8F8F2"])
+ '(c-basic-offset 2)
  '(compilation-message-face (quote default))
  '(cua-global-mark-cursor-color "#2aa198")
  '(cua-normal-cursor-color "#839496")
@@ -323,6 +327,9 @@ layers configuration. You are free to put any user code."
  '(hl-fg-colors
    (quote
     ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+ '(indent-guide-global-mode t)
+ '(indent-guide-recursive t)
+ '(indent-guide-threshold 0)
  '(js-indent-level 2)
  '(js2-basic-offset 2)
  '(js2-bounce-indent t)
@@ -341,6 +348,8 @@ layers configuration. You are free to put any user code."
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
+ '(smie-indent-basic 2)
+ '(standard-indent 2)
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
  '(vc-annotate-background nil)
