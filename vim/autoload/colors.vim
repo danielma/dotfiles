@@ -1,4 +1,4 @@
-set guifont=InputMono:h11
+set guifont=Menlo:h11
 set cursorline
 colors base16-tomorrow
 set bg=dark

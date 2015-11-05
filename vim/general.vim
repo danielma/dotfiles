@@ -1,4 +1,4 @@
-let mapleader=","
+let mapleader="\<Space>"
 syntax enable
 filetype plugin indent on
 
