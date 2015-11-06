@@ -18,6 +18,7 @@ Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'rking/ag.vim'
 Plugin 'rgarver/Kwbd.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-endwise'
 Plugin 'mattn/emmet-vim'
 

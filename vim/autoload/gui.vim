@@ -9,5 +9,7 @@ if exists('*MacMenu')
   nmap <T-k> <C-k>
   nmap <T-j> <C-j>
   nmap <T-h> <C-h>
+
+  imap <T-Enter> <Esc>o
 endif
 
