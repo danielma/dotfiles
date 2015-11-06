@@ -2,6 +2,7 @@
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'skalnik/vim-vroom'
 
 Plugin 'benekastah/neomake'
 "Plugin 'Shougo/neocomplete.vim'
