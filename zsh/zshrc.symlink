@@ -51,3 +51,4 @@ alias up="cd .."
 
 unset config_files
 
+eval "$(rbenv init -)"
