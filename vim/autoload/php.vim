@@ -10,4 +10,4 @@ function! TogglePHPMode()
   endif
 endfunction
 command! TogglePHPMode call TogglePHPMode()
-nmap <Leader>p :TogglePHPMode<CR>
+nmap <Leader>P :TogglePHPMode<CR>

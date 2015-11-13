@@ -3,6 +3,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'skalnik/vim-vroom'
+Plugin 'tpope/vim-rbenv'
 
 Plugin 'benekastah/neomake'
 "Plugin 'Shougo/neocomplete.vim'
@@ -28,7 +29,7 @@ Plugin 'chriskempson/vim-tomorrow-theme'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'chriskempson/base16-vim'
 Plugin 'jpo/vim-railscasts-theme'
-Plugin 'w0ng/vim-hybrid'
+Plugin 'geoffharcourt/one-dark.vim'
 
 " Languages
 Plugin 'vim-ruby/vim-ruby'

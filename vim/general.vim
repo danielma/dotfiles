@@ -6,7 +6,7 @@ set relativenumber
 set number
 set foldcolumn=4
 set foldlevel=2
-set foldmethod=manual
+set foldmethod=indent
 set encoding=utf-8
 
 set colorcolumn=100
@@ -37,8 +37,6 @@ nmap <Leader>bd :Kwbd<CR>
 nmap <Leader>f :set foldmethod=syntax<CR>:set foldmethod=manual<CR>
 :command! -bar -bang Q quit<bang>
 :command! -bar -bang W write<bang>
-
-map <D-s> :w
 
 autocmd BufNewFile,BufReadPost *.haml setl foldmethod=indent
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent
