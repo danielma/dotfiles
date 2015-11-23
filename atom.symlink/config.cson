@@ -1,10 +1,11 @@
 "*":
   editor:
     showIndentGuide: true
-    fontFamily: "Menlo"
+    fontFamily: "Input Mono Narrow"
     invisibles: {}
     softWrapAtPreferredLineLength: true
-    fontSize: 11
+    fontSize: 12
+    lineHeight: 1.1
   core:
     ignoredNames: [
       ".bundle"
