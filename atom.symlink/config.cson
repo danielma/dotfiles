@@ -15,15 +15,15 @@
       "tmp"
       "vendor"
     ]
-    themes: [
-      "unity-ui"
-      "glacier-syntax"
-    ]
     hideGitIgnoredFiles: true
     disabledPackages: [
       "background-tips"
       "exception-reporting"
       "metrics"
+    ]
+    themes: [
+      "one-dark-ui"
+      "base16-ocean-dark"
     ]
   "spell-check":
     grammars: [
@@ -35,3 +35,5 @@
     showOnStartup: false
   "release-notes":
     viewedVersion: "0.89.0"
+  "linter-rubocop":
+    command: "/Users/danielma/.rbenv/shims/rubocop"
