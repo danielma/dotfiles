@@ -22,8 +22,8 @@
       "metrics"
     ]
     themes: [
-      "one-dark-ui"
-      "base16-ocean-dark"
+      "atom-dark-ui"
+      "base16-tomorrow-dark-theme"
     ]
   "spell-check":
     grammars: [

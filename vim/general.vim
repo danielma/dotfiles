@@ -38,9 +38,6 @@ nmap <Leader>f :set foldmethod=syntax<CR>:set foldmethod=manual<CR>
 :command! -bar -bang Q quit<bang>
 :command! -bar -bang W write<bang>
 
-autocmd BufNewFile,BufReadPost *.haml setl foldmethod=indent
-autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent
-
 " call add(g:extra_whitespace_ignored_filetypes, 'esv')
 " autocmd Filetype esv call SetupESV()
 "
