@@ -25,3 +25,4 @@ nmap <silent> <Leader>md :!mkdir -p %:p:h<CR>
 " Insert mode
 imap <C-d> <Esc>ddi
 
+imap jk <Esc>

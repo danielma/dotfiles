@@ -39,3 +39,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'elixir-lang/vim-elixir'
+Plugin 'plasticboy/vim-markdown'
+
+" Tools
+Plugin 'junegunn/goyo.vim'
