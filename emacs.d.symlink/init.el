@@ -233,6 +233,7 @@
   (add-hook 'writeroom-mode-hook (lambda ()
                                    (nlinum-mode 0)
                                    (visual-line-mode nil)
+                                   (whitespace-mode 0)
                                    (setq-local word-wrap t)))
   (setq writeroom-extra-line-spacing 0.3
         writeroom-fullscreen-effect nil
