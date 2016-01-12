@@ -23,3 +23,7 @@ alias gsl='git stash list'
 alias gcb='git branch --merged | grep -v \* | xargs git branch -d'
 alias gds='git diff --staged'
 alias gr='git rebase'
+
+function setup-sanity-check() {
+  alias sanity-check="git diff `git rev-parse HEAD`"
+}

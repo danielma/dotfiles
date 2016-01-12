@@ -4,8 +4,9 @@
     fontFamily: "Input Mono Narrow"
     invisibles: {}
     softWrapAtPreferredLineLength: true
-    fontSize: 12
     lineHeight: 1.1
+    fontSize: 12
+    scrollPastEnd: true
   core:
     ignoredNames: [
       ".bundle"
@@ -23,7 +24,7 @@
     ]
     themes: [
       "atom-dark-ui"
-      "base16-tomorrow-dark-theme"
+      "one-dark-syntax"
     ]
   "spell-check":
     grammars: [
@@ -37,3 +38,9 @@
     viewedVersion: "0.89.0"
   "linter-rubocop":
     command: "/Users/danielma/.rbenv/shims/rubocop"
+  linter:
+    showErrorPanel: false
+  "atom-typescript": {}
+  "markdown-writer": {}
+  "ide-flow":
+    flowPath: "/usr/local/bin/flow"

@@ -40,6 +40,8 @@ Plugin 'mxw/vim-jsx'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'slim-template/vim-slim'
+Plugin 'tpope/vim-haml'
 
 " Tools
 Plugin 'junegunn/goyo.vim'
