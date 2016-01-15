@@ -52,3 +52,8 @@ alias up="cd .."
 unset config_files
 
 eval "$(rbenv init -)"
+
+export BASE16_THEME="base16-tomorrow.dark"
+export BASE16_SHELL="$HOME/.dotfiles/base16-shell/$BASE16_THEME.sh"
+
+[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL

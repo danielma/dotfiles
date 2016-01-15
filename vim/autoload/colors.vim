@@ -1,7 +1,11 @@
+let g:base16_shell_path="~/.dotfiles/base16-shell/"
+let base16_shell_theme=split($BASE16_THEME, "\\.")
+
 set guifont=Menlo:h11
 set cursorline
-set bg=dark
-colorscheme base16-tomorrow
+execute "set bg=".base16_shell_theme[1]
+execute "colorscheme ".base16_shell_theme[0]
+"colorscheme base16-ocean
 "colorscheme onedark
 
 " Customizations
