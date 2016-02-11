@@ -17,8 +17,9 @@
         branch = auto
         ui = true
 [core]
-        excludesfile = /Users/danielma/.gitignore
+	excludesfile = /Users/danielma/.gitignore
         editor = e
+	pager = diff-highlight | diff-so-fancy | less --tabs=1,5 -R
 [apply]
         whitespace = nowarn
 [mergetool]
@@ -37,7 +38,7 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /opt/homebrew-cask/Caskroom/sourcetree/2.0.5.2/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /opt/homebrew-cask/Caskroom/sourcetree/2.1/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [filter "lfs"]
 	clean = git-lfs clean %f

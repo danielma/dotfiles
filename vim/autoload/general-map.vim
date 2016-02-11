@@ -7,7 +7,7 @@ map <C-l> <C-W>l
 map <Leader>w <C-W>
 
 " Saving
-map <C-s> :w<CR>
+"map <C-s> :w<CR>
 map <Leader>fs :w<CR>
 imap <C-S> <C-O><C-S>
 noremap <D-s> :w<CR>

@@ -27,6 +27,15 @@ set wrap
 set exrc " Allow for custom config
 
 let g:user_emmet_settings = { 'indentation': '  ' }
+let g:nvim_true_color = $NVIM_TUI_ENABLE_TRUE_COLOR
+
+let g:indent_guides_force_gui_colors = 1
+
+function! s:ReloadVimRC()
+  source $MYVIMRC
+endfunction
+
+command Reload call s:ReloadVimRC()
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
