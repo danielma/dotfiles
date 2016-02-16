@@ -27,3 +27,9 @@ alias gr='git rebase'
 function setup-sanity-check() {
   alias sanity-check="git diff `git rev-parse HEAD`"
 }
+
+function staging() {
+  CHANGED_LENGTH=$(git status -s | wc -l)
+  [[ $CHANGED_LENGTH -ne "0" ]] && echo "NOPE! you have changes" && gs
+  [[ $CHANGED_LENGTH -eq "0" ]] && git checkout staging && git fetch origin staging && git reset --hard origin/staging
+}

@@ -1,47 +1,49 @@
-" Tools
-Plugin 'kien/ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'skalnik/vim-vroom'
-Plugin 'tpope/vim-rbenv'
-"Plugin 'muziqiushan/vim-bufonly'
-
-Plugin 'Shougo/deoplete.nvim'
-"Plugin 'osyo-manga/vim-monster'
-
-Plugin 'benekastah/neomake'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'terryma/vim-multiple-cursors'
-"Plugin 'qpkorr/vim-bufkill'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'bling/vim-airline'
-Plugin 'jeetsukumaran/vim-buffergator'
-Plugin 'rking/ag.vim'
-Plugin 'rgarver/Kwbd.vim'
-"Plugin 'tpope/vim-fugitive'
-Plugin 'Raimondi/delimitMate'
-Plugin 'tpope/vim-endwise'
-Plugin 'mattn/emmet-vim'
-
-" Colors
-Plugin 'chriskempson/vim-tomorrow-theme'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'chriskempson/base16-vim'
-"Plugin 'jaywilliams/vim-vwilight'
-Plugin 'joshdick/onedark.vim'
-
-" Languages
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'slim-template/vim-slim'
-Plugin 'tpope/vim-haml'
+call plug#begin()
 
 " Tools
-Plugin 'junegunn/goyo.vim'
+"Plug 'scrooloose/nerdtree'
+"Plug 'scrooloose/nerdcommenter'
+"Plug 'skalnik/vim-vroom'
+"Plug 'tpope/vim-rbenv'
+
+Plug 'Shougo/deoplete.nvim'
+
+Plug 'benekastah/neomake'
+"Plug 'easymotion/vim-easymotion'
+"Plug 'junegunn/vim-easy-align'
+Plug 'terryma/vim-multiple-cursors'
+"Plug 'danielma/vim-indent-guides'
+Plug 'bronson/vim-trailing-whitespace'
+""Plug 'powerline/powerline'
+"Plug 'jeetsukumaran/vim-buffergator'
+"Plug 'rking/ag.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+"Plug 'daylerees/colour-schemes', { 'rtp': 'vim/' }
+Plug 'rgarver/Kwbd.vim'
+""Plug 'tpope/vim-fugitive'
+"Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-commentary'
+"Plug 'mattn/emmet-vim'
+
+"" Colors
+"Plug 'chriskempson/vim-tomorrow-theme'
+"Plug 'altercation/vim-colors-solarized'
+"Plug 'joshdick/onedark.vim'
+
+"" Languages
+"Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+"Plug 'pangloss/vim-javascript'
+"Plug 'mxw/vim-jsx'
+"Plug 'kchmck/vim-coffee-script'
+"Plug 'elixir-lang/vim-elixir'
+"Plug 'plasticboy/vim-markdown'
+"Plug 'slim-template/vim-slim'
+"Plug 'tpope/vim-haml'
+
+"" Tools
+"Plug 'junegunn/goyo.vim'
+
+call plug#end()

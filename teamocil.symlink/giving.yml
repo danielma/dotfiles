@@ -1,0 +1,17 @@
+windows:
+  - name: jobs
+    root: ~/Code/all-the-procfiles/
+    layout: main-vertical
+    panes:
+      - commands:
+        - pco box halt
+        - pco box up
+        - pco box foreman start
+  - name: work
+    root: ~/Code/giving/
+    layout: main-vertical
+    panes:
+      - bundle exec guard
+      - pco box rails console
+      - git status
+

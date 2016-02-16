@@ -4,6 +4,7 @@ filetype off                  " required
 source ~/.dotfiles/vim/plugins.vim
 source ~/.dotfiles/vim/general.vim
 
+
 for f in split(glob('~/.dotfiles/vim/autoload/*.vim'), '\n')
   exe 'source' f
 endfor
