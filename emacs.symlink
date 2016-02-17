@@ -1,0 +1,77 @@
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(global-linum-mode 1)
+
+(ido-mode 1)
+(setq ido-enable-flex-matching t)
+
+(setq inhibit-startup-message t
+      inhibit-startup-echo-area-message t)
+
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
+
+(require 'evil)
+(global-evil-leader-mode)
+(evil-mode 1)
+
+(evil-leader/set-leader "<SPC>")
+(evil-leader/set-key
+  "fs" 'save-buffer
+  "fq" 'kill-buffer-and-window
+
+  "bd" 'kill-buffer
+  "bs" 'switch-to-buffer
+
+  "w=" 'balance-windows
+  "wh" 'windmove-left
+  "wk" 'windmove-up
+  "wj" 'windmove-down
+  "wl" 'windmove-right
+
+  "ph" 'helm-projectile
+  "pa" 'helm-ag-project-root)
+
+(setq windmove-wrap-around t)
+
+(require 'linum-relative)
+(linum-relative-global-mode)
+
+; (require 'fzf)
+; 
+; (defun fzf-git-branches ()
+;   "uses fzf to find a git branch"
+;   (interactive)
+;   (make-term "fzf" "git branch --no-merged | fzf | xargs git checkout"))
+
+(projectile-global-mode)
+
+;; -------------------------------------------------------------------
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" default)))
+ '(fzf/args nil)
+ '(fzf/executable "/usr/local/bin/fzf")
+ '(helm-ag-base-command "/usr/local/bin/ag --nocolor --nogroup")
+ '(package-selected-packages
+   (quote
+    (linum-relative helm-ag helm-projectile evil-leader projectile fzf base16-theme evil)))
+ '(term-scroll-show-maximum-output t)
+ '(term-scroll-to-bottom-on-output t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "Black" :foreground "White" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Input Mono Condensed")))))
