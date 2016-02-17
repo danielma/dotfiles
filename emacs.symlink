@@ -48,7 +48,12 @@
 					       ("dsc" "described_class")
 					       ("sbj" "subject")
 					       ("aseq" "assert_equal")
-					       ("ass" "assert"))
+					       ("ass" "assert")))
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
 ; (require 'fzf)
 ; 
