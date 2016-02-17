@@ -36,12 +36,19 @@
   "wl" 'windmove-right
 
   "ph" 'helm-projectile
-  "pa" 'helm-ag-project-root)
+  "pa" 'helm-do-ag-project-root)
 
-(setq windmove-wrap-around t)
+(setq windmove-wrap-around t
+      default-abbrev-mode t)
 
 (require 'linum-relative)
 (linum-relative-global-mode)
+
+(define-abbrev-table 'ruby-mode-abbrev-table '(
+					       ("dsc" "described_class")
+					       ("sbj" "subject")
+					       ("aseq" "assert_equal")
+					       ("ass" "assert"))
 
 ; (require 'fzf)
 ; 
