@@ -20,9 +20,9 @@ git_dirty() {
   else
     if [[ $($git status --porcelain) == "" ]]
     then
-      echo "on %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
+      echo "on $(git_project) %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
     else
-      echo "on %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
+      echo "on $(git_project) %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
     fi
   fi
 }
@@ -30,7 +30,7 @@ git_dirty() {
 git_prompt_info () {
  ref=$($git symbolic-ref HEAD 2>/dev/null) || return
 # echo "(%{\e[0;33m%}${ref#refs/heads/}%{\e[0m%})"
- echo "${ref#refs/heads/}"
+  echo "${ref#refs/heads/}"
 }
 
 unpushed () {
@@ -46,22 +46,14 @@ need_push () {
   fi
 }
 
-ruby_version() {
-  if (( $+commands[rbenv] ))
-  then
-    echo "$(rbenv version | awk '{print $1}')"
-  fi
-
-  if (( $+commands[rvm-prompt] ))
-  then
-    echo "$(rvm-prompt | awk '{print $1}')"
-  fi
+project() {
+  git remote -v 2>/dev/null | head -n1 | awk '{print $2}' | sed 's/.*\///' | sed 's/\.git//' || ""
 }
 
-rb_prompt() {
-  if ! [[ -z "$(ruby_version)" ]]
+git_project() {
+  if ! [[ -z "$(project)" ]]
   then
-    echo "%{$fg_bold[yellow]%}$(ruby_version)%{$reset_color%} "
+    echo "%{$fg_bold[yellow]%}$(project)%{$reset_color%}"
   else
     echo ""
   fi
@@ -71,7 +63,7 @@ directory_name() {
   echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(rb_prompt)in $(directory_name) $(git_dirty)$(need_push)\n\u26A1 '
+export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push)\n\u26A1 '
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
 }

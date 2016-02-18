@@ -26,6 +26,13 @@
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
+(setq helm-dash-browser-func 'eww)
+(elscreen-start)
+
+(require 'powerline)
+(require 'powerline-evil)
+(powerline-evil-vim-theme)
+
 (require 'evil)
 (global-evil-leader-mode)
 (evil-mode 1)
@@ -35,13 +42,30 @@
 (setq evil-shift-width 2)
 (setq-default indent-tabs-mode nil)
 
+;; (evil-ex-define-cmd "AV")
+
+(define-key evil-normal-state-map "[b" 'previous-buffer)
+(define-key evil-normal-state-map "]b" 'next-buffer)
+
+(defun save-buffer-always ()
+  "Save this buffer even if it hasn't been modieifed."
+  (interactive)
+  (set-buffer-modified-p t)
+  (save-buffer))
+
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
-  "fs" 'save-buffer
-  "fq" 'kill-buffer-and-window
+  "fs" 'save-buffer-always
+  "fq" 'delete-window
 
   "bd" 'kill-this-buffer
   "bs" 'switch-to-buffer
+  "bl" 'buf-move-right
+  "bh" 'buf-move-left
+  "bj" 'buf-move-down
+  "bk" 'buf-move-up
+
+  "ll" 'flycheck-list-errors
 
   "w=" 'balance-windows
   "wh" 'windmove-left
@@ -64,9 +88,6 @@
   "cl" 'comment-line
 
   "gs" 'magit-status)
-
-(setq helm-dash-browser-func 'eww)
-(elscreen-start)
 
 (eval-after-load "hideshow"
   '(add-to-list 'hs-special-modes-alist
@@ -169,6 +190,16 @@
 
 (projectile-global-mode)
 
+(setq-default
+ flycheck-disabled-checkers (append flycheck-disabled-checkers '(javascript-jshint))
+ flycheck-temp-prefix ".flycheck")
+
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (equal web-mode-content-type "jsx")
+    (let ((web-mode-enable-part-face nil))
+      ad-do-it)
+    ad-do-it))
+
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'electric-pair-mode)
@@ -187,18 +218,26 @@
  '(elscreen-display-screen-number nil)
  '(evil-shift-round nil)
  '(evil-shift-width 2)
+ '(flycheck-disabled-checkers (quote (javascript-jshint)))
  '(fzf/args nil)
  '(fzf/executable "/usr/local/bin/fzf")
+ '(global-flycheck-mode t)
  '(helm-ag-base-command "/usr/local/bin/ag --nocolor --nogroup")
+ '(js2-mode-show-parse-errors t)
+ '(js2-mode-show-strict-warnings nil)
+ '(linum-relative-current-symbol "")
+ '(linum-relative-global-mode t)
  '(package-selected-packages
    (quote
-    (evil-magit web-mode magit elscreen ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile fzf base16-theme evil)))
+    (js2-mode yaml-mode buffer-move elscreen powerline-evil powerline evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile fzf base16-theme evil)))
+ '(ruby-end-insert-newline nil)
  '(term-scroll-show-maximum-output t)
- '(term-scroll-to-bottom-on-output t))
+ '(term-scroll-to-bottom-on-output t)
+ '(web-mode-code-indent-offset 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Input Mono Condensed"))))
+ '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight light :height 120 :width normal :foundry "nil" :family "Input Mono Condensed"))))
  '(elscreen-tab-other-screen-face ((t (:background "disabledControlTextColor" :foreground "controlLightHighlightColor")))))
