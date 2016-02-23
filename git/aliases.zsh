@@ -14,7 +14,6 @@ alias gd='git diff'
 alias gc='git commit'
 alias gca='git commit -a'
 alias gco='git checkout'
-alias gcb='git copy-branch-name'
 alias gb='git branch'
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias ga='git add'
@@ -23,6 +22,7 @@ alias gsl='git stash list'
 alias gcb='git branch --merged | grep -v \* | xargs git branch -d'
 alias gds='git diff --staged'
 alias gr='git rebase'
+alias glcb='gl && gcb'
 
 function setup-sanity-check() {
   alias sanity-check="git diff `git rev-parse HEAD`"
@@ -32,4 +32,10 @@ function staging() {
   CHANGED_LENGTH=$(git status -s | wc -l)
   [[ $CHANGED_LENGTH -ne "0" ]] && echo "NOPE! you have changes" && gs
   [[ $CHANGED_LENGTH -eq "0" ]] && git checkout staging && git fetch origin staging && git reset --hard origin/staging
+}
+
+function master() {
+  CHANGED_LENGTH=$(git status -s | wc -l)
+  [[ $CHANGED_LENGTH -ne "0" ]] && echo "NOPE! you have changes" && gs
+  [[ $CHANGED_LENGTH -eq "0" ]] && git checkout master && glcb
 }

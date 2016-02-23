@@ -1,7 +1,7 @@
 if [[ -n $SSH_CONNECTION ]]; then
-  export PS1='%m:%3~$(git_info_for_prompt)%# '
+  export PS1='%m:%3~ $(git_dirty) %# '
 else
-  export PS1='%3~$(git_info_for_prompt)%# '
+  export PS1='%3~ $(git_dirty) %# '
 fi
 
 export LSCOLORS="exfxcxdxbxegedabagacad"
@@ -22,7 +22,7 @@ setopt NO_LIST_BEEP
 setopt LOCAL_OPTIONS # allow functions to have local options
 setopt LOCAL_TRAPS # allow functions to have local traps
 setopt HIST_VERIFY
-setopt SHARE_HISTORY # share history between sessions ???
+# setopt SHARE_HISTORY # share history between sessions ???
 setopt EXTENDED_HISTORY # add timestamps to history
 setopt PROMPT_SUBST
 setopt CORRECT
