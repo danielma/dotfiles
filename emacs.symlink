@@ -70,11 +70,15 @@
   "EVIL: search for instances of the symbol under the cursor."
   (interactive)
   (let (from to sym)
-    (save-excursion
-      (skip-syntax-backward "w_") (setq from (point)))
-    (save-excursion
-      (skip-syntax-forward "w_") (setq to (point)))
-    (setq sym (buffer-substring-no-properties to from))
+    (if (evil-visual-state-p)
+        (progn
+          (setq sym (buffer-substring-no-properties (mark) (point))))
+        (progn
+          (save-excursion
+            (skip-syntax-backward "w_") (setq from (point)))
+          (save-excursion
+            (skip-syntax-forward "w_") (setq to (point)))
+          (setq sym (buffer-substring-no-properties to from))))
     (evil-ex (concat "%s/" sym "/"))))
 
 (evil-leader/set-leader "<SPC>")
