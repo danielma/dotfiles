@@ -66,6 +66,17 @@
   (interactive "c")
   (elscreen-goto (string-to-number (char-to-string num))))
 
+(defun replace-symbol ()
+  "EVIL: search for instances of the symbol under the cursor."
+  (interactive)
+  (let (from to sym)
+    (save-excursion
+      (skip-syntax-backward "w_") (setq from (point)))
+    (save-excursion
+      (skip-syntax-forward "w_") (setq to (point)))
+    (setq sym (buffer-substring-no-properties to from))
+    (evil-ex (concat "%s/" sym "/"))))
+
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
   "fs" 'save-buffer-always
@@ -80,16 +91,16 @@
   "bk" 'buf-move-up
 
   "cd" 'cd
+  "cl" 'custom-comment-line
+
+  "gs" 'magit-status
+
+  "hd" 'helm-dash
+  "hD" 'helm-dash-at-point
 
   "ll" 'flycheck-list-errors
   "ln" 'flycheck-next-error
   "lp" 'flycheck-previous-error
-
-  "w=" 'balance-windows
-  "wh" 'windmove-left
-  "wk" 'windmove-up
-  "wj" 'windmove-down
-  "wl" 'windmove-right
 
   "ph" 'helm-projectile-find-file
   "pa" 'helm-do-ag-project-root
@@ -98,8 +109,8 @@
   "pt" 'projectile-toggle-between-implementation-and-test
   "pT" 'projectile-find-implementation-or-test-other-window
 
-  "hd" 'helm-dash
-  "hD" 'helm-dash-at-point
+  "ss" 'evil-search-word-forward
+  "sr" 'replace-symbol
 
   "tn" 'elscreen-create
   "tl" 'elscreen-next
@@ -107,9 +118,11 @@
   "tq" 'elscreen-kill
   "tj" 'custom-elscreen-jump
 
-  "cl" 'custom-comment-line
-
-  "gs" 'magit-status
+  "w=" 'balance-windows
+  "wh" 'windmove-left
+  "wk" 'windmove-up
+  "wj" 'windmove-down
+  "wl" 'windmove-right
 
   "<SPC>" 'execute-extended-command)
 
