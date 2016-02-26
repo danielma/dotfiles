@@ -2,6 +2,7 @@ if [[ -n $SSH_CONNECTION ]]; then
   export PS1='%m:%3~ $(git_dirty) %# '
 else
   export PS1='%3~ $(git_dirty) %# '
+  export LANG=en_US.UTF-8
 fi
 
 export LSCOLORS="exfxcxdxbxegedabagacad"

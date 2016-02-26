@@ -23,6 +23,7 @@ alias gcb='git branch --merged | grep -v \* | xargs git branch -d'
 alias gds='git diff --staged'
 alias gr='git rebase'
 alias glcb='gl && gcb'
+alias amend="git commit --amend"
 
 function setup-sanity-check() {
   alias sanity-check="git diff `git rev-parse HEAD`"
