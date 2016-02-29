@@ -1,3 +1,4 @@
+;; -*- mode: emacs-lisp -*-
 ;;; .emacs --- take care of business
 
 ;;; Code:
@@ -22,7 +23,7 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
-(load-theme 'base16-oceanicnext-dark t)
+(load-theme 'base16-default-dark t)
 
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
@@ -223,12 +224,17 @@
 (require 'ruby-end)
 
 (define-abbrev-table 'ruby-mode-abbrev-table '(
-					       ("dsc" "described_class")
-					       ("sbj" "subject")
-					       ("aseq" "assert_equal")
-					       ("ass" "assert")
+                                               ("dsc" "described_class")
+                                               ("sbj" "subject")
+                                               ("aseq" "assert_equal")
+                                               ("ass" "assert")
                                                ("AS::" "ActiveSupport::")
                                                ("AR::" "ActiveRecord::")))
+
+(define-key global-map (kbd "s-=") 'zoom-frm-in)
+(define-key global-map (kbd "s--") 'zoom-frm-out)
+(define-key global-map (kbd "s-0") 'zoom-frm-unzoom)
+(define-key global-map (kbd "s-<return>") 'toggle-frame-fullscreen)
 
 (require 'fill-column-indicator)
 (fci-mode)
@@ -347,7 +353,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(linum-relative-global-mode t)
  '(package-selected-packages
    (quote
-    (sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen powerline-evil powerline evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile fzf base16-theme evil)))
+    (zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen powerline-evil powerline evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile fzf base16-theme evil)))
  '(projectile-generic-command "ag -g \"\"")
  '(projectile-global-mode t)
  '(projectile-switch-project-action (quote helm-projectile-find-file))
