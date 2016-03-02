@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Callback function
+# key: fn
+# --
+function() {
+  $0
+}

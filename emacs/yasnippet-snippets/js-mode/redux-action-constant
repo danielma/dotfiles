@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Redux action constant
+# key: rdac
+# --
+export const ${1:constant} = "${2:namespace}/$1"

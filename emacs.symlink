@@ -12,8 +12,9 @@
 
 (setq ido-enable-flex-matching t
       inhibit-startup-message t
-      inhibit-startup-echo-area-message t)
-(setq make-backup-files nil)
+      inhibit-startup-echo-area-message t
+      make-backup-files nil
+      ad-redefinition-action 'accept)
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
@@ -22,6 +23,15 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(setq package-list (quote (jsx-mode smart-mode-line-powerline-theme smart-mode-line yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile base16-theme evil ruby-end exec-path-from-shell)))
+
+(dolist (package package-list)
+  (print package)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 (load-theme 'base16-default-dark t)
 
@@ -31,10 +41,6 @@
 (setq helm-dash-browser-func 'eww)
 (elscreen-start)
 
-(require 'powerline)
-(require 'powerline-evil)
-(powerline-evil-vim-theme)
-
 (require 'evil)
 (global-evil-leader-mode)
 (evil-mode 1)
@@ -43,6 +49,14 @@
 
 (setq evil-shift-width 2)
 (setq-default indent-tabs-mode nil)
+
+(setq sml/no-confirm-load-theme t)
+(setq sml/theme 'powerline)
+(sml/setup)
+
+(setq yas-snippet-dirs
+      '(yas-installed-snippets-dir
+        "~/.dotfiles/emacs/yasnippet-snippets/"))
 
 ;; (evil-ex-define-cmd "AV")
 
@@ -55,12 +69,17 @@
   (set-buffer-modified-p t)
   (save-buffer))
 
+(defun toggle-comment-on-line ()
+  "comment or uncomment current line"
+  (interactive)
+  (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
+
 (defun custom-comment-line ()
   "Comment lines the way I want to."
   (interactive)
   (if (evil-visual-state-p)
-      (call-interactively 'comment-region)
-      (call-interactively 'comment-line)))
+      (call-interactively 'comment-or-uncomment-region)
+      (call-interactively 'toggle-comment-on-line)))
 
 (defun custom-elscreen-jump (num)
   "Custom elscreen jump that works with evil-leader and go to NUM."
@@ -111,6 +130,7 @@
   "pa" 'helm-do-ag-project-root
   "pd" 'projectile-dired
   "ps" 'helm-projectile-switch-project
+  "pK" 'projectile-kill-buffers
   "pt" 'projectile-toggle-between-implementation-and-test
   "pT" 'projectile-find-implementation-or-test-other-window
 
@@ -234,6 +254,7 @@
 (define-key global-map (kbd "s-=") 'zoom-frm-in)
 (define-key global-map (kbd "s--") 'zoom-frm-out)
 (define-key global-map (kbd "s-0") 'zoom-frm-unzoom)
+(define-key global-map (kbd "s-t") 'elscreen-create)
 (define-key global-map (kbd "s-<return>") 'toggle-frame-fullscreen)
 
 (require 'fill-column-indicator)
@@ -340,7 +361,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (add-hook 'js2-mode-hook 'modify-syntax-table-for-jsx)
 (add-hook 'after-init-hook 'global-company-mode)
-(add-hook 'after-init-hook (lambda() (yas-global-mode 1)))
+(add-hook 'after-init-hook 'yas-global-mode)
 (add-hook 'after-init-hook 'flycheck-setup)
 (add-hook 'after-init-hook 'electric-pair-mode)
 (add-hook 'projectile-mode-hook 'projectile-rails-on)
@@ -362,7 +383,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("8e3f020f1ce69cfa0c1ebee4e198feb28dd7eb31b7d77927e9c790819210c654" "930227e22122d1881db7c2c1ae712dcf715697a1c4d9864f8107a2c3c2da9f8b" "a17f246690840fcf3fc26cb845ffedd2d8e1161cae386c14df61dabb9af3a5a9" "0bd7a42bd443517e5e61dac3cabc24018fbd0c6b2b4199b3c4efd9e3727efd30" "cb18233197cedab557c70d171b511bed49cc702f428750925280090c31498bd2" "b3ce6fadd85126d247b72d4ed9ac4d2bb43c0e0fd1605008cafd54185f30b7eb" "aed73c6d0afcf2232bb25ed2d872c7a1c4f1bda6759f84afc24de6a1aec93da8" "232f715279fc131ed4facf6a517b84d23dca145fcc0e09c5e0f90eb534e1680f" "0b6645497e51d80eda1d337d6cabe31814d6c381e69491931a688836c16137ed" "b6db49cec08652adf1ff2341ce32c7303be313b0de38c621676122f255ee46db" "e1551b5516e0a439b6ab019ba00cee866e735f66f22ff67a5d882ad0f1383454" "50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" default)))
+    ("b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8e3f020f1ce69cfa0c1ebee4e198feb28dd7eb31b7d77927e9c790819210c654" "930227e22122d1881db7c2c1ae712dcf715697a1c4d9864f8107a2c3c2da9f8b" "a17f246690840fcf3fc26cb845ffedd2d8e1161cae386c14df61dabb9af3a5a9" "0bd7a42bd443517e5e61dac3cabc24018fbd0c6b2b4199b3c4efd9e3727efd30" "cb18233197cedab557c70d171b511bed49cc702f428750925280090c31498bd2" "b3ce6fadd85126d247b72d4ed9ac4d2bb43c0e0fd1605008cafd54185f30b7eb" "aed73c6d0afcf2232bb25ed2d872c7a1c4f1bda6759f84afc24de6a1aec93da8" "232f715279fc131ed4facf6a517b84d23dca145fcc0e09c5e0f90eb534e1680f" "0b6645497e51d80eda1d337d6cabe31814d6c381e69491931a688836c16137ed" "b6db49cec08652adf1ff2341ce32c7303be313b0de38c621676122f255ee46db" "e1551b5516e0a439b6ab019ba00cee866e735f66f22ff67a5d882ad0f1383454" "50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" default)))
  '(elscreen-display-screen-number nil)
  '(elscreen-prefix-key (kbd "C-c e"))
  '(evil-shift-round nil)
@@ -373,12 +394,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(global-flycheck-mode t)
  '(helm-ag-base-command "/usr/local/bin/ag --nocolor --nogroup")
  '(js-indent-level 2)
+ '(js2-basic-offset 2)
  '(js2-mode-show-strict-warnings nil)
  '(linum-relative-current-symbol "")
  '(linum-relative-global-mode t)
  '(package-selected-packages
    (quote
-    (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen powerline-evil powerline evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile fzf base16-theme evil)))
+    (jsx-mode smart-mode-line-powerline-theme smart-mode-line yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile fzf base16-theme evil)))
  '(projectile-generic-command "ag -g \"\"")
  '(projectile-global-mode t)
  '(projectile-switch-project-action (quote helm-projectile-find-file))
