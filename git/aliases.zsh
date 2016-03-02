@@ -41,3 +41,9 @@ function master() {
   [[ $CHANGED_LENGTH -ne "0" ]] && echo "NOPE! you have changes" && gs
   [[ $CHANGED_LENGTH -eq "0" ]] && git checkout master && glcb
 }
+
+function groot() {
+  while [[ -z $(ls -a | grep .git) ]] {
+    cd ..
+  }
+}
