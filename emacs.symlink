@@ -26,7 +26,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (jsx-mode smart-mode-line-powerline-theme smart-mode-line yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile base16-theme evil ruby-end exec-path-from-shell)))
+(setq package-list (quote (jsx-mode smart-mode-line-powerline-theme smart-mode-line yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile base16-theme evil ruby-end exec-path-from-shell ido-vertical-mode)))
 
 (dolist (package package-list)
   (print package)
@@ -34,6 +34,10 @@
     (package-install package)))
 
 (load-theme 'base16-default-dark t)
+
+(require 'ido-vertical-mode)
+(ido-vertical-mode 1)
+(setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
 
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
@@ -149,7 +153,7 @@
   "wj" 'windmove-down
   "wl" 'windmove-right
 
-  "<SPC>" 'execute-extended-command)
+  "<SPC>" 'helm-M-x)
 
 (eval-after-load "hideshow"
   '(add-to-list 'hs-special-modes-alist
@@ -178,6 +182,13 @@
    "service: "
    '(("app/services/" "app/services/\\(.+\\)\\.rb$"))
   "app/services/${filename}.rb"))
+
+(defun projectile-rails-find-presenter ()
+  (interactive)
+  (projectile-rails-find-resource
+   "presenter: "
+   '(("app/presenters/" "app/presenters/\\(.+\\)\\.rb$"))
+   "app/services/${filename}.rb"))
 
 (defun projectile-rails-setup ()
   "Customizations for projectile rails mode."
@@ -217,8 +228,9 @@
 
     "ro" 'projectile-rails-find-log
 
-    "rp" 'projectile-rails-find-spec
-    "rP" 'projectile-rails-find-current-spec
+    ;; "rp" 'projectile-rails-find-spec
+    ;; "rP" 'projectile-rails-find-current-spec
+    "rp" 'projectile-rails-find-presenter
 
     "rr" 'projectile-rails-console
     "rR" 'projectile-rails-server
@@ -408,6 +420,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(fzf/executable "/usr/local/bin/fzf")
  '(global-flycheck-mode t)
  '(helm-ag-base-command "/usr/local/bin/ag --nocolor --nogroup")
+ '(helm-completion-in-region-fuzzy-match t)
+ '(helm-mode nil)
+ '(helm-mode-fuzzy-match t)
+ '(helm-prevent-escaping-from-minibuffer nil)
  '(js-indent-level 2)
  '(js2-basic-offset 2)
  '(js2-mode-show-strict-warnings nil)

@@ -43,7 +43,7 @@ function master() {
 }
 
 function groot() {
-  while [[ -z $(ls -a | grep .git) ]] {
+  while [[ -z $(ls -A --color=no | grep \\.git/) ]] {
     cd ..
   }
 }
