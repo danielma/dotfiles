@@ -43,5 +43,6 @@
       "source.gfm"
       "text.git-commit"
     ]
+  "vim-mode": {}
   welcome:
     showOnStartup: false
