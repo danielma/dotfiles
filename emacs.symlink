@@ -23,7 +23,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (jsx-mode smart-mode-line-powerline-theme smart-mode-line yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile base16-theme evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido)))
+(setq package-list (quote (jsx-mode smart-mode-line-powerline-theme smart-mode-line yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile base16-theme evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority)))
 
 (dolist (package package-list)
   (print package)
@@ -51,13 +51,23 @@
 (global-evil-leader-mode)
 (evil-mode 1)
 
+(require 'key-chord)
+(key-chord-mode 1)
+(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+(key-chord-define evil-insert-state-map "fs" 'save-buffer-always)
+
 (require 'evil-magit)
 
 (setq evil-shift-width 2)
 (setq-default indent-tabs-mode nil)
 
-(setq sml/no-confirm-load-theme t)
-(setq sml/theme 'powerline)
+(setq sml/no-confirm-load-theme t
+      sml/theme 'respectful
+      powerline-arrow-shape 'arrow14
+      sml/mode-width 0
+      sml/name-width 20
+      powerline-default-separator-dir '(right . left))
+(rich-minority-mode 1)
 (sml/setup)
 
 (setq yas-snippet-dirs
@@ -149,11 +159,7 @@
   "tq" 'elscreen-kill
   "tj" 'custom-elscreen-jump
 
-  "w=" 'balance-windows
-  "wh" 'windmove-left
-  "wk" 'windmove-up
-  "wj" 'windmove-down
-  "wl" 'windmove-right
+  "w" 'evil-window-map
 
   "<SPC>" 'helm-M-x)
 
@@ -171,12 +177,20 @@
 (add-hook 'ruby-mode-hook
           (lambda () (modify-syntax-entry ?_ "w")))
 
-(defun add-mode-line-dirtrack ()
-    "When editing a file, show the last 2 directories of the current path in the mode line."
-    (add-to-list 'mode-line-buffer-identification 
-                 '(:eval (substring default-directory 
-                                    (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
-(add-hook 'find-file-hook 'add-mode-line-dirtrack)
+;; (defun add-mode-line-dirtrack ()
+;;     "When editing a file, show the last 2 directories of the current path in the mode line."
+;;     (add-to-list 'mode-line-buffer-identification 
+;;                  '(:eval (substring default-directory 
+;;                                     (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
+;; (add-hook 'find-file-hook 'add-mode-line-dirtrack)
+
+(add-to-list 'sml/replacer-regexp-list
+             '("^~/Code/\\(\\w+\\)/"
+               (lambda (s) (concat ":" (match-string 1 s) ":")))
+             t)
+(require 'rich-minority)
+
+(add-to-list 'rm-blacklist 'company)
 
 (defun projectile-rails-find-service ()
   (interactive)
@@ -192,9 +206,18 @@
    '(("app/presenters/" "/presenters/\\(.+?\\)\\(_presenter\\)?\\.rb$"))
    "app/services/${filename}_presenter.rb"))
 
+(defun projectile-rails-find-component ()
+  (interactive)
+  (projectile-rails-find-resource
+   "component: "
+   '(("app/assets/javascripts/components/" "/components/\\(.+\\)\\.js$"))
+   "app/assets/javascripts/components/${filename}.js"))
+
 (defun projectile-rails-setup ()
   "Customizations for projectile rails mode."
   (evil-leader/set-key
+    "jc" 'projectile-rails-find-component
+    
     "ra" 'projectile-rails-find-stylesheet
     "rA" 'projectile-rails-find-current-stylesheet
 
@@ -285,6 +308,7 @@
 (define-key global-map (kbd "s-<return>") 'toggle-frame-fullscreen)
 (define-key global-map (kbd "s-{") 'elscreen-previous)
 (define-key global-map (kbd "s-}") 'elscreen-next)
+(define-key global-map (kbd "s-s") 'save-buffer-always)
 
 (require 'fill-column-indicator)
 (fci-mode)
@@ -384,7 +408,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
-(add-to-list 'auto-mode-alist '("\\.html.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\(\+modal\\)?\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
 
@@ -414,6 +438,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(custom-safe-themes
    (quote
     ("b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8e3f020f1ce69cfa0c1ebee4e198feb28dd7eb31b7d77927e9c790819210c654" "930227e22122d1881db7c2c1ae712dcf715697a1c4d9864f8107a2c3c2da9f8b" "a17f246690840fcf3fc26cb845ffedd2d8e1161cae386c14df61dabb9af3a5a9" "0bd7a42bd443517e5e61dac3cabc24018fbd0c6b2b4199b3c4efd9e3727efd30" "cb18233197cedab557c70d171b511bed49cc702f428750925280090c31498bd2" "b3ce6fadd85126d247b72d4ed9ac4d2bb43c0e0fd1605008cafd54185f30b7eb" "aed73c6d0afcf2232bb25ed2d872c7a1c4f1bda6759f84afc24de6a1aec93da8" "232f715279fc131ed4facf6a517b84d23dca145fcc0e09c5e0f90eb534e1680f" "0b6645497e51d80eda1d337d6cabe31814d6c381e69491931a688836c16137ed" "b6db49cec08652adf1ff2341ce32c7303be313b0de38c621676122f255ee46db" "e1551b5516e0a439b6ab019ba00cee866e735f66f22ff67a5d882ad0f1383454" "50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" default)))
+ '(display-time-mode t)
  '(elscreen-display-screen-number nil)
  '(elscreen-prefix-key (kbd "C-c e"))
  '(evil-shift-round nil)
@@ -442,7 +467,78 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(projectile-generic-command "ag -g \"\"")
  '(projectile-global-mode t)
  '(projectile-switch-project-action (quote helm-projectile-find-file))
+ '(rich-minority-mode nil)
  '(ruby-end-insert-newline nil)
+ '(sml/mode-width
+   (if
+       (eq
+        (powerline-current-separator)
+        (quote arrow))
+       (quote right)
+     (quote full)))
+ '(sml/pos-id-separator
+   (quote
+    (""
+     (:propertize " " face powerline-active1)
+     (:eval
+      (propertize " "
+                  (quote display)
+                  (funcall
+                   (intern
+                    (format "powerline-%s-%s"
+                            (powerline-current-separator)
+                            (car powerline-default-separator-dir)))
+                   (quote powerline-active1)
+                   (quote powerline-active2))))
+     (:propertize " " face powerline-active2))))
+ '(sml/pos-minor-modes-separator
+   (quote
+    (""
+     (:propertize " " face powerline-active1)
+     (:eval
+      (propertize " "
+                  (quote display)
+                  (funcall
+                   (intern
+                    (format "powerline-%s-%s"
+                            (powerline-current-separator)
+                            (cdr powerline-default-separator-dir)))
+                   (quote powerline-active1)
+                   nil)))
+     (:propertize " " face sml/global))))
+ '(sml/pre-id-separator
+   (quote
+    (""
+     (:propertize " " face sml/global)
+     (:eval
+      (propertize " "
+                  (quote display)
+                  (funcall
+                   (intern
+                    (format "powerline-%s-%s"
+                            (powerline-current-separator)
+                            (car powerline-default-separator-dir)))
+                   nil
+                   (quote powerline-active1))))
+     (:propertize " " face powerline-active1))))
+ '(sml/pre-minor-modes-separator
+   (quote
+    (""
+     (:propertize " " face powerline-active2)
+     (:eval
+      (propertize " "
+                  (quote display)
+                  (funcall
+                   (intern
+                    (format "powerline-%s-%s"
+                            (powerline-current-separator)
+                            (cdr powerline-default-separator-dir)))
+                   (quote powerline-active2)
+                   (quote powerline-active1))))
+     (:propertize " " face powerline-active1))))
+ '(sml/pre-modes-separator (propertize " " (quote face) (quote sml/modes)))
+ '(sml/theme (quote respectful))
+ '(sml/use-projectile-p nil)
  '(speedbar-show-unknown-files t)
  '(term-scroll-show-maximum-output t)
  '(term-scroll-to-bottom-on-output t)
@@ -454,6 +550,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight light :height 120 :width normal :foundry "nil" :family "Input Mono Condensed"))))
+ '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Input Mono Condensed"))))
  '(elscreen-tab-current-screen-face ((t (:background "controlHighlightColor" :foreground "black"))))
  '(elscreen-tab-other-screen-face ((t (:background "disabledControlTextColor" :foreground "controlLightHighlightColor")))))
