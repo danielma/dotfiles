@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: memoized attribute
+# key: @|
+# --
+@${1:attr} ||= $0
