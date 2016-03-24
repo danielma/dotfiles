@@ -60,12 +60,16 @@ git_project() {
 }
 
 directory_name() {
-  echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
+  echo "%{$fg_bold[cyan]%}%~%{$reset_color%}"
+}
+
+prompt_time() {
+  echo "%{$fg[magenta]%}%D{%r}%{$reset_color%}"
 }
 
 export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push)\n\u26A1 '
 set_prompt () {
-  export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
+  export RPROMPT="$(prompt_time)"
 }
 
 precmd() {
