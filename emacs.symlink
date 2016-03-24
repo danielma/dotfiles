@@ -21,7 +21,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority smartparens ace-jump-mode diff-hl diminish)))
+(setq package-list (quote (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority smartparens ace-jump-mode diff-hl diminish git-timemachine)))
 
 (dolist (package package-list)
   (print package)
@@ -136,8 +136,17 @@
 (defun custom-flycheck-toggle-errors ()
   (interactive)
   (if (get-buffer "*Flycheck errors*")
-      (kill-buffer "*Flycheck errors*")
+      (progn
+        (delete-window (get-buffer-window (get-buffer "*Flycheck errors*")))
+        (kill-buffer "*Flycheck errors*"))
     (flycheck-list-errors)))
+
+;; @see https://bitbucket.org/lyro/evil/issue/511/let-certain-minor-modes-key-bindings
+(eval-after-load 'git-timemachine
+  '(progn
+     (evil-make-overriding-map git-timemachine-mode-map 'normal)
+     ;; force update evil keymaps after git-timemachine-mode loaded
+     (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
 
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
@@ -156,6 +165,7 @@
   "cl" 'custom-comment-line
 
   "gs" 'magit-status
+  "gt" 'git-timemachine-toggle
 
   "hd" 'helm-dash
   "hD" 'helm-dash-at-point
