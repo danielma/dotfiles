@@ -433,11 +433,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'diminish)
 (defun custom-diminish ()
+  (interactive)
   (diminish 'company-mode "ⓒ ")
   (diminish 'yas-minor-mode "ⓨ ")
   (diminish 'flycheck-mode "ⓕ ")
   (diminish 'projectile-mode "ⓟ ")
   (diminish 'projectile-rails-mode "ⓡ ")
+  (diminish 'emmet-mode "ⓔ ")
   (diminish 'indent-guide-mode)
   (diminish 'linum-relative-mode)
   (diminish 'auto-revert-mode)
@@ -508,7 +510,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(linum-relative-global-mode t)
  '(package-selected-packages
    (quote
-    (jsx-mode smart-mode-line-powerline-theme smart-mode-line yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile fzf evil)))
+    (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile fzf evil)))
  '(projectile-generic-command "ag -g \"\"")
  '(projectile-global-mode t)
  '(projectile-switch-project-action (quote helm-projectile-find-file))
