@@ -34,11 +34,21 @@
 (flx-ido-mode 1)
 
 (require 'smartparens-config)
+(sp-local-pair 'js2-mode "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+(sp-local-pair 'js2-jsx-mode "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+(sp-local-pair 'js2-mode "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+(sp-local-pair 'js2-jsx-mode "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+(defun my-create-newline-and-enter-sexp (&rest _ignored)
+  "Open a new brace or bracket expression, with relevant newlines and indent. "
+  (newline)
+  (indent-according-to-mode)
+  (forward-line -1)
+  (indent-according-to-mode))
 
 ;; (add-to-list 'load-path (expand-file-name "~/.dotfiles/emacs/themes"))
 (add-to-list 'custom-theme-load-path "~/.dotfiles/emacs/themes")
 
-(load-theme 'base16-oceanicnext-dark t)
+(load-theme 'base16-default-dark t)
 
 (require 'ido-vertical-mode)
 (ido-vertical-mode 1)
@@ -495,10 +505,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(company-dabbrev-downcase nil)
  '(custom-safe-themes
    (quote
-    ("4434cfc1946e6f11d250a3975520e25c5f33ef317ae970044fa7a66977aa57da" "2a07975ec5ebe65da76fa3193e5e6500f63f22d01146231d46d3af6e63f59b4c" "edcb52500eb4a8c13fd94870175a5748b3a24fe8432c2ed0f3c077dace23cc4a" "6431fc318d1176ac3c372ab03fef94b8777316e84ab0351dc13d08b1fca16353" "d43120398682953ef18fd7e11e69c94e44d39bb2ab450c4e64815311542acbff" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8e3f020f1ce69cfa0c1ebee4e198feb28dd7eb31b7d77927e9c790819210c654" "930227e22122d1881db7c2c1ae712dcf715697a1c4d9864f8107a2c3c2da9f8b" "a17f246690840fcf3fc26cb845ffedd2d8e1161cae386c14df61dabb9af3a5a9" "0bd7a42bd443517e5e61dac3cabc24018fbd0c6b2b4199b3c4efd9e3727efd30" "cb18233197cedab557c70d171b511bed49cc702f428750925280090c31498bd2" "b3ce6fadd85126d247b72d4ed9ac4d2bb43c0e0fd1605008cafd54185f30b7eb" "aed73c6d0afcf2232bb25ed2d872c7a1c4f1bda6759f84afc24de6a1aec93da8" "232f715279fc131ed4facf6a517b84d23dca145fcc0e09c5e0f90eb534e1680f" "0b6645497e51d80eda1d337d6cabe31814d6c381e69491931a688836c16137ed" "b6db49cec08652adf1ff2341ce32c7303be313b0de38c621676122f255ee46db" "e1551b5516e0a439b6ab019ba00cee866e735f66f22ff67a5d882ad0f1383454" "50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" default)))
+    ("4b27e83eb6f581b094767ce296dddc703dc055c34586586ddf059035e97cc866" "78bf41cdf8dce722b6e04ef789e09dd085e36700a28c9b74fd9f6ba5a1875ec3" "4434cfc1946e6f11d250a3975520e25c5f33ef317ae970044fa7a66977aa57da" "2a07975ec5ebe65da76fa3193e5e6500f63f22d01146231d46d3af6e63f59b4c" "edcb52500eb4a8c13fd94870175a5748b3a24fe8432c2ed0f3c077dace23cc4a" "6431fc318d1176ac3c372ab03fef94b8777316e84ab0351dc13d08b1fca16353" "d43120398682953ef18fd7e11e69c94e44d39bb2ab450c4e64815311542acbff" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8e3f020f1ce69cfa0c1ebee4e198feb28dd7eb31b7d77927e9c790819210c654" "930227e22122d1881db7c2c1ae712dcf715697a1c4d9864f8107a2c3c2da9f8b" "a17f246690840fcf3fc26cb845ffedd2d8e1161cae386c14df61dabb9af3a5a9" "0bd7a42bd443517e5e61dac3cabc24018fbd0c6b2b4199b3c4efd9e3727efd30" "cb18233197cedab557c70d171b511bed49cc702f428750925280090c31498bd2" "b3ce6fadd85126d247b72d4ed9ac4d2bb43c0e0fd1605008cafd54185f30b7eb" "aed73c6d0afcf2232bb25ed2d872c7a1c4f1bda6759f84afc24de6a1aec93da8" "232f715279fc131ed4facf6a517b84d23dca145fcc0e09c5e0f90eb534e1680f" "0b6645497e51d80eda1d337d6cabe31814d6c381e69491931a688836c16137ed" "b6db49cec08652adf1ff2341ce32c7303be313b0de38c621676122f255ee46db" "e1551b5516e0a439b6ab019ba00cee866e735f66f22ff67a5d882ad0f1383454" "50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" default)))
  '(diff-hl-margin-mode t)
  '(display-time-mode t)
  '(elscreen-display-screen-number nil)
+ '(elscreen-display-tab 30)
  '(elscreen-prefix-key (kbd "C-c e"))
  '(elscreen-tab-display-control nil)
  '(elscreen-tab-display-kill-screen nil)
