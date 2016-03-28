@@ -21,7 +21,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority smartparens ace-jump-mode diff-hl diminish git-timemachine)))
+(setq package-list (quote (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority smartparens ace-jump-mode diff-hl diminish git-timemachine fzf)))
 
 (dolist (package package-list)
   (print package)
@@ -147,6 +147,10 @@
      (evil-make-overriding-map git-timemachine-mode-map 'normal)
      ;; force update evil keymaps after git-timemachine-mode loaded
      (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
+
+(defun edit-emacs ()
+  (interactive)
+  (find-file "~/.dotfiles/emacs.symlink"))
 
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
@@ -457,6 +461,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-to-list 'auto-mode-alist '("\\.js.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
 
+(defun fzf-setup ()
+  (linum-mode 0)
+  (linum-relative-mode 0)
+  (company-mode 0)
+  (evil-emacs-state)
+  (abbrev-mode 0))
+
+(add-hook 'term-mode-hook 'fzf-setup)
 (add-hook 'js2-mode-hook 'modify-syntax-table-for-jsx)
 (add-hook 'js2-mode-hook #'smartparens-mode)
 (add-hook 'after-init-hook 'global-company-mode)
