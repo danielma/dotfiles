@@ -48,7 +48,7 @@
 ;; (add-to-list 'load-path (expand-file-name "~/.dotfiles/emacs/themes"))
 (add-to-list 'custom-theme-load-path "~/.dotfiles/emacs/themes")
 
-(load-theme 'base16-default-dark t)
+(load-theme 'base16-monokai-dark t)
 
 (require 'ido-vertical-mode)
 (ido-vertical-mode 1)
@@ -64,6 +64,10 @@
 (global-evil-leader-mode)
 (evil-mode 1)
 
+(defun interactive-wrap-with-pair (pair)
+  (interactive "c")
+  (sp-wrap-with-pair (char-to-string pair)))
+
 (require 'key-chord)
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
@@ -73,6 +77,7 @@
 (define-key evil-insert-state-map (kbd "C-p") 'previous-line)
 (define-key evil-normal-state-map (kbd ",,") 'ace-jump-mode)
 (define-key evil-normal-state-map (kbd "M-RET") 'newline)
+(define-key evil-visual-state-map (kbd "C-w") 'interactive-wrap-with-pair)
 
 (require 'evil-magit)
 
@@ -329,6 +334,12 @@
 (global-set-key (kbd "C-.") 'company-complete)
 (setq company-idle-delay 0.1)
 
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "M-n") nil)
+  (define-key company-active-map (kbd "M-p") nil)
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
+
 (setq windmove-wrap-around t)
 (setq-default abbrev-mode t)
 
@@ -484,6 +495,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (evil-emacs-state)
   (abbrev-mode 0))
 
+(defun web-mode-setup ()
+  (flycheck-mode (cond ((equal web-mode-content-type "jsx") t)
+                       ((equal web-mode-content-type "javascript") t)
+                       (t nil)))
+  (if (equal web-mode-content-type "javascript")
+      (web-mode-set-content-type "jsx")))
+(evil-define-key 'normal web-mode-map "zc" 'web-mode-fold-or-unfold)
+(evil-define-key 'normal web-mode-map "zo" 'web-mode-fold-or-unfold)
+
 (add-hook 'term-mode-hook 'fzf-setup)
 (add-hook 'js2-mode-hook 'modify-syntax-table-for-jsx)
 (add-hook 'js2-mode-hook #'smartparens-mode)
@@ -494,13 +514,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'projectile-mode-hook 'projectile-rails-on)
 (add-hook 'projectile-rails-mode-hook 'projectile-rails-setup)
 (add-hook 'web-mode-hook 'emmet-mode)
-(add-hook 'web-mode-hook
-          (lambda ()
-            (flycheck-mode (cond ((equal web-mode-content-type "jsx") t)
-                                 ((equal web-mode-content-type "javascript") t)
-                                 (t nil)))
-            (if (equal web-mode-content-type "javascript")
-                (web-mode-set-content-type "jsx"))))
+(add-hook 'web-mode-hook 'web-mode-setup)
 
 ;; -------------------------------------------------------------------
 (custom-set-variables
@@ -511,7 +525,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(company-dabbrev-downcase nil)
  '(custom-safe-themes
    (quote
-    ("4b27e83eb6f581b094767ce296dddc703dc055c34586586ddf059035e97cc866" "78bf41cdf8dce722b6e04ef789e09dd085e36700a28c9b74fd9f6ba5a1875ec3" "4434cfc1946e6f11d250a3975520e25c5f33ef317ae970044fa7a66977aa57da" "2a07975ec5ebe65da76fa3193e5e6500f63f22d01146231d46d3af6e63f59b4c" "edcb52500eb4a8c13fd94870175a5748b3a24fe8432c2ed0f3c077dace23cc4a" "6431fc318d1176ac3c372ab03fef94b8777316e84ab0351dc13d08b1fca16353" "d43120398682953ef18fd7e11e69c94e44d39bb2ab450c4e64815311542acbff" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8e3f020f1ce69cfa0c1ebee4e198feb28dd7eb31b7d77927e9c790819210c654" "930227e22122d1881db7c2c1ae712dcf715697a1c4d9864f8107a2c3c2da9f8b" "a17f246690840fcf3fc26cb845ffedd2d8e1161cae386c14df61dabb9af3a5a9" "0bd7a42bd443517e5e61dac3cabc24018fbd0c6b2b4199b3c4efd9e3727efd30" "cb18233197cedab557c70d171b511bed49cc702f428750925280090c31498bd2" "b3ce6fadd85126d247b72d4ed9ac4d2bb43c0e0fd1605008cafd54185f30b7eb" "aed73c6d0afcf2232bb25ed2d872c7a1c4f1bda6759f84afc24de6a1aec93da8" "232f715279fc131ed4facf6a517b84d23dca145fcc0e09c5e0f90eb534e1680f" "0b6645497e51d80eda1d337d6cabe31814d6c381e69491931a688836c16137ed" "b6db49cec08652adf1ff2341ce32c7303be313b0de38c621676122f255ee46db" "e1551b5516e0a439b6ab019ba00cee866e735f66f22ff67a5d882ad0f1383454" "50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" default)))
+    ("3d911fbb499640607201ce789cf86f2fbc06ff25db77be3efc6ccb3b9b64a02b" "0f4be770d01b04e9b5ed2d22605241a9f5eec920c9e3cb1134ac298f4378cd6f" "802d89a2cadb5957de9a621fcb84a4efbb3112f0f346b4cb4d4439013ef9132e" "0bb8220386b6278be8d3519029da0bd6f96d17da6d3694d03218195441fb2808" "3616734460b2e5eb3e00d4e15d8c2d92b935e3dc0491bca00d042a7fb0821ea9" "4b27e83eb6f581b094767ce296dddc703dc055c34586586ddf059035e97cc866" "78bf41cdf8dce722b6e04ef789e09dd085e36700a28c9b74fd9f6ba5a1875ec3" "4434cfc1946e6f11d250a3975520e25c5f33ef317ae970044fa7a66977aa57da" "2a07975ec5ebe65da76fa3193e5e6500f63f22d01146231d46d3af6e63f59b4c" "edcb52500eb4a8c13fd94870175a5748b3a24fe8432c2ed0f3c077dace23cc4a" "6431fc318d1176ac3c372ab03fef94b8777316e84ab0351dc13d08b1fca16353" "d43120398682953ef18fd7e11e69c94e44d39bb2ab450c4e64815311542acbff" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8e3f020f1ce69cfa0c1ebee4e198feb28dd7eb31b7d77927e9c790819210c654" "930227e22122d1881db7c2c1ae712dcf715697a1c4d9864f8107a2c3c2da9f8b" "a17f246690840fcf3fc26cb845ffedd2d8e1161cae386c14df61dabb9af3a5a9" "0bd7a42bd443517e5e61dac3cabc24018fbd0c6b2b4199b3c4efd9e3727efd30" "cb18233197cedab557c70d171b511bed49cc702f428750925280090c31498bd2" "b3ce6fadd85126d247b72d4ed9ac4d2bb43c0e0fd1605008cafd54185f30b7eb" "aed73c6d0afcf2232bb25ed2d872c7a1c4f1bda6759f84afc24de6a1aec93da8" "232f715279fc131ed4facf6a517b84d23dca145fcc0e09c5e0f90eb534e1680f" "0b6645497e51d80eda1d337d6cabe31814d6c381e69491931a688836c16137ed" "b6db49cec08652adf1ff2341ce32c7303be313b0de38c621676122f255ee46db" "e1551b5516e0a439b6ab019ba00cee866e735f66f22ff67a5d882ad0f1383454" "50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" default)))
  '(diff-hl-margin-mode t)
  '(display-time-mode t)
  '(elscreen-display-screen-number nil)
@@ -560,7 +574,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight thin :height 120 :width normal :foundry "nil" :family "Input Mono Condensed"))))
- '(diff-hl-change ((t (:background "LightBlue1" :foreground "SteelBlue1"))))
- '(elscreen-tab-current-screen-face ((t (:background "controlHighlightColor" :foreground "black"))))
- '(elscreen-tab-other-screen-face ((t (:background "disabledControlTextColor" :foreground "controlLightHighlightColor")))))
+ '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight light :height 120 :width normal :family "Input Mono Narrow"))))
+ '(diff-hl-change ((t (:background "LightBlue1" :foreground "SteelBlue1")))))
