@@ -1,0 +1,10 @@
+# vim: set ft=ruby:
+
+def pbcopy(string)
+  Tempfile.open('clipboard') do |file|
+    file.write(string)
+    file.close
+    `cat #{file.path} | pbcopy`
+    true
+  end
+end
