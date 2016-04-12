@@ -30,16 +30,46 @@ function setup-sanity-check() {
   alias sanity-check="git diff `git rev-parse HEAD`"
 }
 
-function staging() {
+function git-changes {
   CHANGED_LENGTH=$(git status -s | wc -l)
-  [[ $CHANGED_LENGTH -ne "0" ]] && echo "NOPE! you have changes" && gs
-  [[ $CHANGED_LENGTH -eq "0" ]] && git checkout staging && git fetch origin staging && git reset --hard origin/staging
+  if [[ $CHANGED_LENGTH -ne "0" ]]
+  then
+    echo true
+  else
+    echo false
+  fi
+}
+
+function staging() {
+  if $(git-changes)
+  then
+    echo "NOPE! you have changes"
+    gs
+  else
+    git checkout staging && git fetch origin staging && git reset --hard origin/staging
+  fi
 }
 
 function master() {
-  CHANGED_LENGTH=$(git status -s | wc -l)
-  [[ $CHANGED_LENGTH -ne "0" ]] && echo "NOPE! you have changes" && gs
-  [[ $CHANGED_LENGTH -eq "0" ]] && git checkout master && glcb
+  if $(git-changes)
+  then
+    echo "NOPE! you have changes"
+    gs
+  else
+    git checkout master && glcb
+  fi
+}
+
+function deploy-me-to-staging() {
+  if $(git-changes)
+  then
+    echo "NOPE! you have changes"
+    gs
+  else
+    CURRENT_BRANCH=$(git symbolic-ref HEAD | sed 's/refs\/heads\///')
+    staging
+    (git merge $CURRENT_BRANCH --no-edit && git push && secret-work-deploy && terminal-notifier -message "Deploy succeeded" || terminal-notifier -message "Deploy failed") &
+  fi
 }
 
 function groot() {
