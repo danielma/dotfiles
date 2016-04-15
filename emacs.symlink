@@ -13,25 +13,31 @@
       make-backup-files nil
       ad-redefinition-action 'accept)
 
-(define-key global-map (kbd "RET") 'newline-and-indent)
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority smartparens ace-jump-mode diff-hl diminish git-timemachine fzf)))
+(setq package-list (quote (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority smartparens ace-jump-mode diff-hl diminish git-timemachine fzf coffee-mode discover)))
 
 (dolist (package package-list)
   (print package)
   (unless (package-installed-p package)
     (package-install package)))
 
+;; LOAD ALL THE THINGS
+(dolist (elt (file-expand-wildcards "~/.dotfiles/emacs/autoload/*.el"))
+  (load elt))
+
+
 (require 'flx-ido)
 (ido-mode 1)
 (ido-everywhere 1)
 (flx-ido-mode 1)
+
+(require 'discover)
+(global-discover-mode 1)
 
 (require 'smartparens-config)
 (sp-local-pair 'js2-mode "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
@@ -60,10 +66,6 @@
 (setq helm-dash-browser-func 'eww)
 (elscreen-start)
 
-(require 'evil)
-(global-evil-leader-mode)
-(evil-mode 1)
-
 (defun interactive-wrap-with-pair (pair)
   (interactive "c")
   (sp-wrap-with-pair (char-to-string pair)))
@@ -81,11 +83,6 @@
 
 (require 'evil-magit)
 
-;; (fset 'evil-visual-update-x-selection 'ignore)
-(setq evil-shift-width 2)
-      ;; x-select-enable-clipboard nil)
-(setq-default indent-tabs-mode nil)
-
 ;; (setq sml/no-confirm-load-theme t
 ;;       sml/theme 'respectful
 ;;       powerline-arrow-shape 'arrow
@@ -102,128 +99,12 @@
 
 ;; (evil-ex-define-cmd "AV")
 
-(define-key evil-normal-state-map "[b" 'previous-buffer)
-(define-key evil-normal-state-map "]b" 'next-buffer)
-
-(defun save-buffer-always ()
-  "Save this buffer even if it hasn't been modieifed."
-  (interactive)
-  (set-buffer-modified-p t)
-  (save-buffer))
-
-(defun toggle-comment-on-line ()
-  "comment or uncomment current line"
-  (interactive)
-  (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
-
-(defun custom-comment-line ()
-  "Comment lines the way I want to."
-  (interactive)
-  (if (evil-visual-state-p)
-      (call-interactively 'comment-or-uncomment-region)
-      (call-interactively 'toggle-comment-on-line)))
-
-(defun replace-symbol ()
-  "EVIL: search for instances of the symbol under the cursor."
-  (interactive)
-  (let (from to sym)
-    (if (use-region-p)
-        (progn
-          (setq sym (buffer-substring-no-properties (mark) (point))))
-        (progn
-          (save-excursion
-            (skip-syntax-backward "w_") (setq from (point)))
-          (save-excursion
-            (skip-syntax-forward "w_") (setq to (point)))
-          (setq sym (buffer-substring-no-properties to from))))
-    (evil-ex (concat "%s/" sym "/"))))
-
-(defun find-symbol-in-project ()
-  "Search for symbol in project using projectile-ag"
-  (interactive)
-  (let (from to sym)
-    (if (use-region-p)
-        (progn
-          (setq sym (buffer-substring-no-properties (mark) (point))))
-      (progn
-        (save-excursion
-          (skip-syntax-backward "w_") (setq from (point)))
-        (save-excursion
-          (skip-syntax-forward "w_") (setq to (point)))
-        (setq sym (buffer-substring-no-properties to from))))
-    (helm-ag-project-root sym)))
-
-(defun custom-flycheck-toggle-errors ()
-  (interactive)
-  (if (get-buffer "*Flycheck errors*")
-      (progn
-        (delete-window (get-buffer-window (get-buffer "*Flycheck errors*")))
-        (kill-buffer "*Flycheck errors*"))
-    (flycheck-list-errors)))
-
 ;; @see https://bitbucket.org/lyro/evil/issue/511/let-certain-minor-modes-key-bindings
 (eval-after-load 'git-timemachine
   '(progn
      (evil-make-overriding-map git-timemachine-mode-map 'normal)
      ;; force update evil keymaps after git-timemachine-mode loaded
      (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
-
-(defun edit-emacs ()
-  (interactive)
-  (find-file "~/.dotfiles/emacs.symlink"))
-
-(evil-leader/set-leader "<SPC>")
-(evil-leader/set-key
-  "fs" 'save-buffer-always
-  "fq" 'delete-window
-  "fl" 'sr-speedbar-toggle
-
-  "bd" 'kill-this-buffer
-  "bs" 'switch-to-buffer
-  "bl" 'buf-move-right
-  "bh" 'buf-move-left
-  "bj" 'buf-move-down
-  "bk" 'buf-move-up
-
-  "cd" 'cd
-  "cl" 'custom-comment-line
-
-  "ee" 'edit-emacs
-
-  "gs" 'magit-status
-  "gt" 'git-timemachine-toggle
-
-  "hd" 'helm-dash
-  "hD" 'helm-dash-at-point
-
-  "ll" 'custom-flycheck-toggle-errors
-  "ln" 'flycheck-next-error
-  "lp" 'flycheck-previous-error
-
-  "mw" 'web-mode
-  "mx" 'js2-jsx-mode
-
-  "ph" 'helm-projectile-find-file
-  "pa" 'helm-projectile-ag
-  "pk" 'find-symbol-in-project
-  "pd" 'projectile-dired
-  "ps" 'helm-projectile-switch-project
-  "pK" 'projectile-kill-buffers
-  "pt" 'projectile-toggle-between-implementation-and-test
-  "pT" 'projectile-find-implementation-or-test-other-window
-
-  "ss" 'evil-search-word-forward
-  "sr" 'replace-symbol
-
-  "tn" 'elscreen-create
-  "tl" 'elscreen-next
-  "th" 'elscreen-previous
-  "tq" 'elscreen-kill
-  "tj" 'elscreen-select-and-goto
-
-  "w" 'evil-window-map
-
-  "<SPC>" 'helm-M-x)
 
 (eval-after-load "hideshow"
   '(add-to-list 'hs-special-modes-alist
@@ -246,93 +127,6 @@
                                     (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
 (add-hook 'find-file-hook 'add-mode-line-dirtrack)
 
-(defun projectile-rails-find-service ()
-  (interactive)
-  (projectile-rails-find-resource
-   "service: "
-   '(("app/services/" "/services/\\(.+\\)\\.rb$"))
-  "app/services/${filename}.rb"))
-
-(defun projectile-rails-find-presenter ()
-  (interactive)
-  (projectile-rails-find-resource
-   "presenter: "
-   '(("app/presenters/" "/presenters/\\(.+?\\)\\(_presenter\\)?\\.rb$"))
-   "app/presenters/${filename}_presenter.rb"))
-
-(defun projectile-rails-find-component ()
-  (interactive)
-  (projectile-rails-find-resource
-   "component: "
-   '(("app/assets/javascripts/components/" "/components/\\(.+\\)\\.js$"))
-   "app/assets/javascripts/components/${filename}.js"))
-
-(defun projectile-rails-setup ()
-  "Customizations for projectile rails mode."
-  (evil-leader/set-key
-    "jc" 'projectile-rails-find-component
-    
-    "ra" 'projectile-rails-find-stylesheet
-    "rA" 'projectile-rails-find-current-stylesheet
-
-    "rb" 'projectile-rails-find-job
-
-    "rc" 'projectile-rails-find-controller
-    "rC" 'projectile-rails-find-current-controller
-
-    "re" 'projectile-rails-find-environment
-
-    "rf" 'projectile-rails-find-fixture
-    "rF" 'projectile-rails-find-current-fixture
-
-    "rg" 'projectile-rails-mode-goto-map
-
-    "rh" 'projectile-rails-find-helper
-    "rH" 'projectile-rails-find-current-helper
-
-    "rj" 'projectile-rails-find-javascript
-    "rJ" 'projectile-rails-find-current-javascript
-
-    "rk" 'projectile-rails-find-rake-task
-
-    "ri" 'projectile-rails-find-initializer
-
-    "rl" 'projectile-rails-find-lib
-
-    "rm" 'projectile-rails-find-model
-    "rM" 'projectile-rails-find-current-model
-
-    "rn" 'projectile-rails-find-migration
-    "rN" 'projectile-rails-find-current-migration
-
-    "ro" 'projectile-rails-find-log
-
-    ;; "rp" 'projectile-rails-find-spec
-    ;; "rP" 'projectile-rails-find-current-spec
-    "rp" 'projectile-rails-find-presenter
-
-    "rr" 'projectile-rails-console
-    "rR" 'projectile-rails-server
-
-    "rs" 'projectile-rails-find-service
-
-    "rt" 'projectile-rails-find-test
-    "rT" 'projectile-rails-find-current-test
-
-    "rv" 'projectile-rails-find-view
-    "rV" 'projectile-rails-find-current-view
-
-    "rx" 'projectile-rails-extract-region
-
-    "ry" 'projectile-rails-find-layout
-
-    "rz" 'projectile-rails-find-serializer
-    "rZ" 'projectile-rails-find-current-serializer
-
-    "r@" 'projectile-rails-find-mailer
-    "r!" 'projectile-rails-find-validator
-  ))
-                                   
 (global-set-key (kbd "C-.") 'company-complete)
 (setq company-idle-delay 0.1)
 
@@ -361,15 +155,6 @@
                                                ("AS::" "ActiveSupport::")
                                                ("AR::" "ActiveRecord::")))
 
-(define-key global-map (kbd "s-=") 'zoom-frm-in)
-(define-key global-map (kbd "s--") 'zoom-frm-out)
-(define-key global-map (kbd "s-0") 'zoom-frm-unzoom)
-(define-key global-map (kbd "s-t") 'elscreen-create)
-(define-key global-map (kbd "s-<return>") 'toggle-frame-fullscreen)
-(define-key global-map (kbd "s-{") 'elscreen-previous)
-(define-key global-map (kbd "s-}") 'elscreen-next)
-(define-key global-map (kbd "s-s") 'save-buffer-always)
-
 (require 'fill-column-indicator)
 (fci-mode)
 (set-fill-column 100)
@@ -379,6 +164,7 @@
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+(setq create-lockfiles nil)
 
 ; (require 'fzf)
 ; 
@@ -391,18 +177,6 @@
 (make-face 'speedbar-face)
 (set-face-font 'speedbar-face "Lucida Grande 11")
 (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
-
-(projectile-global-mode)
-(require 'helm-projectile)
-(helm-projectile-on)
-
-(with-eval-after-load 'helm-projectile
-  (defvar helm-source-file-not-found
-    (helm-build-dummy-source
-        "Create file"
-      :action (lambda (cand) (find-file cand))))
-
-(add-to-list 'helm-projectile-sources-list helm-source-file-not-found t))
 
 ;;; esc always quits
 (defun minibuffer-keyboard-quit ()
@@ -513,8 +287,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'after-init-hook 'yas-global-mode)
 (add-hook 'after-init-hook 'flycheck-setup)
 (add-hook 'after-init-hook 'custom-diminish)
-(add-hook 'projectile-mode-hook 'projectile-rails-on)
-(add-hook 'projectile-rails-mode-hook 'projectile-rails-setup)
 (add-hook 'web-mode-hook 'emmet-mode)
 (add-hook 'web-mode-hook 'web-mode-setup)
 

@@ -17,7 +17,7 @@
     ]
     themes: [
       "atom-dark-ui"
-      "base16-tomorrow-dark-theme"
+      "one-dark-syntax"
     ]
   editor:
     fontFamily: "Input Mono Narrow"
