@@ -40,10 +40,8 @@
 (global-discover-mode 1)
 
 (require 'smartparens-config)
-(sp-local-pair 'js2-mode "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
-(sp-local-pair 'js2-jsx-mode "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
-(sp-local-pair 'js2-mode "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
-(sp-local-pair 'js2-jsx-mode "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+(sp-local-pair '(js-mode js2-mode js2-jsx-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+(sp-local-pair '(js-mode js2-mode js2-jsx-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
 (defun my-create-newline-and-enter-sexp (&rest _ignored)
   "Open a new brace or bracket expression, with relevant newlines and indent. "
   (newline)
@@ -283,6 +281,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'term-mode-hook 'fzf-setup)
 (add-hook 'js2-mode-hook 'modify-syntax-table-for-jsx)
 (add-hook 'js2-mode-hook #'smartparens-mode)
+(add-hook 'js-mode-hook #'smartparens-mode)
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'after-init-hook 'yas-global-mode)
 (add-hook 'after-init-hook 'flycheck-setup)

@@ -13,8 +13,9 @@
   (add-to-list 'helm-projectile-sources-list helm-source-file-not-found t))
 
 (defun projectile-set-default-directory ()
-  (cd (projectile-project-root)))
-
+  (interactive)
+  (cd (projectile-project-root))
+  (print (concat "Set root to " (projectile-project-root))))
 
 (define-key projectile-command-map "T" 'projectile-find-implementation-or-test-other-window)
 (define-key projectile-command-map "a" 'helm-projectile-ag)
