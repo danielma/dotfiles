@@ -68,8 +68,12 @@ function deploy-me-to-staging() {
   else
     CURRENT_BRANCH=$(git symbolic-ref HEAD | sed 's/refs\/heads\///')
     staging
-    (git merge $CURRENT_BRANCH --no-edit && git push && secret-work-deploy && terminal-notifier -message "Deploy succeeded" || terminal-notifier -message "Deploy failed") &
+    (git merge $CURRENT_BRANCH --no-edit && git push && staging-deploy) &
   fi
+}
+
+function staging-deploy() {
+  (secret-work-deploy && terminal-notifier -message "Deploy succeeded" || terminal-notifier -message "Deploy failed") &
 }
 
 function groot() {
