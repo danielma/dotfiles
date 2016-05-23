@@ -19,7 +19,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority smartparens ace-jump-mode diff-hl diminish git-timemachine fzf coffee-mode discover)))
+(setq package-list (quote (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority smartparens ace-jump-mode diff-hl diminish git-timemachine fzf coffee-mode discover json-mode tide solarized-theme)))
 
 (dolist (package package-list)
   (print package)
@@ -40,8 +40,8 @@
 (global-discover-mode 1)
 
 (require 'smartparens-config)
-(sp-local-pair '(js-mode js2-mode js2-jsx-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
-(sp-local-pair '(js-mode js2-mode js2-jsx-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+(sp-local-pair '(js-mode js2-mode js2-jsx-mode typescript-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+(sp-local-pair '(js-mode js2-mode js2-jsx-mode typescript-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
 (defun my-create-newline-and-enter-sexp (&rest _ignored)
   "Open a new brace or bracket expression, with relevant newlines and indent. "
   (newline)
@@ -52,7 +52,7 @@
 ;; (add-to-list 'load-path (expand-file-name "~/.dotfiles/emacs/themes"))
 (add-to-list 'custom-theme-load-path "~/.dotfiles/emacs/themes")
 
-(load-theme 'base16-monokai-dark t)
+(load-theme 'base16-default-dark t)
 
 (require 'ido-vertical-mode)
 (ido-vertical-mode 1)
@@ -71,11 +71,10 @@
 (require 'key-chord)
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-(key-chord-define evil-insert-state-map "fs" 'save-buffer-always)
+;; (key-chord-define evil-insert-state-map "fs" 'save-buffer-always)
 (key-chord-define evil-insert-state-map ",," 'ace-jump-mode)
 (define-key evil-insert-state-map (kbd "C-n") 'next-line)
 (define-key evil-insert-state-map (kbd "C-p") 'previous-line)
-(define-key evil-normal-state-map (kbd ",,") 'ace-jump-mode)
 (define-key evil-normal-state-map (kbd "M-RET") 'newline)
 (define-key evil-visual-state-map (kbd "C-w") 'interactive-wrap-with-pair)
 
@@ -116,6 +115,8 @@
 (add-hook 'ruby-mode-hook 'hs-minor-mode)
 (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch)
 (add-hook 'ruby-mode-hook
+          (lambda () (modify-syntax-entry ?_ "w")))
+(add-hook 'yaml-mode-hook
           (lambda () (modify-syntax-entry ?_ "w")))
 
 (defun add-mode-line-dirtrack ()
@@ -197,13 +198,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-<") 'mc/mark-previous-symbol-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-(defun flycheck-setup ()
-  (global-flycheck-mode)
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
-  (setq-default
-    flycheck-disabled-checkers (append flycheck-disabled-checkers '(javascript-jshint))
-    flycheck-temp-prefix ".flycheck"))
-
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
   (if (equal web-mode-content-type "jsx")
     (let ((web-mode-enable-part-face nil))
@@ -246,7 +240,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (diminish 'flycheck-mode "ⓕ ")
   (diminish 'projectile-mode "ⓟ ")
   (diminish 'projectile-rails-mode "ⓡ ")
+  (diminish 'tide-mode "ⓣ ")
   (diminish 'emmet-mode "ⓔ ")
+  (diminish 'eldoc-mode "ⓓ ")
+  (diminish 'smartparens-mode)
   (diminish 'indent-guide-mode)
   (diminish 'linum-relative-mode)
   (diminish 'auto-revert-mode)
@@ -256,11 +253,27 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (diminish 'ruby-end-mode)
   (diminish 'ruby-refactor-mode))
 
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
+;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\(\+modal\\)?\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
+
+;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+(defun rename-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file filename new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
 
 (defun fzf-setup ()
   (linum-mode 0)
@@ -284,7 +297,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'js-mode-hook #'smartparens-mode)
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'after-init-hook 'yas-global-mode)
-(add-hook 'after-init-hook 'flycheck-setup)
 (add-hook 'after-init-hook 'custom-diminish)
 (add-hook 'web-mode-hook 'emmet-mode)
 (add-hook 'web-mode-hook 'web-mode-setup)
@@ -296,9 +308,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(company-dabbrev-downcase nil)
+ '(compilation-message-face (quote default))
+ '(cua-global-mark-cursor-color "#2aa198")
+ '(cua-normal-cursor-color "#657b83")
+ '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-color "#859900")
  '(custom-safe-themes
    (quote
-    ("3d911fbb499640607201ce789cf86f2fbc06ff25db77be3efc6ccb3b9b64a02b" "0f4be770d01b04e9b5ed2d22605241a9f5eec920c9e3cb1134ac298f4378cd6f" "802d89a2cadb5957de9a621fcb84a4efbb3112f0f346b4cb4d4439013ef9132e" "0bb8220386b6278be8d3519029da0bd6f96d17da6d3694d03218195441fb2808" "3616734460b2e5eb3e00d4e15d8c2d92b935e3dc0491bca00d042a7fb0821ea9" "4b27e83eb6f581b094767ce296dddc703dc055c34586586ddf059035e97cc866" "78bf41cdf8dce722b6e04ef789e09dd085e36700a28c9b74fd9f6ba5a1875ec3" "4434cfc1946e6f11d250a3975520e25c5f33ef317ae970044fa7a66977aa57da" "2a07975ec5ebe65da76fa3193e5e6500f63f22d01146231d46d3af6e63f59b4c" "edcb52500eb4a8c13fd94870175a5748b3a24fe8432c2ed0f3c077dace23cc4a" "6431fc318d1176ac3c372ab03fef94b8777316e84ab0351dc13d08b1fca16353" "d43120398682953ef18fd7e11e69c94e44d39bb2ab450c4e64815311542acbff" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8e3f020f1ce69cfa0c1ebee4e198feb28dd7eb31b7d77927e9c790819210c654" "930227e22122d1881db7c2c1ae712dcf715697a1c4d9864f8107a2c3c2da9f8b" "a17f246690840fcf3fc26cb845ffedd2d8e1161cae386c14df61dabb9af3a5a9" "0bd7a42bd443517e5e61dac3cabc24018fbd0c6b2b4199b3c4efd9e3727efd30" "cb18233197cedab557c70d171b511bed49cc702f428750925280090c31498bd2" "b3ce6fadd85126d247b72d4ed9ac4d2bb43c0e0fd1605008cafd54185f30b7eb" "aed73c6d0afcf2232bb25ed2d872c7a1c4f1bda6759f84afc24de6a1aec93da8" "232f715279fc131ed4facf6a517b84d23dca145fcc0e09c5e0f90eb534e1680f" "0b6645497e51d80eda1d337d6cabe31814d6c381e69491931a688836c16137ed" "b6db49cec08652adf1ff2341ce32c7303be313b0de38c621676122f255ee46db" "e1551b5516e0a439b6ab019ba00cee866e735f66f22ff67a5d882ad0f1383454" "50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" default)))
+    ("89eccb8743a7019bc9fce5b2c725d4156a27ba1000ebf7cb60e48ab281a6f2d0" "0949a3f4ac2735c6bce3d4cb118211e3fc893baad7fee073092c1b631c6c78b1" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "7746651fe1f4c2f37d5a0bd4386f026d9adf361a97bbb4522bda45705c79692f" "3d911fbb499640607201ce789cf86f2fbc06ff25db77be3efc6ccb3b9b64a02b" "0f4be770d01b04e9b5ed2d22605241a9f5eec920c9e3cb1134ac298f4378cd6f" "802d89a2cadb5957de9a621fcb84a4efbb3112f0f346b4cb4d4439013ef9132e" "0bb8220386b6278be8d3519029da0bd6f96d17da6d3694d03218195441fb2808" "3616734460b2e5eb3e00d4e15d8c2d92b935e3dc0491bca00d042a7fb0821ea9" "4b27e83eb6f581b094767ce296dddc703dc055c34586586ddf059035e97cc866" "78bf41cdf8dce722b6e04ef789e09dd085e36700a28c9b74fd9f6ba5a1875ec3" "4434cfc1946e6f11d250a3975520e25c5f33ef317ae970044fa7a66977aa57da" "2a07975ec5ebe65da76fa3193e5e6500f63f22d01146231d46d3af6e63f59b4c" "edcb52500eb4a8c13fd94870175a5748b3a24fe8432c2ed0f3c077dace23cc4a" "6431fc318d1176ac3c372ab03fef94b8777316e84ab0351dc13d08b1fca16353" "d43120398682953ef18fd7e11e69c94e44d39bb2ab450c4e64815311542acbff" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8e3f020f1ce69cfa0c1ebee4e198feb28dd7eb31b7d77927e9c790819210c654" "930227e22122d1881db7c2c1ae712dcf715697a1c4d9864f8107a2c3c2da9f8b" "a17f246690840fcf3fc26cb845ffedd2d8e1161cae386c14df61dabb9af3a5a9" "0bd7a42bd443517e5e61dac3cabc24018fbd0c6b2b4199b3c4efd9e3727efd30" "cb18233197cedab557c70d171b511bed49cc702f428750925280090c31498bd2" "b3ce6fadd85126d247b72d4ed9ac4d2bb43c0e0fd1605008cafd54185f30b7eb" "aed73c6d0afcf2232bb25ed2d872c7a1c4f1bda6759f84afc24de6a1aec93da8" "232f715279fc131ed4facf6a517b84d23dca145fcc0e09c5e0f90eb534e1680f" "0b6645497e51d80eda1d337d6cabe31814d6c381e69491931a688836c16137ed" "b6db49cec08652adf1ff2341ce32c7303be313b0de38c621676122f255ee46db" "e1551b5516e0a439b6ab019ba00cee866e735f66f22ff67a5d882ad0f1383454" "50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" default)))
  '(diff-hl-margin-mode t)
  '(display-time-mode t)
  '(elscreen-display-screen-number nil)
@@ -308,6 +325,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(elscreen-tab-display-kill-screen nil)
  '(evil-shift-round nil)
  '(evil-shift-width 2)
+ '(fci-rule-color "#eee8d5")
  '(flycheck-disabled-checkers (quote (javascript-jshint)))
  '(fzf/args nil)
  '(fzf/executable "/usr/local/bin/fzf")
@@ -317,6 +335,29 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(helm-mode nil)
  '(helm-mode-fuzzy-match t)
  '(helm-prevent-escaping-from-minibuffer nil)
+ '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
+ '(highlight-symbol-colors
+   (--map
+    (solarized-color-blend it "#fdf6e3" 0.25)
+    (quote
+     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+ '(highlight-symbol-foreground-color "#586e75")
+ '(highlight-tail-colors
+   (quote
+    (("#eee8d5" . 0)
+     ("#B4C342" . 20)
+     ("#69CABF" . 30)
+     ("#69B7F0" . 50)
+     ("#DEB542" . 60)
+     ("#F2804F" . 70)
+     ("#F771AC" . 85)
+     ("#eee8d5" . 100))))
+ '(hl-bg-colors
+   (quote
+    ("#DEB542" "#F2804F" "#FF6E64" "#F771AC" "#9EA0E5" "#69B7F0" "#69CABF" "#B4C342")))
+ '(hl-fg-colors
+   (quote
+    ("#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3")))
  '(js-indent-level 2)
  '(js2-basic-offset 2)
  '(js2-mode-show-strict-warnings nil)
@@ -324,11 +365,18 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(js3-enter-indents-newline t)
  '(js3-indent-on-enter-key t)
  '(js3-mode-show-strict-warnings nil)
+ '(line-spacing 0.3)
  '(linum-relative-current-symbol "")
  '(linum-relative-global-mode t)
+ '(magit-diff-use-overlays nil)
+ '(nrepl-message-colors
+   (quote
+    ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
     (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile fzf evil)))
+ '(pos-tip-background-color "#eee8d5")
+ '(pos-tip-foreground-color "#586e75")
  '(projectile-generic-command "ag -g \"\"")
  '(projectile-global-mode t)
  '(projectile-switch-project-action (quote helm-projectile-find-file))
@@ -336,12 +384,47 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (quote
     (" hl-p" "company" "yas" "Projectile" "ing" "LR" "Undo-Tree" "Abbrev" "hs")))
  '(ruby-end-insert-newline nil)
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(speedbar-show-unknown-files t)
+ '(term-default-bg-color "#fdf6e3")
+ '(term-default-fg-color "#657b83")
  '(term-scroll-show-maximum-output t)
  '(term-scroll-to-bottom-on-output t)
+ '(typescript-indent-level 2)
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#dc322f")
+     (40 . "#c85d17")
+     (60 . "#be730b")
+     (80 . "#b58900")
+     (100 . "#a58e00")
+     (120 . "#9d9100")
+     (140 . "#959300")
+     (160 . "#8d9600")
+     (180 . "#859900")
+     (200 . "#669b32")
+     (220 . "#579d4c")
+     (240 . "#489e65")
+     (260 . "#399f7e")
+     (280 . "#2aa198")
+     (300 . "#2898af")
+     (320 . "#2793ba")
+     (340 . "#268fc6")
+     (360 . "#268bd2"))))
+ '(vc-annotate-very-old-color nil)
  '(web-mode-attr-indent-offset 2)
  '(web-mode-code-indent-offset 2)
- '(web-mode-markup-indent-offset 2))
+ '(web-mode-css-indent-offset 2)
+ '(web-mode-markup-indent-offset 2)
+ '(web-mode-sql-indent-offset 2)
+ '(weechat-color-list
+   (quote
+    (unspecified "#fdf6e3" "#eee8d5" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#657b83" "#839496")))
+ '(xterm-color-names
+   ["#eee8d5" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#073642"])
+ '(xterm-color-names-bright
+   ["#fdf6e3" "#cb4b16" "#93a1a1" "#839496" "#657b83" "#6c71c4" "#586e75" "#002b36"]))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

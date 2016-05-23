@@ -22,7 +22,7 @@
   (interactive)
   (projectile-rails-find-resource
    "component: "
-   '(("app/assets/javascripts/components/" "/components/\\(.+\\)\\.js$"))
+   '(("app/assets/javascripts/components/" "/components/\\(.+\\.[jt]sx?\\)$"))
    "app/assets/javascripts/components/${filename}.js"))
 
 (defun projectile-rails-setup ()

@@ -15,6 +15,11 @@
 (define-key evil-normal-state-map "[b" 'previous-buffer)
 (define-key evil-normal-state-map "]b" 'next-buffer)
 
+;; (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+;; (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+;; (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+;; (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+
 (defun save-buffer-always ()
   "Save this buffer even if it hasn't been modieifed."
   (interactive)
@@ -105,6 +110,7 @@
 
   "mw" 'web-mode
   "mx" 'js2-jsx-mode
+  "mj" 'js-mode
 
   "p" 'projectile-command-map
 
@@ -118,5 +124,7 @@
   "tj" 'elscreen-select-and-goto
 
   "w" 'evil-window-map
+
+  "," 'ace-jump-mode
 
   "<SPC>" 'helm-M-x)

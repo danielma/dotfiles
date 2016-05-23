@@ -7,5 +7,5 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_use_caching = 0
 
 imap <C-P> <Esc><C-P>
-map <Leader>ph :FZF<CR>
+map <Leader>pf :FZF<CR>
 

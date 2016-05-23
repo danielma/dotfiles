@@ -20,12 +20,12 @@
       "one-dark-syntax"
     ]
   editor:
-    fontFamily: "Input Mono Narrow"
-    fontSize: 12
+    fontFamily: "Monaco"
     invisibles: {}
     lineHeight: 1.1
     scrollPastEnd: true
     showIndentGuide: true
+    showInvisibles: true
     softWrapAtPreferredLineLength: true
   "ide-flow":
     flowPath: "/usr/local/bin/flow"
