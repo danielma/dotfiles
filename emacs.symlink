@@ -73,6 +73,7 @@
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 ;; (key-chord-define evil-insert-state-map "fs" 'save-buffer-always)
 (key-chord-define evil-insert-state-map ",," 'ace-jump-mode)
+(key-chord-define evil-normal-state-map ";;" 'helm-M-x)
 (define-key evil-insert-state-map (kbd "C-n") 'next-line)
 (define-key evil-insert-state-map (kbd "C-p") 'previous-line)
 (define-key evil-normal-state-map (kbd "M-RET") 'newline)

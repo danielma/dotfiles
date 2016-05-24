@@ -68,11 +68,8 @@ prompt_time() {
 }
 
 export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push)\n\u26A1 '
-set_prompt () {
-  export RPROMPT="$(prompt_time)"
-}
+export RPROMPT="$(prompt_time)"
 
 precmd() {
   title "zsh" "%m" "%55<...<%~"
-  set_prompt
 }
