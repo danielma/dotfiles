@@ -308,10 +308,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#2b303b" "#bf616a" "#a3be8c" "#ebcb8b" "#8fa1b3" "#b48ead" "#8fa1b3" "#c0c5ce"])
- '(ansi-term-color-vector
-   [unspecified "#2b303b" "#bf616a" "#a3be8c" "#ebcb8b" "#8fa1b3" "#b48ead" "#8fa1b3" "#c0c5ce"] t)
  '(company-dabbrev-downcase nil)
  '(compilation-message-face (quote default))
  '(cua-global-mark-cursor-color "#2aa198")
@@ -370,7 +366,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(js3-enter-indents-newline t)
  '(js3-indent-on-enter-key t)
  '(js3-mode-show-strict-warnings nil)
- '(line-spacing -10)
+ '(line-spacing 0)
  '(linum-relative-current-symbol "")
  '(linum-relative-global-mode t)
  '(magit-diff-use-overlays nil)
@@ -391,8 +387,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(ruby-end-insert-newline nil)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(speedbar-show-unknown-files t)
- '(term-default-bg-color "#fdf6e3")
- '(term-default-fg-color "#657b83")
  '(term-scroll-show-maximum-output t)
  '(term-scroll-to-bottom-on-output t)
  '(typescript-indent-level 2)
