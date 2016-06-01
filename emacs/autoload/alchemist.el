@@ -14,6 +14,12 @@
     (kbd "<down>") 'comint-next-input)
   )
 
+(defun my-alchemist-mode-config ()
+  "tryna alchemize"
+  (evil-leader/set-key
+    "a" 'alchemist-mode-keymap)
+  )
 
 ;; add to hook
 (add-hook 'alchemist-iex-mode-hook 'my-alchemist-iex-mode-config)
+(add-hook 'alchemist-mode-hook 'my-alchemist-mode-config)

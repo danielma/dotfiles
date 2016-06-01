@@ -52,7 +52,7 @@
 ;; (add-to-list 'load-path (expand-file-name "~/.dotfiles/emacs/themes"))
 (add-to-list 'custom-theme-load-path "~/.dotfiles/emacs/themes")
 
-(load-theme 'base16-default-dark t)
+(load-theme 'base16-monokai-dark t)
 
 (require 'ido-vertical-mode)
 (ido-vertical-mode 1)
