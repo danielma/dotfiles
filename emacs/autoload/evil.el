@@ -78,7 +78,7 @@
 
 (defun edit-emacs ()
   (interactive)
-  (find-file "~/.dotfiles/emacs.symlink"))
+  (find-file "~/.dotfiles/emacs/emacs.symlink"))
 
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
