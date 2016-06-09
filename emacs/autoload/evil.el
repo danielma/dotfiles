@@ -99,6 +99,7 @@
   "ee" 'edit-emacs
 
   "gs" 'magit-status
+  "gc" 'magit-commit
   "gt" 'git-timemachine-toggle
 
   "hd" 'helm-dash
