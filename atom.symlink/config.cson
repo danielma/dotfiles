@@ -20,7 +20,8 @@
       "one-dark-syntax"
     ]
   editor:
-    fontFamily: "Monaco"
+    fontFamily: "Input Mono Narrow"
+    fontSize: 12
     invisibles: {}
     lineHeight: 1.1
     scrollPastEnd: true
