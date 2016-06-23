@@ -17,13 +17,13 @@
     ]
     themes: [
       "atom-dark-ui"
-      "one-dark-syntax"
+      "monokai-shade"
     ]
   editor:
-    fontFamily: "Input Mono Narrow"
-    fontSize: 12
+    fontFamily: "Monaco"
     invisibles: {}
     lineHeight: 1.1
+    preferredLineLength: 100
     scrollPastEnd: true
     showIndentGuide: true
     showInvisibles: true
