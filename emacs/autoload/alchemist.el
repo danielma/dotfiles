@@ -1,3 +1,5 @@
+(require 'elixir-mode)
+
 (defun comint-goto-end-and-insert ()
   (interactive)
   (if (not (comint-after-pmark-p))
@@ -30,9 +32,14 @@
   (interactive)
   (alchemist-phoenix-find-dir "lib"))
 
+(defun alchemist-phoenix-find-template ()
+  (interactive)
+  (alchemist-phoenix-find-dir "web/templates"))
+
 (defun my-alchemist-phoenix-mode-config ()
   "use dat space"
   (define-key alchemist-phoenix-command-map (kbd "n b") #'alchemist-phoenix-find-lib)
+  (define-key alchemist-phoenix-command-map (kbd "n p") #'alchemist-phoenix-find-template)
   )
 
 

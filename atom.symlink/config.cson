@@ -5,6 +5,7 @@
       "background-tips"
       "exception-reporting"
       "metrics"
+      "react"
     ]
     hideGitIgnoredFiles: true
     ignoredNames: [
@@ -17,12 +18,13 @@
     ]
     themes: [
       "atom-dark-ui"
-      "monokai-shade"
+      "base16-tomorrow-dark-theme"
     ]
   editor:
-    fontFamily: "Monaco"
+    fontFamily: "SFMono-Regular"
+    fontSize: 16
     invisibles: {}
-    lineHeight: 1.1
+    lineHeight: 1.2
     preferredLineLength: 100
     scrollPastEnd: true
     showIndentGuide: true
