@@ -217,6 +217,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         (backward-char 1)
         (if (looking-at "->") t nil)))))
 
+(setq helm-ag-insert-at-point 'symbol)
+
 (defun do-yas-expand ()
   (let ((yas/fallback-behavior 'return-nil))
     (yas/expand)))

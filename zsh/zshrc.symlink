@@ -50,10 +50,10 @@ unset config_files
 
 eval "$(rbenv init -)"
 
-export BASE16_THEME="base16-monokai.dark"
-export BASE16_SHELL="$HOME/.dotfiles/base16-shell/$BASE16_THEME.sh"
 export FZF_DEFAULT_COMMAND='ag -g ""'
 
+export BASE16_THEME="base16-monokai.dark"
+export BASE16_SHELL="$HOME/.dotfiles/base16-shell/$BASE16_THEME.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

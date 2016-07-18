@@ -101,9 +101,11 @@
   "gs" 'magit-status
   "gc" 'magit-commit
   "gt" 'git-timemachine-toggle
+  "gb" 'magit-blame
 
   "hd" 'helm-dash
   "hD" 'helm-dash-at-point
+  "hr" 'helm-resume
 
   "ll" 'custom-flycheck-toggle-errors
   "ln" 'flycheck-next-error
