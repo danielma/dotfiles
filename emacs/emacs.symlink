@@ -19,7 +19,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority smartparens ace-jump-mode diff-hl diminish git-timemachine fzf coffee-mode discover json-mode tide solarized-theme)))
+(setq package-list (quote (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority smartparens ace-jump-mode diff-hl diminish git-timemachine fzf coffee-mode discover json-mode solarized-theme smart-mode-line)))
 
 (dolist (package package-list)
   (print package)
@@ -81,15 +81,23 @@
 
 (require 'evil-magit)
 
-;; (setq sml/no-confirm-load-theme t
-;;       sml/theme 'respectful
-;;       powerline-arrow-shape 'arrow
-;;       sml/mode-width 0
-;;       sml/name-width 20
-;;       sml/mode-width 4 
-;;       sml/shorten-modes t)
-;; (rich-minority-mode 1)
-;; (sml/setup)
+(setq mode-line-format 
+      '("%e" mode-line-front-space " " mode-line-client mode-line-modified mode-line-remote " " mode-line-buffer-identification sml/pos-id-separator mode-line-position evil-mode-line-tag
+       sml/pre-modes-separator mode-line-modes mode-line-misc-info "  " mode-line-end-spaces))
+(setq display-time-default-load-average nil)
+(require 'smart-mode-line)
+(setq sml/no-confirm-load-theme t
+      sml/position-percentage-format nil
+      powerline-default-separator 'utf-8
+      sml/mode-width 'full
+      sml/name-width 'full
+      sml/theme 'respectful
+      powerline-display-hud nil
+      sml/shorten-modes t)
+(add-to-list 'sml/replacer-regexp-list '("~/Code/\([^/]+\)" ":C:\1/") t)
+(sml/setup)
+(line-number-mode 0)
+(column-number-mode 0)
 
 (setq yas-snippet-dirs
       '(yas-installed-snippets-dir
@@ -119,13 +127,6 @@
           (lambda () (modify-syntax-entry ?_ "w")))
 (add-hook 'yaml-mode-hook
           (lambda () (modify-syntax-entry ?_ "w")))
-
-(defun add-mode-line-dirtrack ()
-    "When editing a file, show the last 2 directories of the current path in the mode line."
-    (add-to-list 'mode-line-buffer-identification 
-                 '(:eval (substring default-directory 
-                                    (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
-(add-hook 'find-file-hook 'add-mode-line-dirtrack)
 
 (global-set-key (kbd "C-.") 'company-complete)
 (setq company-idle-delay 0.1)
@@ -390,6 +391,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (" hl-p" "company" "yas" "Projectile" "ing" "LR" "Undo-Tree" "Abbrev" "hs")))
  '(ruby-end-insert-newline nil)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
+ '(sml/directory-truncation-string "")
+ '(sml/modified-char "*")
  '(speedbar-show-unknown-files t)
  '(term-scroll-show-maximum-output t)
  '(term-scroll-to-bottom-on-output t)
