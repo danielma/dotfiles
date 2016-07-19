@@ -90,14 +90,12 @@
       sml/position-percentage-format nil
       powerline-default-separator 'utf-8
       sml/mode-width 'full
-      sml/name-width 'full
+      sml/name-width 40
       sml/theme 'respectful
       powerline-display-hud nil
       sml/shorten-modes t)
 (add-to-list 'sml/replacer-regexp-list '("~/Code/\([^/]+\)" ":C:\1/") t)
 (sml/setup)
-(line-number-mode 0)
-(column-number-mode 0)
 
 (setq yas-snippet-dirs
       '(yas-installed-snippets-dir
@@ -369,6 +367,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(js3-enter-indents-newline t)
  '(js3-indent-on-enter-key t)
  '(js3-mode-show-strict-warnings nil)
+ '(line-number-mode nil)
+ '(column-number-mode nil)
  '(line-spacing 0)
  '(linum-relative-current-symbol "")
  '(linum-relative-global-mode t)
@@ -438,4 +438,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight light :height 120 :width normal :family "SF Mono"))))
  '(diff-hl-change ((t (:background "LightBlue1" :foreground "SteelBlue1"))))
+ '(sml/modified ((t (:inherit (sml/prefix sml/not-modified) :weight bold))))
+ '(sml/not-modified ((t (:inherit sml/global\
+))))
  '(term ((t (:inherit default)))))
