@@ -1,0 +1,9 @@
+# -*- mode: ruby -*-
+
+notification(:emacs, {
+  elisp_file: "~/.dotfiles/ruby/notiffany.erb",
+  success: "ForestGreen",
+  failed: "Firebrick",
+  default: "Black",
+  fontcolor: "White"
+})
