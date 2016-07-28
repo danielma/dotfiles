@@ -27,6 +27,12 @@
   (custom-theme-set-faces 
    'base16-oceanicnext-dark
 
+   ;; telephone line
+   `(telephone-line-evil-normal ((t (:inherit telephone-line-evil :background, base02))))
+   `(telephone-line-evil-emacs ((t (:inherit telephone-line-evil :background, base0E))))
+   `(telephone-line-evil-insert ((t (:inherit telephone-line-evil :background, base0D))))
+   `(telephone-line-evil-visual ((t (:inherit telephone-line-evil :background, base09))))
+
    ;; Built-in stuff (Emacs 23)
    `(border ((t (:background ,base03))))
    `(border-glyph ((t (nil))))
