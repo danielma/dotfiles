@@ -52,8 +52,8 @@ eval "$(rbenv init -)"
 
 export FZF_DEFAULT_COMMAND='ag -g ""'
 
-export BASE16_THEME="base16-oceanicnext.dark"
-export BASE16_SHELL="$HOME/.dotfiles/base16-shell/$BASE16_THEME.sh"
+export BASE16_THEME="base16-oceanicnext"
+export BASE16_SHELL="$HOME/.dotfiles/base16-shell/scripts/$BASE16_THEME.sh"
 export GUARD_NOTIFY=false
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
