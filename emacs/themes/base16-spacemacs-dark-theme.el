@@ -1,55 +1,54 @@
-;; Base16 Summerfruit (https://github.com/chriskempson/base16)
-;; Scheme: Christopher Corley (http://cscorley.github.io/)
+;; Base16 Spacemacs (https://github.com/chriskempson/base16)
+;; Scheme: Nasser Alshammari (https://github.com/nashamri/spacemacs-theme)
 
-;;; base16-summerfruit-light-theme.el
+;;; base16-spacemacs-dark-theme.el
 
 ;;; Code:
 
-(deftheme base16-summerfruit-light)
+(deftheme base16-spacemacs-dark)
 
-(let ((base00 "#151515")
-      (base01 "#202020")
-      (base02 "#303030")
-      (base03 "#505050")
-      (base04 "#B0B0B0")
-      (base05 "#D0D0D0")
-      (base06 "#E0E0E0")
-      (base07 "#FFFFFF")
-      (base08 "#FF0086")
-      (base09 "#FD8900")
-      (base0A "#ABA800")
-      (base0B "#00C918")
-      (base0C "#1faaaa")
-      (base0D "#3777E6")
-      (base0E "#AD00A1")
-      (base0F "#cc6633"))
+(let ((base00 "#1f2022")
+      (base01 "#282828")
+      (base02 "#444155")
+      (base03 "#585858")
+      (base04 "#b8b8b8")
+      (base05 "#a3a3a3")
+      (base06 "#e8e8e8")
+      (base07 "#f8f8f8")
+      (base08 "#f2241f")
+      (base09 "#ffa500")
+      (base0A "#b1951d")
+      (base0B "#67b11d")
+      (base0C "#2d9574")
+      (base0D "#4f97d7")
+      (base0E "#a31db1")
+      (base0F "#b03060"))
 
-  (custom-theme-set-faces
-   'base16-summerfruit-light
+  (custom-theme-set-faces 
+   'base16-spacemacs-dark
 
    ;; Built-in stuff (Emacs 23)
    `(border ((t (:background ,base03))))
    `(border-glyph ((t (nil))))
    `(cursor ((t (:background ,base08))))
-   `(default ((t (:background ,base07 :foreground ,base02))))
-   `(fringe ((t (:background ,base05))))
+   `(default ((t (:background ,base00 :foreground ,base05))))
+   `(fringe ((t (:background ,base02))))
    `(gui-element ((t (:background ,base03 :foreground ,base06))))
    `(highlight ((t (:background ,base01))))
    `(link ((t (:foreground ,base0D))))
    `(link-visited ((t (:foreground ,base0E))))
    `(minibuffer-prompt ((t (:foreground ,base0D))))
-   `(mode-line ((t (:background ,base05 :foreground ,base02 :box nil))))
-   `(mode-line-buffer-id ((t (:foreground ,base0F :background nil))))
+   `(mode-line ((t (:background ,base02 :foreground ,base04 :box nil))))
+   `(mode-line-buffer-id ((t (:foreground ,base0E :background nil))))
    `(mode-line-emphasis ((t (:foreground ,base06 :slant italic))))
    `(mode-line-highlight ((t (:foreground ,base0E :box nil :weight bold))))
-   `(mode-line-inactive ((t (:background ,base06 :foreground ,base03 :box nil))))
-   `(region ((t (:background ,base05))))
+   `(mode-line-inactive ((t (:background ,base01 :foreground ,base03 :box nil))))
+   `(region ((t (:background ,base02))))
    `(secondary-selection ((t (:background ,base03))))
    `(error ((t (:foreground ,base08 :weight bold))))
    `(warning ((t (:foreground ,base09 :weight bold))))
    `(success ((t (:foreground ,base0B :weight bold))))
-   `(hl-line ((t (:background, base06))))
-   `(shadow ((t (:background, base06))))
+   `(hl-line ((t (:background, base01))))
 
    `(header-line ((t (:inherit mode-line :foreground ,base0E :background nil))))
 
@@ -72,8 +71,7 @@
    `(font-lock-warning-face ((t (:foreground ,base08))))
 
    ;; linum-mode
-   `(linum ((t (:background ,base06 :foreground ,base03))))
-   `(linum-relative-current-face ((t (:inherit linum :foreground ,base0A :bold t))))
+   `(linum ((t (:background ,base01 :foreground ,base03))))
 
    ;; Search
    `(match ((t (:foreground ,base0D :background ,base01 :inverse-video t))))
@@ -82,18 +80,26 @@
    `(isearch-fail ((t (:background ,base01 :inherit font-lock-warning-face :inverse-video t))))
    `(evil-search-highlight-persist-highlight-face ((t (:background ,base01 :inherit font-lock-warning-face :inverse-video t))))
 
-   ;; Popups
-   `(popup-face ((t (:foreground ,base02 :background ,base05))))
-   `(popup-isearch-match ((t (:foreground ,base07 :background ,base0B))))
-   `(popup-scroll-bar-background-face ((t (:background ,base04))))
-   `(popup-scroll-bar-foreground-face ((t (:background ,base02))))
-   `(popup-summary-face ((t (:foreground ,base03))))
-   `(popup-tip-face ((t (:foreground ,base07 :background ,base0A))))
-   `(popup-menu-mouse-face ((t (:foreground ,base07 :background ,base0D))))
-   `(popup-menu-selection-face ((t (:foreground ,base07 :background ,base0C))))
 
-   ;; Pair matching (show-smartparens-mode)
-   `(sp-show-pair-match-face ((t (:background ,base01 :foreground ,base05))))
+   ;; Popups
+   `(popup-face ((t (:foreground ,base05 :background ,base02))))
+   `(popup-isearch-match ((t (:foreground ,base00 :background ,base0B))))
+   `(popup-scroll-bar-background-face ((t (:background ,base03))))
+   `(popup-scroll-bar-foreground-face ((t (:background ,base05))))
+   `(popup-summary-face ((t (:foreground ,base04))))
+   `(popup-tip-face ((t (:foreground ,base00 :background ,base0A))))
+   `(popup-menu-mouse-face ((t (:foreground ,base00 :background ,base0D))))
+   `(popup-menu-selection-face ((t (:foreground ,base00 :background ,base0C))))
+
+   ;; Popups
+   `(popup-face ((t (:foreground ,base05 :background ,base02))))
+   `(popup-isearch-match ((t (:foreground ,base00 :background ,base0B))))
+   `(popup-scroll-bar-background-face ((t (:background ,base03))))
+   `(popup-scroll-bar-foreground-face ((t (:background ,base05))))
+   `(popup-summary-face ((t (:foreground ,base04))))
+   `(popup-tip-face ((t (:foreground ,base00 :background ,base0A))))
+   `(popup-menu-mouse-face ((t (:foreground ,base00 :background ,base0D))))
+   `(popup-menu-selection-face ((t (:foreground ,base00 :background ,base0C))))
 
    ;; Flymake
    `(flymake-warnline ((t (:underline ,base09 :background ,base01))))
@@ -154,6 +160,9 @@
    ;; Parenthesis matching (built-in)
    `(show-paren-match ((t (:background ,base0D :foreground ,base03))))
    `(show-paren-mismatch ((t (:background ,base09 :foreground ,base03))))
+
+   ;; Pair matching (show-smartparens-mode)
+   `(sp-show-pair-match-face ((t (:background ,base01 :foreground ,base05))))
 
    ;; Parenthesis matching (mic-paren)
    `(paren-face-match ((t (:foreground nil :background nil :inherit show-paren-match))))
@@ -260,6 +269,13 @@
 
    `(regex-tool-matched-face ((t (:foreground nil :background nil :inherit match))))
 
+   ;; Cscope
+   `(cscope-file-face ((t (:foreground ,base0B))))
+   `(cscope-function-face ((t (:foreground ,base0D))))
+   `(cscope-line-number-face ((t (:foreground ,base0A))))
+   `(cscope-mouse-face ((t (:background ,base01 :foreground ,base04))))
+   `(cscope-separator-face ((t (:foreground ,base08 :overline t :underline t :weight bold))))
+
    ;; mark-multiple
    `(mm/master-face ((t (:inherit region :foreground nil :background nil))))
    `(mm/mirror-face ((t (:inherit region :foreground nil :background nil))))
@@ -271,7 +287,7 @@
    `(org-agenda-dimmed-todo-face ((t (:foreground ,base04))))
    `(org-block ((t (:foreground ,base09))))
    `(org-code ((t (:foreground ,base0A))))
-   `(org-column ((t (:background ,base03))))
+   `(org-column ((t (:background ,base01))))
    `(org-column-title ((t (:inherit org-column :weight bold :underline t))))
    `(org-date ((t (:foreground ,base0E :underline t))))
    `(org-document-info ((t (:foreground ,base0C))))
@@ -471,25 +487,25 @@
    `(helm-visible-mark ((t (:foreground ,base00 :background ,base0B))))
 
    ;; elscreen
-   `(elscreen-tab-background-face ((t (:background ,base06))))
-   `(elscreen-tab-other-screen-face ((t (:foreground, base01 :background, base06))))
+   `(elscreen-tab-background-face ((t (:background ,base01))))
+   `(elscreen-tab-other-screen-face ((t (:foreground, base04 :background, base01))))
    `(elscreen-tab-current-screen-face ((t (:foreground, base07 :background, base03))))
    `(elscreen-tab-control-face ((t (:foreground, base04))))
 
    ;; telephone line
-   `(telephone-line-evil-normal ((t (:inherit telephone-line-evil :background, base04))))
+   `(telephone-line-evil-normal ((t (:inherit telephone-line-evil :background, base01))))
    `(telephone-line-evil-emacs ((t (:inherit telephone-line-evil :background, base0E))))
    `(telephone-line-evil-insert ((t (:inherit telephone-line-evil :background, base0D))))
    `(telephone-line-evil-visual ((t (:inherit telephone-line-evil :background, base09))))
-   `(telephone-line-accent-active ((t (:inherit mode-line :background, base03 :foreground, base07))))
-   `(telephone-line-accent-inactive ((t (:inherit mode-line-inactive :background, base06))))
+   `(telephone-line-accent-active ((t (:inherit mode-line :background, base00 :foreground, base07))))
+   `(telephone-line-accent-inactive ((t (:inherit mode-line-inactive :background, base01))))
 
    `(custom-variable-tag ((t (:foreground ,base0D))))
    `(custom-group-tag ((t (:foreground ,base0D))))
    `(custom-state ((t (:foreground ,base0B)))))
 
   (custom-theme-set-variables
-   'base16-summerfruit-light
+   'base16-spacemacs-dark
 
    `(ansi-color-names-vector
      ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
@@ -498,6 +514,6 @@
      ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
      [unspecified ,base00 ,base08 ,base0B ,base0A ,base0D ,base0E ,base0D ,base05])))
 
-(provide-theme 'base16-summerfruit-light)
+(provide-theme 'base16-spacemacs-dark)
 
-;;; base16-summerfruit-light-theme.el ends here
+;;; base16-spacemacs-dark-theme.el ends here

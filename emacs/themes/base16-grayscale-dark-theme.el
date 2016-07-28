@@ -48,6 +48,7 @@
    `(error ((t (:foreground ,base08 :weight bold))))
    `(warning ((t (:foreground ,base09 :weight bold))))
    `(success ((t (:foreground ,base0B :weight bold))))
+   `(hl-line ((t (:background, base01))))
 
    `(header-line ((t (:inherit mode-line :foreground ,base0E :background nil))))
 
@@ -490,6 +491,14 @@
    `(elscreen-tab-other-screen-face ((t (:foreground, base04 :background, base01))))
    `(elscreen-tab-current-screen-face ((t (:foreground, base07 :background, base03))))
    `(elscreen-tab-control-face ((t (:foreground, base04))))
+
+   ;; telephone line
+   `(telephone-line-evil-normal ((t (:inherit telephone-line-evil :background, base01))))
+   `(telephone-line-evil-emacs ((t (:inherit telephone-line-evil :background, base0E))))
+   `(telephone-line-evil-insert ((t (:inherit telephone-line-evil :background, base0D))))
+   `(telephone-line-evil-visual ((t (:inherit telephone-line-evil :background, base09))))
+   `(telephone-line-accent-active ((t (:inherit mode-line :background, base00 :foreground, base07))))
+   `(telephone-line-accent-inactive ((t (:inherit mode-line-inactive :background, base01))))
 
    `(custom-variable-tag ((t (:foreground ,base0D))))
    `(custom-group-tag ((t (:foreground ,base0D))))

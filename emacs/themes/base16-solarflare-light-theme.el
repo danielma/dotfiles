@@ -1,31 +1,31 @@
-;; Base16 Summerfruit (https://github.com/chriskempson/base16)
-;; Scheme: Christopher Corley (http://cscorley.github.io/)
+;; Base16 Solar Flare (https://github.com/chriskempson/base16)
+;; Scheme: Chuck Harmston (https://chuck.harmston.ch)
 
-;;; base16-summerfruit-light-theme.el
+;;; base16-solarflare-light-theme.el
 
 ;;; Code:
 
-(deftheme base16-summerfruit-light)
+(deftheme base16-solarflare-light)
 
-(let ((base00 "#151515")
-      (base01 "#202020")
-      (base02 "#303030")
-      (base03 "#505050")
-      (base04 "#B0B0B0")
-      (base05 "#D0D0D0")
-      (base06 "#E0E0E0")
-      (base07 "#FFFFFF")
-      (base08 "#FF0086")
-      (base09 "#FD8900")
-      (base0A "#ABA800")
-      (base0B "#00C918")
-      (base0C "#1faaaa")
-      (base0D "#3777E6")
-      (base0E "#AD00A1")
-      (base0F "#cc6633"))
+(let ((base00 "#18262F")
+      (base01 "#222E38")
+      (base02 "#586875")
+      (base03 "#667581")
+      (base04 "#85939E")
+      (base05 "#A6AFB8")
+      (base06 "#E8E9ED")
+      (base07 "#F5F7FA")
+      (base08 "#EF5253")
+      (base09 "#E66B2B")
+      (base0A "#E4B51C")
+      (base0B "#7CC844")
+      (base0C "#52CBB0")
+      (base0D "#33B5E1")
+      (base0E "#A363D5")
+      (base0F "#D73C9A"))
 
   (custom-theme-set-faces
-   'base16-summerfruit-light
+   'base16-solarflare-light
 
    ;; Built-in stuff (Emacs 23)
    `(border ((t (:background ,base03))))
@@ -489,7 +489,7 @@
    `(custom-state ((t (:foreground ,base0B)))))
 
   (custom-theme-set-variables
-   'base16-summerfruit-light
+   'base16-solarflare-light
 
    `(ansi-color-names-vector
      ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
@@ -498,6 +498,6 @@
      ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
      [unspecified ,base00 ,base08 ,base0B ,base0A ,base0D ,base0E ,base0D ,base05])))
 
-(provide-theme 'base16-summerfruit-light)
+(provide-theme 'base16-solarflare-light)
 
-;;; base16-summerfruit-light-theme.el ends here
+;;; base16-solarflare-light-theme.el ends here

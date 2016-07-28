@@ -32,22 +32,24 @@
    `(border-glyph ((t (nil))))
    `(cursor ((t (:background ,base08))))
    `(default ((t (:background ,base07 :foreground ,base02))))
-   `(fringe ((t (:background ,base02))))
+   `(fringe ((t (:background ,base05))))
    `(gui-element ((t (:background ,base03 :foreground ,base06))))
    `(highlight ((t (:background ,base01))))
    `(link ((t (:foreground ,base0D))))
    `(link-visited ((t (:foreground ,base0E))))
    `(minibuffer-prompt ((t (:foreground ,base0D))))
-   `(mode-line ((t (:background ,base02 :foreground ,base04 :box nil))))
-   `(mode-line-buffer-id ((t (:foreground ,base0E :background nil))))
+   `(mode-line ((t (:background ,base05 :foreground ,base02 :box nil))))
+   `(mode-line-buffer-id ((t (:foreground ,base0F :background nil))))
    `(mode-line-emphasis ((t (:foreground ,base06 :slant italic))))
    `(mode-line-highlight ((t (:foreground ,base0E :box nil :weight bold))))
-   `(mode-line-inactive ((t (:background ,base01 :foreground ,base03 :box nil))))
-   `(region ((t (:background ,base02))))
+   `(mode-line-inactive ((t (:background ,base06 :foreground ,base03 :box nil))))
+   `(region ((t (:background ,base05))))
    `(secondary-selection ((t (:background ,base03))))
    `(error ((t (:foreground ,base08 :weight bold))))
    `(warning ((t (:foreground ,base09 :weight bold))))
    `(success ((t (:foreground ,base0B :weight bold))))
+   `(hl-line ((t (:background, base06))))
+   `(shadow ((t (:background, base06))))
 
    `(header-line ((t (:inherit mode-line :foreground ,base0E :background nil))))
 
@@ -70,16 +72,18 @@
    `(font-lock-warning-face ((t (:foreground ,base08))))
 
    ;; linum-mode
-   `(linum ((t (:background ,base01 :foreground ,base03))))
+   `(linum ((t (:background ,base06 :foreground ,base03))))
+   `(linum-relative-current-face ((t (:inherit linum :foreground ,base0A :bold t))))
 
    ;; Search
    `(match ((t (:foreground ,base0D :background ,base01 :inverse-video t))))
    `(isearch ((t (:foreground ,base0A :background ,base01 :inverse-video t))))
    `(isearch-lazy-highlight-face ((t (:foreground ,base0C :background ,base01 :inverse-video t))))
    `(isearch-fail ((t (:background ,base01 :inherit font-lock-warning-face :inverse-video t))))
+   `(evil-search-highlight-persist-highlight-face ((t (:background ,base01 :inherit font-lock-warning-face :inverse-video t))))
 
    ;; Popups
-   `(popup-face ((t (:foreground ,base02 :background ,base05))))	
+   `(popup-face ((t (:foreground ,base02 :background ,base05))))
    `(popup-isearch-match ((t (:foreground ,base07 :background ,base0B))))
    `(popup-scroll-bar-background-face ((t (:background ,base04))))
    `(popup-scroll-bar-foreground-face ((t (:background ,base02))))
@@ -87,6 +91,9 @@
    `(popup-tip-face ((t (:foreground ,base07 :background ,base0A))))
    `(popup-menu-mouse-face ((t (:foreground ,base07 :background ,base0D))))
    `(popup-menu-selection-face ((t (:foreground ,base07 :background ,base0C))))
+
+   ;; Pair matching (show-smartparens-mode)
+   `(sp-show-pair-match-face ((t (:background ,base01 :foreground ,base05))))
 
    ;; Flymake
    `(flymake-warnline ((t (:underline ,base09 :background ,base01))))
@@ -432,10 +439,54 @@
    `(erc-prompt-face ((t (:foreground ,base0D))))
    `(erc-timestamp-face ((t (:foreground ,base0C))))
 
+   ;; helm
+   `(helm-M-x-key ((t (:foreground ,base0C))))
+   `(helm-action ((t (:foreground ,base05))))
+   `(helm-buffer-directory ((t (:foreground ,base04 :background nil :weight bold))))
+   `(helm-buffer-file ((t (:foreground ,base0C))))
+   `(helm-buffer-not-saved ((t (:foreground ,base08))))
+   `(helm-buffer-process ((t (:foreground ,base03))))
+   `(helm-buffer-saved-out ((t (:foreground ,base0F))))
+   `(helm-buffer-size ((t (:foreground ,base09))))
+   `(helm-candidate-number ((t (:foreground ,base00 :background ,base09))))
+   `(helm-ff-directory ((t (:foreground ,base04 :background nil :weight bold))))
+   `(helm-ff-executable ((t (:foreground ,base0B))))
+   `(helm-ff-file ((t (:foreground ,base0C))))
+   `(helm-ff-invalid-symlink ((t (:foreground ,base00 :background ,base08))))
+   `(helm-ff-prefix ((t (:foreground nil :background nil))))
+   `(helm-ff-symlink ((t (:foreground ,base00 :background ,base0C))))
+   `(helm-grep-cmd-line ((t (:foreground ,base0B))))
+   `(helm-grep-file ((t (:foreground ,base0C))))
+   `(helm-grep-finish ((t (:foreground ,base00 :background ,base09))))
+   `(helm-grep-lineno ((t (:foreground ,base03))))
+   `(helm-grep-match ((t (:foreground ,base0A))))
+   `(helm-grep-running ((t (:foreground ,base09))))
+   `(helm-header ((t (:foreground ,base0A :background ,base00 :underline nil))))
+   `(helm-match ((t (:foreground ,base0A))))
+   `(helm-moccur-buffer ((t (:foreground ,base0C))))
+   `(helm-selection ((t (:foreground nil :background ,base02 :underline nil))))
+   `(helm-selection-line ((t (:foreground nil :background ,base02))))
+   `(helm-separator ((t (:foreground ,base02))))
+   `(helm-source-header ((t (:foreground ,base05 :background ,base01 :weight bold))))
+   `(helm-visible-mark ((t (:foreground ,base00 :background ,base0B))))
+
+   ;; elscreen
+   `(elscreen-tab-background-face ((t (:background ,base06))))
+   `(elscreen-tab-other-screen-face ((t (:foreground, base01 :background, base06))))
+   `(elscreen-tab-current-screen-face ((t (:foreground, base07 :background, base03))))
+   `(elscreen-tab-control-face ((t (:foreground, base04))))
+
+   ;; telephone line
+   `(telephone-line-evil-normal ((t (:inherit telephone-line-evil :background, base04))))
+   `(telephone-line-evil-emacs ((t (:inherit telephone-line-evil :background, base0E))))
+   `(telephone-line-evil-insert ((t (:inherit telephone-line-evil :background, base0D))))
+   `(telephone-line-evil-visual ((t (:inherit telephone-line-evil :background, base09))))
+   `(telephone-line-accent-active ((t (:inherit mode-line :background, base03 :foreground, base07))))
+   `(telephone-line-accent-inactive ((t (:inherit mode-line-inactive :background, base06))))
+
    `(custom-variable-tag ((t (:foreground ,base0D))))
    `(custom-group-tag ((t (:foreground ,base0D))))
    `(custom-state ((t (:foreground ,base0B)))))
-
 
   (custom-theme-set-variables
    'base16-irblack-light

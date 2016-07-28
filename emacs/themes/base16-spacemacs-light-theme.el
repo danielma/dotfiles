@@ -1,31 +1,31 @@
-;; Base16 Summerfruit (https://github.com/chriskempson/base16)
-;; Scheme: Christopher Corley (http://cscorley.github.io/)
+;; Base16 Spacemacs (https://github.com/chriskempson/base16)
+;; Scheme: Nasser Alshammari (https://github.com/nashamri/spacemacs-theme)
 
-;;; base16-summerfruit-light-theme.el
+;;; base16-spacemacs-light-theme.el
 
 ;;; Code:
 
-(deftheme base16-summerfruit-light)
+(deftheme base16-spacemacs-light)
 
-(let ((base00 "#151515")
-      (base01 "#202020")
-      (base02 "#303030")
-      (base03 "#505050")
-      (base04 "#B0B0B0")
-      (base05 "#D0D0D0")
-      (base06 "#E0E0E0")
-      (base07 "#FFFFFF")
-      (base08 "#FF0086")
-      (base09 "#FD8900")
-      (base0A "#ABA800")
-      (base0B "#00C918")
-      (base0C "#1faaaa")
-      (base0D "#3777E6")
-      (base0E "#AD00A1")
-      (base0F "#cc6633"))
+(let ((base00 "#1f2022")
+      (base01 "#282828")
+      (base02 "#444155")
+      (base03 "#585858")
+      (base04 "#b8b8b8")
+      (base05 "#a3a3a3")
+      (base06 "#e8e8e8")
+      (base07 "#f8f8f8")
+      (base08 "#f2241f")
+      (base09 "#ffa500")
+      (base0A "#b1951d")
+      (base0B "#67b11d")
+      (base0C "#2d9574")
+      (base0D "#4f97d7")
+      (base0E "#a31db1")
+      (base0F "#b03060"))
 
   (custom-theme-set-faces
-   'base16-summerfruit-light
+   'base16-spacemacs-light
 
    ;; Built-in stuff (Emacs 23)
    `(border ((t (:background ,base03))))
@@ -489,7 +489,7 @@
    `(custom-state ((t (:foreground ,base0B)))))
 
   (custom-theme-set-variables
-   'base16-summerfruit-light
+   'base16-spacemacs-light
 
    `(ansi-color-names-vector
      ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
@@ -498,6 +498,6 @@
      ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
      [unspecified ,base00 ,base08 ,base0B ,base0A ,base0D ,base0E ,base0D ,base05])))
 
-(provide-theme 'base16-summerfruit-light)
+(provide-theme 'base16-spacemacs-light)
 
-;;; base16-summerfruit-light-theme.el ends here
+;;; base16-spacemacs-light-theme.el ends here
