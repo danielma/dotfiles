@@ -18,7 +18,7 @@
     ]
     themes: [
       "atom-dark-ui"
-      "solarized-light-syntax"
+      "base16-tomorrow-dark-theme"
     ]
   editor:
     fontFamily: "SFMono-Regular"
@@ -32,8 +32,7 @@
     softWrapAtPreferredLineLength: true
   "ide-flow":
     flowPath: "/usr/local/bin/flow"
-  linter:
-    showErrorPanel: false
+  linter: {}
   "linter-eslint": {}
   "linter-rubocop":
     command: "/Users/danielma/.rbenv/shims/rubocop"

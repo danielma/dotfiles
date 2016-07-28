@@ -8,6 +8,8 @@
   )
 
 (defun my-javascript-mode-setup ()
+  (hs-minor-mode 1)
+  (modify-syntax-entry ?` "\"" js-mode-syntax-table)
   ;; (setq-local outline-regexp " *\\(function\\|class\\|describe\\|it(\\)")
   ;; (setq-local outline-level 'my-javascript-outline-level)
 
