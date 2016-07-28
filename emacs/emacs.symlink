@@ -11,6 +11,7 @@
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t
       make-backup-files nil
+      byte-compile-warnings '(not free-vars)
       ad-redefinition-action 'accept)
 
 (require 'package)
@@ -19,12 +20,15 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar fill-column-indicator yaml-mode elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord smartparens ace-jump-mode diff-hl diminish coffee-mode json-mode solarized-theme smart-mode-line company)))
+(setq package-list (quote (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar fill-column-indicator yaml-mode elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord smartparens ace-jump-mode diff-hl coffee-mode json-mode solarized-theme smart-mode-line company browse-at-remote)))
 
 (dolist (package package-list)
   (print package)
   (unless (package-installed-p package)
     (package-install package)))
+
+(require 'evil)
+(evil-mode 1)
 
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
@@ -118,25 +122,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (global-set-key [tab] 'tab-indent-or-complete)
 
-(defun custom-diminish ()
-  (interactive)
-  (diminish 'company-mode "ⓒ ")
-  (diminish 'yas-minor-mode "ⓨ ")
-  (diminish 'projectile-mode "ⓟ ")
-  (diminish 'projectile-rails-mode "ⓡ ")
-  (diminish 'emmet-mode "ⓔ ")
-  (diminish 'eldoc-mode "ⓓ ")
-  (diminish 'smartparens-mode)
-  (diminish 'indent-guide-mode)
-  (diminish 'linum-relative-mode)
-  (diminish 'auto-revert-mode)
-  (diminish 'undo-tree-mode)
-  (diminish 'abbrev-mode)
-  (diminish 'hs-minor-mode)
-  (diminish 'ruby-end-mode))
-
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js-mode))
-
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
@@ -157,12 +142,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (modify-syntax-entry ?< "(>")
   (modify-syntax-entry ?> ")<"))
 
-(add-hook 'js2-mode-hook 'modify-syntax-table-for-jsx)
-(add-hook 'js2-mode-hook #'smartparens-mode)
-(add-hook 'js-mode-hook #'smartparens-mode)
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'after-init-hook 'yas-global-mode)
-(add-hook 'after-init-hook 'custom-diminish)
 
 ;; -------------------------------------------------------------------
 (custom-set-variables
@@ -233,11 +214,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-    (company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil)))
+    (browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil)))
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
  '(projectile-generic-command "ag -g \"\"")
  '(projectile-global-mode t)
+ '(projectile-mode-line (quote Ⓟ))
  '(projectile-switch-project-action (quote helm-projectile-find-file))
  '(rm-blacklist
    (quote
@@ -245,7 +227,21 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(ruby-end-insert-newline nil)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(sml/directory-truncation-string "")
+ '(sml/mode-width (quote full))
  '(sml/modified-char "*")
+ '(sml/replacer-regexp-list
+   (quote
+    (("^~/org/" ":Org:")
+     ("^~/\\.emacs\\.d/elpa/" ":ELPA:")
+     ("^~/\\.emacs\\.d/" ":ED:")
+     ("^/sudo:.*:" ":SU:")
+     ("^~/Documents/" ":Doc:")
+     ("^~/Dropbox/" ":DB:")
+     ("^:\\([^:]*\\):Documento?s/" ":\\1/Doc:")
+     ("^~/[Gg]it/" ":Git:")
+     ("^~/[Gg]it[Hh]ub/" ":Git:")
+     ("^~/[Gg]it\\([Hh]ub\\|\\)-?[Pp]rojects/" ":Git:")
+     ("~/Code/([^/]+)" ":C:"))))
  '(speedbar-show-unknown-files t)
  '(term-scroll-show-maximum-output t)
  '(term-scroll-to-bottom-on-output t)
@@ -284,6 +280,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    ["#eee8d5" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#073642"])
  '(xterm-color-names-bright
    ["#fdf6e3" "#cb4b16" "#93a1a1" "#839496" "#657b83" "#6c71c4" "#586e75" "#002b36"]))
+  
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

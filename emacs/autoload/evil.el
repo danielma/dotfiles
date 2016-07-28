@@ -4,7 +4,6 @@
 
 ;;; Code:
 
-(evil-mode 1)
 (global-evil-leader-mode)
 
 ;; (fset 'evil-visual-update-x-selection 'ignore)
@@ -105,6 +104,7 @@
   "gs" 'magit-status
   "gc" 'magit-commit
   "gb" 'magit-blame
+  "gB" 'browse-at-remote
 
   "hr" 'helm-resume
 

@@ -24,3 +24,7 @@
   (indent-according-to-mode)
   (forward-line -1)
   (indent-according-to-mode))
+
+(add-hook 'js-mode-hook #'smartparens-mode)
+
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js-mode))
