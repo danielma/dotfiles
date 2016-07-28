@@ -19,80 +19,39 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord rich-minority smartparens ace-jump-mode diff-hl diminish git-timemachine fzf coffee-mode discover json-mode solarized-theme smart-mode-line)))
+(setq package-list (quote (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar fill-column-indicator yaml-mode elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord smartparens ace-jump-mode diff-hl diminish coffee-mode json-mode solarized-theme smart-mode-line company)))
 
 (dolist (package package-list)
   (print package)
   (unless (package-installed-p package)
     (package-install package)))
 
-;; LOAD ALL THE THINGS
-(dolist (elt (file-expand-wildcards "~/.dotfiles/emacs/autoload/*.el"))
-  (load elt))
-
-
-(require 'flx-ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
-
-(require 'discover)
-(global-discover-mode 1)
-
-(require 'smartparens-config)
-(sp-local-pair '(js-mode js2-mode js2-jsx-mode typescript-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
-(sp-local-pair '(js-mode js2-mode js2-jsx-mode typescript-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
-(defun my-create-newline-and-enter-sexp (&rest _ignored)
-  "Open a new brace or bracket expression, with relevant newlines and indent. "
-  (newline)
-  (indent-according-to-mode)
-  (forward-line -1)
-  (indent-according-to-mode))
-
-;; (add-to-list 'load-path (expand-file-name "~/.dotfiles/emacs/themes"))
-(add-to-list 'custom-theme-load-path "~/.dotfiles/emacs/themes")
-
-(load-theme 'base16-monokai-dark t)
-
-(require 'ido-vertical-mode)
-(ido-vertical-mode 1)
-(setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
-
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
-(setq helm-dash-browser-func 'eww)
+(dolist (package package-list)
+  (require package))
+
 (elscreen-start)
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
+(ido-vertical-mode 1)
+(setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
 
-(defun interactive-wrap-with-pair (pair)
-  (interactive "c")
-  (sp-wrap-with-pair (char-to-string pair)))
-
-(require 'key-chord)
-(key-chord-mode 1)
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-;; (key-chord-define evil-insert-state-map "fs" 'save-buffer-always)
-(key-chord-define evil-insert-state-map ",," 'ace-jump-mode)
-(key-chord-define evil-normal-state-map "''" 'helm-M-x)
-(define-key evil-insert-state-map (kbd "C-n") 'next-line)
-(define-key evil-insert-state-map (kbd "C-p") 'previous-line)
-(define-key evil-normal-state-map (kbd "M-RET") 'newline)
-(define-key evil-visual-state-map (kbd "C-w") 'interactive-wrap-with-pair)
-
-(require 'evil-magit)
+;; LOAD ALL THE THINGS
+(dolist (elt (file-expand-wildcards "~/.dotfiles/emacs/autoload/*.el"))
+  (load elt))
 
 (setq mode-line-format 
       '("%e" mode-line-front-space " " mode-line-client mode-line-modified mode-line-remote " " mode-line-buffer-identification sml/pos-id-separator mode-line-position evil-mode-line-tag
        sml/pre-modes-separator mode-line-modes mode-line-misc-info "  " mode-line-end-spaces))
 (setq display-time-default-load-average nil)
-(require 'smart-mode-line)
 (setq sml/no-confirm-load-theme t
       sml/position-percentage-format nil
-      powerline-default-separator 'utf-8
       sml/mode-width 'full
       sml/name-width 40
       sml/theme 'respectful
-      powerline-display-hud nil
       sml/shorten-modes t)
 (add-to-list 'sml/replacer-regexp-list '("~/Code/\([^/]+\)" ":C:\1/") t)
 (sml/setup)
@@ -101,30 +60,7 @@
       '(yas-installed-snippets-dir
         "~/.dotfiles/emacs/yasnippet-snippets/"))
 
-;; (evil-ex-define-cmd "AV")
-
-;; @see https://bitbucket.org/lyro/evil/issue/511/let-certain-minor-modes-key-bindings
-(eval-after-load 'git-timemachine
-  '(progn
-     (evil-make-overriding-map git-timemachine-mode-map 'normal)
-     ;; force update evil keymaps after git-timemachine-mode loaded
-     (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
-
-(eval-after-load "hideshow"
-  '(add-to-list 'hs-special-modes-alist
-                 `(ruby-mode
-                   ,(rx (or "def" "class" "module" "{" "[" "do")) ; Block start
-                   ,(rx (or "}" "]" "end"))                  ; Block end
-                   ,(rx (or "#" "=begin"))                   ; Comment start
-                   ruby-forward-sexp nil)))
-
-(require 'ruby-refactor)
-(add-hook 'ruby-mode-hook 'hs-minor-mode)
-(add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch)
-(add-hook 'ruby-mode-hook
-          (lambda () (modify-syntax-entry ?_ "w")))
-(add-hook 'yaml-mode-hook
-          (lambda () (modify-syntax-entry ?_ "w")))
+;;; COMPANY
 
 (global-set-key (kbd "C-.") 'company-complete)
 (setq company-idle-delay 0.1)
@@ -138,25 +74,10 @@
 (setq windmove-wrap-around t)
 (setq-default abbrev-mode t)
 
-(require 'linum-relative)
-(linum-relative-global-mode)
-
+(linum-relative-on)
 (indent-guide-global-mode)
 (setq indent-guide-recursive t)
 
-(require 'ruby-end)
-
-(define-abbrev-table 'ruby-mode-abbrev-table '(
-                                               ("dsc" "described_class")
-                                               ("sbj" "subject")
-                                               ("aseq" "assert_equal")
-                                               ("ass" "assert")
-                                               ("AS::" "ActiveSupport::")
-                                               ("AR::" "ActiveRecord::")))
-
-(require 'fill-column-indicator)
-(fci-mode)
-(set-fill-column 100)
 (global-hl-line-mode)
 
 (setq backup-directory-alist
@@ -164,18 +85,6 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 (setq create-lockfiles nil)
-
-; (require 'fzf)
-; 
-; (defun fzf-git-branches ()
-;   "uses fzf to find a git branch"
-;   (interactive)
-;   (make-term "fzf" "git branch --no-merged | fzf | xargs git checkout"))
-
-(require 'sr-speedbar)
-(make-face 'speedbar-face)
-(set-face-font 'speedbar-face "Lucida Grande 11")
-(setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
 
 ;;; esc always quits
 (defun minibuffer-keyboard-quit ()
@@ -193,31 +102,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
 
-(require 'multiple-cursors)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this-symbol)
-(global-set-key (kbd "C-<") 'mc/mark-previous-symbol-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-(defadvice web-mode-highlight-part (around tweak-jsx activate)
-  (if (equal web-mode-content-type "jsx")
-    (let ((web-mode-enable-part-face nil))
-      ad-do-it)
-    ad-do-it))
-
-(defun modify-syntax-table-for-jsx ()
-  (modify-syntax-entry ?< "(>")
-  (modify-syntax-entry ?> ")<"))
-
-(defun check-expansion ()
-  (save-excursion
-    (if (looking-at "\\_>") t
-      (backward-char 1)
-      (if (looking-at "\\.") t
-        (backward-char 1)
-        (if (looking-at "->") t nil)))))
-
-(setq helm-ag-insert-at-point 'symbol)
-
 (defun do-yas-expand ()
   (let ((yas/fallback-behavior 'return-nil))
     (yas/expand)))
@@ -234,7 +118,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (global-set-key [tab] 'tab-indent-or-complete)
 
-(require 'diminish)
 (defun custom-diminish ()
   (interactive)
   (diminish 'company-mode "ⓒ ")
@@ -250,19 +133,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (diminish 'undo-tree-mode)
   (diminish 'abbrev-mode)
   (diminish 'hs-minor-mode)
-  (diminish 'ruby-end-mode)
-  (diminish 'ruby-refactor-mode))
+  (diminish 'ruby-end-mode))
 
-;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js-mode))
-(add-to-list 'auto-mode-alist '("\\.html\\(\+modal\\)?\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.js.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
-
-(defun first-move-to-end-of-line ()
-  (end-of-line))
-
-(add-function :before (symbol-function 'hs-find-block-beginning) #'first-move-to-end-of-line)
 
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)
@@ -280,31 +153,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
-(defun fzf-setup ()
-  (linum-mode 0)
-  (linum-relative-mode 0)
-  (company-mode 0)
-  (evil-emacs-state)
-  (abbrev-mode 0))
+(defun modify-syntax-table-for-jsx ()
+  (modify-syntax-entry ?< "(>")
+  (modify-syntax-entry ?> ")<"))
 
-(defun web-mode-setup ()
-  (flycheck-mode (cond ((equal web-mode-content-type "jsx") t)
-                       ((equal web-mode-content-type "javascript") t)
-                       (t nil)))
-  (if (equal web-mode-content-type "javascript")
-      (web-mode-set-content-type "jsx")))
-(evil-define-key 'normal web-mode-map "zc" 'web-mode-fold-or-unfold)
-(evil-define-key 'normal web-mode-map "zo" 'web-mode-fold-or-unfold)
-
-(add-hook 'term-mode-hook 'fzf-setup)
 (add-hook 'js2-mode-hook 'modify-syntax-table-for-jsx)
 (add-hook 'js2-mode-hook #'smartparens-mode)
 (add-hook 'js-mode-hook #'smartparens-mode)
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'after-init-hook 'yas-global-mode)
 (add-hook 'after-init-hook 'custom-diminish)
-(add-hook 'web-mode-hook 'emmet-mode)
-(add-hook 'web-mode-hook 'web-mode-setup)
 
 ;; -------------------------------------------------------------------
 (custom-set-variables
@@ -331,12 +189,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(elscreen-tab-display-kill-screen nil)
  '(evil-shift-round nil)
  '(evil-shift-width 2)
- '(fci-rule-color "#eee8d5")
  '(flycheck-disabled-checkers (quote (javascript-jshint)))
- '(fzf/args nil)
- '(fzf/executable "/usr/local/bin/fzf")
  '(global-flycheck-mode t)
  '(helm-ag-base-command "/usr/local/bin/ag --nocolor --nogroup")
+ '(helm-ag-insert-at-point (quote symbol))
  '(helm-completion-in-region-fuzzy-match t)
  '(helm-mode nil)
  '(helm-mode-fuzzy-match t)
@@ -365,12 +221,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (quote
     ("#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3")))
  '(js-indent-level 2)
- '(js2-basic-offset 2)
- '(js2-mode-show-strict-warnings nil)
- '(js3-auto-indent-p t)
- '(js3-enter-indents-newline t)
- '(js3-indent-on-enter-key t)
- '(js3-mode-show-strict-warnings nil)
  '(line-number-mode nil)
  '(line-spacing 0)
  '(linum-relative-current-symbol "")
@@ -383,7 +233,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-    (jsx-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode ruby-refactor ruby-guard sr-speedbar multiple-cursors fill-column-indicator js2-mode yaml-mode buffer-move elscreen evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile fzf evil)))
+    (company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen evil-magit web-mode magit ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil)))
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
  '(projectile-generic-command "ag -g \"\"")

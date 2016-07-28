@@ -4,16 +4,29 @@
 
 ;;; Code:
 
-(require 'evil)
-(global-evil-leader-mode)
 (evil-mode 1)
+(global-evil-leader-mode)
 
 ;; (fset 'evil-visual-update-x-selection 'ignore)
 (setq evil-shift-width 2)
       ;; x-select-enable-clipboard nil)
 (setq-default indent-tabs-mode nil)
+
+(defun interactive-wrap-with-pair (pair)
+  (interactive "c")
+  (sp-wrap-with-pair (char-to-string pair)))
+
+(key-chord-mode 1)
+(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+;; (key-chord-define evil-insert-state-map "fs" 'save-buffer-always)
+(key-chord-define evil-insert-state-map ",," 'ace-jump-mode)
+(key-chord-define evil-normal-state-map "''" 'helm-M-x)
+(define-key evil-insert-state-map (kbd "C-n") 'next-line)
+(define-key evil-insert-state-map (kbd "C-p") 'previous-line)
+(define-key evil-normal-state-map (kbd "M-RET") 'newline)
 (define-key evil-normal-state-map "[b" 'previous-buffer)
 (define-key evil-normal-state-map "]b" 'next-buffer)
+(define-key evil-visual-state-map (kbd "C-w") 'interactive-wrap-with-pair)
 
 ;; (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
 ;; (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
@@ -27,7 +40,7 @@
   (save-buffer))
 
 (defun toggle-comment-on-line ()
-  "comment or uncomment current line"
+  "Comment or uncomment current line."
   (interactive)
   (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
 
@@ -38,9 +51,8 @@
       (call-interactively 'comment-or-uncomment-region)
       (call-interactively 'toggle-comment-on-line)))
 
-(defun replace-symbol ()
-  "EVIL: search for instances of the symbol under the cursor."
-  (interactive)
+(defun current-symbol-or-region ()
+  "Return the symbol under the cursor or the selected region."
   (let (from to sym)
     (if (use-region-p)
         (progn
@@ -51,22 +63,18 @@
           (save-excursion
             (skip-syntax-forward "w_") (setq to (point)))
           (setq sym (buffer-substring-no-properties to from))))
-    (evil-ex (concat "%s/" sym "/"))))
+    sym))
 
-(defun find-symbol-in-project ()
-  "Search for symbol in project using projectile-ag"
+(defun replace-symbol ()
+  "EVIL: search for instances of the symbol under the cursor."
   (interactive)
-  (let (from to sym)
-    (if (use-region-p)
-        (progn
-          (setq sym (buffer-substring-no-properties (mark) (point))))
-      (progn
-        (save-excursion
-          (skip-syntax-backward "w_") (setq from (point)))
-        (save-excursion
-          (skip-syntax-forward "w_") (setq to (point)))
-        (setq sym (buffer-substring-no-properties to from))))
-    (helm-ag-project-root sym)))
+  (evil-ex (concat "%s/" (current-symbol-or-region) "/")))
+
+;; TODO this would be nice
+(defun find-symbol-in-project ()
+  "Search for symbol in project using projectile-ag."
+  (interactive)
+  (helm-ag-project-root (current-symbol-or-region)))
 
 (defun custom-flycheck-toggle-errors ()
   (interactive)
@@ -88,10 +96,6 @@
 
   "bd" 'kill-this-buffer
   "bs" 'switch-to-buffer
-  "bl" 'buf-move-right
-  "bh" 'buf-move-left
-  "bj" 'buf-move-down
-  "bk" 'buf-move-up
 
   "cd" 'cd
   "cl" 'custom-comment-line
@@ -100,11 +104,8 @@
 
   "gs" 'magit-status
   "gc" 'magit-commit
-  "gt" 'git-timemachine-toggle
   "gb" 'magit-blame
 
-  "hd" 'helm-dash
-  "hD" 'helm-dash-at-point
   "hr" 'helm-resume
 
   "ll" 'custom-flycheck-toggle-errors
@@ -112,13 +113,13 @@
   "lp" 'flycheck-previous-error
 
   "mw" 'web-mode
-  "mx" 'js2-jsx-mode
   "mj" 'js-mode
 
   "p" 'projectile-command-map
 
   "ss" 'evil-search-word-forward
   "sr" 'replace-symbol
+  "sa" 'find-symbol-in-project
 
   "tn" 'elscreen-create
   "tl" 'elscreen-next
