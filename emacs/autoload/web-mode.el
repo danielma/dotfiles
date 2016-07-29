@@ -15,6 +15,7 @@
 (add-to-list 'auto-mode-alist '("\\.html\\(\+modal\\)?\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 
 (defun my-web-mode-setup ()
   (flycheck-mode (cond ((equal web-mode-content-type "jsx") t)
