@@ -129,6 +129,6 @@
 
   "w" 'evil-window-map
 
-  "," 'ace-jump-mode
+  "," 'ace-jump-char-mode
 
   "<SPC>" 'helm-M-x)
