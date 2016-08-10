@@ -1,0 +1,8 @@
+windows:
+  - name: groups
+    root: ~/Code/groups
+    layout: main-vertical
+    panes:
+      - (./node_modules/.bin/webpack --watch --progress &) && be guard -w app test -i -g ruby_tests js_tests
+      - pco box rails console
+      - git status

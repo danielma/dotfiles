@@ -1,0 +1,8 @@
+windows:
+  - name: giving
+    root: ~/Code/giving
+    layout: main-vertical
+    panes:
+      - (./node_modules/.bin/webpack --watch --progress &) && be guard -w app test -i
+      - pco box rails console
+      - git status
