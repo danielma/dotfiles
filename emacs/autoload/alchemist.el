@@ -50,7 +50,29 @@
                (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
                (ruby-end-mode +1)))
 
+(flycheck-define-checker elixir-credo
+  "Defines a checker for elixir with credo"
+  :command ("mix" "credo" "--format" "flycheck" source-inplace)
+  :standard-input t
+  :working-directory (lambda (checker)
+                       (locate-dominating-file default-directory "mix.exs"))
+  :error-patterns
+  (
+   (info line-start (file-name) ":" line ":" column ": " (or "F" "R" "C")  ": " (message) line-end)
+   (info line-start (file-name) ":" line ": " (or "F" "D" "R" "C" "W")  ": " (message) line-end)
+   (warning line-start (file-name) ":" line ":" column ": " (or "D" "W")  ": " (message) line-end)
+   (warning line-start (file-name) ":" line ": " (or "D" "W")  ": " (message) line-end)
+   )
+  :modes (elixir-mode)
+  :next-checkers ((warning . elixir-dogma))
+)
+
+(defun flycheck-elixir-credo-setup ()
+  "Setup Flycheck for Elixir Credo."
+  (add-to-list 'flycheck-checkers 'elixir-credo))
+
 ;; add to hook
 (add-hook 'alchemist-iex-mode-hook 'my-alchemist-iex-mode-config)
 (add-hook 'alchemist-mode-hook 'my-alchemist-mode-config)
 (add-hook 'alchemist-phoenix-mode-hook 'my-alchemist-phoenix-mode-config)
+(add-hook 'alchemist-mode-hook 'flycheck-elixir-credo-setup)
