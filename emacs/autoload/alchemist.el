@@ -40,6 +40,20 @@
   "use dat space"
   (define-key alchemist-phoenix-command-map (kbd "n b") #'alchemist-phoenix-find-lib)
   (define-key alchemist-phoenix-command-map (kbd "n p") #'alchemist-phoenix-find-template)
+
+  (evil-leader/set-key
+    "rb" #'alchemist-phoenix-find-lib
+    "rp" #'alchemist-phoenix-find-template
+    "rw" #'alchemist-phoenix-find-web
+    "rw" #'alchemist-phoenix-find-web
+    "rv" #'alchemist-phoenix-find-views
+    "rc" #'alchemist-phoenix-find-controllers
+    "rl" #'alchemist-phoenix-find-channels
+    "rt" #'alchemist-phoenix-find-templates
+    "rm" #'alchemist-phoenix-find-models
+    "rs" #'alchemist-phoenix-find-static
+    "rr" #'alchemist-phoenix-router
+    "rR" #'alchemist-phoenix-routes)
   )
 
 
