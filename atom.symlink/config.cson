@@ -31,7 +31,8 @@
     softWrapAtPreferredLineLength: true
   "ide-flow":
     flowPath: "/usr/local/bin/flow"
-  linter: {}
+  linter:
+    showErrorPanel: false
   "linter-eslint": {}
   "linter-rubocop":
     command: "/Users/danielma/.rbenv/shims/rubocop"

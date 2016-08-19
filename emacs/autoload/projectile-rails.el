@@ -27,7 +27,7 @@
 
 (defun projectile-rails-setup ()
   "Customizations for projectile rails mode."
-  (evil-leader/set-key
+  (evil-leader/set-key-for-mode 'projectile-rails-mode
     "r" 'projectile-rails-command-map
     "jc" 'projectile-rails-find-component
 

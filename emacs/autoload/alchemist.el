@@ -18,7 +18,7 @@
 
 (defun my-alchemist-mode-config ()
   "tryna alchemize"
-  (evil-leader/set-key
+  (evil-leader/set-key-for-mode 'alchemist-phoenix-mode
     "a" 'alchemist-key-command-prefix)
   (defun alchemist-file-find-files (root directory)
     "open DIRECTORY inside ROOT and prompt for a file."
@@ -41,7 +41,7 @@
   (define-key alchemist-phoenix-command-map (kbd "n b") #'alchemist-phoenix-find-lib)
   (define-key alchemist-phoenix-command-map (kbd "n p") #'alchemist-phoenix-find-template)
 
-  (evil-leader/set-key
+  (evil-leader/set-key-for-mode 'alchemist-phoenix-mode
     "rb" #'alchemist-phoenix-find-lib
     "rp" #'alchemist-phoenix-find-template
     "rw" #'alchemist-phoenix-find-web
