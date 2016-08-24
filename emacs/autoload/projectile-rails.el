@@ -25,19 +25,24 @@
    '(("app/assets/javascripts/components/" "/components/\\(.+\\.[jt]sx?\\)$"))
    "app/assets/javascripts/components/${filename}.js"))
 
-(defun projectile-rails-setup ()
-  "Customizations for projectile rails mode."
-  (evil-leader/set-key-for-mode 'projectile-rails-mode
-    "r" 'projectile-rails-command-map
-    "jc" 'projectile-rails-find-component
+(evil-leader/set-key-for-mode 'projectile-rails-mode
+  "r" 'projectile-rails-command-map
+  "jc" 'projectile-rails-find-component)
 
-    "rz" 'projectile-rails-find-serializer
-    "rZ" 'projectile-rails-find-current-serializer)
-  (define-key projectile-rails-command-map "p" 'projectile-rails-find-presenter)
-  (define-key projectile-rails-command-map "s" 'projectile-rails-find-service)
-  (define-key projectile-rails-command-map "a" 'projectile-rails-find-stylesheet)
-  (define-key projectile-rails-command-map "A" 'projectile-rails-find-current-stylesheet)
-  )
-                                   
-(add-hook 'projectile-mode-hook 'projectile-rails-on)
-(add-hook 'projectile-rails-mode-hook 'projectile-rails-setup)
+(setq my/projectile-rails-command-map
+      (let ((map (make-sparse-keymap)))
+        (set-keymap-parent map projectile-rails-command-map)
+
+        (define-key map "f" 'projectile-rails-find-presenter)
+        (define-key map "s" 'projectile-rails-find-service)
+        (define-key map "a" 'projectile-rails-find-stylesheet)
+        (define-key map "A" 'projectile-rails-find-current-stylesheet)
+        (define-key map "z" 'projectile-rails-find-serializer)
+        (define-key map "Z" 'projectile-rails-find-current-serializer)
+        map))
+        
+(evil-define-minor-mode-key
+  'normal
+  'alchemist-phoenix-mode
+  (kbd (concat evil-leader/leader "r"))
+  my/projectile-rails-command-map)

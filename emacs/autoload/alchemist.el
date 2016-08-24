@@ -36,26 +36,21 @@
   (interactive)
   (alchemist-phoenix-find-dir "web/templates"))
 
-(defun my-alchemist-phoenix-mode-config ()
-  "use dat space"
-  (define-key alchemist-phoenix-command-map (kbd "n b") #'alchemist-phoenix-find-lib)
-  (define-key alchemist-phoenix-command-map (kbd "n p") #'alchemist-phoenix-find-template)
-
-  (evil-leader/set-key-for-mode 'alchemist-phoenix-mode
-    "rb" #'alchemist-phoenix-find-lib
-    "rp" #'alchemist-phoenix-find-template
-    "rw" #'alchemist-phoenix-find-web
-    "rw" #'alchemist-phoenix-find-web
-    "rv" #'alchemist-phoenix-find-views
-    "rc" #'alchemist-phoenix-find-controllers
-    "rl" #'alchemist-phoenix-find-channels
-    "rt" #'alchemist-phoenix-find-templates
-    "rm" #'alchemist-phoenix-find-models
-    "rs" #'alchemist-phoenix-find-static
-    "rr" #'alchemist-phoenix-router
-    "rR" #'alchemist-phoenix-routes)
-  )
-
+(setq my/projectile-phoenix-command-map
+      (let ((map (make-sparse-keymap)))
+        (define-key map "b" #'alchemist-phoenix-find-lib)
+        (define-key map "p" #'alchemist-phoenix-find-template)
+        (define-key map "w" #'alchemist-phoenix-find-web)
+        (define-key map "w" #'alchemist-phoenix-find-web)
+        (define-key map "v" #'alchemist-phoenix-find-views)
+        (define-key map "c" #'alchemist-phoenix-find-controllers)
+        (define-key map "l" #'alchemist-phoenix-find-channels)
+        (define-key map "t" #'alchemist-phoenix-find-templates)
+        (define-key map "m" #'alchemist-phoenix-find-models)
+        (define-key map "s" #'alchemist-phoenix-find-static)
+        (define-key map "r" #'alchemist-phoenix-router)
+        (define-key map "R" #'alchemist-phoenix-routes)
+        map))
 
 (add-to-list 'elixir-mode-hook
              (defun auto-activate-ruby-end-mode-for-elixir-mode ()
@@ -66,7 +61,7 @@
 
 (flycheck-define-checker elixir-credo
   "Defines a checker for elixir with credo"
-  :command ("mix" "credo" "--format" "flycheck" source-inplace)
+  :command ("mix" "credo" "--format" "flycheck" source-original)
   :standard-input t
   :working-directory (lambda (checker)
                        (locate-dominating-file default-directory "mix.exs"))
@@ -88,5 +83,9 @@
 ;; add to hook
 (add-hook 'alchemist-iex-mode-hook 'my-alchemist-iex-mode-config)
 (add-hook 'alchemist-mode-hook 'my-alchemist-mode-config)
-(add-hook 'alchemist-phoenix-mode-hook 'my-alchemist-phoenix-mode-config)
 (add-hook 'alchemist-mode-hook 'flycheck-elixir-credo-setup)
+(evil-define-minor-mode-key
+  'normal
+  'alchemist-phoenix-mode
+  (kbd (concat evil-leader/leader "r"))
+  my/projectile-phoenix-command-map)
