@@ -43,6 +43,8 @@
         
 (evil-define-minor-mode-key
   'normal
-  'alchemist-phoenix-mode
+  'projectile-rails-mode
   (kbd (concat evil-leader/leader "r"))
   my/projectile-rails-command-map)
+
+(add-hook 'projectile-mode-hook 'projectile-rails-on)

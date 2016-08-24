@@ -17,8 +17,6 @@
   (cd (projectile-project-root))
   (message (concat "Set root to " (projectile-project-root))))
 
-(projectile-dir-files (concat (projectile-project-root) "emacs/autoload"))
-
 (defun my/projectile-find-autoload ()
   (interactive)
   (my/projectile-find-resource
@@ -38,8 +36,6 @@ Returns a hash table with keys being short names and values being relative paths
                   (puthash (match-string 1 file) file hash))))
     hash))
 
-(mapcar #'car minor-mode-alist)
-
 (defun my/projectile-goto-file (filepath)
   (find-file (concat (projectile-project-root) filepath)))
 
@@ -58,7 +54,7 @@ The bound variable is \"filename\"."
      (if filepath
          (my/projectile-goto-file filepath)
        (when ,newfile-template
-         (my/projectile-goto-file (s-lex-format ,newfile-template) t)))))
+         (my/projectile-goto-file (s-lex-format ,newfile-template))))))
 
 (define-key projectile-command-map "T" 'projectile-find-implementation-or-test-other-window)
 (define-key projectile-command-map "a" 'helm-projectile-ag)

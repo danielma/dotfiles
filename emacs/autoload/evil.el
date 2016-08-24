@@ -4,8 +4,6 @@
 
 ;;; Code:
 
-(global-evil-leader-mode)
-
 ;; (fset 'evil-visual-update-x-selection 'ignore)
 (setq evil-shift-width 2)
       ;; x-select-enable-clipboard nil)
@@ -87,7 +85,6 @@
   (interactive)
   (find-file "~/.dotfiles/emacs/emacs.symlink"))
 
-(evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
   "fs" 'save-buffer-always
   "fq" 'delete-window

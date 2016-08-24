@@ -28,29 +28,65 @@
       (find-file (expand-file-name file root))))
   )
 
-(defun alchemist-phoenix-find-lib ()
+(defun my/alchemist-phoenix-find-lib ()
   (interactive)
-  (alchemist-phoenix-find-dir "lib"))
+  (my/projectile-find-resource
+   "lib: "
+   '(("lib" "lib/\\(.+\\)\.exs?$"))
+   "lib/${filename}.ex"))
 
-(defun alchemist-phoenix-find-template ()
+(defun my/alchemist-phoenix-find-view ()
   (interactive)
-  (alchemist-phoenix-find-dir "web/templates"))
+  (my/projectile-find-resource
+   "view: "
+   '(("web/views" "/views/\\(.+\\)\.exs?$"))
+   "web/views/${filename}.ex"))
 
-(setq my/projectile-phoenix-command-map
-      (let ((map (make-sparse-keymap)))
-        (define-key map "b" #'alchemist-phoenix-find-lib)
-        (define-key map "p" #'alchemist-phoenix-find-template)
-        (define-key map "w" #'alchemist-phoenix-find-web)
-        (define-key map "w" #'alchemist-phoenix-find-web)
-        (define-key map "v" #'alchemist-phoenix-find-views)
-        (define-key map "c" #'alchemist-phoenix-find-controllers)
-        (define-key map "l" #'alchemist-phoenix-find-channels)
-        (define-key map "t" #'alchemist-phoenix-find-templates)
-        (define-key map "m" #'alchemist-phoenix-find-models)
-        (define-key map "s" #'alchemist-phoenix-find-static)
-        (define-key map "r" #'alchemist-phoenix-router)
-        (define-key map "R" #'alchemist-phoenix-routes)
-        map))
+(defun my/alchemist-phoenix-find-controller ()
+  (interactive)
+  (my/projectile-find-resource
+   "controller: "
+   '(("web/controllers" "/controllers/\\(.+\\)\.exs?$"))
+   "web/controllers/${filename}.ex"))
+
+(defun my/alchemist-phoenix-find-model ()
+  (interactive)
+  (my/projectile-find-resource
+   "model: "
+   '(("web/models" "/models/\\(.+\\)\.exs?$"))
+   "web/models/${filename}.ex"))
+
+(defun my/alchemist-phoenix-find-template ()
+  (interactive)
+  (my/projectile-find-resource
+   "template: "
+   '(("web/templates" "/templates/\\(.+\\)$"))
+   "web/templates/${filename}"))
+
+(defun my/alchemist-phoenix-find-web ()
+  (interactive)
+  (my/projectile-find-resource
+   "web: "
+   '(("web" "web/\\(.+\\)$"))
+   "web/${filename}"))
+
+(evil-define-minor-mode-key
+  'normal
+  'alchemist-phoenix-mode
+  (kbd (concat evil-leader/leader "r"))
+  (let ((map (make-sparse-keymap)))
+    (define-key map "l" #'my/alchemist-phoenix-find-lib)
+    (define-key map "w" #'my/alchemist-phoenix-find-web)
+    (define-key map "v" #'my/alchemist-phoenix-find-view)
+    (define-key map "c" #'my/alchemist-phoenix-find-controller)
+    (define-key map "h" #'alchemist-phoenix-find-channels)
+    (define-key map "t" #'my/alchemist-phoenix-find-template)
+    (define-key map "m" #'my/alchemist-phoenix-find-model)
+    (define-key map "s" #'alchemist-phoenix-find-static)
+    (define-key map "r" #'alchemist-phoenix-router)
+    (define-key map "R" #'alchemist-phoenix-routes)
+    map)
+  )
 
 (add-to-list 'elixir-mode-hook
              (defun auto-activate-ruby-end-mode-for-elixir-mode ()
@@ -84,8 +120,3 @@
 (add-hook 'alchemist-iex-mode-hook 'my-alchemist-iex-mode-config)
 (add-hook 'alchemist-mode-hook 'my-alchemist-mode-config)
 (add-hook 'alchemist-mode-hook 'flycheck-elixir-credo-setup)
-(evil-define-minor-mode-key
-  'normal
-  'alchemist-phoenix-mode
-  (kbd (concat evil-leader/leader "r"))
-  my/projectile-phoenix-command-map)
