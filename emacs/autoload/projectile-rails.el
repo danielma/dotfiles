@@ -25,8 +25,7 @@
    '(("app/assets/javascripts/components/" "/components/\\(.+\\.[jt]sx?\\)$"))
    "app/assets/javascripts/components/${filename}.js"))
 
-(evil-leader/set-key-for-mode 'projectile-rails-mode
-  "r" 'projectile-rails-command-map
+(evil-leader/set-key
   "jc" 'projectile-rails-find-component)
 
 (setq my/projectile-rails-command-map
