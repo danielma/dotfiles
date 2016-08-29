@@ -35,7 +35,7 @@
         :base0A ,hue-62
         :base0B ,hue-4
         :base0C ,hue-1
-        :base0D ,hue-2
+        :base0D ,hue-1
         :base0E ,hue-3
         :base0F ,(my/hsl-to-hex 220 1.0 0.66))
       )
