@@ -52,6 +52,7 @@
 
 ;; (add-to-list 'load-path (expand-file-name "~/.dotfiles/emacs/themes"))
 (add-to-list 'custom-theme-load-path "~/.dotfiles/emacs/themes")
+(add-to-list 'custom-theme-load-path "~/Code/test/base16-builder-php/templates/emacs/build/")
 
 (load-theme 'base16-monokai-dark t)
 

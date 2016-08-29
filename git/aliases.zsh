@@ -68,8 +68,7 @@ function deploy-me-to-staging() {
     gs
   else
     CURRENT_BRANCH=$(git symbolic-ref HEAD | sed 's/refs\/heads\///')
-    staging
-    (git merge $CURRENT_BRANCH --no-edit && git push && staging-deploy) &
+    staging && git merge $CURRENT_BRANCH --no-edit && git push && staging-deploy
   fi
 }
 

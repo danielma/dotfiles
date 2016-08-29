@@ -53,9 +53,11 @@ eval "$(rbenv init -)"
 export FZF_DEFAULT_COMMAND='ag -g ""'
 
 export BASE16_THEME="base16-ocean"
-export BASE16_SHELL="$HOME/.dotfiles/base16-shell/scripts/$BASE16_THEME.sh"
+export BASE16_SHELL="$HOME/Code/test/base16-builder-php/templates/shell/"
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 export GUARD_NOTIFY=false
-[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+
+base16_gruvbox
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

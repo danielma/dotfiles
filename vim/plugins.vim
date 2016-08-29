@@ -31,7 +31,7 @@ Plug 'tpope/vim-commentary'
 "Plug 'chriskempson/vim-tomorrow-theme'
 "Plug 'altercation/vim-colors-solarized'
 "Plug 'joshdick/onedark.vim'
-Plug 'chriskempson/base16-vim'
+Plug 'chriskempson/base16-vim', { 'dir': '~/Code/test/base16-builder-php/templates/vim' }
 
 "" Languages
 "Plug 'vim-ruby/vim-ruby'
