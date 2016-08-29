@@ -95,6 +95,7 @@
 
   "cd" 'cd
   "cl" 'custom-comment-line
+  "ct" 'my/base16-set-theme
 
   "ee" 'edit-emacs
 
