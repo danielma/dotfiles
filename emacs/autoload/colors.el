@@ -19,5 +19,5 @@
   (--each
       (--filter (string-prefix-p "base16-" it) (mapcar 'symbol-name custom-enabled-themes))
     (disable-theme (intern it)))
-  (load-theme (intern (concat "base16-" theme)))
+  (load-theme (intern (concat "base16-" theme)) t)
   )
