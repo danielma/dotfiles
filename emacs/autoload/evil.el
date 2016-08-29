@@ -105,6 +105,7 @@
   "gB" 'browse-at-remote
 
   "hr" 'helm-resume
+  "hk" 'helm-show-kill-ring
 
   "ll" 'custom-flycheck-toggle-errors
   "ln" 'flycheck-next-error
