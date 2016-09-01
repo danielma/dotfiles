@@ -11,7 +11,7 @@
   (setq-local electric-indent-chars
               (append "<>" electric-indent-chars))
   (font-lock-add-keywords 'js-jsx-mode
-                          '(("\\(?:</?\\([a-zA-Z.]+\\)\\)" 1 'web-mode-html-tag-face)))
+                          '(("\\(?:</?\\([a-zA-Z0-9.]+\\)\\)" 1 'web-mode-html-tag-face)))
   ;; (setq-local outline-regexp " *\\(function\\|class\\|describe\\|it(\\)")
   ;; (setq-local outline-level 'my-javascript-outline-level)
 
