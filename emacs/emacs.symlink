@@ -279,6 +279,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
      ("~/Code/([^/]+)" ":C:"))))
  '(speedbar-show-unknown-files t)
  '(telephone-line-mode t)
+ '(telephone-line-primary-left-separator (quote telephone-line-abs-left))
+ '(telephone-line-primary-right-separator (quote telephone-line-abs-right))
+ '(telephone-line-secondary-left-separator (quote telephone-line-abs-hollow-left))
+ '(telephone-line-secondary-right-separator (quote telephone-line-abs-hollow-right))
  '(term-scroll-show-maximum-output t)
  '(term-scroll-to-bottom-on-output t)
  '(typescript-indent-level 2)
@@ -324,5 +328,4 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:weight light :height 120 :width normal :family "SF Mono"))))
- )
+ '(default ((t (:weight light :height 120 :width normal :family "SF Mono")))))

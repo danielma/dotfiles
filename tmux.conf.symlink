@@ -1,3 +1,7 @@
+set -g prefix C-a
+unbind C-b
+bind C-a send-prefix
+
 unbind-key j
 bind-key j select-pane -D
 unbind-key k
@@ -7,9 +11,8 @@ bind-key h select-pane -L
 unbind-key l
 bind-key l select-pane -R
 
-set -g prefix C-a
-unbind C-b
-bind C-a send-prefix
+set -g status-keys vi
+setw -g mode-keys vi
 
 # Smart pane switching with awareness of vim splits
 is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?)(diff)?$"'
@@ -20,3 +23,22 @@ is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?)(diff)?
 # bind -n C-\ "select-pane -l"
 
 set-option -g allow-rename off
+set -sg escape-time 0
+
+# powerline
+source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+# set-option -g status on
+# set-option -g status-interval 2
+# # set-option -g status-utf8 on
+# set-option -g status-justify "centre"
+# set-option -g status-left-length 60
+# set-option -g status-right-length 90
+# set-option -g status-left "#(~/Code/test/tmux-powerline/powerline.sh left)"
+# set-option -g status-right "#(~/Code/test/tmux-powerline/powerline.sh right)"
+
+# copy
+bind-key -t vi-copy 'v' begin-selection
+bind-key -t vi-copy 'y' copy-selection
+
+# mouse
+set-option -g mouse on

@@ -57,7 +57,12 @@ export BASE16_SHELL="$HOME/Code/test/base16-builder-php/templates/shell/"
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 export GUARD_NOTIFY=false
 
-base16_default-dark
+if [[ -z $TMUX ]]
+then
+  base16_default-dark
+fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
