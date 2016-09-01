@@ -123,6 +123,7 @@
   "th" 'elscreen-previous
   "tq" 'elscreen-kill
   "tj" 'elscreen-select-and-goto
+  "tt" 'elscreen-toggle-display-tab
 
   "w" 'evil-window-map
 
