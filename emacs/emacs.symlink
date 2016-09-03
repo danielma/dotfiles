@@ -20,7 +20,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar fill-column-indicator yaml-mode elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord smartparens ace-jump-mode diff-hl coffee-mode json-mode solarized-theme smart-mode-line company browse-at-remote telephone-line flycheck)))
+(setq package-list (quote (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar fill-column-indicator yaml-mode elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord smartparens ace-jump-mode diff-hl coffee-mode json-mode solarized-theme company browse-at-remote flycheck)))
 
 (dolist (package package-list)
   (print package)
@@ -42,6 +42,8 @@
 (flx-ido-mode 1)
 (ido-vertical-mode 1)
 (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
+(setq ns-use-native-fullscreen nil)
+
 
 (global-evil-leader-mode)
 (evil-leader/set-leader "<SPC>")
@@ -50,53 +52,6 @@
 (dolist (elt (file-expand-wildcards "~/.dotfiles/emacs/autoload/*.el"))
   (load elt))
 
-;; (setq mode-line-format 
-;;       '("%e" mode-line-front-space " " mode-line-client mode-line-modified mode-line-remote " " mode-line-buffer-identification sml/pos-id-separator mode-line-position evil-mode-line-tag
-;;        sml/pre-modes-separator mode-line-modes mode-line-misc-info "  " mode-line-end-spaces))
-;; (setq display-time-default-load-average nil)
-;; (setq sml/no-confirm-load-theme t
-;;       sml/position-percentage-format nil
-;;       sml/mode-width 'full
-;;       sml/name-width 40
-;;       sml/theme 'respectful
-;;       sml/shorten-modes t)
-;; (add-to-list 'sml/replacer-regexp-list '("~/Code/\([^/]+\)" ":C:\1/") t)
-;; (sml/setup)
-(defun add-mode-line-dirtrack ()
-    "When editing a file, show the last 2 directories of the current path in the mode line."
-    (add-to-list 'mode-line-buffer-identification 
-                 '(:eval (substring default-directory 
-                                    (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
-(add-hook 'find-file-hook 'add-mode-line-dirtrack)
-(telephone-line-defsegment tel-line-not-buffer
-  '(""
-    mode-line-mule-info
-    mode-line-modified
-    mode-line-client
-    mode-line-remote
-    mode-line-frame-identification)
-  )
-
-(telephone-line-defsegment tel-line-buffer
-  (telephone-line-raw mode-line-buffer-identification t)
-  )
-
-(telephone-line-defsegment tel-line-projectile
-  (if (projectile-project-p)
-      (projectile-project-name)))
-
-(setq telephone-line-lhs
-        '((evil   . (telephone-line-evil-tag-segment))
-          (nil    . (telephone-line-erc-modified-channels-segment
-                     telephone-line-process-segment
-                     tel-line-not-buffer))
-          (accent . (tel-line-projectile))
-          (nil    . (tel-line-buffer))))
-(setq telephone-line-rhs
-        '((nil    . (telephone-line-misc-info-segment))
-          (accent . (telephone-line-major-mode-segment))
-          ))
-(telephone-line-mode t)
 
 (setq yas-snippet-dirs
       '(yas-installed-snippets-dir
@@ -176,10 +131,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
-(defun modify-syntax-table-for-jsx ()
-  (modify-syntax-entry ?< "(>")
-  (modify-syntax-entry ?> ")<"))
-
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'after-init-hook 'yas-global-mode)
 
@@ -204,6 +155,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(elscreen-prefix-key (kbd "C-c e"))
  '(elscreen-tab-display-control nil)
  '(elscreen-tab-display-kill-screen nil)
+ '(evil-echo-state nil)
  '(evil-shift-round t)
  '(evil-shift-width 2)
  '(flycheck-disabled-checkers (quote (javascript-jshint)))
@@ -249,7 +201,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-    (suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode telephone-line browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil)))
+    (suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil)))
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
  '(projectile-generic-command "ag -g \"\"")
@@ -278,7 +230,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
      ("^~/[Gg]it\\([Hh]ub\\|\\)-?[Pp]rojects/" ":Git:")
      ("~/Code/([^/]+)" ":C:"))))
  '(speedbar-show-unknown-files t)
- '(telephone-line-mode t)
  '(telephone-line-primary-left-separator (quote telephone-line-abs-left))
  '(telephone-line-primary-right-separator (quote telephone-line-abs-right))
  '(telephone-line-secondary-left-separator (quote telephone-line-abs-hollow-left))

@@ -204,6 +204,11 @@ an alternate theme for use in the terminal.")
      ;; Flymake
      (flymake-warnline                             :background base01 :underline base09)
      (flymake-errline                              :background base01 :underline base08)
+     (mode-line-flycheck-error                     :background base08 :foreground base07)
+     (mode-line-flycheck-warning                   :background base09 :foreground base07)
+     (mode-line-flycheck-info                      :background base0A :foreground base07)
+     (mode-line-flycheck-ok                        :background base0B :foreground base07)
+     (mode-line-flycheck-running                   :background base0C :foreground base07)
 
      ;; Clojure errors
      (clojure-test-failure-face                    :background nil :inherit flymake-warnline)
@@ -597,13 +602,15 @@ an alternate theme for use in the terminal.")
      (elscreen-tab-current-screen-face             :foreground base07 :background base03)
      (elscreen-tab-control-face                    :foreground base04)
 
-     ;; telephone line
-     (telephone-line-evil-normal                   :inherit telephone-line-evil :background base01)
-     (telephone-line-evil-emacs                    :inherit telephone-line-evil :background base0E)
-     (telephone-line-evil-insert                   :inherit telephone-line-evil :background base0D)
-     (telephone-line-evil-visual                   :inherit telephone-line-evil :background base09)
-     (telephone-line-accent-active                 :inherit mode-line :background base005 :foreground base07)
-     (telephone-line-accent-inactive               :inherit mode-line-inactive :background base01)
+     ;; mode line evil
+     (mode-line-evil                          :foreground base06 :weight bold)
+     (mode-line-evil-normal                   :inherit mode-line-evil :background base03)
+     (mode-line-evil-emacs                    :inherit mode-line-evil :background base0E)
+     (mode-line-evil-insert                   :inherit mode-line-evil :background base0D)
+     (mode-line-evil-visual                   :inherit mode-line-evil :background base09)
+     (mode-line-accent-active                 :inherit mode-line :background base01)
+     (mode-line-accent-inactive               :inherit mode-line-inactive :background base01)
+     (mode-line-dark-active                   :inherit mode-line :background base01)
      ))
 
 
