@@ -64,5 +64,19 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# fg Text
+# bg Background
+# hl Highlighted substrings
+# fg+ Text (current line)
+# bg+ Background (current line)
+# hl+ Highlighted substrings (current line)
+# info Info
+# prompt Prompt
+# pointer Pointer to the current line
+# marker Multi-select marker
+# spinner Streaming input indicator
+export FZF_DEFAULT_OPTS='
+  --color 16,bg+:4,fg+:18,hl+:7,hl:5,pointer:9,prompt:13,info:15
+'
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
