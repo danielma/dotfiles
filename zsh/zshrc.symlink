@@ -76,7 +76,7 @@ fi
 # marker Multi-select marker
 # spinner Streaming input indicator
 export FZF_DEFAULT_OPTS='
-  --color 16,bg+:4,fg+:18,hl+:7,hl:5,pointer:9,prompt:13,info:15
+  --color 16,bg+:18,fg+:7,hl+:2,hl:2,pointer:6,prompt:6,info:5
 '
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
