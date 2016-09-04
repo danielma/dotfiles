@@ -94,7 +94,7 @@ setw -g window-status-current-format ' #[fg=colour19]#I #[fg=colour18,bold]#W ' 
 setw -g window-status-fg colour13
 setw -g window-status-bg colour00
 setw -g window-status-attr none
-setw -g window-status-format ' #[fg=colour12]#I #[fg=colour19]#W ' #[fg=colour19]#F '
+setw -g window-status-format ' #[fg=colour12]#I #[fg=colour20]#W ' #[fg=colour19]#F '
 
 setw -g window-status-bell-attr bold
 setw -g window-status-bell-fg colour255
@@ -109,4 +109,4 @@ set -g message-bg colour166
 
 # }
 
-run "emacs --daemon"
+# run "emacs --daemon"
