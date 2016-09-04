@@ -8,5 +8,6 @@
   (let ((map (make-sparse-keymap)))
     (define-key map "s" #'save-buffer-always)
     map))
+(xterm-mouse-mode 1)
 
 ; nope

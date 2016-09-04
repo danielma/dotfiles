@@ -16,21 +16,22 @@
 
 (defvar base16-shell-colors
   '(:base00 "black"
-    :base01 "brightgreen"
-    :base02 "brightyellow"
+    :base005 "black"
+    :base01 "color-18"
+    :base02 "color-19"
     :base03 "brightblack"
-    :base04 "brightblue"
+    :base04 "color-20"
     :base05 "white"
-    :base06 "brightmagenta"
+    :base06 "color-21"
     :base07 "brightwhite"
-    :base08 "red"
-    :base09 "brightred"
-    :base0A "yellow"
-    :base0B "green"
-    :base0C "cyan"
-    :base0D "blue"
-    :base0E "magenta"
-    :base0F "brightcyan")
+    :base08 "brightred"
+    :base09 "color-16"
+    :base0A "brightyellow"
+    :base0B "brightgreen"
+    :base0C "brightcyan"
+    :base0D "brightblue"
+    :base0E "brightmagenta"
+    :base0F "color-17")
   "Base16 colors used when in a terminal.
 
 These mappings are based on the xresources themes.  If you're
@@ -66,7 +67,7 @@ an alternate theme for use in the terminal.")
   (let* ((face       (car spec))
          (definition (cdr spec)))
 
-    (list face `((((min-colors 256)) ,(base16-transform-spec definition colors))
+    (list face `((((min-colors 257)) ,(base16-transform-spec definition colors))
                  (t                  ,(base16-transform-spec definition base16-shell-colors))))))
 
 (defun base16-set-faces (theme-name colors faces)
@@ -119,7 +120,7 @@ an alternate theme for use in the terminal.")
      (button                                       :foreground base0E)
      (cursor                                       :background base08)
      (default                                      :foreground base05 :background base00)
-     (fringe                                       :background base02)
+     (fringe                                       :background base01)
      (gui-element                                  :background base01)
      (highlight                                    :background base01)
      (link                                         :foreground base0D)

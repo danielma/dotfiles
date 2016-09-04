@@ -3,9 +3,9 @@
 
 ;;; Code:
 ;;; Commentary:
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
 (global-linum-mode 1)
 
 (setq inhibit-startup-message t
@@ -199,6 +199,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(nrepl-message-colors
    (quote
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
+ '(ns-auto-hide-menu-bar t)
  '(package-selected-packages
    (quote
     (mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil)))
