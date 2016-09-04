@@ -108,3 +108,5 @@ set -g message-fg colour232
 set -g message-bg colour166
 
 # }
+
+run "emacs --daemon"
