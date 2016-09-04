@@ -2,6 +2,7 @@ alias reload!='. ~/.zshrc'
 alias rless='less -r'
 alias be='bundle exec'
 alias nv='nvim'
+alias tmx='tmux attach || tmux new'
 
 alias ag='ag --path-to-agignore=~/.agignore'
 

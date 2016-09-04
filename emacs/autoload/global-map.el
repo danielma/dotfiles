@@ -9,7 +9,6 @@
 (define-key global-map (kbd "s-[") 'evil-window-prev)
 (define-key global-map (kbd "s-s") 'save-buffer-always)
 (define-key global-map (kbd "RET") 'newline-and-indent)
-(define-key global-map (kbd "C-[ [ a") 'save-buffer-always)
 
 (define-key global-map (kbd "M-s-∆") 'evil-window-down)
 (define-key global-map (kbd "M-s-˚") 'evil-window-up)
