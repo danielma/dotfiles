@@ -73,7 +73,7 @@ function deploy-me-to-staging() {
 }
 
 function staging-deploy() {
-  (secret-work-deploy && terminal-notifier -message "Deploy succeeded" || terminal-notifier -message "Deploy failed") &
+  (secret-work-deploy && terminal-notifier -message "Deploy succeeded") &
 }
 
 function groot() {

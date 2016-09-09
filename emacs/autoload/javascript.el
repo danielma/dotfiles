@@ -16,6 +16,9 @@
   ;; (setq-local outline-level 'my-javascript-outline-level)
 
   ;; (outline-minor-mode 1)
+  (emmet-mode 1)
+  (setq-local emmet-expand-jsx-className? t)
+  (setq-local emmet-self-closing-tag-style " /")
   )
 
 (define-abbrev-table 'javascript-mode-abbrev-table '(

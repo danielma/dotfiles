@@ -3,52 +3,13 @@
         '("%e" mode-line-front-space " " mode-line-client mode-line-modified mode-line-remote " " mode-line-buffer-identification mode-line-position evil-mode-line-tag
            mode-name mode-line-misc-info "  " mode-line-end-spaces))
   (force-mode-line-update))
-;; (setq display-time-default-load-average nil)
-;; (setq sml/no-confirm-load-theme t
-;;       sml/position-percentage-format nil
-;;       sml/mode-width 'full
-;;       sml/name-width 40
-;;       sml/theme 'respectful
-;;       sml/shorten-modes t)
-;; (add-to-list 'sml/replacer-regexp-list '("~/Code/\([^/]+\)" ":C:\1/") t)
-;; (sml/setup)
+
 (defun add-mode-line-dirtrack ()
     "When editing a file, show the last 2 directories of the current path in the mode line."
     (add-to-list 'mode-line-buffer-identification 
                  '(:eval (substring default-directory 
                                     (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
 (add-hook 'find-file-hook 'add-mode-line-dirtrack)
-;; (telephone-line-defsegment tel-line-not-buffer
-;;   '(""
-;;     mode-line-mule-info
-;;     mode-line-modified
-;;     mode-line-client
-;;     mode-line-remote
-;;     mode-line-frame-identification)
-;;   )
-
-;; (telephone-line-defsegment tel-line-buffer
-;;   (telephone-line-raw mode-line-buffer-identification t)
-;;   )
-
-;; (telephone-line-defsegment tel-line-projectile
-;;   (if (projectile-project-p)
-;;       (projectile-project-name)))
-
-;; (setq telephone-line-lhs
-;;         '((evil   . (mode-line-evil-tag-segment))
-;;           (nil    . (telephone-line-erc-modified-channels-segment
-;;                      telephone-line-process-segment
-;;                      tel-line-not-buffer))
-;;           (accent . (tel-line-projectile))
-;;           (nil    . (tel-line-buffer))))
-;; (setq telephone-line-rhs
-;;         '((nil    . (telephone-line-misc-info-segment))
-;;           (accent . (telephone-line-major-mode-segment))
-;;           ))
-;; (telephone-line-mode t)
-
-;; write a function to do the spacing
 
 (defface mode-line-evil
   '((t (:foreground "white" :weight bold :inherit mode-line)))

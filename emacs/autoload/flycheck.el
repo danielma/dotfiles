@@ -10,7 +10,6 @@
 
 (defun flycheck-setup ()
   (global-flycheck-mode)
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
   (setq-default
     flycheck-disabled-checkers (append flycheck-disabled-checkers '(javascript-jshint))
     flycheck-temp-prefix ".flycheck")

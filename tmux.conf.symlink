@@ -110,3 +110,4 @@ set -g message-bg colour166
 # }
 
 # run "emacs --daemon"
+set-option -g default-command "reattach-to-user-namespace -l zsh"

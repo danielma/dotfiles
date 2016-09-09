@@ -1640,7 +1640,7 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>0 484 668 282 0 0 1440 900 </string>
+	<string>0 762 1085 410 0 0 2560 1600 </string>
 	<key>NSWindow Frame Preferences</key>
 	<string>28 368 606 456 0 0 1440 900 </string>
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
@@ -1650,11 +1650,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 7 606 456 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>555 185 796 473 0 0 1440 900 </string>
+	<string>229 135 796 473 0 0 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 293 592 584 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 514 570 379 0 0 1440 900 </string>
+	<string>0 0 1440 900 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 548 570 352 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2429,7 +2429,7 @@
 					<key>parameter</key>
 					<string>Test Failure</string>
 					<key>regex</key>
-					<string>^\d+ (runs|tests),.+([^0] failures)</string>
+					<string>^\d+ BROKED (runs|tests),.+([^0] failures)</string>
 				</dict>
 				<dict>
 					<key>action</key>
@@ -2437,7 +2437,7 @@
 					<key>parameter</key>
 					<string>Test Success!</string>
 					<key>regex</key>
-					<string>^\d+ (runs|tests),.+0 failures, 0 errors</string>
+					<string>^\d+ BROKED (runs|tests),.+0 failures, 0 errors</string>
 				</dict>
 				<dict>
 					<key>action</key>
@@ -2445,7 +2445,7 @@
 					<key>parameter</key>
 					<string>Test Error</string>
 					<key>regex</key>
-					<string>^\d+ (runs|tests),.+0 failures, ([^0] errors)</string>
+					<string>^\d+ BROKED (runs|tests),.+0 failures, ([^0] errors)</string>
 				</dict>
 			</array>
 			<key>Unlimited Scrollback</key>
@@ -2645,7 +2645,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-09-04T03:41:33Z</date>
+	<date>2016-09-05T08:58:56Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
