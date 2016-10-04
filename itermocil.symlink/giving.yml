@@ -3,6 +3,6 @@ windows:
     root: ~/Code/giving
     layout: main-vertical
     panes:
-      - (./node_modules/.bin/webpack --watch --progress &) && be guard -w app test -i
+      - ./node_modules/.bin/webpack --watch --progress & ; be guard -w app test -g ruby_tests js_tests
       - pco box rails console
       - git status
