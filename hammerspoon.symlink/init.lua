@@ -86,16 +86,16 @@ end
 
 
 -- Sequential keybindings
-a = hs.hotkey.modal.new({}, "F16")
+appModal = hs.hotkey.modal.new({}, "F16")
 
-pressedA = function()
-  a:enter()
+enterAppMode = function()
+  appModal:enter()
 end
 
-releasedA = function()
+releasedEnter = function()
 end
 
-k:bind({}, 'return', pressedA, releasedA)
+k:bind({}, 'return', enterAppMode, releasedEnter)
 
 -- Launch function
 launch = function(appname)
@@ -105,30 +105,31 @@ end
 
 -- Launch apps with Hyper-Enter
 apps = {
-  {'e', 'Emacs'},
-  {'c', 'Google Chrome'},
-  {'i', 'iTunes'},
-  {'s', 'Slack'},
-  {'t', 'iTerm'},
+   {'d', 'DevDocs'},
+   {'e', 'Emacs'},
+   {'c', 'Google Chrome'},
+   {'i', 'iTunes'},
+   {'s', 'Slack'},
+   {'t', 'iTerm'},
 }
 
 for i, app in ipairs(apps) do
-  a:bind(
+  appModal:bind(
     {},
     app[1],
     nil,
     function()
       launch(app[2])
-      a:exit()
+      appModal:exit()
     end
   )
 end
 
 -- Exit launch mode with enter
-a:bind(
+appModal:bind(
   {},
   'return',
   function()
-    a:exit()
+    appModal:exit()
   end
 )
