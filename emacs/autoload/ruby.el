@@ -3,7 +3,7 @@
 (defun my-ruby-mode-setup ()
   (hs-minor-mode t)
   (setq ruby-insert-encoding-magic-comment nil)
-  (lambda () (modify-syntax-entry ?_ "w"))
+  (modify-syntax-entry ?_ "w")
   )
 
 (add-to-list 'hs-special-modes-alist
