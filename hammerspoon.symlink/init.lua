@@ -84,6 +84,19 @@ for i,key in ipairs(hyperTable) do
   )
 end
 
+hyperAppsTable = { {'w', 'Emacs'} }
+
+for i, app in ipairs(hyperAppsTable) do
+  k:bind(
+    {},
+    app[1],
+    nil,
+    function()
+      launch(app[2])
+      k:exit()
+    end
+  )
+end
 
 -- Sequential keybindings
 appModal = hs.hotkey.modal.new({}, "F16")
