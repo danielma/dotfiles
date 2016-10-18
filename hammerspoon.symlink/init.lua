@@ -124,6 +124,8 @@ apps = {
    {'i', 'iTunes'},
    {'s', 'Slack'},
    {'t', 'iTerm'},
+   {'r', 'Trello'},
+   {'m', 'Messages'},
 }
 
 for i, app in ipairs(apps) do
