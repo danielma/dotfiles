@@ -102,6 +102,7 @@ end
 appModal = hs.hotkey.modal.new({}, "F16")
 
 enterAppMode = function()
+  k.triggered = true
   appModal:enter()
 end
 
@@ -113,7 +114,6 @@ k:bind({}, 'return', enterAppMode, releasedEnter)
 -- Launch function
 launch = function(appname)
   hs.application.launchOrFocus(appname)
-  k.triggered = true
 end
 
 -- Launch apps with Hyper-Enter
