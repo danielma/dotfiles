@@ -24,6 +24,7 @@ alias gsl='git stash list'
 alias gcb='git branch --merged | grep -v \* | xargs git branch -d'
 alias gds='git diff --staged'
 alias gr='git rebase'
+alias grm='git fetch origin master && git rebase -i origin/master'
 alias glcb='gl && gcb'
 alias amend="git commit --amend"
 

@@ -1,13 +1,7 @@
 ;; -*- mode: emacs-lisp -*-
 
 (progn
-  (unless (boundp 'notiffany-original-background) (setq notiffany-original-background (face-background 'mode-line)))
-  (unless (boundp 'notiffany-original-foreground) (setq notiffany-original-foreground (face-foreground 'mode-line)))
-  (set-face-attribute 'mode-line nil :background "<%= bgcolor %>" :foreground "<%= color %>")
-
-  (run-at-time "3 sec" nil (lambda ()
-                             (set-face-attribute 'mode-line nil
-                                                 :background notiffany-original-background
-                                                 :foreground notiffany-original-foreground)))
-)
-
+  (if (string= "<%= bgcolor %>" "ok")
+      (setq mode-line-guard-status 'ok)
+    (setq mode-line-guard-status 'error))
+  (force-mode-line-update))

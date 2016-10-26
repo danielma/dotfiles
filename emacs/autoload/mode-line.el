@@ -1,13 +1,13 @@
 (progn
-  (setq mode-line-format 
+  (setq mode-line-format
         '("%e" mode-line-front-space " " mode-line-client mode-line-modified mode-line-remote " " mode-line-buffer-identification mode-line-position evil-mode-line-tag
            mode-name mode-line-misc-info "  " mode-line-end-spaces))
   (force-mode-line-update))
 
 (defun add-mode-line-dirtrack ()
     "When editing a file, show the last 2 directories of the current path in the mode line."
-    (add-to-list 'mode-line-buffer-identification 
-                 '(:eval (substring default-directory 
+    (add-to-list 'mode-line-buffer-identification
+                 '(:eval (substring default-directory
                                     (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
 (add-hook 'find-file-hook 'add-mode-line-dirtrack)
 
@@ -87,8 +87,7 @@
   :group 'mode-line-flycheck)
 
 (defun simple-mode-line-render (left right)
-  "Return a string of `window-width' length containing LEFT, and RIGHT
- aligned respectively."
+  "Return a string of `window-width' length containing LEFT, and RIGHT aligned respectively."
   (let* ((available-width (- (window-total-width) (length left) 2)))
     (format (format " %%s %%%ds " available-width) left right)))
 
@@ -174,6 +173,16 @@
           (t `("" (:propertize " \u2713 " face ,(my/mode-line-flycheck-face 'ok))))
           )))
 
+(defvar mode-line-guard-status 'ok "The current guard status for mode-line.")
+
+(defun my/mode-line-guard-status ()
+  "Full guard mode line string."
+  (if (eq mode-line-guard-status 'ok)
+      `("" (:propertize " \u2694\uFE0E " face ,(my/mode-line-face 'accent)))
+    `("" (:propertize " \u2694\uFE0E " face ,(my/mode-line-flycheck-face 'error)))
+    ))
+
+(setq mode-line-guard-status 'ok)
 ;; use the function in conjunction with :eval and format-mode-line in your mode-line-format
 ;; (progn
   (setq-default mode-line-format
@@ -201,6 +210,7 @@
 
                   ;; right
                   (format-mode-line `("%e"
+                                      ,(my/mode-line-guard-status)
                                       ,(my/mode-line-flycheck-status)
                                       " "
                                       mode-name
