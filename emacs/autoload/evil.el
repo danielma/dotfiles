@@ -13,6 +13,11 @@
   (interactive "c")
   (sp-wrap-with-pair (char-to-string pair)))
 
+(defun expand-at-point ()
+  (interactive)
+  (newline-and-indent)
+  (evil-open-above 1))
+
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 ;; (key-chord-define evil-insert-state-map "fs" 'save-buffer-always)
@@ -21,9 +26,11 @@
 (define-key evil-insert-state-map (kbd "C-n") 'next-line)
 (define-key evil-insert-state-map (kbd "C-p") 'previous-line)
 (define-key evil-normal-state-map (kbd "M-RET") 'newline)
+(define-key evil-insert-state-map (kbd "M-RET") 'expand-at-point)
 (define-key evil-normal-state-map "[b" 'previous-buffer)
 (define-key evil-normal-state-map "]b" 'next-buffer)
 (define-key evil-visual-state-map (kbd "C-w") 'interactive-wrap-with-pair)
+(fset 'evil-visual-update-x-selection 'ignore)
 
 ;; (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
 ;; (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
@@ -85,6 +92,10 @@
   (interactive)
   (find-file "~/.dotfiles/emacs/emacs.symlink"))
 
+(defun edit-scratch ()
+  (interactive)
+  (find-file "~/SCRATCH.md"))
+
 (evil-leader/set-key
   "fs" 'save-buffer-always
   "fq" 'delete-window
@@ -98,6 +109,7 @@
   "ct" 'my/base16-set-theme
 
   "ee" 'edit-emacs
+  "es" 'edit-scratch
 
   "gs" 'magit-status
   "gc" 'magit-commit
