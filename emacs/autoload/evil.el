@@ -96,6 +96,10 @@
   (interactive)
   (find-file "~/SCRATCH.md"))
 
+(defun reveal-in-finder ()
+  (interactive)
+  (shell-command (concat "open -R " (buffer-file-name))))
+
 (evil-leader/set-key
   "fs" 'save-buffer-always
   "fq" 'delete-window
@@ -108,11 +112,14 @@
   "cl" 'custom-comment-line
   "ct" 'my/base16-set-theme
 
+  "dr" 'reveal-in-finder
+
   "ee" 'edit-emacs
   "es" 'edit-scratch
 
   "gs" 'magit-status
   "gc" 'magit-commit
+  "gd" 'magit-diff-buffer-file
   "gb" 'magit-blame
   "gB" 'browse-at-remote
 

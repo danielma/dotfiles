@@ -1,0 +1,61 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 4,
+      "subtext" : {
+        "size" : 11,
+        "colorSelected" : "#252525FF",
+        "font" : "Avenir",
+        "color" : "#F1E2C0FF"
+      },
+      "shortcut" : {
+        "size" : 16,
+        "colorSelected" : "#252525FF",
+        "font" : "Avenir",
+        "color" : "#252525FF"
+      },
+      "backgroundSelected" : "#94B3A9FF",
+      "text" : {
+        "size" : 13,
+        "colorSelected" : "#252525FF",
+        "font" : "Avenir",
+        "color" : "#252525FF"
+      },
+      "iconPaddingHorizontal" : 5,
+      "paddingVertical" : 0,
+      "iconSize" : 40
+    },
+    "search" : {
+      "paddingVertical" : 3,
+      "background" : "#69778700",
+      "spacing" : 10,
+      "text" : {
+        "size" : 24,
+        "colorSelected" : "#000000FF",
+        "font" : "Avenir",
+        "color" : "#252525FF"
+      },
+      "backgroundSelected" : "#B5D5FFFF"
+    },
+    "window" : {
+      "color" : "#697787C1",
+      "paddingHorizontal" : 10,
+      "width" : 515,
+      "borderPadding" : 10,
+      "borderColor" : "#69778700",
+      "blur" : 22,
+      "roundness" : -1,
+      "paddingVertical" : 10
+    },
+    "credit" : "Chris",
+    "separator" : {
+      "color" : "#33333300",
+      "thickness" : 1
+    },
+    "scrollbar" : {
+      "color" : "#333333FF",
+      "thickness" : 2
+    },
+    "name" : "gruvbox (v2)"
+  }
+}

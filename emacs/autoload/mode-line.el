@@ -187,8 +187,6 @@
 ;; (progn
   (setq-default mode-line-format
         '((:eval (simple-mode-line-render
-                  ;; '("%e" mode-line-front-space " " mode-line-client mode-line-modified mode-line-remote " " mode-line-buffer-identification mode-line-position evil-mode-line-tag
-                  ;; mode-name mode-line-misc-info "  " mode-line-end-spaces))
                   ;; left
                   (format-mode-line `(
                                       "%e"
@@ -215,11 +213,6 @@
                                       " "
                                       mode-name
                                       " "
-                                      ;; (""
-                                      ;;  (:propertize
-                                      ;;   (" " mode-name " ")
-                                      ;;   face ,(my/mode-line-face 'accent)
-                                      ;;   
                                       (""
                                        (:propertize
                                         (,(format-time-string " %I:%M "))

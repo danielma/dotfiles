@@ -194,6 +194,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(line-spacing 0)
  '(linum-relative-current-symbol "")
  '(linum-relative-global-mode t)
+ '(mac-command-modifier (quote super))
+ '(mac-mouse-wheel-smooth-scroll t)
  '(magit-diff-use-overlays nil)
  '(magit-popup-use-prefix-argument (quote default))
  '(magit-save-repository-buffers nil)
