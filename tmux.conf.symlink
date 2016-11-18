@@ -109,5 +109,9 @@ set -g message-bg colour166
 
 # }
 
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin "jlipps/tmux-safekill"
+run '~/.tmux/plugins/tpm/tpm'
+
 # run "emacs --daemon"
 set-option -g default-command "reattach-to-user-namespace -l zsh"
