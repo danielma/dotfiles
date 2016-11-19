@@ -32,6 +32,8 @@
 (define-key evil-visual-state-map (kbd "C-w") 'interactive-wrap-with-pair)
 (fset 'evil-visual-update-x-selection 'ignore)
 
+(global-evil-visualstar-mode)
+
 ;; (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
 ;; (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
 ;; (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
