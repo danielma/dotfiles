@@ -1652,17 +1652,17 @@
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>972 1053 616 174 0 0 2560 1577 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>410 209 620 622 0 0 1440 900 </string>
+	<string>970 734 620 622 0 0 2560 1600 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
-	<string>630 18 606 469 0 0 2560 1600 </string>
+	<string>348 117 618 519 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>0 995 796 473 0 0 2560 1600 </string>
+	<string>143 517 918 512 0 0 2560 1600 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
-	<string>99 293 592 584 0 0 1440 877 </string>
+	<string>230 1016 592 584 0 0 2560 1600 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-1440 302 1440 900 -1440 302 1440 900 </string>
+	<string>931 1007 570 379 0 0 2560 1600 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>0 548 570 352 0 0 1440 900 </string>
+	<string>0 1214 570 379 0 0 2560 1600 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>721 23 717 874 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -3319,7 +3319,7 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>465416954.17254001</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>476304288.14784598</real>
+	<real>501917877.357144</real>
 	<key>NoSyncTipsToNotShow</key>
 	<array>
 		<string>000</string>
@@ -3457,11 +3457,11 @@
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/nightly.xml?shard=28</string>
+	<string>https://iterm2.com/appcasts/testing.xml?shard=28</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-10-29T18:21:19Z</date>
+	<date>2016-11-27T05:40:25Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -3495,7 +3495,7 @@
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<false/>
 	<key>UKCrashReporterLastCrashReportDate</key>
-	<real>1454625664</real>
+	<real>1480225280</real>
 	<key>URLHandlersByGuid</key>
 	<dict/>
 	<key>UseBorder</key>
@@ -6461,10 +6461,12 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.20161025-nightly</string>
+	<string>3.0.12</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
 	<false/>
+	<key>moveToApplicationsFolderAlertSuppress</key>
+	<true/>
 </dict>
 </plist>

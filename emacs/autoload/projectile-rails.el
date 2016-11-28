@@ -25,6 +25,13 @@
    '(("app/assets/javascripts/components/" "/components/\\(.+\\.[jt]sx?\\)$"))
    "app/assets/javascripts/components/${filename}.js"))
 
+(defun my/projectile-rails-find-rake-tasks ()
+  (interactive)
+  (projectile-rails-find-resource
+   "tasks: "
+   '(("lib/tasks/" "/tasks/\\(.+\\.rake\\)$"))
+   "lib/tasks/${filename}.rake"))
+
 (evil-leader/set-key
   "jc" 'projectile-rails-find-component)
 
@@ -38,6 +45,7 @@
         (define-key map "A" 'projectile-rails-find-current-stylesheet)
         (define-key map "z" 'projectile-rails-find-serializer)
         (define-key map "Z" 'projectile-rails-find-current-serializer)
+        (define-key map "R" 'my/projectile-rails-find-rake-tasks)
         map))
         
 (evil-define-minor-mode-key

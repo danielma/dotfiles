@@ -3,9 +3,9 @@ set-option -ga terminal-overrides ",xterm-256color:Tc" # :ritm@,sitm@"
 
 set-option -g xterm-keys on
 
-set -g prefix 'C-\'
+set -g prefix C-s
 unbind C-b
-bind 'C-\' send-prefix
+bind C-s send-prefix
 
 unbind-key j
 bind-key j select-pane -D
