@@ -1,4 +1,5 @@
 fw = hs.window.focusedWindow
+hs.window.animationDuration = 0
 
 -- window management
 
@@ -14,9 +15,24 @@ local function hyperBind(key, pressedFn, releasedFn, repeatFn)
    return hyperModal:bind(
       {},
       key,
-      function() hyperModal.triggered = true; pressedFn() end,
-      function() hyperModal.triggered = true; releasedFn() end,
-      function() hyperModal.triggered = true; repeatFn() end
+      function()
+         if pressedFn then
+            hyperModal.triggered = true
+            pressedFn()
+         end
+      end,
+      function()
+         if releasedFn then
+            hyperModal.triggered = true
+            releasedFn()
+         end
+      end,
+      function()
+         if repeatFn then
+            hyperModal.triggered = true
+            repeatFn()
+         end
+      end
    )
 end
 
@@ -62,10 +78,13 @@ hs.fnutils.each({"Left", "Right", "Up", "Down"}, function(arrow)
 
   end)
 
-hyperBind("7", function()
-                  rect({ .5, 0, .5, .5 })
-end)
-                     
+hyperBind("7", rect({ .0, 0, .5, .5 }))
+hyperBind("9", rect({ .5, 0, .5, .5 }))
+hyperBind("1", rect({ 0, .5, .5, .5 }))
+hyperBind("3", rect({ .5, .5, .5, .5 }))
+
+hs.hotkey.bind({"shift", "alt", "cmd"}, "Left", function() fw():moveOneScreenWest() end)
+hs.hotkey.bind({"shift", "alt", "cmd"}, "Right", function() fw():moveOneScreenEast() end)
 
 -- window grid configuration
 hs.grid.setGrid("6x4")
