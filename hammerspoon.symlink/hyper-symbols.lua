@@ -86,6 +86,7 @@ for i, app in ipairs(hyperAppsTable) do
     nil,
     function()
       launch(app[2])
+      hyperModal.triggered()
       hyperModal:exit()
     end
   )

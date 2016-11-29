@@ -13,14 +13,12 @@ require "window"
 appModal = hs.hotkey.modal.new({}, "F16")
 
 enterAppMode = function()
+   hyperModal.triggered = true
    hyperModal:exit()
    appModal:enter()
 end
 
-releasedEnter = function()
-end
-
-hyperModal:bind({}, 'return', enterAppMode, releasedEnter)
+hyperModal:bind({}, 'return', enterAppMode)
 
 -- Launch function
 launch = function(appname)
