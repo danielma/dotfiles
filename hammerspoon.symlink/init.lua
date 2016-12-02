@@ -35,6 +35,7 @@ apps = {
    {'t', 'iTerm'},
    {'r', 'Trello'},
    {'m', 'Messages'},
+   {'q', 'Sequel Pro'},
 }
 
 for i, app in ipairs(apps) do
