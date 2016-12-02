@@ -32,8 +32,16 @@
    '(("lib/tasks/" "/tasks/\\(.+\\.rake\\)$"))
    "lib/tasks/${filename}.rake"))
 
+(defun my/projectile-rails-find-js-test ()
+  (interactive)
+  (projectile-rails-find-resource
+   "test: "
+   '(("test/assets/javascripts/" "/javascripts/\\(.+\\)_test\\.js?$"))
+   "test/assets/javascripts/${filename}_test.js"))
+
 (evil-leader/set-key
-  "jc" 'projectile-rails-find-component)
+  "jc" 'projectile-rails-find-component
+  "jt" 'my/projectile-rails-find-js-test)
 
 (setq my/projectile-rails-command-map
       (let ((map (make-sparse-keymap)))
