@@ -1,8 +1,8 @@
-(progn
-  (setq mode-line-format
-        '("%e" mode-line-front-space " " mode-line-client mode-line-modified mode-line-remote " " mode-line-buffer-identification mode-line-position evil-mode-line-tag
-           mode-name mode-line-misc-info "  " mode-line-end-spaces))
-  (force-mode-line-update))
+;; (progn
+;;   (setq mode-line-format
+;;         '("%e" mode-line-front-space " " mode-line-client mode-line-modified mode-line-remote " " mode-line-buffer-identification mode-line-position evil-mode-line-tag
+;;            mode-name mode-line-misc-info "  " mode-line-end-spaces))
+;;   (force-mode-line-update))
 
 (defun add-mode-line-dirtrack ()
     "When editing a file, show the last 2 directories of the current path in the mode line."
@@ -120,6 +120,18 @@
         ((not (boundp 'evil-state)) 'mode-line)
         (t (intern (concat "mode-line-evil-" (symbol-name evil-state))))))
 
+(defun my/mode-line-evil-tag ()
+  "Return an abbreviated evil tag for the current state."
+  (pcase evil-state
+    ('normal "N")
+    ('insert "I")
+    ('visual "V")
+    ('replace "R")
+    ('motion "M")
+    ('emacs "E")
+    (' "O")
+    (_ (symbol-name evil-state))))
+
 (defun my/mode-line-flycheck-error-level ()
   "Return current error level for flycheck."
   (cond ((flycheck-has-current-errors-p 'error) "error")
@@ -190,7 +202,7 @@
                   ;; left
                   (format-mode-line `(
                                       "%e"
-                                      ("" (:propertize (" " (:eval (symbol-name evil-state)) " ") face ,(my/mode-line-face 'evil)))
+                                      ("" (:propertize (" " (:eval (my/mode-line-evil-tag)) " ") face ,(my/mode-line-face 'evil)))
                                       " "
                                       mode-line-client
                                       mode-line-modified
