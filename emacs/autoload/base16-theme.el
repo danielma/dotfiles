@@ -100,13 +100,21 @@ an alternate theme for use in the terminal.")
    'my/hsl-to-hex
    (apply 'color-lighten-hsl (-snoc (my/hex-to-hsl hex) percent))))
 
+(defun my/darken-hex (hex percent)
+  "Darken HEX by PERCENT."
+
+  (apply
+   'my/hsl-to-hex
+   (apply 'color-darken-hsl (-snoc (my/hex-to-hsl hex) percent))))
+
 (defun my/base16-add-extra-colors (colors)
   "Add extra (non 16) colors to the color scheme."
   (let ((base00 (plist-get colors :base00)))
 
     (-snoc
      colors
-     :base005 (my/lighten-hex base00 2))))
+     :base005 (my/lighten-hex base00 2)
+     :base000 (my/darken-hex base00 2))))
 
 (defun base16-theme-define (theme-name theme-colors)
   "Define the faces for a base16 colorscheme given a `THEME-NAME' and a plist of `THEME-COLORS'."
@@ -137,6 +145,7 @@ an alternate theme for use in the terminal.")
      (warning                                      :foreground base09 :weight bold)
      (success                                      :foreground base0B :weight bold)
      (hl-line                                      :background base005)
+     (highlight-indentation-face                   :background base00 :foreground base000)
 
      (header-line                                  :foreground base0E :background nil :inherit mode-line)
 
@@ -160,7 +169,7 @@ an alternate theme for use in the terminal.")
 
      ;; linum-mode
      (linum                                        :foreground base03 :background base01)
-     (linum-relative-current-face                  :foreground base05 :bold t)
+     (nlinum-relative-current-face                 :foreground base05 :bold t)
 
      ;; Search
      (match                                        :foreground base0D :background base01 :inverse-video t)

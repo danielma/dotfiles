@@ -6,7 +6,6 @@
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
-(global-linum-mode 1)
 
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t
@@ -20,7 +19,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar fill-column-indicator yaml-mode elscreen evil-magit web-mode magit indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord smartparens ace-jump-mode diff-hl coffee-mode json-mode solarized-theme company browse-at-remote flycheck lua-mode evil-visualstar)))
+(setq package-list (quote (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar fill-column-indicator yaml-mode elscreen evil-magit web-mode magit projectile-rails helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord smartparens ace-jump-mode diff-hl coffee-mode json-mode solarized-theme company browse-at-remote flycheck lua-mode evil-visualstar)))
 
 (dolist (package package-list)
   (print package)
@@ -44,7 +43,9 @@
 (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
 (setq ns-use-native-fullscreen nil)
 
-
+(global-nlinum-mode 1)
+(global-nlinum-relative-mode)
+(nlinum-relative-setup-evil)
 (global-evil-leader-mode)
 (evil-leader/set-leader "<SPC>")
 
@@ -70,10 +71,6 @@
 
 (setq windmove-wrap-around t)
 (setq-default abbrev-mode t)
-
-(linum-relative-on)
-(indent-guide-global-mode)
-(setq indent-guide-recursive t)
 
 (global-hl-line-mode)
 
@@ -192,8 +189,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(js-indent-level 2)
  '(line-number-mode nil)
  '(line-spacing 0)
- '(linum-relative-current-symbol "")
- '(linum-relative-global-mode t)
  '(mac-mouse-wheel-smooth-scroll t)
  '(magit-diff-use-overlays nil)
  '(magit-popup-use-prefix-argument (quote default))
@@ -207,7 +202,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(ns-command-modifier (quote super))
  '(package-selected-packages
    (quote
-    (enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash indent-guide projectile-rails linum-relative helm-ag helm-projectile evil-leader projectile evil)))
+    (nlinum-relative nlinum enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
  '(projectile-generic-command "ag -g \"\"")
