@@ -114,7 +114,8 @@ an alternate theme for use in the terminal.")
     (-snoc
      colors
      :base005 (my/lighten-hex base00 2)
-     :base000 (my/darken-hex base00 2))))
+     :base000 (my/darken-hex base00 2)
+     :base0000 (my/darken-hex base00 4))))
 
 (defun base16-theme-define (theme-name theme-colors)
   "Define the faces for a base16 colorscheme given a `THEME-NAME' and a plist of `THEME-COLORS'."
@@ -128,7 +129,7 @@ an alternate theme for use in the terminal.")
      (button                                       :foreground base0E)
      (cursor                                       :background base08)
      (default                                      :foreground base05 :background base00)
-     (fringe                                       :background base01)
+     (fringe                                       :background base00)
      (gui-element                                  :background base01)
      (highlight                                    :background base01)
      (link                                         :foreground base0D)
@@ -148,6 +149,7 @@ an alternate theme for use in the terminal.")
      (highlight-indentation-face                   :background base00 :foreground base000)
 
      (header-line                                  :foreground base0E :background nil :inherit mode-line)
+     (vertical-border                              :foreground base0000)
 
      ;; Font-lock stuff
      (font-lock-builtin-face                       :foreground base0C)
@@ -168,7 +170,7 @@ an alternate theme for use in the terminal.")
      (font-lock-warning-face                       :foreground base08)
 
      ;; linum-mode
-     (linum                                        :foreground base03 :background base01)
+     (linum                                        :foreground base03 :background base00)
      (nlinum-relative-current-face                 :foreground base05 :bold t)
 
      ;; Search
