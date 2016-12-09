@@ -129,7 +129,7 @@
     ('replace "R")
     ('motion "M")
     ('emacs "E")
-    (' "O")
+    ('operator "O")
     (_ (symbol-name evil-state))))
 
 (defun my/mode-line-flycheck-error-level ()

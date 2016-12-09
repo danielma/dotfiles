@@ -135,11 +135,17 @@ an alternate theme for use in the terminal.")
      (link                                         :foreground base0D)
      (link-visited                                 :foreground base0E)
      (minibuffer-prompt                            :foreground base0D)
-     (mode-line                                    :foreground base04 :background base02 :box nil)
+     (mode-line                                    :foreground base04
+                                                   :background base02
+                                                   :overline base0000
+                                                   :box (:line-width -1 :color base02))
      (mode-line-buffer-id                          :foreground base07 :background nil)
      (mode-line-emphasis                           :foreground base06 :slant italic)
      (mode-line-highlight                          :foreground base0E :box nil :weight bold)
-     (mode-line-inactive                           :foreground base03 :background base01 :box nil)
+     (mode-line-inactive                           :foreground base03
+                                                   :background base01
+                                                   :overline base0000
+                                                   :box (:line-width -1 :color base01))
      (region                                       :background base02)
      (secondary-selection                          :background base03)
      (error                                        :foreground base08 :weight bold)
@@ -148,7 +154,7 @@ an alternate theme for use in the terminal.")
      (hl-line                                      :background base005)
      (highlight-indentation-face                   :background base00 :foreground base000)
 
-     (header-line                                  :foreground base0E :background nil :inherit mode-line)
+     (header-line                                  :foreground base0E :background nil :inherit mode-line :box nil)
      (vertical-border                              :foreground base0000)
 
      ;; Font-lock stuff
@@ -216,11 +222,21 @@ an alternate theme for use in the terminal.")
      ;; Flymake
      (flymake-warnline                             :background base01 :underline base09)
      (flymake-errline                              :background base01 :underline base08)
-     (mode-line-flycheck-error                     :background base08 :foreground base07)
-     (mode-line-flycheck-warning                   :background base09 :foreground base07)
-     (mode-line-flycheck-info                      :background base0A :foreground base07)
-     (mode-line-flycheck-ok                        :background base0B :foreground base07)
-     (mode-line-flycheck-running                   :background base0C :foreground base07)
+     (mode-line-flycheck-error                     :background base08
+                                                   :foreground base07
+                                                   :box (:line-width -1 :color base08))
+     (mode-line-flycheck-warning                   :background base09
+                                                   :foreground base07
+                                                   :box (:line-width -1 :color base09))
+     (mode-line-flycheck-info                      :background base0A
+                                                   :foreground base07
+                                                   :box (:line-width -1 :color base0A))
+     (mode-line-flycheck-ok                        :background base0B
+                                                   :foreground base07
+                                                   :box (:line-width -1 :color base0B))
+     (mode-line-flycheck-running                   :background base0C
+                                                   :foreground base07
+                                                   :box (:line-width -1 :color base0C))
 
      ;; Clojure errors
      (clojure-test-failure-face                    :background nil :inherit flymake-warnline)
@@ -369,7 +385,7 @@ an alternate theme for use in the terminal.")
 
      (link                                         :foreground nil :underline t)
      (widget-button                                :underline t)
-     (widget-field                                 :background base03 :box (:line-width 1 :color base06))
+     (widget-field                                 :background base03 :box (:line-width -1 :color base06))
 
      ;; Compilation (most faces politely inherit from 'success, 'error, 'warning etc.)
      (compilation-column-number                    :foreground base0A)
@@ -616,15 +632,28 @@ an alternate theme for use in the terminal.")
 
      ;; mode line evil
      (mode-line-evil                          :foreground base06 :weight bold)
-     (mode-line-evil-normal                   :inherit mode-line-evil :background base03)
-     (mode-line-evil-emacs                    :inherit mode-line-evil :background base0E)
-     (mode-line-evil-insert                   :inherit mode-line-evil :background base0D)
-     (mode-line-evil-visual                   :inherit mode-line-evil :background base09)
-     (mode-line-accent-active                 :inherit mode-line :background base01)
-     (mode-line-accent-inactive               :inherit mode-line-inactive :background base01)
-     (mode-line-dark-active                   :inherit mode-line :background base01)
+     (mode-line-evil-normal                   :inherit mode-line-evil
+                                              :background base03
+                                              :box (:line-width -1 :color base03))
+     (mode-line-evil-emacs                    :inherit mode-line-evil
+                                              :background base0E
+                                              :box (:line-width -1 :color base0E))
+     (mode-line-evil-insert                   :inherit mode-line-evil
+                                              :background base0D
+                                              :box (:line-width -1 :color base0D))
+     (mode-line-evil-visual                   :inherit mode-line-evil
+                                              :background base09
+                                              :box (:line-width -1 :color base09))
+     (mode-line-accent-active                 :inherit mode-line
+                                              :background base01
+                                              :box (:line-width -1 :color base01))
+     (mode-line-accent-inactive               :inherit mode-line-inactive
+                                              :background base01
+                                              :box (:line-width -1 :color base01))
+     (mode-line-dark-active                   :inherit mode-line
+                                              :background base01
+                                              :box (:line-width -1 :color base01))
      ))
-
 
   ;; Anything leftover that doesn't fall neatly into a face goes here.
   (let ((base00 (plist-get theme-colors :base00))
