@@ -154,7 +154,7 @@ an alternate theme for use in the terminal.")
      (hl-line                                      :background base005)
      (highlight-indentation-face                   :background base00 :foreground base000)
 
-     (header-line                                  :foreground base0E :background nil :inherit mode-line :box nil)
+     (header-line                                  :foreground base0E :background base04)
      (vertical-border                              :foreground base0000)
 
      ;; Font-lock stuff
