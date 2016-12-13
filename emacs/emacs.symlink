@@ -186,6 +186,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(hl-fg-colors
    (quote
     ("#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3")))
+ '(initial-scratch-message nil)
  '(js-indent-level 2)
  '(line-number-mode nil)
  '(line-spacing 0)
