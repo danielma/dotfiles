@@ -19,7 +19,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(setq package-list (quote (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar fill-column-indicator yaml-mode elscreen evil-magit web-mode magit projectile-rails helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord smartparens ace-jump-mode diff-hl coffee-mode json-mode solarized-theme company browse-at-remote flycheck lua-mode evil-visualstar evil-multiedit)))
+(setq package-list (quote (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar fill-column-indicator yaml-mode elscreen evil-magit web-mode magit projectile-rails helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord smartparens ace-jump-mode diff-hl coffee-mode json-mode solarized-theme company browse-at-remote flycheck lua-mode evil-visualstar evil-multiedit nlinum nlinum-relative)))
 
 (dolist (package package-list)
   (print package)
