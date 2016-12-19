@@ -28,6 +28,13 @@
             (message (minimal-match (and (one-or-more anything) "\n")))
             line-end))
     :modes (js-mode js2-mode))
+  (setq flycheck-command-wrapper-function
+        (lambda (command)
+          (let ((executable (car command))
+                (arguments (cdr command)))
+            (if (string-suffix-p "rubocop" executable)
+                (append '("bundle" "exec" "rubocop") arguments)
+              command))))
   (add-to-list 'flycheck-checkers 'javascript-flow t))
 
 (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)

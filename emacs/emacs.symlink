@@ -140,6 +140,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(column-number-mode nil)
  '(company-dabbrev-downcase nil)
  '(compilation-message-face (quote default))
+ '(css-indent-offset 2)
  '(cua-global-mark-cursor-color "#2aa198")
  '(cua-normal-cursor-color "#657b83")
  '(cua-overwrite-cursor-color "#b58900")
