@@ -16,11 +16,17 @@
 (add-to-list 'auto-mode-alist '("\\.js.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.module\\'" . web-mode))
+
+(setq web-mode-engines-alist
+      '(("php"    . "\\.module\\'")))
 
 (defun my-web-mode-setup ()
   (flycheck-mode (cond ((equal web-mode-content-type "jsx") t)
                        ((equal web-mode-content-type "javascript") t)
                        (t nil)))
+  (if (equal web-mode-engine "php")
+      (modify-syntax-entry ?_ "w"))
   (if (equal web-mode-content-type "javascript")
       (web-mode-set-content-type "jsx")))
 (evil-define-key 'normal web-mode-map "zc" 'web-mode-fold-or-unfold)
