@@ -39,6 +39,7 @@ ruby-refactor-mode-map
                                                ("dsc" "described_class")
                                                ("sbj" "subject")
                                                ("aseq" "assert_equal")
+                                               ("asprd", "assert_predicate")
                                                ("ass" "assert")
                                                ("AS::" "ActiveSupport::")
                                                ("AR::" "ActiveRecord::")))
