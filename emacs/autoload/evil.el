@@ -98,6 +98,11 @@
   (interactive)
   (find-file "~/SCRATCH.md"))
 
+(defun my/edit-reload ()
+    "Revert buffer without confirmation."
+    (interactive)
+    (revert-buffer :ignore-auto :noconfirm))
+
 (defun reveal-in-finder ()
   (interactive)
   (shell-command (concat "open -R " (buffer-file-name))))
@@ -118,6 +123,7 @@
 
   "ee" 'edit-emacs
   "es" 'edit-scratch
+  "er" 'my/edit-reload
 
   "gs" 'magit-status
   "gc" 'magit-commit

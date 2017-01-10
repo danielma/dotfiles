@@ -6,6 +6,8 @@
 	<false/>
 	<key>AllowClipboardAccess</key>
 	<false/>
+	<key>AlternateMouseScroll</key>
+	<false/>
 	<key>AnimateDimming</key>
 	<false/>
 	<key>AppleAntiAliasingThreshold</key>
@@ -1652,15 +1654,15 @@
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>972 1053 616 174 0 0 2560 1577 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>970 734 620 622 0 0 2560 1600 </string>
+	<string>410 209 620 622 0 0 1440 900 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>348 117 618 519 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>143 534 796 473 0 0 2560 1600 </string>
+	<string>60 422 796 473 0 0 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
-	<string>230 1016 592 584 0 0 2560 1600 </string>
+	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>160 97 570 379 0 0 1440 900 </string>
+	<string>0 514 570 379 0 0 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 0 1440 900 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -3302,6 +3304,8 @@
 	<string>53CB6C02-90E7-4884-A183-9B88EEB7F4F7</string>
 	<key>NoSyncLastTipTime</key>
 	<real>478542532.692729</real>
+	<key>NoSyncNeverAskAboutSettingAlternateMouseScroll</key>
+	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -3461,7 +3465,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-12-10T00:02:58Z</date>
+	<date>2017-01-06T16:55:40Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Selection Respects Soft Boundaries</key>
@@ -3497,7 +3501,7 @@
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<false/>
 	<key>UKCrashReporterLastCrashReportDate</key>
-	<real>1480225280</real>
+	<real>1481347712</real>
 	<key>URLHandlersByGuid</key>
 	<dict/>
 	<key>UseBorder</key>
@@ -6463,7 +6467,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.12</string>
+	<string>3.0.13</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

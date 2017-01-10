@@ -13,6 +13,7 @@
         count   = !git shortlog -sn
         please = push --force-with-lease
         pu = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
+        rbm = !git fetch origin master && git rebase -i origin/master
 [color]
         diff = auto
         status = auto
