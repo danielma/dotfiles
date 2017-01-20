@@ -39,9 +39,20 @@
    '(("test/assets/javascripts/" "/javascripts/\\(.+\\)_test\\.js?$"))
    "test/assets/javascripts/${filename}_test.js"))
 
+(defun my/projectile-rails-goto-package-json ()
+  (interactive)
+  (projectile-rails-goto-file "package.json"))
+
 (evil-leader/set-key
   "jc" 'projectile-rails-find-component
   "jt" 'my/projectile-rails-find-js-test)
+
+(setq my/projectile-rails-goto-map
+      (let ((map (make-sparse-keymap)))
+        (set-keymap-parent map projectile-rails-mode-goto-map)
+
+        (define-key map "p" 'my/projectile-rails-goto-package-json)
+        map))
 
 (setq my/projectile-rails-command-map
       (let ((map (make-sparse-keymap)))
@@ -54,8 +65,9 @@
         (define-key map "z" 'projectile-rails-find-serializer)
         (define-key map "Z" 'projectile-rails-find-current-serializer)
         (define-key map "R" 'my/projectile-rails-find-rake-tasks)
+        (define-key map "g" my/projectile-rails-goto-map)
         map))
-        
+
 (evil-define-minor-mode-key
   'normal
   'projectile-rails-mode
