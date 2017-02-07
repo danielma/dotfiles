@@ -18,6 +18,13 @@
    '(("app/presenters/" "/presenters/\\(.+?\\)\\(_presenter\\)?\\.rb$"))
    "app/presenters/${filename}_presenter.rb"))
 
+(defun my/projectile-rails-find-javascript ()
+  (interactive)
+  (projectile-rails-find-resource
+   "javascript: "
+   '(("app/assets/javascripts/" "/javascripts/\\(.+\\.[jt]sx?\\)$"))
+   "app/assets/javascripts/${filename}.js"))
+
 (defun projectile-rails-find-component ()
   (interactive)
   (projectile-rails-find-resource
@@ -65,6 +72,7 @@
         (define-key map "z" 'projectile-rails-find-serializer)
         (define-key map "Z" 'projectile-rails-find-current-serializer)
         (define-key map "R" 'my/projectile-rails-find-rake-tasks)
+        (define-key map "j" 'my/projectile-rails-find-javascript)
         (define-key map "g" my/projectile-rails-goto-map)
         map))
 

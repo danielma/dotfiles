@@ -24,6 +24,10 @@
    '(("emacs/autoload" "/autoload/\\(.+\\)\.el$"))
    "emacs/autoloat/${filename}.el"))
 
+(defun my/projectile-open-scratch ()
+  (interactive)
+  (find-file (expand-file-name "SCRATCH.md" (projectile-project-root))))
+
 (defun my/projectile-choices (dirs)
   "Find files in directories by (dir re) pair.
 
@@ -59,3 +63,4 @@ The bound variable is \"filename\"."
 (define-key projectile-command-map "T" 'projectile-find-implementation-or-test-other-window)
 (define-key projectile-command-map "a" 'helm-projectile-ag)
 (define-key projectile-command-map "C" 'projectile-set-default-directory)
+(define-key projectile-command-map "s" 'my/projectile-open-scratch)

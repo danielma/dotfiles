@@ -1,7 +1,7 @@
 (defun my/writeroom-setup ()
   (visual-line-mode t)
-  (linum-mode 0)
-  (flyspell-mode-on)
+  (nlinum-mode 0)
+  ;; (flyspell-mode)
   (if elscreen-display-tab
       (elscreen-toggle-display-tab))
   )
