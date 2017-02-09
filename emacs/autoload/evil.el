@@ -107,6 +107,14 @@
   (interactive)
   (shell-command (concat "open -R " (buffer-file-name))))
 
+(setq my/evil-window-map
+      (let ((map (make-sparse-keymap)))
+        (set-keymap-parent map evil-window-map)
+
+        (define-key map "]" 'buf-move-right)
+        (define-key map "[" 'buf-move-left)
+        map))
+
 (evil-leader/set-key
   "fs" 'save-buffer-always
   "fq" 'delete-window
@@ -154,7 +162,7 @@
   "tj" 'elscreen-select-and-goto
   "tt" 'elscreen-toggle-display-tab
 
-  "w" 'evil-window-map
+  "w" my/evil-window-map
 
   "," 'ace-jump-char-mode
 

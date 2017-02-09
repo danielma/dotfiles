@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: memoized method
+# key: def|
+# --
+def ${1:method}
+    @$1 ||= $2
+end
