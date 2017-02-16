@@ -50,6 +50,15 @@
   (interactive)
   (projectile-rails-goto-file "package.json"))
 
+(defun my/projectile-rails-find-spec-or-policy ()
+  (interactive)
+  (if (file-exists-p (expand-file-name "spec" (projectile-project-root)))
+      (projectile-rails-find-spec)
+    (projectile-rails-find-resource
+     "policy: "
+     '(("app/policies/" "/policies/\\(.+?\\)\\(_policy\\)?\\.rb$"))
+     "app/policies/${filename}_policy.rb")))
+
 (evil-leader/set-key
   "jc" 'projectile-rails-find-component
   "jt" 'my/projectile-rails-find-js-test)
@@ -73,6 +82,7 @@
         (define-key map "Z" 'projectile-rails-find-current-serializer)
         (define-key map "R" 'my/projectile-rails-find-rake-tasks)
         (define-key map "j" 'my/projectile-rails-find-javascript)
+        (define-key map "p" 'my/projectile-rails-find-spec-or-policy)
         (define-key map "g" my/projectile-rails-goto-map)
         map))
 
