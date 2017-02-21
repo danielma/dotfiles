@@ -5,5 +5,5 @@ windows:
     panes:
       - ./node_modules/.bin/webpack --watch --progress
       - be guard -w app test -g ruby_tests js_tests
-      - pco box rails console
+      - be rails console
       - git status

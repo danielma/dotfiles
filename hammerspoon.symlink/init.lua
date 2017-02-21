@@ -31,7 +31,7 @@ apps = {
    {'e', 'Emacs'},
    {'c', 'Google Chrome'},
    {'g', '/Applications/Resolutions.app'},
-   {'i', 'iTunes'},
+   {'i', 'Spotify'},
    {'s', 'Slack'},
    {'t', 'iTerm'},
    {'k', 'Spark'},
@@ -52,10 +52,10 @@ for i, app in ipairs(apps) do
   )
 end
 
--- Exit launch mode with enter
+-- Exit launch mode with escape
 appModal:bind(
   {},
-  'return',
+  'escape',
   function()
     appModal:exit()
   end
