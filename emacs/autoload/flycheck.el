@@ -39,3 +39,4 @@
 
 (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 (add-hook 'after-init-hook 'flycheck-setup)
+(evil-set-initial-state 'flycheck-error-list-mode 'emacs) 
