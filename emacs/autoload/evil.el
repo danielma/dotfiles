@@ -113,6 +113,8 @@
 
         (define-key map "]" 'buf-move-right)
         (define-key map "[" 'buf-move-left)
+        (define-key map "{" 'buf-move-up)
+        (define-key map "}" 'buf-move-down)
         map))
 
 (evil-leader/set-key

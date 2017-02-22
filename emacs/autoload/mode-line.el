@@ -56,6 +56,11 @@
   "Accented mode-line segment"
   :group 'mode-line)
 
+(defface mode-line-accent-inactive
+  '((t (:inherit mode-line-inactive)))
+  "Inactive accented mode-line segment"
+  :group 'mode-line)
+
 (defface mode-line-dark-active
   '((t (:inherit mode-line)))
   "Darked mode-line segment"
