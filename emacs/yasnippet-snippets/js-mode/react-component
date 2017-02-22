@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: react-component
+# key: react-component
+# --
+import React from "react"
+
+export default React.createClass({
+  displayName: "`(s-upper-camel-case (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))`",
+
+  render() {
+    return (
+      <div></div>
+    )
+  },
+})

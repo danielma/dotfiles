@@ -33,4 +33,5 @@
 (magit-define-popup-action 'magithub-dispatch-popup
   ?h "Browse Default" 'my/magithub-browse-default)
 
-(setq magithub-features '((t . t)))
+(setq magithub-features '((pull-request-checkout . t)))
+(magithub-feature-autoinject 'all)
