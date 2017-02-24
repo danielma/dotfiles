@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: policy test scaffold
+# key: test:policy
+# --
+require "test_helper"
+
+class `(s-upper-camel-case (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))` < ActiveSupport::TestCase
+  def policy
+    described_class.new(person, ${1:record})
+  end
+
+  def person
+    @person ||= people(:${2:pico})
+  end
+
+  def $1
+    @$1 ||= $1s(:$3)
+  end
+
+  test "#show?" do
+    assert_policy :show?$0
+  end
+end
