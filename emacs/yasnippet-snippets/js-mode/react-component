@@ -1,15 +1,18 @@
 # -*- mode: snippet -*-
 # name: react-component
-# key: react-component
+# key: r:component
 # --
 import React from "react"
+const { string } = React.PropTypes
 
 export default React.createClass({
   displayName: "`(s-upper-camel-case (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))`",
 
   render() {
     return (
-      <div></div>
+      <div>
+        $0
+      </div>
     )
   },
 })

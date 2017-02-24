@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: react-props
+# key: r:dp
+# --
+getDefaultProps() {
+  return {
+    $0,
+  }
+},

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: react-proptypes
+# key: r:pt
+# --
+propTypes: {
+  $0
+},

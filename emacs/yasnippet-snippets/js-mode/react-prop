@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: react-prop
+# key: r:p
+# --
+${1:name}: ${2:type}${3:.isRequired},$0
