@@ -20,9 +20,10 @@ git_dirty() {
   else
     if [[ $($git status --porcelain) == "" ]]
     then
-      echo "on $(git_project) %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
+      # echo "%{$bg[red]%} %{$reset_color%}%{$fg[red]%}\u25b3%{$reset_color%} %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
+      echo "%{$fg_bold[black]%}: %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
     else
-      echo "on $(git_project) %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
+      echo "%{$fg_bold[black]%}: %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
     fi
   fi
 }
@@ -67,7 +68,7 @@ prompt_time() {
   echo "%{$fg[magenta]%}%D{%r}%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push)\n\u26A1 '
+export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push)\n%{$fg_bold[black]%}\u26A1%{$reset_color%} '
 # export RPROMPT="$(prompt_time)"
 
 precmd() {
