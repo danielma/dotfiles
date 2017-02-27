@@ -6,6 +6,8 @@ then
   alias git=$hub_path
 fi
 
+source aliases.secret.zsh
+
 # The rest of my fun git aliases
 alias gl='git pull --prune'
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
@@ -70,10 +72,6 @@ function deploy-me-to-staging() {
     CURRENT_BRANCH=$(git symbolic-ref HEAD | sed 's/refs\/heads\///')
     staging && git merge $CURRENT_BRANCH --no-edit && git push && staging-deploy
   fi
-}
-
-function staging-deploy() {
-  (secret-work-deploy && terminal-notifier -message "Deploy succeeded") &
 }
 
 function groot() {
