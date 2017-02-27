@@ -68,7 +68,7 @@ prompt_time() {
   echo "%{$fg[magenta]%}%D{%r}%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push)\n%{$fg_bold[black]%}\u276F%{$reset_color%} '
+export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push)\n%F{20}\u276F%{$reset_color%} '
 # export RPROMPT="$(prompt_time)"
 
 precmd() {
