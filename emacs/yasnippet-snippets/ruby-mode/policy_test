@@ -4,7 +4,7 @@
 # --
 require "test_helper"
 
-class `(s-upper-camel-case (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))` < ActiveSupport::TestCase
+class `(s-join "" (mapcar 'capitalize (s-split "_" (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))))` < ActiveSupport::TestCase
   def policy
     described_class.new(person, ${1:record})
   end

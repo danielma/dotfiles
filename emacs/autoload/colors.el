@@ -43,7 +43,7 @@
 
 (custom-theme-set-faces
  'session-face
- '(default ((t (:weight normal :height 120 :width normal :family "Input Mono")))))
+ '(default ((t (:weight normal :height 120 :width normal :family "SF Mono")))))
 
 (provide-theme 'session-face)
 
