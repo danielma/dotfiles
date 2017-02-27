@@ -21,4 +21,31 @@
       (--filter (string-prefix-p "base16-" it) (mapcar 'symbol-name custom-enabled-themes))
     (disable-theme (intern it)))
   (load-theme (intern (concat "base16-" theme)) t)
+  (enable-theme 'session-face)
   )
+
+(defun my/set-custom-face (font)
+  "Interactively set the FONT for the custom theme."
+  (interactive
+   (let* ((completion-ignore-case t)
+          (font (completing-read "Font name: "
+                                 ;; x-list-fonts will fail with an error
+                                 ;; if this frame doesn't support fonts.
+                                 (x-list-fonts "*" nil (selected-frame))
+                                 nil nil nil nil
+                                 (frame-parameter nil 'font))))
+     (list font)))
+  (custom-theme-set-faces
+   'session-face
+   `(default ((t (:weight normal :width normal :slant normal :font ,font))))))
+
+(deftheme session-face)
+
+(custom-theme-set-faces
+ 'session-face
+ '(default ((t (:weight normal :height 120 :width normal :family "Input Mono")))))
+
+(provide-theme 'session-face)
+
+(enable-theme 'session-face)
+ ;;; colors.el ends here

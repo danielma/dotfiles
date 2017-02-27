@@ -128,6 +128,7 @@
   "cd" 'cd
   "cl" 'custom-comment-line
   "ct" 'my/base16-set-theme
+  "cf" 'my/set-custom-face
 
   "dr" 'reveal-in-finder
 
