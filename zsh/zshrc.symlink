@@ -4,10 +4,7 @@ export ZSH=$HOME/.dotfiles
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Code
 
-if [[ -a work.secret.zsh ]]
-then
-  source work.secret.zsh
-fi
+source work.secret.zsh
 
 # all of our zsh files
 typeset -U config_files
