@@ -6,7 +6,7 @@ then
   alias git=$hub_path
 fi
 
-source aliases.secret.zsh
+source $ZSH/git/aliases.secret.zsh
 
 # The rest of my fun git aliases
 alias gl='git pull --prune'
