@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: policy scope test scaffold
+# key: test:policy_scope
+# --
+class ScopeTest < ActiveSupport::TestCase
+  def subject
+    described_class.new(person, scope).resolve
+  end
+
+  def person
+    @person ||= people(:${1:pico})
+  end
+
+  def scope
+    @scope ||= ${2:Model}
+  end
+
+  test "includes a $2" do
+    assert_includes subject, $2.first$0
+  end
+end
