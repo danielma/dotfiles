@@ -15,6 +15,19 @@
 (define-key global-map (kbd "M-s-˙") 'evil-window-left)
 (define-key global-map (kbd "M-s-¬") 'evil-window-right)
 
+(defun system-paste ()
+  "Always paste from the system clipboard."
+  (interactive)
+  (evil-paste-after 1 ?+))
+
+(defun system-yank ()
+  "Always yank from the system clipboard."
+  (interactive)
+  (apply 'evil-yank (append (evil-operator-range t) '(?+))))
+
+(global-set-key (kbd "s-v") 'system-paste)
+(global-set-key (kbd "s-c") 'system-yank)
+
 (defun eval-and-replace ()
   "Replace the preceding sexp with its value."
   (interactive)

@@ -19,6 +19,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
+
 (setq package-list (quote (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar fill-column-indicator yaml-mode elscreen evil-magit web-mode magit projectile-rails helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord smartparens ace-jump-mode diff-hl coffee-mode json-mode solarized-theme company browse-at-remote flycheck lua-mode evil-visualstar evil-multiedit nlinum nlinum-relative ruby-refactor magithub buffer-move swift-mode)))
 
 (dolist (package package-list)
@@ -225,6 +226,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (" hl-p" "company" "yas" "Projectile" "ing" "LR" "Undo-Tree" "Abbrev" "hs")))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
+ '(select-enable-clipboard nil)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(sml/directory-truncation-string "")
  '(sml/mode-width (quote full))
@@ -287,3 +289,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    ["#eee8d5" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#073642"])
  '(xterm-color-names-bright
    ["#fdf6e3" "#cb4b16" "#93a1a1" "#839496" "#657b83" "#6c71c4" "#586e75" "#002b36"]))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
