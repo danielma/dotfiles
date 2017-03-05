@@ -50,6 +50,8 @@
 (global-evil-leader-mode)
 (evil-leader/set-leader "<SPC>")
 
+(load (expand-file-name "~/.dotfiles/emacs/text-tools.el"))
+
 ;; LOAD ALL THE THINGS
 (dolist (elt (file-expand-wildcards "~/.dotfiles/emacs/autoload/*.el"))
   (load elt))

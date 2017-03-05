@@ -29,8 +29,6 @@
   (kbd (concat evil-leader/leader "o"))
   my/ruby-refactor-mode-command-map)
 
-ruby-refactor-mode-map
-
 (add-to-list 'hs-special-modes-alist
              '(ruby-mode
                "\\(def\\|do\\)" "\\(end\\|end\\)" "#"

@@ -165,6 +165,8 @@
   "tj" 'elscreen-select-and-goto
   "tt" 'elscreen-toggle-display-tab
 
+  "T" text-tools-map
+
   "w" my/evil-window-map
 
   "," 'ace-jump-char-mode

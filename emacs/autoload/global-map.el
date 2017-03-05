@@ -23,7 +23,8 @@
 (defun system-yank ()
   "Always yank from the system clipboard."
   (interactive)
-  (apply 'evil-yank (append (evil-operator-range t) '(?+))))
+  (apply 'evil-yank (append (evil-operator-range t) '(?+)))
+  (evil-normal-state))
 
 (global-set-key (kbd "s-v") 'system-paste)
 (global-set-key (kbd "s-c") 'system-yank)
