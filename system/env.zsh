@@ -1,1 +1,1 @@
-export EDITOR='emacsclient -t'
+export EDITOR='nvim'
