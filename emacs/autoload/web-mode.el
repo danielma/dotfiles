@@ -25,6 +25,8 @@
   (flycheck-mode (cond ((equal web-mode-content-type "jsx") t)
                        ((equal web-mode-content-type "javascript") t)
                        (t nil)))
+  (setq-local electric-indent-chars
+              (append "{};" electric-indent-chars))
   (if (equal web-mode-engine "php")
       (modify-syntax-entry ?_ "w"))
   (if (equal web-mode-content-type "javascript")

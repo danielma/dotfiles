@@ -228,9 +228,9 @@ an alternate theme for use in the terminal.")
      (mode-line-flycheck-warning                   :background base09
                                                    :foreground base07
                                                    :box (:line-width -1 :color base09))
-     (mode-line-flycheck-info                      :background base0A
+     (mode-line-flycheck-info                      :background base0B
                                                    :foreground base07
-                                                   :box (:line-width -1 :color base0A))
+                                                   :box (:line-width -1 :color base0B))
      (mode-line-flycheck-ok                        :background base0B
                                                    :foreground base07
                                                    :box (:line-width -1 :color base0B))

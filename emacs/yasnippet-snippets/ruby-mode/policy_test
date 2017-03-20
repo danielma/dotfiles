@@ -5,16 +5,14 @@
 require "test_helper"
 
 class `(s-join "" (mapcar 'capitalize (s-split "_" (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))))` < ActiveSupport::TestCase
+  attr_reader :person, ${1:record}
+
   def policy
-    described_class.new(person, ${1:record})
+    described_class.new(person, $1)
   end
 
   def person
     @person ||= people(:${2:pico})
-  end
-
-  def $1
-    @$1 ||= $1s(:$3)
   end
 
   test "#show?" do

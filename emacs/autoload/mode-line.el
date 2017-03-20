@@ -195,8 +195,8 @@
 (defun my/mode-line-guard-status ()
   "Full guard mode line string."
   (if (eq mode-line-guard-status 'ok)
-      `("" (:propertize " \u2694\uFE0E " face ,(my/mode-line-face 'accent)))
-    `("" (:propertize " \u2694\uFE0E " face ,(my/mode-line-flycheck-face 'error)))
+      `("" (:propertize " \u2694 " face ,(my/mode-line-face 'accent)))
+    `("" (:propertize " \u2694 " face ,(my/mode-line-flycheck-face 'error)))
     ))
 
 (setq mode-line-guard-status 'ok)
