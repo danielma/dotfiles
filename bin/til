@@ -1,0 +1,29 @@
+CODE="~/Code"
+TMPFILE=$(mktemp /tmp/til.XXXXXX)
+
+emacsclient -t -e "(progn (find-file \"$TMPFILE\") (markdown-mode))"
+CONTENTS=$(cat $TMPFILE)
+rm $TMPFILE
+
+if [ -z "$CONTENTS" ]; then
+    echo "Empty TIL. I guess you didn't learn anything?"
+    exit
+fi
+
+DATE=$(date +"%Y-%m-%d")
+FILENAME="til-$DATE.md"
+
+cat <<EOF > ~/Code/danielma/blog.unsure.tech/content/post/$FILENAME
++++
+title = "TIL $DATE"
+date = "`gdate +%Y-%m-%dT%H:%M:%S%:z`"
+categories = [ "TIL" ]
++++
+
+$CONTENTS
+EOF
+
+echo "Writing to $FILENAME"
+cd ~/Code/danielma/blog.unsure.tech/
+echo "Now it's time to publish"
+

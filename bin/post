@@ -1,0 +1,2 @@
+cd ~/Code/danielma/blog.unsure.tech/
+hugo new post/$1.md --editor e
