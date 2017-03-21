@@ -18,7 +18,8 @@
 (defun system-paste ()
   "Always paste from the system clipboard."
   (interactive)
-  (evil-paste-after 1 ?+))
+  (evil-paste-before 1 ?+)
+  (forward-char))
 
 (defun system-yank ()
   "Always yank from the system clipboard."
