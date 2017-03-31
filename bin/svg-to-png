@@ -1,0 +1,5 @@
+#!/bin/bash
+
+
+
+        qlmanage -t -s ${2:-600} -o . $1

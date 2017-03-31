@@ -15,6 +15,8 @@
 (define-key global-map (kbd "M-s-˙") 'evil-window-left)
 (define-key global-map (kbd "M-s-¬") 'evil-window-right)
 
+(define-key global-map (kbd "C-h C-f") 'find-function)
+
 (defun system-paste ()
   "Always paste from the system clipboard."
   (interactive)

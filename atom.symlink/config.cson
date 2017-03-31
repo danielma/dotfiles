@@ -6,6 +6,7 @@
       "exception-reporting"
       "metrics"
       "react"
+      "language-gfm"
     ]
     hideGitIgnoredFiles: true
     ignoredNames: [
@@ -33,8 +34,7 @@
     softWrapAtPreferredLineLength: true
   "ide-flow":
     flowPath: "/usr/local/bin/flow"
-  linter:
-    showErrorPanel: false
+  linter: {}
   "linter-eslint": {}
   "linter-rubocop":
     command: "/Users/danielma/.rbenv/shims/rubocop"

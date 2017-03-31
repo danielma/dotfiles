@@ -121,6 +121,7 @@
   "fs" 'save-buffer-always
   "fq" 'delete-window
   "fl" 'sr-speedbar-toggle
+  "fr" 'my/edit-reload
 
   "bd" 'kill-this-buffer
   "bs" 'switch-to-buffer
@@ -134,11 +135,11 @@
 
   "ee" 'edit-emacs
   "es" 'edit-scratch
-  "er" 'my/edit-reload
 
   "gs" 'magit-status
   "gc" 'magit-commit
   "gd" 'magit-diff-buffer-file
+  "gl" 'magit-log-buffer-file
   "gb" 'magit-blame
   "gB" 'browse-at-remote
 
