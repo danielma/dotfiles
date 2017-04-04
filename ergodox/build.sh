@@ -8,6 +8,7 @@ CMakeListsPath=$CONTROLLER_DIR
 
 
 mkdir "$LAYOUTS_DIR/mine"
+rm $LAYOUTS_DIR/mine/*.kll
 cp *.kll "$LAYOUTS_DIR/mine/"
 
 #
@@ -36,7 +37,7 @@ BaseMap="scancode_map leftHand slave1 rightHand"
 # This is the default layer of the keyboard
 # NOTE: To combine kll files into a single layout, separate them by spaces
 # e.g.  DefaultMap="mylayout mylayoutmod"
-DefaultMap="mine/MDErgo1-Default-0 lcdFuncMap"
+DefaultMap="mine/MDErgo1-Default-0 lcdFuncMap mine/image"
 
 # This is where you set the additional layers
 # NOTE: Indexing starts at 1
