@@ -215,8 +215,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "BACKSLASH",
-                    "label": "\\"
+                    "key": "TAB",
+                    "label": "TAB"
                 }
             }
         },
@@ -293,8 +293,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "TAB",
-                    "label": "TAB"
+                    "key": "F18",
+                    "label": "F18"
                 }
             }
         },
@@ -784,6 +784,10 @@
                 "0": {
                     "key": "H",
                     "label": "H"
+                },
+                "1": {
+                    "key": "LEFT",
+                    "label": "\u2190"
                 }
             }
         },
@@ -797,6 +801,10 @@
                 "0": {
                     "key": "J",
                     "label": "J"
+                },
+                "1": {
+                    "key": "DOWN",
+                    "label": "\u2193"
                 },
                 "2": {
                     "key": "P4",
@@ -815,6 +823,10 @@
                     "key": "K",
                     "label": "K"
                 },
+                "1": {
+                    "key": "UP",
+                    "label": "\u2191"
+                },
                 "2": {
                     "key": "P5",
                     "label": "P5"
@@ -831,6 +843,10 @@
                 "0": {
                     "key": "L",
                     "label": "L"
+                },
+                "1": {
+                    "key": "RIGHT",
+                    "label": "\u2192"
                 },
                 "2": {
                     "key": "P6",
