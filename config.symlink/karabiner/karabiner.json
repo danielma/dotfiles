@@ -6,7 +6,18 @@
     },
     "profiles": [
         {
-            "devices": [],
+            "devices": [
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 45133,
+                        "vendor_id": 7185
+                    },
+                    "ignore": true
+                }
+            ],
             "fn_function_keys": {
                 "f1": "vk_consumer_brightness_down",
                 "f10": "mute",

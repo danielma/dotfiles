@@ -141,8 +141,8 @@
             "h": 6,
             "layers": {
                 "0": {
-                    "key": "F16",
-                    "label": "F16"
+                    "key": "LGUI + SPACE",
+                    "label": "ALFRED"
                 }
             }
         },
