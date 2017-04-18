@@ -25,7 +25,7 @@
   "Rebase the current branch onto origin/master."
   (interactive)
   (magit-fetch-branch "origin" "master" nil)
-  (magit-rebase "origin/master" "-i --autosquash"))
+  (magit-rebase "origin/master" '("-i" "--autosquash")))
 
 (magit-define-popup-action 'magithub-pull-request-popup
   ?p "Simple Pull Request" 'my/magithub-pull-request)

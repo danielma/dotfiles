@@ -1,5 +1,8 @@
 #!/bin/bash
 
-
-
-        qlmanage -t -s ${2:-600} -o . $1
+NEWNAME=$(echo $1 | cut -f 1 -d '.')
+HEIGHT=${3:-600}
+rsvg-convert -h $HEIGHT -o "$NEWNAME-$HEIGHT.png" $1
+# convert -alpha on -background transparent -resize $SIZE "MSVG:$1" "$NEWNAME-$SIZE.png"
+# qlmanage -t -s ${2:-600} -o . $1
+# mv "$1.png" "$NEWNAME-$SIZE.png"
