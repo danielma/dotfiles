@@ -25,6 +25,7 @@ U"D" : U"LBRACE";
 U"S" : '(';
 U"A" : U"BACKTICK";
 U"TAB" : '~';
+U"V" : U"MINUS";
 U"FUNCTION6" : U"F7";
 U"6" : U"F8";
 U"7" : U"F9";

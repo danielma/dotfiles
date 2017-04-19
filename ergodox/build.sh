@@ -48,6 +48,7 @@ DefaultMap="mine/MDErgo1-Default-0 lcdFuncMap mine/image"
 PartialMaps[1]="mine/MDErgo1-Default-1 lcdFuncMap"
 PartialMaps[2]="mine/MDErgo1-Default-2 lcdFuncMap"
 PartialMaps[3]="mine/MDErgo1-Default-3 lcdFuncMap"
+PartialMaps[4]="mine/MDErgo1-Default-4 lcdFuncMap"
 
 
 ##########################
