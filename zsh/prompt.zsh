@@ -72,5 +72,4 @@ export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push)\n%F{20}\u276F%{$res
 # export RPROMPT="$(prompt_time)"
 
 precmd() {
-  title "zsh" "%m" "%55<...<%~"
 }
