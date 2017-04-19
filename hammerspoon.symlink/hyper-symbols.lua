@@ -1,5 +1,5 @@
 -- A global variable for the Hyper Mode
-hyperModal = hs.hotkey.modal.new({}, 'F17')
+hyperModal = hs.hotkey.modal.new({})
 
 -- Enter Hyper Mode when F18 (Hyper) is pressed
 pressedF18 = function()

@@ -95,6 +95,17 @@ hyperBind('/', function()
     hs.grid.show(function() hs.grid.setGrid(gridSize) end)
   end)
 
+hs.hotkey.bind(
+    'cmd-ctrl-alt-shift',
+    '/',
+    nil,
+    function()
+      local gridSize = hs.grid.getGrid()
+      hs.grid.setGrid("4x4")
+      hs.grid.show(function() hs.grid.setGrid(gridSize) end)
+    end
+)
+
 -- undo for window operations
 undo = {}
 

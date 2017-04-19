@@ -50,6 +50,15 @@ for i, app in ipairs(apps) do
       appModal:exit()
     end
   )
+
+  hs.hotkey.bind(
+     'cmd-ctrl-alt-shift',
+     app[1],
+     nil,
+     function()
+        launch(app[2])
+     end
+  )
 end
 
 -- Exit launch mode with escape
