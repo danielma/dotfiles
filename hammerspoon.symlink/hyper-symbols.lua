@@ -73,7 +73,7 @@ for i,key in ipairs(hyperTable) do
     key,
     function()
        hyperModal.triggered = true
-       hs.eventtap.keyStroke({'cmd','shift','ctrl'}, key)
+       hs.eventtap.keyStroke({'alt','shift','ctrl'}, key)
     end
   )
 end
