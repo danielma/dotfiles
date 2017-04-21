@@ -21,7 +21,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------| Mouse|           | Meh  |------+------+------+------+------+--------|
  * | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |//Ctrl| RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |Grv/L1| Ctrl | NO   | Lalt | LGui |                                       | Symb |  <   |  v   |  ^   |   >  |                  
+ *   |Grv/L1| Ctrl | c-s  | Lalt | LGui |                                       | Symb |  <   |  v   |  ^   |   >  |                  
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        | Vol- | Vol+ |       | Pause| Next   |
@@ -39,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,         KC_Q,          KC_W,             KC_E,           KC_R,   KC_T,   LGUI(KC_SPC),
         KC_F18,         LT(MDIA, KC_A),KC_S,             KC_D,           KC_F,   KC_G,
         KC_LSFT,        CTL_T(KC_Z),   KC_X,             KC_C,           KC_V,   KC_B,   TG(MDIA),       
-        LT(SYMB,KC_GRV),KC_LCTL,       KC_NO,            KC_LALT,        KC_LGUI,
+        LT(SYMB,KC_GRV),KC_LCTL,       LCTL(KC_S),       KC_LALT,        GUI_T(KC_SPC),
                                                                                  KC_VOLD,KC_VOLU,
                                                                                          KC_MUTE,
                                                                          KC_BSPC,KC_DEL, RESET,
