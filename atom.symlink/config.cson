@@ -1,4 +1,6 @@
 "*":
+  "atom-package-deps":
+    ignored: []
   "atom-typescript": {}
   core:
     disabledPackages: [

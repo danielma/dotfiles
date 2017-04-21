@@ -548,8 +548,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "END",
-                    "label": "END"
+                    "key": "LCK2",
+                    "label": "LOCK-2"
                 }
             }
         },

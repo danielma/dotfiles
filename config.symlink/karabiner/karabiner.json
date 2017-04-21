@@ -15,6 +15,16 @@
                         "product_id": 45133,
                         "vendor_id": 7185
                     },
+                    "ignore": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 25700,
+                        "vendor_id": 65261
+                    },
                     "ignore": true
                 }
             ],
