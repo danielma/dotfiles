@@ -9,3 +9,4 @@ atom.symlink/blob-store
 
 git/gitconfig.symlink
 *.log
+/Alfred/Alfred.alfredpreferences/workflows/user.workflow.private-*
