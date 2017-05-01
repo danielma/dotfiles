@@ -22,7 +22,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------| Mouse|           | Meh  |------+------+------+------+------+--------|
  * | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |  /   | LShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |Grv/L1| Ctrl | c-s  | Lalt | LGui |                                       | Symb |  <   |  v   |  ^   |   >  |                  
+ *   |Grv/L1| Ctrl | c-s  | Lalt | LGui |                                       | Symb |</LGui|  v   |  ^   |   >  |                  
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        | Vol- | Vol+ |       | Pause| Next   |
@@ -45,11 +45,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                                          KC_MUTE,
                                                                          KC_BSPC,KC_DEL, RESET,
         // right hand
-             KC_NO,       KC_6,   KC_7,    KC_8,   KC_9,   KC_0,             KC_EQL, 
-             KC_FN2,      KC_Y,   KC_U,    KC_I,   KC_O,   KC_P,             KC_MINUS,
-                          KC_H,   KC_J,    KC_K,   KC_L,   KC_SCLN,          KC_QUOT,
-             MEH_T(KC_NO),KC_N,   KC_M,    KC_COMM,KC_DOT, KC_SLSH,          KC_LSFT,
-                                  MO(SYMB),KC_LEFT,KC_DOWN,KC_UP,            KC_RIGHT,
+             KC_NO,       KC_6,   KC_7,    KC_8,          KC_9,   KC_0,             KC_EQL, 
+             KC_FN2,      KC_Y,   KC_U,    KC_I,          KC_O,   KC_P,             KC_MINUS,
+                          KC_H,   KC_J,    KC_K,          KC_L,   KC_SCLN,          KC_QUOT,
+             MEH_T(KC_NO),KC_N,   KC_M,    KC_COMM,       KC_DOT, KC_SLSH,          KC_LSFT,
+                                  MO(SYMB),GUI_T(KC_LEFT),KC_DOWN,KC_UP,            KC_RIGHT,
              KC_MPLY,        KC_MNXT,      
              KC_MPRV,
              RESET,  KC_ENT, KC_SPC
