@@ -11,6 +11,28 @@ local arrowMap = {
   Right = { half = {.5, 0,.5, 1}, movement = { 20, 0}, complement = "Up", resize = "Wider" },
 }
 
+local function mehBind(key, pressedFn, releasedFn, repeatFn)
+   return hs.hotkey.bind(
+      {"ctrl", "alt", "shift"}, 
+      key,
+      function()
+         if pressedFn then
+            pressedFn()
+         end
+      end,
+      function()
+         if releasedFn then
+            releasedFn()
+         end
+      end,
+      function()
+         if repeatFn then
+            repeatFn()
+         end
+      end
+   )
+end
+
 local function hyperBind(key, pressedFn, releasedFn, repeatFn)
    return hyperModal:bind(
       {},
@@ -72,16 +94,21 @@ hs.fnutils.each({"Left", "Right", "Up", "Down"}, function(arrow)
       function() undo:push(); hs.grid['pushWindow'..arrow](fw()) end
     )
 
-    hs.hotkey.bind({"ctrl", "alt", "shift"}, arrow, -- resize windows by grid increments
-      function() undo:push(); hs.grid['resizeWindow'..arrowMap[arrow].resize](fw()) end
-    )
-
+    mehBind(arrow, rect(arrowMap[arrow].half))
+    -- hs.hotkey.bind({"ctrl", "alt", "shift"}, arrow, -- resize windows by grid increments
+    --   -- function() undo:push(); hs.grid['resizeWindow'..arrowMap[arrow].resize](fw()) end
+    --   rect(arrowMap[arrow].half)
+    -- )
   end)
 
 hyperBind("7", rect({ .0, 0, .5, .5 }))
 hyperBind("9", rect({ .5, 0, .5, .5 }))
 hyperBind("1", rect({ 0, .5, .5, .5 }))
 hyperBind("3", rect({ .5, .5, .5, .5 }))
+mehBind("7", rect({ .0, 0, .5, .5 }))
+mehBind("9", rect({ .5, 0, .5, .5 }))
+mehBind("1", rect({ 0, .5, .5, .5 }))
+mehBind("3", rect({ .5, .5, .5, .5 }))
 
 hs.hotkey.bind({"shift", "alt", "cmd"}, "Left", function() fw():moveOneScreenWest() end)
 hs.hotkey.bind({"shift", "alt", "cmd"}, "Right", function() fw():moveOneScreenEast() end)
