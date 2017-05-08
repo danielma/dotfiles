@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# UN-WIPs if the last commit was a WIP commit
+
+if [[ $(git log -n 1 --format="%s") == "WIP" ]]
+then
+    git reset HEAD~
+else
+    echo "Nope! Not a wip commit"
+fi
+
