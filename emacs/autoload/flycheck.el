@@ -8,6 +8,8 @@
     (when (and root eslint (file-executable-p eslint))
       (setq-local flycheck-javascript-eslint-executable eslint))))
 
+(setq flycheck-javascript-eslint-executable "eslint_d")
+
 (defun flycheck-setup ()
   (global-flycheck-mode)
   (setq-default
@@ -37,6 +39,7 @@
               command))))
   (add-to-list 'flycheck-checkers 'javascript-flow t))
 
-(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 (add-hook 'after-init-hook 'flycheck-setup)
+;; (add-hook 'flycheck-before-syntax-check-hook #'my/eslint-fix)
 (evil-set-initial-state 'flycheck-error-list-mode 'emacs) 
