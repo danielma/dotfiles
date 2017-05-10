@@ -16,7 +16,7 @@ git_branch() {
 wip_status() {
     if [[ $(git log -n 1 --format="%s") == "WIP" ]]
     then
-        echo "%{$fg_bold[green]%}\u2691%{$reset_color%}"
+        echo " %{$fg_bold[green]%}\u2691%{$reset_color%}"
     fi
 }
 
@@ -28,9 +28,9 @@ git_dirty() {
     if [[ $($git status --porcelain) == "" ]]
     then
       # echo "%{$bg[red]%} %{$reset_color%}%{$fg[red]%}\u25b3%{$reset_color%} %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
-      echo "%{$fg_bold[black]%}: %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%} $(wip_status)"
+      echo "%{$fg_bold[black]%}: %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}$(wip_status)"
     else
-      echo "%{$fg_bold[black]%}: %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%} $(wip_status)"
+      echo "%{$fg_bold[black]%}: %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}$(wip_status)"
     fi
   fi
 }
