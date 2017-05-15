@@ -1654,11 +1654,11 @@
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>972 1053 616 174 0 0 2560 1577 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>-1030 393 620 622 -1440 185 1440 900 </string>
+	<string>-1030 376 700 622 -1440 168 1440 900 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>348 117 618 519 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>0 402 918 498 0 0 1440 900 </string>
+	<string>83 402 918 498 0 0 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
@@ -1877,7 +1877,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>11.524750158629439</real>
+			<real>18.591997754783289</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -2428,7 +2428,7 @@
 			<key>Thin Strokes</key>
 			<integer>2</integer>
 			<key>Transparency</key>
-			<real>0.029389835138016997</real>
+			<real>0.048116216715976337</real>
 			<key>Triggers</key>
 			<array>
 				<dict>
@@ -3465,7 +3465,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-02-22T00:39:36Z</date>
+	<date>2017-05-10T23:59:52Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Selection Respects Soft Boundaries</key>
@@ -6467,7 +6467,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.14</string>
+	<string>3.0.15</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

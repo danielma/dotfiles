@@ -85,7 +85,7 @@ set -g status-position bottom
 set -g status-bg colour18
 set -g status-fg colour21
 set -g status-attr dim
-set -g status-left ''
+set -g status-left '#[bg=colour8] #(echo $KEYMAP) '
 set -g status-right '#[bg=colour16,fg=colour18] #(cat ~/Music/.musicBar) #[fg=colour18,bg=colour3] %I:%M '
 set -g status-right-length 90
 set -g status-left-length 90

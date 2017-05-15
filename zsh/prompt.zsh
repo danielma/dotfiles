@@ -75,6 +75,25 @@ prompt_time() {
   echo "%{$fg[magenta]%}%D{%r}%{$reset_color%}"
 }
 
+prompt_vi_status() {
+    echo ${${KEYMAP/vicmd/ NORMAL}/(main|viins)/INSERT}
+}
+    
+
+function zle-line-init zle-keymap-select {
+    # VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+    # RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(git_custom_status) $EPS1"
+    if [[ $TMUX ]]; then
+        tmux setenv -g KEYMAP $(prompt_vi_status)
+        tmux refresh-client -S
+    fi
+    # zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+export KEYTIMEOUT=1
+
 export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push)\n%F{20}\u276F%{$reset_color%} '
 # export RPROMPT="$(prompt_time)"
 
