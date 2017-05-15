@@ -37,7 +37,7 @@
                                                ("dsc" "described_class")
                                                ("sbj" "subject")
                                                ("aseq" "assert_equal")
-                                               ("asprd", "assert_predicate")
+                                               ("aspd" "assert_predicate")
                                                ("ass" "assert")
                                                ("AS::" "ActiveSupport::")
                                                ("AR::" "ActiveRecord::")))
