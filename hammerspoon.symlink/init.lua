@@ -32,6 +32,7 @@ apps = {
    {'c', 'Google Chrome'},
    {'g', '/Applications/Resolutions.app'},
    {'i', 'Spotify'},
+   {'j', 'JQBX'},
    {'s', 'Slack'},
    {'t', 'iTerm'},
    {'k', 'Spark'},
