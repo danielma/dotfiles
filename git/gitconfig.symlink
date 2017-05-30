@@ -52,3 +52,5 @@
 	required = true
 [remote "origin"]
 	prune = true
+[github]
+	user = danielma
