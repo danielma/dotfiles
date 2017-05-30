@@ -1,0 +1,5 @@
+(defun my/delete-this-file ()
+  (interactive)
+  (delete-file buffer-file-name)
+  (kill-this-buffer)
+  )

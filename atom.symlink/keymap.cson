@@ -1,0 +1,10 @@
+'atom-text-editor.vim-mode.normal-mode':
+  'space': ''
+  'space b': 'fuzzy-finder:toggle-buffer-finder'
+  'space w h': 'window:focus-pane-left'
+  'space w j': 'window:focus-pane-down'
+  'space w k': 'window:focus-pane-up'
+  'space w l': 'window:focus-pane-right'
+
+'atom-text-editor.vim-mode:not(.insert-mode)':
+  'space': 'window:focus-pane-right'

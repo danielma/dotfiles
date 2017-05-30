@@ -33,7 +33,7 @@ apps = {
    {'g', '/Applications/Resolutions.app'},
    {'i', 'Spotify'},
    {'j', 'JQBX'},
-   {'s', 'Slack'},
+   {'s', '/Applications/Slack.app'},
    {'t', 'iTerm'},
    {'k', 'Spark'},
    {'r', 'Trello'},

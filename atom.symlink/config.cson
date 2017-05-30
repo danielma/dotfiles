@@ -20,10 +20,7 @@
       "vendor"
     ]
     telemetryConsent: "limited"
-    themes: [
-      "atom-dark-ui"
-      "base16-tomorrow-dark-theme"
-    ]
+    titleBar: "custom-inset"
   editor:
     fontFamily: "SFMono-Regular"
     fontSize: 12
@@ -37,9 +34,12 @@
   "ide-flow":
     flowPath: "/usr/local/bin/flow"
   linter: {}
-  "linter-eslint": {}
+  "linter-eslint":
+    fixOnSave: true
   "linter-rubocop":
     command: "/Users/danielma/.rbenv/shims/rubocop"
+  "linter-ui-default":
+    showPanel: true
   "markdown-writer": {}
   pigments: {}
   "release-notes":
@@ -50,6 +50,8 @@
       "source.gfm"
       "text.git-commit"
     ]
+  "split-diff":
+    ignoreWhitespace: true
   "vim-mode": {}
   welcome:
     showOnStartup: false

@@ -14,7 +14,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * | Grv    |   1  |   2  |   3  |   4  |   5  |Escape|           | No   |   6  |   7  |   8  |   9  |   _  |   =    |
+ * | Grv    |   -  |   _  |   3  |   4  |   5  |Escape|           | No   |   6  |   7  |   8  |   9  |   _  |   =    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |Tab/SYMB|   Q  |   W  |   E  |   R  |   T  | cmd  |           | Hyper|   Y  |   U  |   I  |   O  |   P  |   -    |
  * |--------+------+------+------+------+------| spc  |           |      |------+------+------+------+------+--------|
@@ -36,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Otherwise, it needs KC_*
 [BASE] = KEYMAP(  // layer 0 : default
         // left hand
-        KC_GRV,         KC_1,          KC_2,             KC_3,           KC_4,   KC_5,   KC_ESC,
+        KC_GRV,         KC_MINUS,      KC_UNDS,          KC_3,           KC_4,   KC_5,   KC_ESC,
         LT(SYMB,KC_TAB),KC_Q,          KC_W,             KC_E,           KC_R,   KC_T,   LGUI(KC_SPC),
         MEH_T(KC_ESC),  LT(MDIA, KC_A),KC_S,             KC_D,           KC_F,   KC_G,
         SFT_T(KC_CAPS), CTL_T(KC_Z),   KC_X,             KC_C,           KC_V,   KC_B,   TG(SYMB),       

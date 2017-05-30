@@ -1,0 +1,181 @@
+import React from "react"
+import _, { noop } from "lodash"
+import LocationForm from "./location_form"
+import locationApi from "api/location"
+
+const { number, string, bool, oneOfType, func } = React.PropTypes
+
+const LocationSelect = React.createClass({
+  propTypes: {
+    currentLocationId: oneOfType([number, string]),
+    name: string,
+    groupId: number,
+    adminPermissions: bool,
+    onChange: func,
+  },
+
+  getDefaultProps() {
+    return {
+      adminPermissions: false,
+      onChange: noop,
+    }
+  },
+
+  getInitialState() {
+    return {
+      selectedLocationId: this.props.currentLocationId || "",
+      availableLocations: [],
+      displayPreferenceOptions: [],
+    }
+  },
+
+  componentDidMount() {
+    const { groupId } = this.props
+
+    locationApi.index(groupId).then(data => {
+      this.setState({
+        availableLocations: data.locations,
+        displayPreferenceOptions: data.display_preference_options,
+      })
+    })
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.currentLocationId !== nextProps.currentLocationId) {
+      this.setState({ selectedLocationId: nextProps.currentLocationId || "" })
+    }
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.state.selectedLocationId !== "new" &&
+      prevState.selectedLocationId !== this.state.selectedLocationId
+    ) {
+      this.props.onChange(this.state.selectedLocationId)
+    }
+  },
+
+  handleLocationSave(location, onReject) {
+    const { groupId } = this.props
+
+    locationApi.save({ location }, groupId).then(
+      data => {
+        this.setState({
+          availableLocations: data.locations,
+          selectedLocationId: data.id,
+        })
+      },
+      ({ jqXhr }) => onReject(jqXhr.responseJSON.errors)
+    )
+  },
+
+  handleLocationDelete(locationId) {
+    const { groupId } = this.props
+
+    locationApi.delete(locationId, groupId).then(data => {
+      this.setState({
+        availableLocations: data.locations,
+        selectedLocationId: "",
+      })
+    })
+  },
+
+  handleLocationCreateCancellation() {
+    this.setState({ selectedLocationId: this.props.currentLocationId || "" })
+  },
+
+  handleChange(event) {
+    this.setState({ selectedLocationId: event.target.value })
+  },
+
+  getSelectedAddress() {
+    const { groupId } = this.props
+    // eslint-disable-next-line no-unused-vars
+    const { displayPreferenceOptions } = this.state
+
+    if (this.state.selectedLocationId === "new") {
+      return { id: "new", group_id: groupId, display_preference: "approximate" }
+    }
+
+    return (
+      _.find(this.state.availableLocations, location => {
+        return (
+          location.id.toString() === this.state.selectedLocationId.toString()
+        )
+      }) || { id: null }
+    )
+  },
+
+  renderGroupLocations() {
+    const locations = _.filter(
+      this.state.availableLocations,
+      location => location.group_id
+    )
+    return this.renderLocationsOptgroup("Group Locations", locations)
+  },
+
+  renderSharedLocations() {
+    const locations = _.filter(
+      this.state.availableLocations,
+      location => !location.group_id
+    )
+    return this.renderLocationsOptgroup("Shared Locations", locations)
+  },
+
+  renderLocationsOptgroup(label, locations) {
+    if (locations.length === 0) {
+      return null
+    }
+
+    return (
+      <optgroup label={label}>
+        {locations.map(location => {
+          return (
+            <option key={location.id} value={location.id}>
+              {location.name}
+            </option>
+          )
+        })}
+      </optgroup>
+    )
+  },
+
+  render() {
+    const { selectedLocationId, displayPreferenceOptions } = this.state
+
+    return (
+      <div className="pane section__wrapper group-location-wrapper mb-0">
+        <div className="pane__body section__body">
+          <div className="mb-2">
+            <label className="label">Location:</label>
+            <select
+              onChange={this.handleChange}
+              value={selectedLocationId}
+              className="select"
+            >
+              <option value="">(no location)</option>
+              <option value="new">Create a new location...</option>
+              {this.renderGroupLocations()}
+              {this.renderSharedLocations()}
+            </select>
+          </div>
+          <LocationForm
+            location={this.getSelectedAddress()}
+            adminPermissions={this.props.adminPermissions}
+            onSave={this.handleLocationSave}
+            onDelete={this.handleLocationDelete}
+            onCreateCancellation={this.handleLocationCreateCancellation}
+            displayPreferenceOptions={displayPreferenceOptions}
+          />
+          <input
+            type="hidden"
+            name={this.props.name}
+            value={selectedLocationId}
+          />
+        </div>
+      </div>
+    )
+  },
+})
+
+export default LocationSelect
