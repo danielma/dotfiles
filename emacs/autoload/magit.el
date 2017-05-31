@@ -14,7 +14,7 @@
 (defun my/magithub-pull-request ()
   "Simple pull request command."
   (interactive)
-  (magithub--command-with-editor "pull-request" (magithub-pull-request-arguments)))
+  (magithub--command-with-editor "pull-request"))
 
 (defun my/magithub-browse-default ()
   "Browse the github repo."
@@ -27,8 +27,8 @@
   (magit-fetch-branch "origin" "master" nil)
   (magit-rebase "origin/master" '("-i" "--autosquash")))
 
-(magit-define-popup-action 'magithub-pull-request-popup
-  ?p "Simple Pull Request" 'my/magithub-pull-request)
+(magit-define-popup-action 'magithub-dispatch-popup
+  ?P "Simple Pull Request" 'my/magithub-pull-request)
 
 (magit-define-popup-action 'magithub-dispatch-popup
   ?h "Browse Default" 'my/magithub-browse-default)

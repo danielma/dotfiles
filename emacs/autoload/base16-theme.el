@@ -138,14 +138,14 @@ an alternate theme for use in the terminal.")
      (mode-line                                    :foreground base04
                                                    :background base02
                                                    :overline base0000
-                                                   :box (:line-width -1 :color base02))
+                                                   :box (:line-width 3 :color base02))
      (mode-line-buffer-id                          :foreground base07 :background nil)
      (mode-line-emphasis                           :foreground base06 :slant italic)
      (mode-line-highlight                          :foreground base0E :box nil :weight bold)
      (mode-line-inactive                           :foreground base03
                                                    :background base01
                                                    :overline base0000
-                                                   :box (:line-width -1 :color base01))
+                                                   :box (:line-width 3 :color base01))
      (region                                       :background base02)
      (secondary-selection                          :background base03)
      (error                                        :foreground base08 :weight bold)
@@ -625,10 +625,10 @@ an alternate theme for use in the terminal.")
      (custom-state                                 :foreground base0B)
 
      ;; elscreen
-     (elscreen-tab-background-face                 :background base01)
+     (elscreen-tab-background-face                 :background base01 :box (:line-width 9 :color base01))
      (elscreen-tab-other-screen-face               :foreground base04 :background base01)
      (elscreen-tab-current-screen-face             :foreground base07 :background base03)
-     (elscreen-tab-control-face                    :foreground base04)
+     (elscreen-tab-control-face                    :foreground base01)
 
      ;; mode line evil
      (mode-line-evil                          :foreground base06 :weight bold)

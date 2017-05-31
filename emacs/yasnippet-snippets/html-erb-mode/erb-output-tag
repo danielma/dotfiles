@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: erb output tag
+# key: tp
+# --
+<%= $1 %>$2

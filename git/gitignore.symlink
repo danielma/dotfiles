@@ -6,3 +6,5 @@ SCRATCH*
 Termfile
 
 .#*
+
+.dir-locals.el

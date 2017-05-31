@@ -2,7 +2,6 @@
 (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch)
 
 (defun my-ruby-mode-setup ()
-  (hs-minor-mode t)
   (setq ruby-insert-encoding-magic-comment nil)
   (modify-syntax-entry ?_ "w")
   )
@@ -29,10 +28,6 @@
   (kbd (concat evil-leader/leader "o"))
   my/ruby-refactor-mode-command-map)
 
-(add-to-list 'hs-special-modes-alist
-             '(ruby-mode
-               "\\(def\\|do\\)" "\\(end\\|end\\)" "#"
-               (lambda (arg) (ruby-end-of-block)) nil))
 (define-abbrev-table 'ruby-mode-abbrev-table '(
                                                ("dsc" "described_class")
                                                ("sbj" "subject")

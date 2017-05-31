@@ -6,7 +6,6 @@
   )
 
 (defun my-javascript-mode-setup ()
-  (hs-minor-mode 1)
   (eslintd-fix-mode)
   (modify-syntax-entry ?` "\"" js-mode-syntax-table)
   (setq-local electric-indent-chars
