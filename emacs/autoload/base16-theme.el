@@ -626,8 +626,8 @@ an alternate theme for use in the terminal.")
 
      ;; elscreen
      (elscreen-tab-background-face                 :background base01 :box (:line-width 9 :color base01))
-     (elscreen-tab-other-screen-face               :foreground base04 :background base01)
-     (elscreen-tab-current-screen-face             :foreground base07 :background base03)
+     (elscreen-tab-other-screen-face               :foreground base04 :background base01 :box (:line-width 9 :color base01))
+     (elscreen-tab-current-screen-face             :foreground base07 :background base03 :box (:line-width 9 :color base03))
      (elscreen-tab-control-face                    :foreground base01)
 
      ;; mode line evil

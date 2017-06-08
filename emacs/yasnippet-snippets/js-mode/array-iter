@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Simple array iterator
+# key: iter
+# --
+${1:map}(${2:x} => $2$3)$0

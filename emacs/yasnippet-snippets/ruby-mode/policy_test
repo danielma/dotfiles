@@ -5,7 +5,7 @@
 require "test_helper"
 
 class `(s-join "" (mapcar 'capitalize (s-split "_" (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))))` < ActiveSupport::TestCase
-  attr_reader :person, ${1:record}
+  attr_reader :person, :${1:record}
 
   def policy
     described_class.new(person, $1)
