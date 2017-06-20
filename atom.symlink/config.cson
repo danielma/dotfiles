@@ -21,9 +21,11 @@
     ]
     telemetryConsent: "limited"
     titleBar: "custom-inset"
+  drupal:
+    fileTypesPhp: "module,install,inc,test,profile"
   editor:
-    fontFamily: "SFMono-Regular"
-    fontSize: 12
+    fontFamily: "Input Mono Compressed"
+    fontSize: 15
     invisibles: {}
     lineHeight: 1.2
     preferredLineLength: 100
@@ -38,8 +40,7 @@
     fixOnSave: true
   "linter-rubocop":
     command: "/Users/danielma/.rbenv/shims/rubocop"
-  "linter-ui-default":
-    showPanel: true
+  "linter-ui-default": {}
   "markdown-writer": {}
   pigments: {}
   "release-notes":

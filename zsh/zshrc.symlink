@@ -79,7 +79,7 @@ export FZF_DEFAULT_OPTS='
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-export PATH="$(yarn global bin):$PATH"
+export PATH="$PATH:$(yarn global bin)"
 
 export NVM_DIR="/usr/local/var/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

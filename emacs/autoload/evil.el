@@ -30,6 +30,7 @@
 (define-key evil-normal-state-map "[b" 'previous-buffer)
 (define-key evil-normal-state-map "]b" 'next-buffer)
 (define-key evil-visual-state-map (kbd "C-w") 'interactive-wrap-with-pair)
+(define-key evil-normal-state-map (kbd "C-.") 'helm-M-x)
 (fset 'evil-visual-update-x-selection 'ignore)
 
 (global-evil-visualstar-mode)
