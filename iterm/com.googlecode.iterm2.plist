@@ -1654,11 +1654,11 @@
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>972 1053 616 174 0 0 2560 1577 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>-1030 376 700 622 -1440 168 1440 900 </string>
+	<string>-1070 376 700 622 -1440 168 1440 900 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>348 117 618 519 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>83 402 918 498 0 0 1440 900 </string>
+	<string>-1410 365 796 473 -1440 168 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
@@ -3465,7 +3465,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-05-10T23:59:52Z</date>
+	<date>2017-06-21T17:09:26Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Selection Respects Soft Boundaries</key>
@@ -6464,10 +6464,12 @@
 	<string>/-+\~_.</string>
 	<key>findIgnoreCase_iTerm</key>
 	<true/>
+	<key>findMode_iTerm</key>
+	<integer>0</integer>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.15</string>
+	<string>3.1.beta.5</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

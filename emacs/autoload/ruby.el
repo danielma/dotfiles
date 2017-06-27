@@ -1,5 +1,6 @@
 (add-hook 'ruby-mode-hook 'my-ruby-mode-setup)
 (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch)
+;; (add-hook 'ruby-mode-hook 'rufo-mode)
 
 (defun my-ruby-mode-setup ()
   (setq ruby-insert-encoding-magic-comment nil)

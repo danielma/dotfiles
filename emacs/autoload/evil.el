@@ -25,6 +25,8 @@
 (key-chord-define evil-normal-state-map "''" 'helm-M-x)
 (define-key evil-insert-state-map (kbd "C-n") 'next-line)
 (define-key evil-insert-state-map (kbd "C-p") 'previous-line)
+(define-key evil-insert-state-map (kbd "C-a") 'beginning-of-line-text)
+(define-key evil-insert-state-map (kbd "C-e") 'end-of-line)
 (define-key evil-normal-state-map (kbd "M-RET") 'newline)
 (define-key evil-insert-state-map (kbd "M-RET") 'expand-at-point)
 (define-key evil-normal-state-map "[b" 'previous-buffer)

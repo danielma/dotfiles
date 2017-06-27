@@ -53,6 +53,7 @@
 (dolist (elt (file-expand-wildcards "~/.dotfiles/emacs/autoload/*.el"))
   (load elt))
 
+(setq gc-cons-threshold 20000000)
 
 ;;; COMPANY
 
@@ -222,7 +223,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(magit-log-select-arguments (quote ("-n20" "--decorate")))
  '(magit-popup-use-prefix-argument (quote default))
  '(magit-save-repository-buffers nil)
- '(magithub-api-timeout 2)
+ '(magithub-api-timeout 3)
  '(markdown-asymmetric-header t)
  '(markdown-header-scaling t)
  '(nlinum-format " %d")
@@ -239,7 +240,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+    (flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
  '(projectile-completion-system (quote ido))

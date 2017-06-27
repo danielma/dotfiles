@@ -63,15 +63,21 @@ function master() {
   fi
 }
 
-function deploy-me-to-staging() {
+function merge-me-to-staging() {
   if $(git-changes)
   then
     echo "NOPE! you have changes"
     gs
+    false
   else
     CURRENT_BRANCH=$(git symbolic-ref HEAD | sed 's/refs\/heads\///')
-    staging && git merge $CURRENT_BRANCH --no-edit && git push && staging-deploy
+    staging && git merge $CURRENT_BRANCH --no-edit && git push
   fi
+}
+    
+
+function deploy-me-to-staging() {
+  merge-me-to-staging && staging-deploy
 }
 
 function groot() {

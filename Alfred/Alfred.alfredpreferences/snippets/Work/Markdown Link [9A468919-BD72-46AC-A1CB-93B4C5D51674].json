@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "[{cursor}]({clipboard})",
+    "uid" : "9A468919-BD72-46AC-A1CB-93B4C5D51674",
+    "name" : "Markdown Link",
+    "keyword" : "!ml"
+  }
+}

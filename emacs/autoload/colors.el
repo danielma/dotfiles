@@ -2,7 +2,7 @@
 (add-to-list 'custom-theme-load-path "~/Code/test/base16-builder-php/templates/emacs/build")
 
 ;; (setq ns-use-srgb-colorspace nil)
-(load-theme 'base16-eighties t)
+(load-theme 'base16-onedark t)
 
 (defun my/base16-set-theme (theme)
   "Set a base16 THEME by unloading all others."
@@ -43,7 +43,7 @@
 
 (custom-theme-set-faces
  'session-face
- '(default ((t (:weight normal :height 120 :width normal :family "SF Mono")))))
+ '(default ((t (:weight normal :height 120 :width normal :family "Input Mono Compressed")))))
 
 (provide-theme 'session-face)
 
