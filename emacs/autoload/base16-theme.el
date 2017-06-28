@@ -620,6 +620,15 @@ an alternate theme for use in the terminal.")
      (helm-source-header                           :foreground base05 :background base01 :weight bold)
      (helm-visible-mark                            :foreground base00 :background base0B)
 
+     ;; magit
+     (magit-signature-untrusted                    :foreground base0A)
+     (magit-signature-good                         :foreground base0B)
+     (magit-section-heading                        :foreground base0A :weight bold)
+     (magit-tag                                    :foreground base09)
+     (magit-branch-remote                          :foreground base0B)
+     (magit-branch-local                           :foreground base0D)
+     ;; (magit-section-highlight                      :foreground base0A)
+
      (custom-variable-tag                          :foreground base0D)
      (custom-group-tag                             :foreground base0D)
      (custom-state                                 :foreground base0B)
