@@ -223,7 +223,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(magit-log-select-arguments (quote ("-n20" "--decorate")))
  '(magit-popup-use-prefix-argument (quote default))
  '(magit-save-repository-buffers nil)
- '(magithub-api-timeout 3)
+ '(magithub-api-timeout 6)
  '(markdown-asymmetric-header t)
  '(markdown-header-scaling t)
  '(nlinum-format " %d")
