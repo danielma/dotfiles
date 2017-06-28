@@ -627,6 +627,8 @@ an alternate theme for use in the terminal.")
      (magit-tag                                    :foreground base09)
      (magit-branch-remote                          :foreground base0B)
      (magit-branch-local                           :foreground base0D)
+     (magit-log-author                             :foreground base08)
+     ;; (magit-diff-added                             :background base0B)
      ;; (magit-section-highlight                      :foreground base0A)
 
      (custom-variable-tag                          :foreground base0D)
