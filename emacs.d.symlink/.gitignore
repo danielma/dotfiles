@@ -1,0 +1,6 @@
+*.elc
+.cask
+ido.last
+magithub/cache
+projectile-bookmarks.eld
+recentf

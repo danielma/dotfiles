@@ -1,3 +1,7 @@
+(require 'magit)
+(require 'magithub)
+(require 'evil-magit)
+
 (setq magit-display-buffer-function
       (lambda (buffer)
         (display-buffer

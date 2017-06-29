@@ -1,3 +1,5 @@
+(require 'smartparens)
+
 (defun my-javascript-outline-level ()
   (let (buffer-invisibility-spec)
     (save-excursion

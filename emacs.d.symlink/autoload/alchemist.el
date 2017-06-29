@@ -1,4 +1,5 @@
 (require 'elixir-mode)
+(require 'flycheck)
 
 (defun comint-goto-end-and-insert ()
   (interactive)

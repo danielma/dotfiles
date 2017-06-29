@@ -95,7 +95,7 @@
 
 (defun edit-emacs ()
   (interactive)
-  (find-file "~/.dotfiles/emacs/emacs.symlink"))
+  (find-file "~/.emacs.d/init.el"))
 
 (defun edit-scratch ()
   (interactive)

@@ -4,6 +4,8 @@
 
 ;;; Code:
 
+(require 'projectile-rails)
+
 (defun projectile-rails-find-service ()
   (interactive)
   (projectile-rails-find-resource

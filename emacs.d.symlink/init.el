@@ -1,8 +1,14 @@
 ;;; -*- mode: emacs-lisp -*-
 ;;; .emacs --- take care of business
-
 ;;; Code:
 ;;; Commentary:
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
@@ -13,19 +19,8 @@
       byte-compile-warnings '(not free-vars)
       ad-redefinition-action 'accept)
 
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-
-(setq package-list (quote (yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar fill-column-indicator yaml-mode elscreen evil-magit web-mode magit projectile-rails helm-ag helm-projectile evil-leader projectile evil ruby-end exec-path-from-shell ido-vertical-mode flx-ido key-chord smartparens ace-jump-mode diff-hl coffee-mode json-mode solarized-theme company browse-at-remote flycheck lua-mode evil-visualstar evil-multiedit  ruby-refactor magithub buffer-move swift-mode eslintd-fix company-sourcekit org-mobile-sync nlinum nlinum-relative)))
-
-(dolist (package package-list)
-  (print package)
-  (unless (package-installed-p package)
-    (package-install package)))
+(require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
+(cask-initialize)
 
 (require 'evil)
 (evil-mode 1)
@@ -33,9 +28,10 @@
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
-(dolist (package package-list)
-  (require package))
-
+;; (add-to-list 'load-path "~/Code/danielma/rufo-emacs/")
+;; (load "rufo-mode")
+;; (require 'rufo-mode)
+;; 
 (elscreen-start)
 (ido-mode 1)
 (ido-everywhere 1)
@@ -47,10 +43,10 @@
 (global-evil-leader-mode)
 (evil-leader/set-leader "<SPC>")
 
-(load (expand-file-name "~/.dotfiles/emacs/text-tools.el"))
+(load (expand-file-name "~/.dotfiles/emacs.d.symlink/text-tools.el"))
 
 ;; LOAD ALL THE THINGS
-(dolist (elt (file-expand-wildcards "~/.dotfiles/emacs/autoload/*.el"))
+(dolist (elt (file-expand-wildcards "~/.emacs.d/autoload/*.el"))
   (load elt))
 
 (setq gc-cons-threshold 20000000)
@@ -90,6 +86,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+
+(defun what-face (pos)
+  (interactive "d")
+  (let ((face (or (get-char-property (pos) 'read-face-name)
+                  (get-char-property (pos) 'face))))
+    (if face (message "Face: %s" face) (message "No face at %d" pos))))
 
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)
@@ -240,7 +242,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+    (pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
  '(projectile-completion-system (quote ido))

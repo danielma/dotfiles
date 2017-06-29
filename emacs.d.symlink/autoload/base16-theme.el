@@ -14,6 +14,8 @@
 
 ;;; Code:
 
+(require 'color)
+
 (defvar base16-shell-colors
   '(:base00 "black"
     :base005 "black"

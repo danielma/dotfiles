@@ -1,3 +1,5 @@
+(require 'evil-multiedit)
+
 ;; Highlights all matches of the selection in the buffer.
 (define-key evil-visual-state-map "R" 'evil-multiedit-match-all)
 
