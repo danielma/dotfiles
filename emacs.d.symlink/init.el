@@ -21,6 +21,8 @@
 
 (require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
 (cask-initialize)
+(require 'pallet)
+(pallet-mode t)
 
 (require 'evil)
 (evil-mode 1)
@@ -31,7 +33,7 @@
 ;; (add-to-list 'load-path "~/Code/danielma/rufo-emacs/")
 ;; (load "rufo-mode")
 ;; (require 'rufo-mode)
-;; 
+ 
 (elscreen-start)
 (ido-mode 1)
 (ido-everywhere 1)
@@ -257,7 +259,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
    (quote
-    ((projectile-project-type rails-test)
+    ((rufo-mode-use-bundler . t)
+     (projectile-project-type rails-test)
      (projectile-project-type
       (quote rails-test)))))
  '(select-enable-clipboard nil)

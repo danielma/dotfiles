@@ -27,6 +27,7 @@ end
 
 -- Launch apps with Hyper-Enter
 apps = {
+   {'1', '1Password 6'},
    {'d', 'DevDocs'},
    {'e', 'Emacs'},
    {'c', 'Google Chrome'},

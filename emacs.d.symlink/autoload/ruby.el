@@ -1,3 +1,5 @@
+(require 'rufo-mode)
+
 (add-hook 'ruby-mode-hook 'my-ruby-mode-setup)
 (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch)
 ;; (add-hook 'ruby-mode-hook 'rufo-mode)

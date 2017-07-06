@@ -8,7 +8,7 @@
 
 (setq yas-snippet-dirs
       '(yas-installed-snippets-dir
-        "~/.dotfiles/emacs/yasnippet-snippets/"))
+        "~/.emacs.d/yasnippet-snippets/"))
 
 (defun do-yas-expand ()
   (let ((yas-fallback-behavior 'return-nil))

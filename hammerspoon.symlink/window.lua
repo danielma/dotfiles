@@ -74,6 +74,7 @@ end
 
 -- center and enlarge current window; hold to maximize
 hyperBind("space", rect({0, 0, 1, 1}))
+mehBind("space", rect({0, 0, 1, 1}))
 
 -- arrow-based window movement/resize operations
 hs.fnutils.each({"Left", "Right", "Up", "Down"}, function(arrow)
