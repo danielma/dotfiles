@@ -1,4 +1,4 @@
-(require 'rufo-mode)
+;; (require 'rufo-mode)
 
 (add-hook 'ruby-mode-hook 'my-ruby-mode-setup)
 (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch)
