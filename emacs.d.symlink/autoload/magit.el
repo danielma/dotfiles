@@ -28,7 +28,10 @@
 (defun my/git-rebase-onto-master ()
   "Rebase the current branch onto origin/master."
   (interactive)
-  (magit-fetch-branch "origin" "master" nil)
+  (accept-process-output
+   (magit-fetch-branch "origin" "master" nil)
+   5 ;; timeout
+   )
   (magit-rebase "origin/master" '("-i" "--autosquash")))
 
 (magit-define-popup-action 'magithub-dispatch-popup
