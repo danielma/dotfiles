@@ -56,7 +56,7 @@ export BASE16_SHELL="$HOME/Code/test/base16-builder-php/templates/shell/"
 
 if [[ -z $TMUX ]]
 then
-  base16_default-dark
+  base16_onedark
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
