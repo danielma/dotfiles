@@ -12,9 +12,6 @@ end
 --   send ESCAPE if no other keys are pressed.
 releasedF18 = function()
   hyperModal:exit()
-  if not hyperModal.triggered then
-    hs.eventtap.keyStroke({}, 'ESCAPE')
-  end
 end
 
 -- Bind the Hyper key

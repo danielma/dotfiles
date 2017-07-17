@@ -6,6 +6,44 @@
     },
     "profiles": [
         {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.to_if_alone_timeout_milliseconds": 200
+                },
+                "rules": [
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Change caps_lock to f18 when used as modifier, escape when used alone",
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "f18"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "escape",
+                                        "modifiers": {
+                                            "optional": [
+                                                "any"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
             "devices": [
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -45,7 +83,6 @@
             "name": "Default profile",
             "selected": true,
             "simple_modifications": {
-                "caps_lock": "f18",
                 "right_option": "f18"
             },
             "virtual_hid_keyboard": {
