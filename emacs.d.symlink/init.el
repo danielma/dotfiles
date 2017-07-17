@@ -181,7 +181,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode git-commit-mode)))
  '(evil-shift-round t)
  '(evil-shift-width 2)
- '(flycheck-disabled-checkers (quote (javascript-jshint)))
+ '(flycheck-disabled-checkers (quote (javascript-jshint ruby-reek)))
  '(global-flycheck-mode t)
  '(helm-ag-fuzzy-match t)
  '(helm-ag-insert-at-point (quote symbol))
