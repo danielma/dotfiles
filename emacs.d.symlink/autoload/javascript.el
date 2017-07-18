@@ -25,6 +25,8 @@
 
 (define-abbrev-table 'javascript-mode-abbrev-table '(
                                                      ("aseq" "assert.equal")))
+(define-abbrev-table 'js-jsx-mode-abbrev-table '(
+                                                     ("aseq" "assert.equal")))
 
 (sp-local-pair '(js-mode js-jsx-mode typescript-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
 (sp-local-pair '(js-mode js-jsx-mode typescript-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))

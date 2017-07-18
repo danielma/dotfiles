@@ -48,4 +48,6 @@
 (provide-theme 'session-face)
 
 (enable-theme 'session-face)
+
+(set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)
  ;;; colors.el ends here

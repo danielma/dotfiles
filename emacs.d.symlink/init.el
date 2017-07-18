@@ -116,7 +116,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'after-init-hook (lambda ()
 			     (global-nlinum-mode 1)
 			     (global-nlinum-relative-mode)
-			     (nlinum-relative-setup-evil)))
+			     (nlinum-relative-setup-evil)
+                             ))
 
 ;; (with-eval-after-load "common-header-mode-line-autoloads"
 ;;   (add-hook
@@ -173,6 +174,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(elscreen-tab-display-control nil)
  '(elscreen-tab-display-kill-screen nil)
  '(emmet-indentation 2)
+ '(emojify-display-style (quote image))
  '(enh-ruby-add-encoding-comment-on-save nil)
  '(epg-gpg-program "gpg2")
  '(evil-echo-state nil)
@@ -292,6 +294,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
      (projectile-project-type
       (quote rails-test)))))
  '(select-enable-clipboard nil)
+ '(show-paren-mode t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(sml/directory-truncation-string "")
  '(sml/mode-width (quote full))
