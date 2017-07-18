@@ -18,7 +18,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |Tab/SYMB|   Q  |   W  |   E  |   R  |   T  | cmd  |           | Hyper|   Y  |   U  |   I  |   O  |   P  |   -    |
  * |--------+------+------+------+------+------| spc  |           |      |------+------+------+------+------+--------|
- * |Esc/MEH |A/MDIA|   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  ;   | '      |
+ * |Esc/MEH |A/MDIA|   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  :/; | '      |
  * |--------+------+------+------+------+------| Symb |           | Meh  |------+------+------+------+------+--------|
  * | SHIFT  |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |  /   |Caps/Shf|
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -47,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // right hand
              KC_NO,       KC_6,   KC_7,    KC_8,          KC_9,   KC_UNDS,          KC_EQL,
              KC_FN2,      KC_Y,   KC_U,    KC_I,          KC_O,   KC_P,             KC_MINUS,
-                          KC_H,   KC_J,    KC_K,          KC_L,   KC_SCLN,          KC_QUOT,
+                          KC_H,   KC_J,    KC_K,          KC_L,   M(0),          KC_QUOT,
              MEH_T(KC_NO),KC_N,   KC_M,    KC_COMM,       KC_DOT, KC_SLSH,          SFT_T(KC_CAPS),
                                   MO(SYMB),GUI_T(KC_LEFT),KC_DOWN,KC_UP,            KC_RIGHT,
              KC_MPLY,        KC_MNXT,      
@@ -61,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |        |   !  |   @  |   (  |   )  |   %  |      |           |      |   ^  |   7  |   8  |   9  |   |  |    +   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |   ~    |   `  |   #  |   {  |   }  |   <  |------|           |------|   &  |   4  |   5  |   6  |   :  |    "   |
+ * |   ~    |   `  |   #  |   {  |   }  |   <  |------|           |------|   &  |   4  |   5  |   6  |   ;  |    "   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |      |   $  |   [  |   ]  |   >  |      |           |      |   *  |   1  |   2  |   3  |   \  |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -89,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        // right hand
        KC_F7,  KC_F8,    KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_TRNS,
        KC_TRNS, KC_CIRC, KC_7,   KC_8,    KC_9,    KC_PIPE, KC_PLUS,
-                KC_AMPR, KC_4,   KC_5,    KC_6,    KC_COLN, LSFT(KC_QUOT),
+                KC_AMPR, KC_4,   KC_5,    KC_6,    KC_SCLN, LSFT(KC_QUOT),
        KC_TRNS, KC_ASTR, KC_1,   KC_2,    KC_3,    KC_BSLS, KC_TRNS,
                          KC_TRNS,KC_0,    KC_DOT,  KC_COMM, KC_TRNS,
        KC_TRNS, KC_TRNS,
@@ -187,17 +187,24 @@ const uint16_t PROGMEM fn_actions[] = {
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
-  // MACRODOWN only works in this function
-      switch(id) {
-        case 0:
-        if (record->event.pressed) {
-          register_code(KC_RSFT);
-        } else {
-          unregister_code(KC_RSFT);
-        }
-        break;
+  if (record->event.pressed) {
+    switch(id) {
+    case 0:
+      if (get_mods()&MOD_BIT(KC_LSHIFT)) {
+        unregister_code(KC_LSHIFT);
+        register_code(KC_SCLN);
+        unregister_code(KC_SCLN);
+        register_code(KC_LSHIFT);
+        return false;
+      } else {
+        SEND_STRING(":");
+        return false;
       }
-    return MACRO_NONE;
+      break;
+    }
+  }
+
+  return MACRO_NONE;
 };
 
 // Runs just one time when the keyboard initializes.
