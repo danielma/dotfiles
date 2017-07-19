@@ -27,9 +27,6 @@
 (require 'evil)
 (evil-mode 1)
 
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
- 
 (elscreen-start)
 (ido-mode 1)
 (ido-everywhere 1)
@@ -42,6 +39,15 @@
 (evil-leader/set-leader "<SPC>")
 
 (load (expand-file-name "~/.dotfiles/emacs.d.symlink/text-tools.el"))
+
+(add-hook 'after-init-hook (lambda ()
+                             (global-company-mode)
+			     (global-nlinum-mode 1)
+			     (global-nlinum-relative-mode)
+			     (nlinum-relative-setup-evil)
+                             (when (memq window-system '(mac ns))
+                               (exec-path-from-shell-initialize))
+                             ))
 
 ;; LOAD ALL THE THINGS
 (dolist (elt (file-expand-wildcards "~/.emacs.d/autoload/*.el"))
@@ -112,13 +118,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (global-origami-mode)
 
-(add-hook 'after-init-hook 'global-company-mode)
-(add-hook 'after-init-hook (lambda ()
-			     (global-nlinum-mode 1)
-			     (global-nlinum-relative-mode)
-			     (nlinum-relative-setup-evil)
-                             ))
-
 ;; (with-eval-after-load "common-header-mode-line-autoloads"
 ;;   (add-hook
 ;;    'after-init-hook
@@ -183,6 +182,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode git-commit-mode)))
  '(evil-shift-round t)
  '(evil-shift-width 2)
+ '(exec-path-from-shell-variables (quote ("PATH" "MANPATH" "NVM_DIR")))
  '(flycheck-disabled-checkers (quote (javascript-jshint ruby-reek)))
  '(global-flycheck-mode t)
  '(helm-ag-fuzzy-match t)

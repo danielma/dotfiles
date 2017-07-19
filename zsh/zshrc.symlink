@@ -82,8 +82,6 @@ export FZF_DEFAULT_OPTS='
   --color 16,bg+:18,fg+:7,hl+:2,hl:2,pointer:6,prompt:6,info:5
 '
 
-export PATH="$PATH:$(yarn global bin)"
-
 if [[ "$PROFILE_STARTUP" == true ]]; then
     unsetopt xtrace
     exec 2>&3 3>&-
