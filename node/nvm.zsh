@@ -1,4 +1,19 @@
-export NVM_DIR=$(brew --prefix)/var/nvm
-NVM_SH="$(brew --prefix nvm)/nvm.sh"
+export NVM_DIR="/usr/local/var/nvm"
 
-[[ -a $NVM_SH ]] && source $NVM_SH
+nvm() {
+    unset -f nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    nvm "$@"
+}
+ 
+node() {
+    unset -f node
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    node "$@"
+}
+ 
+npm() {
+    unset -f npm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    npm "$@"
+}

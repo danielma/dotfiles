@@ -1,3 +1,10 @@
+PROFILE_STARTUP=false
+if [[ "$PROFILE_STARTUP" == true ]]; then
+    # http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+    PS4=$'%D{%M%S%.} %N:%i> '
+    exec 3>&2 2>$HOME/tmp/startlog.$$
+    setopt xtrace prompt_subst
+fi
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
@@ -45,8 +52,6 @@ alias up="cd .."
 
 unset config_files
 
-eval "$(rbenv init -)"
-
 export FZF_DEFAULT_COMMAND='ag -g ""'
 
 export BASE16_THEME="base16-ocean"
@@ -77,9 +82,9 @@ export FZF_DEFAULT_OPTS='
   --color 16,bg+:18,fg+:7,hl+:2,hl:2,pointer:6,prompt:6,info:5
 '
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-export NVM_DIR="/usr/local/var/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 export PATH="$PATH:$(yarn global bin)"
 
+if [[ "$PROFILE_STARTUP" == true ]]; then
+    unsetopt xtrace
+    exec 2>&3 3>&-
+fi
