@@ -47,7 +47,6 @@ brew 'little-cms2', args: ['universal']
 brew 'makedepend'
 brew 'msgpack'
 brew 'mysql'
-brew 'node'
 brew 'nvm'
 brew 'pandoc'
 brew 'pcre'
