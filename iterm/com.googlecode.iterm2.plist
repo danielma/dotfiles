@@ -1658,13 +1658,13 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>348 117 618 519 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>-1410 365 796 473 -1440 168 1440 900 </string>
+	<string>43 228 796 473 0 0 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1440 900 0 0 1440 900 </string>
+	<string>0 816 1277 784 0 0 2560 1600 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>0 0 1440 900 0 0 1440 900 </string>
+	<string>0 521 570 379 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>721 23 717 874 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -2271,11 +2271,11 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>300</integer>
 			<key>Scrollback With Status Bar</key>
 			<false/>
 			<key>Scrollback in Alternate Screen</key>
-			<true/>
+			<false/>
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -3298,6 +3298,8 @@
 	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
 	<integer>0</integer>
+	<key>NoSyncHaveUsedCopyMode</key>
+	<true/>
 	<key>NoSyncHaveWarnedAboutIncompatibleSoftware</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
@@ -3465,7 +3467,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-06-21T17:09:26Z</date>
+	<date>2017-07-18T13:19:03Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Selection Respects Soft Boundaries</key>
