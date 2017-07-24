@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+origin_remote = `git remote get-url origin 2>/dev/null`.strip
+origin_remote =~ /github\.com.+?(\w+\/\w+)(?:\.git)?\Z/
+
+if $~.nil?
+  puts "Can't use this remote! #{origin_remote.inspect}"
+  exit 1
+end
+
+repo = $1
+
+`open "https://github.com/#{repo}/pulls"`
