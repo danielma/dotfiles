@@ -13,7 +13,8 @@
     (find-file "~/org/auto.org")
     (goto-char (point-min))
     (search-forward body)
-    (org-todo 'done)))
+    (kill-whole-line)
+    (save-buffer)))
 
 (defun my/todos-print ()
   (save-window-excursion
