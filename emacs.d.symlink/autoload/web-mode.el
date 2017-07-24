@@ -27,7 +27,7 @@
                        (t nil)))
   (setq-local electric-indent-chars
               (append "{};" electric-indent-chars))
-  (if (equal web-mode-engine "php")
+  (if (member web-mode-engine '("php" "erb"))
       (modify-syntax-entry ?_ "w"))
   (if (equal web-mode-content-type "javascript")
       (web-mode-set-content-type "jsx")))

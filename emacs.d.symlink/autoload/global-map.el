@@ -18,6 +18,7 @@
 
 (define-key global-map (kbd "C-h C-f") 'find-function)
 (define-key global-map (kbd "C-.") 'helm-M-x)
+(define-key global-map (kbd "C-'") 'company-yasnippet)
 
 (defun system-paste ()
   "Always paste from the system clipboard."
