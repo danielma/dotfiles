@@ -1,7 +1,17 @@
 #!/bin/bash
 
-curl -H Authorization:\ token\ $PERSONAL_GITHUB_API_TOKEN https://api.github.com/notifications 2>/dev/null | jq -r 'group_by(.repository.full_name)
-| .[]
-| .[]
-| { title: .subject.title, repo: .repository.full_name, type: .subject.type, url: .subject.url | sub("api\\."; "") | sub("github.com/repos"; "github.com") | sub("/pulls/"; "/pull/") }
-| @text "\u001B[1;32m\(.title)\u001B[0m \u001B[1;30m\(.repo)\n\u001B[0m\(.url)\n"'
+arg=$1
+token=$PERSONAL_GITHUB_API_TOKEN
+api_request="curl -H Authorization:\ token\ $token"
+if [ "$arg" = "clear" ]; then
+    eval $api_request -X PUT https://api.github.com/notifications -d '{}'
+    echo cleared all notifications
+else
+    (eval $api_request https://api.github.com/notifications 2>/dev/null) | jq -r 'group_by(.repository.full_name)
+    | .[]
+    | .[]
+    | { title: .subject.title, repo: .repository.full_name, type: .subject.type, url: .subject.url | sub("api\\."; "") | sub("github.com/repos"; "github.com") | sub("/pulls/"; "/pull/") }
+    | @text "\u001B[1;32m\(.title)\u001B[0m \u001B[1;30m\(.repo)\n\u001B[0m\(.url)\n"'
+fi
+
+
