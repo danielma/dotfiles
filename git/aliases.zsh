@@ -33,7 +33,7 @@ function setup-sanity-check() {
   alias sanity-check="git diff `git rev-parse HEAD`"
 }
 
-function git-changes {
+function gitchanges {
   CHANGED_LENGTH=$(git status -s | wc -l)
   if [[ $CHANGED_LENGTH -ne "0" ]]
   then
@@ -63,8 +63,8 @@ function master() {
   fi
 }
 
-function merge-me-to-staging() {
-  if $(git-changes)
+function mergemetostaging() {
+  if $(gitchanges)
   then
     echo "NOPE! you have changes"
     gs
@@ -76,8 +76,8 @@ function merge-me-to-staging() {
 }
     
 
-function deploy-me-to-staging() {
-  merge-me-to-staging && staging-deploy
+function deploymetostaging() {
+  mergemetostaging && stagingdeploy
 }
 
 function groot() {

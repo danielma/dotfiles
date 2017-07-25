@@ -3,7 +3,7 @@ windows:
     root: ~/Code/giving
     layout: d6dd,204x58,0,0{102x58,0,0[102x9,0,0,0,102x48,0,10,8],101x58,103,0[101x29,103,0,6,101x28,103,30,7]}
     panes:
-      - ./node_modules/.bin/webpack --watch --progress
-      - be guard -w app test -g ruby_tests js_tests
+      - ysp
+      - beg
       - be rails console
       - git status

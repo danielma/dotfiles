@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: refute block
+# key: rfb
+# --
+refute { $1 }$0
