@@ -58,7 +58,7 @@
 ;;; COMPANY
 
 (with-eval-after-load 'company
-  (add-to-list 'company-backends 'company-sourcekit)
+  ; (add-to-list 'company-backends 'company-sourcekit)
   (define-key company-active-map (kbd "M-n") nil)
   (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-n") #'company-select-next)
