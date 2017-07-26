@@ -666,6 +666,9 @@ an alternate theme for use in the terminal.")
      (mode-line-dark-active                   :inherit mode-line
                                               :background base01
                                               :box (:line-width -1 :color base01))
+
+     ;; web-mode
+     (web-mode-html-tag-face :foreground base05)
      ))
 
   ;; Anything leftover that doesn't fall neatly into a face goes here.

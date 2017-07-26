@@ -21,6 +21,8 @@
 			      ))
   (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
+(use-package ruby-end)
+
 (use-package ruby-refactor
   :config
   (evil-leader/set-key-for-mode 'ruby-mode

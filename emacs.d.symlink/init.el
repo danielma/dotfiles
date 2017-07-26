@@ -23,7 +23,6 @@
       inhibit-startup-echo-area-message t
       make-backup-files nil
       indent-tabs-mode nil
-      windmove-wrap-around t
       ns-use-native-fullscreen nil
       ad-redefinition-action 'accept
       backup-directory-alist `((".*" . ,temporary-file-directory))
@@ -170,6 +169,10 @@
 ; (dolist (elt (file-expand-wildcards "~/.emacs.d/autoload/*.el"))
 ;   (load elt))
 
+(use-package which-key
+  :config
+  (which-key-mode))
+
 (use-package dm-magit :ensure nil)
 (use-package dm-todo :ensure nil)
 (use-package dm-minibuffer :ensure nil)
@@ -195,7 +198,7 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector [base00 base08 base0B base0A base0D base0E base0D base05])
  '(ansi-term-color-vector
-   [unspecified base00 base08 base0B base0A base0D base0E base0D base05])
+   [unspecified base00 base08 base0B base0A base0D base0E base0D base05] t)
  '(column-number-mode nil)
  '(css-indent-offset 2)
  '(custom-safe-themes
@@ -203,22 +206,16 @@
     ("6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" default)))
  '(display-time-default-load-average nil)
  '(display-time-mode t)
- '(emmet-indentation 2)
  '(enh-ruby-add-encoding-comment-on-save nil)
  '(epg-gpg-program "gpg2")
- '(evil-echo-state nil)
  '(evil-insert-state-modes
    (quote
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode git-commit-mode)))
  '(exec-path-from-shell-variables (quote ("PATH" "MANPATH" "NVM_DIR")))
- '(flycheck-disabled-checkers (quote (javascript-jshint ruby-reek)))
- '(global-flycheck-mode t)
- '(helm-ag-fuzzy-match t)
- '(helm-ag-insert-at-point (quote symbol))
  '(initial-scratch-message nil)
  '(js-indent-level 2)
  '(line-number-mode nil)
- '(line-spacing 0)
+ '(line-spacing 1)
  '(mac-mouse-wheel-smooth-scroll t)
  '(markdown-asymmetric-header t)
  '(markdown-header-scaling t)
@@ -232,11 +229,7 @@
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
- '(projectile-completion-system (quote ido))
- '(projectile-generic-command "ag -g \"\"")
- '(projectile-global-mode t)
- '(projectile-switch-project-action (quote projectile-dired))
+    (ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
@@ -280,11 +273,6 @@
  '(show-paren-mode t)
  '(term-scroll-show-maximum-output t)
  '(term-scroll-to-bottom-on-output t)
- '(web-mode-attr-indent-offset 2)
- '(web-mode-code-indent-offset 2)
- '(web-mode-css-indent-offset 2)
- '(web-mode-markup-indent-offset 2)
- '(web-mode-sql-indent-offset 2)
  '(writeroom-fullscreen-effect nil)
  '(writeroom-major-modes (quote (markdown-mode)))
  '(yas-triggers-in-field t))

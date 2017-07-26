@@ -20,12 +20,16 @@
 						("tt" "<%")
 						("tp" "<%=")))
   :config
+  (dolist (width '(web-mode-attr-indent-offset web-mode-code-indent-offset web-mode-css-indent-offset web-mode-markup-indent-offset web-mode-sql-indent-offset))
+    (set width 2))
   (setq web-mode-engines-alist
 	'(("php" . "\\.module\\'")))
   )
 
 (use-package emmet-mode
   :init
-  (add-hook 'web-mode-hook 'emmet-mode))
+  (add-hook 'web-mode-hook 'emmet-mode)
+  :config
+  (setq emmet-indentation 2))
 
 (provide 'dm-web-mode)

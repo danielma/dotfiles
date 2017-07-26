@@ -17,7 +17,8 @@
 (use-package evil
   :init
   (setq evil-shift-width 2
-	evil-shift-round t)
+	evil-shift-round t
+	evil-echo-state nil)
   :config
   (evil-mode 1)
   :bind (

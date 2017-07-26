@@ -1,9 +1,19 @@
 (use-package smartparens
   :config
-  (sp-local-pair '(js-mode js-jsx-mode typescript-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
-  (sp-local-pair '(js-mode js-jsx-mode typescript-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+  (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+  (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
   )
 (use-package eslintd-fix)
+
+(use-package rjsx-mode
+  :init
+  (add-hook 'rjsx-mode-hook 'eslintd-fix-mode)
+  (add-hook 'rjsx-mode-hook 'emmet-mode)
+  (add-hook 'rjsx-mode-hooo 'smartparens-mode)
+  (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
+  (add-hook 'rjsx-mode-hook (lambda ()
+			      (setq-local emmet-expand-jsx-className? t)
+			      (setq-local emmet-self-closing-tag-style " /"))))
 
 (defun my-create-newline-and-enter-sexp (&rest _ignored)
   "Open a new brace or bracket expression, with relevant newlines and indent. "
@@ -30,6 +40,6 @@
 
 (add-hook 'js-jsx-mode-hook #'smartparens-mode)
 (add-hook 'js-jsx-mode-hook 'my-javascript-mode-setup)
-(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js-jsx-mode))
+;; (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js-jsx-mode))
 
 (provide 'dm-javascript)

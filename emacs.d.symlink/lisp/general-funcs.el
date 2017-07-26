@@ -103,5 +103,12 @@
   (kill-this-buffer)
   )
 
+; https://stackoverflow.com/a/1242366/4499924
+(defun what-face (pos)
+    (interactive "d")
+        (let ((face (or (get-char-property (point) 'read-face-name)
+            (get-char-property (point) 'face))))
+    (if face (message "Face: %s" face) (message "No face at %d" pos))))
+
 (provide 'general-funcs)
 ;; general-funcs.el ends here
