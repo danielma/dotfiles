@@ -2,7 +2,7 @@
 (add-to-list 'custom-theme-load-path "~/Code/test/base16-builder-php/templates/emacs/build")
 
 ;; (setq ns-use-srgb-colorspace nil)
-(load-theme (if (custom-theme-p 'base16-onedark)
+(load-theme (if (member 'base16-onedark (custom-available-themes))
                 'base16-onedark
               'base16-default-dark) t)
 
