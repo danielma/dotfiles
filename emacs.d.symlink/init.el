@@ -13,10 +13,14 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
+(setq gc-cons-threshold 20000000)
+
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t
       make-backup-files nil
       byte-compile-warnings '(not free-vars)
+      indent-tabs-mode nil
+      windmove-wrap-around t
       ad-redefinition-action 'accept)
 
 (require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
@@ -24,10 +28,49 @@
 (require 'pallet)
 (pallet-mode t)
 
-(require 'evil)
-(evil-mode 1)
+;; set all widths to 2
+;; (dolist (width '(evil-shift-width))
+;;         (set width 2))
 
-(elscreen-start)
+(defun interactive-wrap-with-pair (pair)
+  (interactive "c")
+  (sp-wrap-with-pair (char-to-string pair)))
+
+(defun expand-at-point ()
+  "Insert a newline and put the cursor at the indented location above."
+  (interactive)
+  (newline-and-indent)
+  (evil-open-above 1))
+
+(use-package evil
+  :init
+  (setq evil-shift-width 2)
+  :config
+  (evil-mode 1)
+  :bind (:map evil-insert-state-map
+	 ("C-n" . next-line)
+	 ("C-p" . previous-line)
+	 ("C-a" . beginning-of-line-text)
+	 ("C-e" . end-of-line)
+	 ("M-RET" . expand-at-point)
+	 :map evil-normal-state-map
+	 ("M-RET" . newline)
+	 ("[b" . previous-buffer)
+	 ("]b" . next-buffer)
+	 ("C-." . helm-M-x)
+	 :map evil-visual-state-map
+	 ("C-w" . interactive-wrap-with-pair)
+	 ))
+
+(use-package elscreen
+  :config
+  (setq elscreen-display-screen-number nil)
+  (setq elscreen-display-tab 30)
+  (setq elscreen-tab-display-control nil)
+  (setq elscreen-tab-display-kill-screen nil)
+  :init
+  (elscreen-start))
+
 (ido-mode 1)
 (ido-everywhere 1)
 (flx-ido-mode 1)
@@ -41,30 +84,51 @@
 (load (expand-file-name "~/.dotfiles/emacs.d.symlink/text-tools.el"))
 
 (add-hook 'after-init-hook (lambda ()
-                             (global-company-mode)
-			     (global-nlinum-mode 1)
-			     (global-nlinum-relative-mode)
-			     (nlinum-relative-setup-evil)
                              (when (memq window-system '(mac ns))
                                (exec-path-from-shell-initialize))
                              ))
+
+(use-package key-chord
+  :config
+  (key-chord-mode 1)
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  (key-chord-define evil-insert-state-map ",," 'ace-jump-mode)
+  (key-chord-define evil-normal-state-map "''" 'helm-M-x))
+
+(use-package evil-visualstar
+  :init
+  (global-evil-visualstar-mode))
+
+(use-package nlinum
+  :init
+  (nlinum-relative-setup-evil)
+  :config
+  (add-hook 'prog-mode-hook 'nlinum-mode)
+  (add-hook 'text-mode-hook 'nlinum-mode)
+  (setq nlinum-format " %d"))
+  
+(use-package nlinum-relative
+    :commands (nlinum-relative-on)
+    :config
+    (setq nlinum-relative-current-symbol ""
+	  nlinum-relative-redisplay-delay 0)
+    :init
+    (nlinum-relative-setup-evil)
+    (add-hook 'nlinum-mode-hook 'nlinum-relative-on))
+
+(use-package company
+  :init
+  (global-company-mode)
+  :bind (:map company-active-map
+              ("M-n" . nil)
+              ("M-p" . nil)
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous)))
 
 ;; LOAD ALL THE THINGS
 (dolist (elt (file-expand-wildcards "~/.emacs.d/autoload/*.el"))
   (load elt))
 
-(setq gc-cons-threshold 20000000)
-
-;;; COMPANY
-
-(with-eval-after-load 'company
-  ; (add-to-list 'company-backends 'company-sourcekit)
-  (define-key company-active-map (kbd "M-n") nil)
-  (define-key company-active-map (kbd "M-p") nil)
-  (define-key company-active-map (kbd "C-n") #'company-select-next)
-  (define-key company-active-map (kbd "C-p") #'company-select-previous))
-
-(setq windmove-wrap-around t)
 (setq-default abbrev-mode t)
 
 (global-hl-line-mode)
@@ -161,11 +225,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     ("6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" default)))
  '(display-time-default-load-average nil)
  '(display-time-mode t)
- '(elscreen-display-screen-number nil)
- '(elscreen-display-tab 30)
- '(elscreen-prefix-key (kbd "C-c e"))
- '(elscreen-tab-display-control nil)
- '(elscreen-tab-display-kill-screen nil)
  '(emmet-indentation 2)
  '(enh-ruby-add-encoding-comment-on-save nil)
  '(epg-gpg-program "gpg2")
@@ -174,7 +233,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (quote
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode git-commit-mode)))
  '(evil-shift-round t)
- '(evil-shift-width 2)
  '(exec-path-from-shell-variables (quote ("PATH" "MANPATH" "NVM_DIR")))
  '(flycheck-disabled-checkers (quote (javascript-jshint ruby-reek)))
  '(global-flycheck-mode t)
@@ -196,7 +254,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(magithub-api-timeout 6)
  '(markdown-asymmetric-header t)
  '(markdown-header-scaling t)
- '(nlinum-format " %d")
  '(ns-auto-hide-menu-bar t)
  '(ns-command-modifier (quote super))
  '(org-agenda-files (quote ("~/org/todo.org")))

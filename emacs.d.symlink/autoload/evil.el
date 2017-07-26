@@ -4,43 +4,7 @@
 
 ;;; Code:
 
-;; (fset 'evil-visual-update-x-selection 'ignore)
-(setq evil-shift-width 2)
-      ;; x-select-enable-clipboard nil)
-(setq-default indent-tabs-mode nil)
-
-(defun interactive-wrap-with-pair (pair)
-  (interactive "c")
-  (sp-wrap-with-pair (char-to-string pair)))
-
-(defun expand-at-point ()
-  (interactive)
-  (newline-and-indent)
-  (evil-open-above 1))
-
-(key-chord-mode 1)
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-;; (key-chord-define evil-insert-state-map "fs" 'save-buffer-always)
-(key-chord-define evil-insert-state-map ",," 'ace-jump-mode)
-(key-chord-define evil-normal-state-map "''" 'helm-M-x)
-(define-key evil-insert-state-map (kbd "C-n") 'next-line)
-(define-key evil-insert-state-map (kbd "C-p") 'previous-line)
-(define-key evil-insert-state-map (kbd "C-a") 'beginning-of-line-text)
-(define-key evil-insert-state-map (kbd "C-e") 'end-of-line)
-(define-key evil-normal-state-map (kbd "M-RET") 'newline)
-(define-key evil-insert-state-map (kbd "M-RET") 'expand-at-point)
-(define-key evil-normal-state-map "[b" 'previous-buffer)
-(define-key evil-normal-state-map "]b" 'next-buffer)
-(define-key evil-visual-state-map (kbd "C-w") 'interactive-wrap-with-pair)
-(define-key evil-normal-state-map (kbd "C-.") 'helm-M-x)
 (fset 'evil-visual-update-x-selection 'ignore)
-
-(global-evil-visualstar-mode)
-
-;; (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
-;; (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-;; (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-;; (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
 
 (defun save-buffer-always ()
   "Save this buffer even if it hasn't been modieifed."
