@@ -155,16 +155,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(column-number-mode nil)
  '(company-dabbrev-downcase nil)
  '(company-idle-delay 0.2)
- '(compilation-message-face (quote default))
  '(css-indent-offset 2)
- '(cua-global-mark-cursor-color "#2aa198")
- '(cua-normal-cursor-color "#657b83")
- '(cua-overwrite-cursor-color "#b58900")
- '(cua-read-only-cursor-color "#859900")
  '(custom-safe-themes
    (quote
     ("6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" default)))
- '(diff-hl-margin-mode t)
  '(display-time-default-load-average nil)
  '(display-time-mode t)
  '(elscreen-display-screen-number nil)
@@ -173,7 +167,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(elscreen-tab-display-control nil)
  '(elscreen-tab-display-kill-screen nil)
  '(emmet-indentation 2)
- '(emojify-display-style (quote image))
  '(enh-ruby-add-encoding-comment-on-save nil)
  '(epg-gpg-program "gpg2")
  '(evil-echo-state nil)
@@ -189,30 +182,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(helm-ag-insert-at-point (quote symbol))
  '(helm-completion-in-region-fuzzy-match t)
  '(helm-mode-fuzzy-match t)
- '(helm-prevent-escaping-from-minibuffer nil)
- '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
- '(highlight-symbol-colors
-   (--map
-    (solarized-color-blend it "#fdf6e3" 0.25)
-    (quote
-     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
- '(highlight-symbol-foreground-color "#586e75")
- '(highlight-tail-colors
-   (quote
-    (("#eee8d5" . 0)
-     ("#B4C342" . 20)
-     ("#69CABF" . 30)
-     ("#69B7F0" . 50)
-     ("#DEB542" . 60)
-     ("#F2804F" . 70)
-     ("#F771AC" . 85)
-     ("#eee8d5" . 100))))
- '(hl-bg-colors
-   (quote
-    ("#DEB542" "#F2804F" "#FF6E64" "#F771AC" "#9EA0E5" "#69B7F0" "#69CABF" "#B4C342")))
- '(hl-fg-colors
-   (quote
-    ("#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3")))
  '(initial-scratch-message nil)
  '(js-indent-level 2)
  '(line-number-mode nil)
@@ -220,7 +189,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(mac-mouse-wheel-smooth-scroll t)
  '(magit-bury-buffer-function (quote magit-mode-quit-window))
  '(magit-completing-read-function (quote magit-ido-completing-read))
- '(magit-diff-use-overlays nil)
  '(magit-log-arguments (quote ("-n20" "--graph" "--decorate")))
  '(magit-log-select-arguments (quote ("-n20" "--decorate")))
  '(magit-popup-use-prefix-argument (quote default))
@@ -229,9 +197,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(markdown-asymmetric-header t)
  '(markdown-header-scaling t)
  '(nlinum-format " %d")
- '(nrepl-message-colors
-   (quote
-    ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(ns-auto-hide-menu-bar t)
  '(ns-command-modifier (quote super))
  '(org-agenda-files (quote ("~/org/todo.org")))
@@ -242,17 +207,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
- '(pos-tip-background-color "#eee8d5")
- '(pos-tip-foreground-color "#586e75")
+    (use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(projectile-completion-system (quote ido))
  '(projectile-generic-command "ag -g \"\"")
  '(projectile-global-mode t)
- '(projectile-mode-line (quote Ⓟ))
  '(projectile-switch-project-action (quote projectile-dired))
- '(rm-blacklist
-   (quote
-    (" hl-p" "company" "yas" "Projectile" "ing" "LR" "Undo-Tree" "Abbrev" "hs")))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
@@ -295,69 +254,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       (quote rails-test)))))
  '(select-enable-clipboard nil)
  '(show-paren-mode t)
- '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
- '(sml/directory-truncation-string "")
- '(sml/mode-width (quote full))
- '(sml/modified-char "*")
- '(sml/replacer-regexp-list
-   (quote
-    (("^~/org/" ":Org:")
-     ("^~/\\.emacs\\.d/elpa/" ":ELPA:")
-     ("^~/\\.emacs\\.d/" ":ED:")
-     ("^/sudo:.*:" ":SU:")
-     ("^~/Documents/" ":Doc:")
-     ("^~/Dropbox/" ":DB:")
-     ("^:\\([^:]*\\):Documento?s/" ":\\1/Doc:")
-     ("^~/[Gg]it/" ":Git:")
-     ("^~/[Gg]it[Hh]ub/" ":Git:")
-     ("^~/[Gg]it\\([Hh]ub\\|\\)-?[Pp]rojects/" ":Git:")
-     ("~/Code/([^/]+)" ":C:"))))
- '(speedbar-show-unknown-files t)
- '(sx-search-default-order (quote relevance))
- '(telephone-line-primary-left-separator (quote telephone-line-abs-left))
- '(telephone-line-primary-right-separator (quote telephone-line-abs-right))
- '(telephone-line-secondary-left-separator (quote telephone-line-abs-hollow-left))
- '(telephone-line-secondary-right-separator (quote telephone-line-abs-hollow-right))
  '(term-scroll-show-maximum-output t)
  '(term-scroll-to-bottom-on-output t)
- '(typescript-indent-level 2)
- '(vc-annotate-background nil)
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#dc322f")
-     (40 . "#c85d17")
-     (60 . "#be730b")
-     (80 . "#b58900")
-     (100 . "#a58e00")
-     (120 . "#9d9100")
-     (140 . "#959300")
-     (160 . "#8d9600")
-     (180 . "#859900")
-     (200 . "#669b32")
-     (220 . "#579d4c")
-     (240 . "#489e65")
-     (260 . "#399f7e")
-     (280 . "#2aa198")
-     (300 . "#2898af")
-     (320 . "#2793ba")
-     (340 . "#268fc6")
-     (360 . "#268bd2"))))
- '(vc-annotate-very-old-color nil)
- '(vc-follow-symlinks t)
  '(web-mode-attr-indent-offset 2)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
  '(web-mode-markup-indent-offset 2)
  '(web-mode-sql-indent-offset 2)
- '(weechat-color-list
-   (quote
-    (unspecified "#fdf6e3" "#eee8d5" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#657b83" "#839496")))
  '(writeroom-fullscreen-effect nil)
  '(writeroom-major-modes (quote (markdown-mode)))
- '(xterm-color-names
-   ["#eee8d5" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#073642"])
- '(xterm-color-names-bright
-   ["#fdf6e3" "#cb4b16" "#93a1a1" "#839496" "#657b83" "#6c71c4" "#586e75" "#002b36"])
  '(yas-triggers-in-field t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
