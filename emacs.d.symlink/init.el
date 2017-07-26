@@ -22,7 +22,10 @@
       indent-tabs-mode nil
       windmove-wrap-around t
       ns-use-native-fullscreen nil
-      ad-redefinition-action 'accept)
+      ad-redefinition-action 'accept
+      backup-directory-alist `((".*" . ,temporary-file-directory))
+      auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
+      create-lockfiles nil)
 
 (fset 'evil-visual-update-x-selection 'ignore)
 
@@ -53,59 +56,21 @@
   (helm-mode))
 
 (use-package buffer-move
-  :commands buf-move buf-move-right buf-move-left buf-move-up buf-move-down
+  :commands (buf-move buf-move-right buf-move-left buf-move-up buf-move-down)
   )
 
-(use-package dm-evil)
+(use-package rainbow-delimiters)
 
-(use-package evil-leader
+(use-package emacs-lisp-mode
   :init
-  (global-evil-leader-mode)
-  (evil-leader/set-leader "<SPC>")
-  (evil-leader/set-key
-    "fs" 'save-buffer-always
-    "fq" 'delete-window
-    "fr" 'force-reload
+  (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+  :mode ("Cask" . emacs-lisp-mode))
 
-    "bd" 'kill-this-buffer
-    "bs" 'helm-buffers-list
+(use-package yaml-mode
+  :init
+  (add-hook 'yaml-mode-hook (lambda () (modify-syntax-entry ?_ "w"))))
 
-    "cd" 'cd
-    "cl" 'custom-comment-line
-    "ct" 'my/base16-set-theme
-    "cf" 'my/set-custom-face
-
-    "dr" 'reveal-in-finder
-
-    "ee" 'edit-emacs
-    "es" 'edit-scratch
-    "ey" 'edit-yasnippet-dir
-
-    "gB" 'browse-at-remote
-
-    "hr" 'helm-resume
-    "hk" 'helm-show-kill-ring
-
-    "ll" 'custom-flycheck-toggle-errors
-    "ln" 'flycheck-next-error
-    "lp" 'flycheck-previous-error
-
-    ;; "mw" 'web-mode
-    ;; "mj" 'js-mode
-
-    "p" 'projectile-command-map
-
-    "ss" 'evil-search-word-forward
-    "sr" 'replace-symbol
-    "sa" 'find-symbol-in-project
-
-    "T" text-tools-map
-
-    "w" evil-window-map
-
-    "," 'ace-jump-char-mode
-
-    "<SPC>" 'helm-M-x))
+(use-package dm-evil)
 
 (use-package elscreen
   :config
@@ -137,9 +102,14 @@
   (ido-vertical-mode 1))
 
 (add-hook 'after-init-hook (lambda ()
-                             (when (memq window-system '(mac ns))
-                               (exec-path-from-shell-initialize))
-                             ))
+			     (setq-default abbrev-mode t)
+			     (global-hl-line-mode)))
+
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns))
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
 
 (use-package key-chord
   :config
@@ -170,6 +140,9 @@
     (add-hook 'nlinum-mode-hook 'nlinum-relative-on))
 
 (use-package company
+  :config
+  (setq company-dabbrev-downcase nil
+	company-idle-delay 0.2)
   :init
   (global-company-mode)
   :bind (:map company-active-map
@@ -197,83 +170,13 @@
 (dolist (elt (file-expand-wildcards "~/.emacs.d/autoload/*.el"))
   (load elt))
 
-(setq-default abbrev-mode t)
-
-(global-hl-line-mode)
-
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-(setq create-lockfiles nil)
-
-;;; esc always quits
-(defun minibuffer-keyboard-quit ()
-  "Abort recursive edit.
-In Delete Selection mode, if the mark is active, just deactivate it;
-then it takes a second \\[keyboard-quit] to abort the minibuffer."
-  (interactive)
-  (if (and delete-selection-mode transient-mark-mode mark-active)
-      (setq deactivate-mark  t)
-    (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
-    (abort-recursive-edit)))
-(define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
-
-(defun what-face (pos)
-  (interactive "d")
-  (let ((face (or (get-char-property (pos) 'read-face-name)
-                  (get-char-property (pos) 'face))))
-    (if face (message "Face: %s" face) (message "No face at %d" pos))))
-
-;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
-(defun rename-file-and-buffer (new-name)
-  "Renames both current buffer and file it's visiting to NEW-NAME."
-  (interactive "sNew name: ")
-  (let ((name (buffer-name))
-        (filename (buffer-file-name)))
-    (if (not filename)
-        (message "Buffer '%s' is not visiting a file!" name)
-      (if (get-buffer new-name)
-          (message "A buffer named '%s' already exists!" new-name)
-        (progn
-          (rename-file filename new-name 1)
-          (rename-buffer new-name)
-          (set-visited-file-name new-name)
-          (set-buffer-modified-p nil))))))
+(use-package dm-minibuffer)
+(use-package dm-ruby)
 
 (require 'epa-file)
 (epa-file-enable)
 
 (global-origami-mode)
-
-;; (with-eval-after-load "common-header-mode-line-autoloads"
-;;   (add-hook
-;;    'after-init-hook
-;;    #'(lambda ()
-;;        (common-header-line-mode 1)
-;;        (setq per-frame-mode-line-update-display-function
-;;                  #'(lambda (display)
-;;                      (let ((buf (cdr (assq 'buf display))))
-;;                        (with-current-buffer buf
-;;                          (setq-local buffer-read-only nil)
-;;                          (erase-buffer)
-;;                          (let*
-;;                              ((mode-l-str
-;;                                (format-mode-line
-;;                                 `("%e" mode-line-front-space
-;;                                   (eldoc-mode-line-string (" " eldoc-mode-line-string " "))
-;;                                   mode-line-modified mode-line-client mode-line-frame-identification
-;;                                   mode-line-modes mode-line-misc-info mode-line-end-spaces)
-;;                                 'per-frame-mode-line-face per-frame-header-mode-line--selected-window)))
-;;                            (insert mode-l-str))
-;;                          (setq-local mode-line-format nil)
-;;                          (setq-local header-line-format nil)
-;;                          (goto-char (point-min))
-;;                          (setq-local buffer-read-only t))))))))
 
 ;; -------------------------------------------------------------------
 (custom-set-variables
@@ -285,8 +188,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(ansi-term-color-vector
    [unspecified base00 base08 base0B base0A base0D base0E base0D base05])
  '(column-number-mode nil)
- '(company-dabbrev-downcase nil)
- '(company-idle-delay 0.2)
  '(css-indent-offset 2)
  '(custom-safe-themes
    (quote
