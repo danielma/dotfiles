@@ -97,6 +97,11 @@
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
+(defun my/delete-this-file ()
+  (interactive)
+  (delete-file buffer-file-name)
+  (kill-this-buffer)
+  )
 
 (provide 'general-funcs)
 ;; general-funcs.el ends here

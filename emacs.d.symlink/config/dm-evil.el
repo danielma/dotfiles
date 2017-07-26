@@ -48,7 +48,7 @@
   )
 
 (use-package evil-leader
-  :init
+  :config
   (global-evil-leader-mode)
   (evil-leader/set-leader "<SPC>")
   (evil-leader/set-key
@@ -81,8 +81,6 @@
 
     ;; "mw" 'web-mode
     ;; "mj" 'js-mode
-
-    "p" 'projectile-command-map
 
     "ss" 'evil-search-word-forward
     "sr" 'replace-symbol

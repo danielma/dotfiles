@@ -3,7 +3,7 @@
 ;;; Commentary:
 
 ;;; Code:
-(require 's)
+(use-package s)
 
 (defvar
   break-object-trailing-commas

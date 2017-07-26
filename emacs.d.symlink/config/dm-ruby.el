@@ -4,7 +4,7 @@
   :defer t)
 
 (use-package ruby-mode
-  :config
+  :init
   (define-abbrev-table 'ruby-mode-abbrev-table '(
 						 ("dsc" "described_class")
 						 ("sbj" "subject")
@@ -13,7 +13,6 @@
 						 ("ass" "assert")
 						 ("AS::" "ActiveSupport::")
 						 ("AR::" "ActiveRecord::")))
-  :init
   (add-hook 'ruby-mode-hook (lambda ()
 			      (setq ruby-insert-encoding-magic-comment nil)
 			      (modify-syntax-entry ?_ "w")
@@ -21,7 +20,7 @@
   (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
 (use-package ruby-refactor
-  :init
+  :config
   (evil-leader/set-key-for-mode 'ruby-mode
     "o" (let ((map (make-sparse-keymap)))
 	  (define-key map (kbd "e") 'ruby-refactor-extract-to-method)
