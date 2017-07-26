@@ -1,6 +1,6 @@
 (source gnu)
 (source melpa)
-(files "*.el" "autoload/*.el")
+(files "*.el" "autoload/*.el" "lisp/*.el" "config/*.el")
 
 (depends-on "0blayout")
 (depends-on "ace-jump-mode")

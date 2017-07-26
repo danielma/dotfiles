@@ -33,10 +33,13 @@
 
 (eval-when-compile
   (require 'use-package))
+(setq use-package-verbose t)
 
+(add-to-list 'load-path "~/.emacs.d/config/")
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
 (require 'text-tools)
+(require 'general-funcs)
 
 ;; set all widths to 2
 ;; (dolist (width '(evil-shift-width))
@@ -53,32 +56,7 @@
   :commands buf-move buf-move-right buf-move-left buf-move-up buf-move-down
   )
 
-(use-package evil
-  :init
-  (setq evil-shift-width 2
-	evil-shift-round t)
-  :config
-  (require 'general-funcs)
-  (evil-mode 1)
-  :bind (:map evil-insert-state-map
-	 ("C-n" . next-line)
-	 ("C-p" . previous-line)
-	 ("C-a" . beginning-of-line-text)
-	 ("C-e" . end-of-line)
-	 ("M-RET" . expand-at-point)
-	 :map evil-normal-state-map
-	 ("M-RET" . newline)
-	 ("[b" . previous-buffer)
-	 ("]b" . next-buffer)
-	 ("C-." . helm-M-x)
-	 :map evil-visual-state-map
-	 ("C-w" . interactive-wrap-with-pair)
-	 :map evil-window-map
-	 ("]" . buf-move-right)
-	 ("[" . buf-move-left)
-	 ("}" . buf-move-down)
-	 ("{" . buf-move-up)
-	 ))
+(use-package dm-evil)
 
 (use-package evil-leader
   :init
@@ -101,6 +79,7 @@
 
     "ee" 'edit-emacs
     "es" 'edit-scratch
+    "ey" 'edit-yasnippet-dir
 
     "gB" 'browse-at-remote
 
@@ -111,8 +90,8 @@
     "ln" 'flycheck-next-error
     "lp" 'flycheck-previous-error
 
-    "mw" 'web-mode
-    "mj" 'js-mode
+    ;; "mw" 'web-mode
+    ;; "mj" 'js-mode
 
     "p" 'projectile-command-map
 
