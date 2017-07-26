@@ -668,7 +668,11 @@ an alternate theme for use in the terminal.")
                                               :box (:line-width -1 :color base01))
 
      ;; web-mode
-     (web-mode-html-tag-face :foreground base05)
+     (web-mode-html-tag-face :foreground base04 :weight bold)
+
+     ;; rjsx-mode
+     (rjsx-tag :foreground base04 :weight bold)
+     (rjsx-attr :slant italic)
      ))
 
   ;; Anything leftover that doesn't fall neatly into a face goes here.
