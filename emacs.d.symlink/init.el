@@ -150,16 +150,17 @@
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)))
 
-(use-package dm-magit :ensure nil)
-(use-package dm-todo :ensure nil)
-
 ;; LOAD ALL THE THINGS
 ; (dolist (elt (file-expand-wildcards "~/.emacs.d/autoload/*.el"))
 ;   (load elt))
 
+(use-package dm-magit :ensure nil)
+(use-package dm-todo :ensure nil)
+
 (use-package dm-minibuffer :ensure nil)
 (use-package dm-ruby :ensure nil)
 (use-package dm-flycheck :ensure nil)
+(use-package dm-javascript :ensure nil)
 
 (require 'epa-file)
 (epa-file-enable)
@@ -213,7 +214,7 @@
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+    (js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(projectile-completion-system (quote ido))
  '(projectile-generic-command "ag -g \"\"")
  '(projectile-global-mode t)

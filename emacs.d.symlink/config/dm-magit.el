@@ -20,7 +20,7 @@
 (use-package magit
   :init
   (setq magit-bury-buffer-function 'magit-mode-quit-window
-	magit-completing-read-function 'magit-ido-completing-read
+	;; magit-completing-read-function 'magit-ido-completing-read
 	magit-log-arguments (quote ("-n20" "--graph" "--decorate"))
 	magit-log-select-arguments (quote ("-n20" "--decorate"))
 	magit-popup-use-prefix-argument 'default
