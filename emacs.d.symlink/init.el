@@ -21,6 +21,7 @@
       byte-compile-warnings '(not free-vars)
       indent-tabs-mode nil
       windmove-wrap-around t
+      ns-use-native-fullscreen nil
       ad-redefinition-action 'accept)
 
 (require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
@@ -42,9 +43,17 @@
   (newline-and-indent)
   (evil-open-above 1))
 
+(use-package helm
+  :config
+  (setq helm-completion-in-region-fuzzy-match t
+	helm-mode-fuzzy-match t)
+  :init
+  (helm-mode))
+
 (use-package evil
   :init
-  (setq evil-shift-width 2)
+  (setq evil-shift-width 2
+	evil-shift-round t)
   :config
   (evil-mode 1)
   :bind (:map evil-insert-state-map
@@ -71,17 +80,26 @@
   :init
   (elscreen-start))
 
-(ido-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
-(ido-vertical-mode 1)
-(setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
-(setq ns-use-native-fullscreen nil)
+(use-package flx-ido
+  :config
+  (ido-mode 1)
+  (ido-everywhere 1)
+  :init
+  (flx-ido-mode 1))
 
-(global-evil-leader-mode)
-(evil-leader/set-leader "<SPC>")
+(use-package ido-vertical-mode
+  :config
+  (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
+  :init
+  (ido-vertical-mode 1))
 
-(load (expand-file-name "~/.dotfiles/emacs.d.symlink/text-tools.el"))
+(use-package evil-leader
+  :init
+  (global-evil-leader-mode)
+  (evil-leader/set-leader "<SPC>"))
+
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+(require 'text-tools)
 
 (add-hook 'after-init-hook (lambda ()
                              (when (memq window-system '(mac ns))
@@ -232,14 +250,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(evil-insert-state-modes
    (quote
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode git-commit-mode)))
- '(evil-shift-round t)
  '(exec-path-from-shell-variables (quote ("PATH" "MANPATH" "NVM_DIR")))
  '(flycheck-disabled-checkers (quote (javascript-jshint ruby-reek)))
  '(global-flycheck-mode t)
  '(helm-ag-fuzzy-match t)
  '(helm-ag-insert-at-point (quote symbol))
- '(helm-completion-in-region-fuzzy-match t)
- '(helm-mode-fuzzy-match t)
  '(initial-scratch-message nil)
  '(js-indent-level 2)
  '(line-number-mode nil)
