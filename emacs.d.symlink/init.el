@@ -75,8 +75,9 @@
 (use-package dm-projectile :ensure nil)
 
 (use-package elscreen
-  :config
+  :init
   (elscreen-start)
+  :config
   (setq elscreen-display-screen-number nil)
   (setq elscreen-display-tab 30)
   (setq elscreen-tab-display-control nil)
@@ -141,9 +142,9 @@
     :init
     (setq nlinum-relative-current-symbol ""
 	  nlinum-relative-redisplay-delay 0.1)
+    (add-hook 'nlinum-mode-hook 'nlinum-relative-on)
     :config
-    (nlinum-relative-setup-evil)
-    (add-hook 'nlinum-mode-hook 'nlinum-relative-on))
+    (nlinum-relative-setup-evil))
 
 (use-package company
   :config
