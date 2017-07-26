@@ -169,6 +169,7 @@
 (use-package dm-javascript :ensure nil)
 (use-package dm-colors :ensure nil)
 (use-package dm-mode-line :ensure nil)
+(use-package dm-web-mode :ensure nil)
 
 (require 'epa-file)
 (epa-file-enable)
