@@ -20,7 +20,24 @@
 	evil-shift-round t)
   :config
   (evil-mode 1)
-  :bind (:map evil-insert-state-map
+  :bind (
+	 ("s-]" . evil-window-next)
+	 ("s-[" . evil-window-prev)
+	 ("M-s-∆" . evil-window-down)
+	 ("M-s-˚" . evil-window-up)
+	 ("M-s-˙" . evil-window-left)
+	 ("M-s-¬" . evil-window-right)
+	 ("s-v" . system-paste)
+	 ("s-c" . system-yank)
+	 :map evil-insert-state-map
+	 ("s-]" . evil-window-next)
+	 ("s-[" . evil-window-prev)
+	 ("M-s-∆" . evil-window-down)
+	 ("M-s-˚" . evil-window-up)
+	 ("M-s-˙" . evil-window-left)
+	 ("M-s-¬" . evil-window-right)
+	 ("s-v" . system-paste)
+	 ("s-c" . system-yank)
 	 ("C-n" . next-line)
 	 ("C-p" . previous-line)
 	 ("C-a" . beginning-of-line-text)
@@ -38,15 +55,6 @@
 	 ("[" . buf-move-left)
 	 ("}" . buf-move-down)
 	 ("{" . buf-move-up)
-	 :map global-map
-	 ("s-]" . evil-window-next)
-	 ("s-[" . evil-window-prev)
-	 ("M-s-∆" . evil-window-down)
-	 ("M-s-˚" . evil-window-up)
-	 ("M-s-˙" . evil-window-left)
-	 ("M-s-¬" . evil-window-right)
-	 ("s-v" . system-paste)
-	 ("s-c" . system-yank)
 	 ))
 
 (use-package evil-multiedit
@@ -113,7 +121,6 @@
     "w" evil-window-map
 
     "," 'ace-jump-char-mode
-
-    "<SPC>" 'helm-M-x))
+    )
 
 (provide 'dm-evil)

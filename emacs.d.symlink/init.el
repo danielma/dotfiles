@@ -52,18 +52,27 @@
   :config
   (setq helm-completion-in-region-fuzzy-match t
 	helm-mode-fuzzy-match t)
-  (helm-mode))
+  (helm-mode)
+  :bind (
+	 ("C-." . helm-M-x)
+	 :map evil-leader--default-map
+	 ("<SPC>" . helm-M-x)
+	 ))
 
 (use-package buffer-move
   :commands (buf-move buf-move-right buf-move-left buf-move-up buf-move-down)
   )
 
-(use-package rainbow-delimiters)
+(use-package rainbow-delimiters
+  :init
+  (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+  )
 
-; (use-package emacs-lisp
-;   :init
-;   (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
-;   :mode ("Cask" . emacs-lisp-mode))
+(use-package zoom-frm
+  :bind
+  ("s-=" . zoom-frm-in)
+  ("s--" . zoom-frm-out)
+  ("s-0" . zoom-frm-unzoom))
 
 (use-package yaml-mode
   :config
