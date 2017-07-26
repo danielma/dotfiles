@@ -4,12 +4,12 @@
 ;;            mode-name mode-line-misc-info "  " mode-line-end-spaces))
 ;;   (force-mode-line-update))
 
-(defun add-mode-line-dirtrack ()
-    "When editing a file, show the last 2 directories of the current path in the mode line."
-    (add-to-list 'mode-line-buffer-identification
-                 '(:eval (substring default-directory
-                                    (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
-(add-hook 'find-file-hook 'add-mode-line-dirtrack)
+;; (defun add-mode-line-dirtrack ()
+;;     "When editing a file, show the last 2 directories of the current path in the mode line."
+;;     (add-to-list 'mode-line-buffer-identification
+;;                  '(:eval (substring default-directory
+;;                                     (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
+;; (add-hook 'find-file-hook 'add-mode-line-dirtrack)
 
 (defface mode-line-evil
   '((t (:foreground "white" :weight bold :inherit mode-line)))
@@ -239,3 +239,4 @@
                   ))))
   ;; (force-mode-line-update))
  
+(provide 'dm-mode-line)

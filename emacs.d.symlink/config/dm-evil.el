@@ -1,6 +1,19 @@
 (eval-when-compile
   (require 'use-package))
 
+
+(defun system-paste ()
+  "Always paste from the system clipboard."
+  (interactive)
+  (evil-paste-before 1 ?+)
+  (forward-char))
+
+(defun system-yank ()
+  "Always yank from the system clipboard."
+  (interactive)
+  (apply 'evil-yank (append (evil-operator-range t) '(?+)))
+  (evil-normal-state))
+
 (use-package evil
   :init
   (setq evil-shift-width 2
@@ -25,6 +38,15 @@
 	 ("[" . buf-move-left)
 	 ("}" . buf-move-down)
 	 ("{" . buf-move-up)
+	 :map global-map
+	 ("s-]" . evil-window-next)
+	 ("s-[" . evil-window-prev)
+	 ("M-s-∆" . evil-window-down)
+	 ("M-s-˚" . evil-window-up)
+	 ("M-s-˙" . evil-window-left)
+	 ("M-s-¬" . evil-window-right)
+	 ("s-v" . system-paste)
+	 ("s-c" . system-yank)
 	 ))
 
 (use-package evil-multiedit

@@ -42,6 +42,7 @@
 
 (require 'text-tools)
 (require 'general-funcs)
+(require 'global-map)
 
 ;; set all widths to 2
 ;; (dolist (width '(evil-shift-width))
@@ -75,18 +76,23 @@
 
 (use-package elscreen
   :config
+  (elscreen-start)
   (setq elscreen-display-screen-number nil)
   (setq elscreen-display-tab 30)
   (setq elscreen-tab-display-control nil)
   (setq elscreen-tab-display-kill-screen nil)
-  (elscreen-start)
   :bind (:map evil-leader--default-map
-	      ("tn" . elscreen-create)
-	      ("tl" . elscreen-next)
-	      ("th" . elscreen-previous)
-	      ("tq" . elscreen-kill)
-	      ("tj" . elscreen-select-and-goto)
-	      ("tt" . elscreen-toggle-display-tab)))
+	 ("tn" . elscreen-create)
+	 ("tl" . elscreen-next)
+	 ("th" . elscreen-previous)
+	 ("tq" . elscreen-kill)
+	 ("tj" . elscreen-select-and-goto)
+	 ("tt" . elscreen-toggle-display-tab)
+	 :map global-map
+	 ("s-t" . elscreen-create)
+	 ("s-w" . elscreen-kill)
+	 ("s-{" . elscreen-previous)
+	 ("s-}" . elscreen-next)))
 
 (use-package flx-ido
   :init
@@ -156,11 +162,12 @@
 
 (use-package dm-magit :ensure nil)
 (use-package dm-todo :ensure nil)
-
 (use-package dm-minibuffer :ensure nil)
 (use-package dm-ruby :ensure nil)
 (use-package dm-flycheck :ensure nil)
 (use-package dm-javascript :ensure nil)
+(use-package dm-colors :ensure nil)
+(use-package dm-mode-line :ensure nil)
 
 (require 'epa-file)
 (epa-file-enable)
@@ -255,7 +262,6 @@
 	    (make-local-variable
 	     (quote package-build-recipes-dir))
 	    default-directory))
-     (rufo-mode-use-bundler . t)
      (projectile-project-type rails-test)
      (projectile-project-type
       (quote rails-test)))))

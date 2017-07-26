@@ -1,10 +1,5 @@
-(add-to-list 'custom-theme-load-path "~/.dotfiles/emacs/themes")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/Code/test/base16-builder-php/templates/emacs/build")
-
-;; (setq ns-use-srgb-colorspace nil)
-(load-theme (if (member 'base16-onedark (custom-available-themes))
-                'base16-onedark
-              'base16-default-dark) t)
 
 (defun my/base16-set-theme (theme)
   "Set a base16 THEME by unloading all others."
@@ -41,6 +36,11 @@
    'session-face
    `(default ((t (:weight normal :width normal :slant normal :font ,font))))))
 
+
+(load-theme (if (member 'base16-onedark (custom-available-themes))
+                'base16-onedark
+              'base16-default-dark) t)
+
 (deftheme session-face)
 
 (custom-theme-set-faces
@@ -52,4 +52,5 @@
 (enable-theme 'session-face)
 
 (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)
- ;;; colors.el ends here
+
+(provide 'dm-colors)
