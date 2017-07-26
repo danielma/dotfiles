@@ -102,8 +102,6 @@
 (depends-on "slim-mode")
 (depends-on "smartparens")
 (depends-on "solarized-theme")
-(depends-on "sourcekit")
-(depends-on "sr-speedbar")
 (depends-on "suggest")
 (depends-on "swift-mode")
 (depends-on "sx")

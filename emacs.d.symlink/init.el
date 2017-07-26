@@ -24,24 +24,23 @@
       ns-use-native-fullscreen nil
       ad-redefinition-action 'accept)
 
+(fset 'evil-visual-update-x-selection 'ignore)
+
 (require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
 (cask-initialize)
 (require 'pallet)
 (pallet-mode t)
 
+(eval-when-compile
+  (require 'use-package))
+
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+(require 'text-tools)
+
 ;; set all widths to 2
 ;; (dolist (width '(evil-shift-width))
 ;;         (set width 2))
-
-(defun interactive-wrap-with-pair (pair)
-  (interactive "c")
-  (sp-wrap-with-pair (char-to-string pair)))
-
-(defun expand-at-point ()
-  "Insert a newline and put the cursor at the indented location above."
-  (interactive)
-  (newline-and-indent)
-  (evil-open-above 1))
 
 (use-package helm
   :config
@@ -50,11 +49,16 @@
   :init
   (helm-mode))
 
+(use-package buffer-move
+  :commands buf-move buf-move-right buf-move-left buf-move-up buf-move-down
+  )
+
 (use-package evil
   :init
   (setq evil-shift-width 2
 	evil-shift-round t)
   :config
+  (require 'general-funcs)
   (evil-mode 1)
   :bind (:map evil-insert-state-map
 	 ("C-n" . next-line)
@@ -69,7 +73,60 @@
 	 ("C-." . helm-M-x)
 	 :map evil-visual-state-map
 	 ("C-w" . interactive-wrap-with-pair)
+	 :map evil-window-map
+	 ("]" . buf-move-right)
+	 ("[" . buf-move-left)
+	 ("}" . buf-move-down)
+	 ("{" . buf-move-up)
 	 ))
+
+(use-package evil-leader
+  :init
+  (global-evil-leader-mode)
+  (evil-leader/set-leader "<SPC>")
+  (evil-leader/set-key
+    "fs" 'save-buffer-always
+    "fq" 'delete-window
+    "fr" 'force-reload
+
+    "bd" 'kill-this-buffer
+    "bs" 'helm-buffers-list
+
+    "cd" 'cd
+    "cl" 'custom-comment-line
+    "ct" 'my/base16-set-theme
+    "cf" 'my/set-custom-face
+
+    "dr" 'reveal-in-finder
+
+    "ee" 'edit-emacs
+    "es" 'edit-scratch
+
+    "gB" 'browse-at-remote
+
+    "hr" 'helm-resume
+    "hk" 'helm-show-kill-ring
+
+    "ll" 'custom-flycheck-toggle-errors
+    "ln" 'flycheck-next-error
+    "lp" 'flycheck-previous-error
+
+    "mw" 'web-mode
+    "mj" 'js-mode
+
+    "p" 'projectile-command-map
+
+    "ss" 'evil-search-word-forward
+    "sr" 'replace-symbol
+    "sa" 'find-symbol-in-project
+
+    "T" text-tools-map
+
+    "w" evil-window-map
+
+    "," 'ace-jump-char-mode
+
+    "<SPC>" 'helm-M-x))
 
 (use-package elscreen
   :config
@@ -78,7 +135,14 @@
   (setq elscreen-tab-display-control nil)
   (setq elscreen-tab-display-kill-screen nil)
   :init
-  (elscreen-start))
+  (elscreen-start)
+  :bind (:map evil-leader--default-map
+	      ("tn" . elscreen-create)
+	      ("tl" . elscreen-next)
+	      ("th" . elscreen-previous)
+	      ("tq" . elscreen-kill)
+	      ("tj" . elscreen-select-and-goto)
+	      ("tt" . elscreen-toggle-display-tab)))
 
 (use-package flx-ido
   :config
@@ -92,14 +156,6 @@
   (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
   :init
   (ido-vertical-mode 1))
-
-(use-package evil-leader
-  :init
-  (global-evil-leader-mode)
-  (evil-leader/set-leader "<SPC>"))
-
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-(require 'text-tools)
 
 (add-hook 'after-init-hook (lambda ()
                              (when (memq window-system '(mac ns))
@@ -129,7 +185,7 @@
     :commands (nlinum-relative-on)
     :config
     (setq nlinum-relative-current-symbol ""
-	  nlinum-relative-redisplay-delay 0)
+	  nlinum-relative-redisplay-delay 0.1)
     :init
     (nlinum-relative-setup-evil)
     (add-hook 'nlinum-mode-hook 'nlinum-relative-on))
@@ -142,6 +198,21 @@
               ("M-p" . nil)
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)))
+
+(use-package magit
+  :config
+  (setq magit-bury-buffer-function 'magit-mode-quit-window
+	magit-completing-read-function 'magit-ido-completing-read
+	magit-log-arguments (quote ("-n20" "--graph" "--decorate"))
+	magit-log-select-arguments (quote ("-n20" "--decorate"))
+	magit-popup-use-prefix-argument 'default
+	magit-save-repository-buffers nil)
+  :bind (:map evil-leader--default-map
+	      ("gs" . magit-status)
+	      ("gc" . magit-commit)
+	      ("gd" . magit-diff-buffer-file)
+	      ("gl" . magit-log-buffer-file)
+	      ("gb" . magit-blame)))
 
 ;; LOAD ALL THE THINGS
 (dolist (elt (file-expand-wildcards "~/.emacs.d/autoload/*.el"))
@@ -260,12 +331,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(line-number-mode nil)
  '(line-spacing 0)
  '(mac-mouse-wheel-smooth-scroll t)
- '(magit-bury-buffer-function (quote magit-mode-quit-window))
- '(magit-completing-read-function (quote magit-ido-completing-read))
- '(magit-log-arguments (quote ("-n20" "--graph" "--decorate")))
- '(magit-log-select-arguments (quote ("-n20" "--decorate")))
- '(magit-popup-use-prefix-argument (quote default))
- '(magit-save-repository-buffers nil)
  '(magithub-api-timeout 6)
  '(markdown-asymmetric-header t)
  '(markdown-header-scaling t)

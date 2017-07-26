@@ -1,10 +1,12 @@
-;;; evil.el --- setup for evil mode
+(defun interactive-wrap-with-pair (pair)
+  (interactive "c")
+  (sp-wrap-with-pair (char-to-string pair)))
 
-;;; Commentary:
-
-;;; Code:
-
-(fset 'evil-visual-update-x-selection 'ignore)
+(defun expand-at-point ()
+  "Insert a newline and put the cursor at the indented location above."
+  (interactive)
+  (newline-and-indent)
+  (evil-open-above 1))
 
 (defun save-buffer-always ()
   "Save this buffer even if it hasn't been modieifed."
@@ -44,11 +46,12 @@
   (evil-ex (concat "%s/" (current-symbol-or-region) "/")))
 
 ;; TODO this would be nice
-(defun find-symbol-in-project ()
-  "Search for symbol in project using projectile-ag."
-  (interactive)
-  (helm-ag-project-root (current-symbol-or-region)))
+;; (defun find-symbol-in-project ()
+;;   "Search for symbol in project using projectile-ag."
+;;   (interactive)
+;;   (helm-ag-project-root (current-symbol-or-region)))
 
+;; TODO: this should open 20% below
 (defun custom-flycheck-toggle-errors ()
   (interactive)
   (if (get-buffer "*Flycheck errors*")
@@ -65,7 +68,7 @@
   (interactive)
   (find-file "~/SCRATCH.md"))
 
-(defun my/edit-reload ()
+(defun force-reload ()
     "Revert buffer without confirmation."
     (interactive)
     (revert-buffer :ignore-auto :noconfirm))
@@ -74,69 +77,5 @@
   (interactive)
   (shell-command (concat "open -R " (buffer-file-name))))
 
-(setq my/evil-window-map
-      (let ((map (make-sparse-keymap)))
-        (set-keymap-parent map evil-window-map)
-
-        (define-key map "]" 'buf-move-right)
-        (define-key map "[" 'buf-move-left)
-        (define-key map "{" 'buf-move-up)
-        (define-key map "}" 'buf-move-down)
-        map))
-
-(evil-leader/set-key
-  "fs" 'save-buffer-always
-  "fq" 'delete-window
-  "fl" 'sr-speedbar-toggle
-  "fr" 'my/edit-reload
-
-  "bd" 'kill-this-buffer
-  "bs" 'switch-to-buffer
-
-  "cd" 'cd
-  "cl" 'custom-comment-line
-  "ct" 'my/base16-set-theme
-  "cf" 'my/set-custom-face
-
-  "dr" 'reveal-in-finder
-
-  "ee" 'edit-emacs
-  "es" 'edit-scratch
-
-  "gs" 'magit-status
-  "gc" 'magit-commit
-  "gd" 'magit-diff-buffer-file
-  "gl" 'magit-log-buffer-file
-  "gb" 'magit-blame
-  "gB" 'browse-at-remote
-
-  "hr" 'helm-resume
-  "hk" 'helm-show-kill-ring
-
-  "ll" 'custom-flycheck-toggle-errors
-  "ln" 'flycheck-next-error
-  "lp" 'flycheck-previous-error
-
-  "mw" 'web-mode
-  "mj" 'js-mode
-
-  "p" 'projectile-command-map
-
-  "ss" 'evil-search-word-forward
-  "sr" 'replace-symbol
-  "sa" 'find-symbol-in-project
-
-  "tn" 'elscreen-create
-  "tl" 'elscreen-next
-  "th" 'elscreen-previous
-  "tq" 'elscreen-kill
-  "tj" 'elscreen-select-and-goto
-  "tt" 'elscreen-toggle-display-tab
-
-  "T" text-tools-map
-
-  "w" my/evil-window-map
-
-  "," 'ace-jump-char-mode
-
-  "<SPC>" 'helm-M-x)
+(provide 'general-funcs)
+;; general-funcs.el ends here
