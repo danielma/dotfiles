@@ -54,11 +54,9 @@
   :init
   (projectile-rails-global-mode)
   :config
-  (eval
-   `(bind-map projectile-rails-command-map
-      :keys ,(my/leader-sub-key "r")
-      :evil-keys ,(my/leader-evil-sub-key "r")
-      :minor-modes (projectile-rails-mode)))
+  (bind-map-for-mode-inherit my/projectile-rails-command-map base-leader-map
+    :minor-modes (projectile-rails-mode)
+    :bindings ("r" projectile-rails-command-map))
   :bind (
 	 :map projectile-rails-command-map
          ("f" . my/projectile-rails-find-presenter)

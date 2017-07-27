@@ -1,19 +1,9 @@
-(setq base-leader-key "M-m"
-      base-leader-evil-key "SPC")
-
-(defun my/leader-sub-key (key)
-  (list (concat base-leader-key " " key)))
-
-(defun my/leader-evil-sub-key (key)
-  (list (concat base-leader-evil-key " " key)))
-
 (use-package bind-map
   :config
-  (eval
-   `(bind-map base-leader-map
-      :keys ,(list base-leader-key)
-      :evil-keys ,(list base-leader-evil-key)
-      :evil-states (normal motion visual)))
+  (bind-map base-leader-map
+    :keys ("M-m")
+    :evil-keys ("SPC")
+    :evil-states (normal motion visual))
 
   (bind-map-set-keys base-leader-map
     "fs" 'save-buffer-always
