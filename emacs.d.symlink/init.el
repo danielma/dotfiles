@@ -47,14 +47,17 @@
 ;; (dolist (width '(evil-shift-width))
 ;;         (set width 2))
 
+(use-package dm-bindings :ensure nil)
+
 (use-package helm
   :config
   (setq helm-completion-in-region-fuzzy-match t
+	helm-buffers-fuzzy-matching t
 	helm-mode-fuzzy-match t)
   (helm-mode)
   :bind (
 	 ("C-." . helm-M-x)
-	 :map evil-leader--default-map
+	 :map base-leader-map
 	 ("<SPC>" . helm-M-x)
 	 ))
 
@@ -90,7 +93,7 @@
   (setq elscreen-display-tab 30)
   (setq elscreen-tab-display-control nil)
   (setq elscreen-tab-display-kill-screen nil)
-  :bind (:map evil-leader--default-map
+  :bind (:map base-leader-map
 	 ("tn" . elscreen-create)
 	 ("tl" . elscreen-next)
 	 ("th" . elscreen-previous)

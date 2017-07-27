@@ -3,7 +3,7 @@
   (projectile-mode)
 
   :config
-  (evil-leader/set-key "p" projectile-command-map)
+  (define-key base-leader-map "p" projectile-command-map)
 
   (use-package helm-projectile
     :init
@@ -16,8 +16,8 @@
     (setq helm-ag-insert-at-point (quote symbol))
     )
 
-  (setq projectile-generic-command "ag -g \"\"")
-  (setq projectile-switch-project-action '(projectile-dired))
+  (setq projectile-generic-command "ag -g \"\""
+        projectile-switch-project-action 'projectile-dired)
 
   :bind (:map projectile-command-map
 	("T" . projectile-find-implementation-or-test-other-window)))

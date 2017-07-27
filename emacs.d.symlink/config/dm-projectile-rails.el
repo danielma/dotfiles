@@ -51,6 +51,14 @@
 ;;   "jt" 'my/projectile-rails-find-js-test)
 
 (use-package projectile-rails
+  :init
+  (projectile-rails-global-mode)
+  :config
+  (eval
+   `(bind-map projectile-rails-command-map
+      :keys ,(my/leader-sub-key "r")
+      :evil-keys ,(my/leader-evil-sub-key "r")
+      :minor-modes (projectile-rails-mode)))
   :bind (
 	 :map projectile-rails-command-map
          ("f" . my/projectile-rails-find-presenter)
@@ -61,6 +69,5 @@
          ("p" . my/projectile-rails-find-spec-or-policy)
 	 :map projectile-rails-mode-goto-map
 	 ("p" . my/projectile-rails-goto-package-json)))
-  
 
 (provide 'dm-projectile-rails)

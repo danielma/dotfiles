@@ -15,6 +15,6 @@
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
 
-(global-set-key (kbd "C-c e") eval-and-replace)
+(global-set-key (kbd "C-c e") 'eval-and-replace)
 
 (provide 'global-map)

@@ -25,14 +25,18 @@
 
 (use-package ruby-refactor
   :config
-  (evil-leader/set-key-for-mode 'ruby-mode
-    "o" (let ((map (make-sparse-keymap)))
-	  (define-key map (kbd "e") 'ruby-refactor-extract-to-method)
-	  (define-key map (kbd "p") 'ruby-refactor-add-parameter)
-	  (define-key map (kbd "l") 'ruby-refactor-extract-to-let)
-	  (define-key map (kbd "v") 'ruby-refactor-extract-local-variable)
-	  (define-key map (kbd "c") 'ruby-refactor-extract-constant)
-	  (define-key map (kbd "o") 'ruby-refactor-convert-post-conditional)
-	  map)))
+  (eval
+   `(bind-map my/ruby-refactor-mode-map
+      :keys ,(my/leader-sub-key "o")
+      :evil-keys ,(my/leader-evil-sub-key "o")
+      :major-modes (ruby-mode)
+      :bindings (
+		 "e" 'ruby-refactor-extract-to-method
+		 "p" 'ruby-refactor-add-parameter
+		 "l" 'ruby-refactor-extract-to-let
+		 "v" 'ruby-refactor-extract-local-variable
+		 "c" 'ruby-refactor-extract-constant
+		 "o" 'ruby-refactor-convert-post-conditional
+		 ))))
 
 (provide 'dm-ruby)

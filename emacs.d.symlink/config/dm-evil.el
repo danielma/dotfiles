@@ -1,7 +1,6 @@
 (eval-when-compile
   (require 'use-package))
 
-
 (defun system-paste ()
   "Always paste from the system clipboard."
   (interactive)
@@ -19,8 +18,9 @@
   (setq evil-shift-width 2
 	evil-shift-round t
 	evil-echo-state nil)
-  :config
   (evil-mode 1)
+  :config
+  (define-key base-leader-map "w" evil-window-map)
   :bind (
 	 ("s-]" . evil-window-next)
 	 ("s-[" . evil-window-prev)
@@ -31,14 +31,6 @@
 	 ("s-v" . system-paste)
 	 ("s-c" . system-yank)
 	 :map evil-insert-state-map
-	 ("s-]" . evil-window-next)
-	 ("s-[" . evil-window-prev)
-	 ("M-s-∆" . evil-window-down)
-	 ("M-s-˚" . evil-window-up)
-	 ("M-s-˙" . evil-window-left)
-	 ("M-s-¬" . evil-window-right)
-	 ("s-v" . system-paste)
-	 ("s-c" . system-yank)
 	 ("C-n" . next-line)
 	 ("C-p" . previous-line)
 	 ("C-a" . beginning-of-line-text)
@@ -78,50 +70,5 @@
 	;; ("RET" . evil-multiedit-toggle-or-restrict-region)
   )
 
-(use-package evil-leader
-  :config
-  (global-evil-leader-mode)
-  (evil-leader/set-leader "<SPC>")
-  (evil-leader/set-key
-    "fs" 'save-buffer-always
-    "fq" 'delete-window
-    "fr" 'force-reload
-
-    "bd" 'kill-this-buffer
-    "bs" 'helm-buffers-list
-
-    "cd" 'cd
-    "cl" 'custom-comment-line
-    "ct" 'my/base16-set-theme
-    "cf" 'my/set-custom-face
-
-    "dr" 'reveal-in-finder
-
-    "ee" 'edit-emacs
-    "es" 'edit-scratch
-    "ey" 'edit-yasnippet-dir
-
-    "gB" 'browse-at-remote
-
-    "hr" 'helm-resume
-    "hk" 'helm-show-kill-ring
-
-    "ll" 'custom-flycheck-toggle-errors
-    "ln" 'flycheck-next-error
-    "lp" 'flycheck-previous-error
-
-    ;; "mw" 'web-mode
-    ;; "mj" 'js-mode
-
-    "ss" 'evil-search-word-forward
-    "sr" 'replace-symbol
-    "sa" 'find-symbol-in-project
-
-    "T" text-tools-map
-
-    "w" evil-window-map
-
-    "," 'ace-jump-char-mode
-    )
 
 (provide 'dm-evil)

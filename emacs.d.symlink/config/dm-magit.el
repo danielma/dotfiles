@@ -39,7 +39,7 @@
 		    '(display-buffer-same-window)))))
   :config
   (evil-magit-init)
-  :bind (:map evil-leader--default-map
+  :bind (:map base-leader-map
 	      ("gs" . magit-status)
 	      ("gc" . magit-commit)
 	      ("gd" . magit-diff-buffer-file)
