@@ -158,7 +158,7 @@
     (nlinum-relative-setup-evil))
 
 (use-package company
-  :config
+  :init
   (global-company-mode)
   (setq company-dabbrev-downcase nil
 	company-idle-delay 0.2)
@@ -186,6 +186,7 @@
 (use-package dm-mode-line :ensure nil)
 (use-package dm-web-mode :ensure nil)
 (use-package dm-projectile-rails :ensure nil)
+(use-package dm-yasnippet :ensure nil)
 
 (require 'epa-file)
 (epa-file-enable)
