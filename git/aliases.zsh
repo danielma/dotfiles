@@ -44,7 +44,7 @@ function gitchanges {
 }
 
 function staging() {
-  if $(git-changes)
+  if $(gitchanges)
   then
     echo "NOPE! you have changes"
     gs
@@ -54,7 +54,7 @@ function staging() {
 }
 
 function master() {
-  if $(git-changes)
+  if $(gitchanges)
   then
     echo "NOPE! you have changes"
     gs

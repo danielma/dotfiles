@@ -1,9 +1,9 @@
 (use-package bind-map
   :config
   (bind-map base-leader-map
+    :override-minor-modes t
     :keys ("M-m")
-    :evil-keys ("SPC")
-    :evil-states (normal motion visual))
+    :evil-keys ("SPC"))
 
   (bind-map-set-keys base-leader-map
     "fs" 'save-buffer-always
@@ -42,6 +42,7 @@
 
     "T" text-tools-map
 
-    "," 'ace-jump-char-mode))
+    "," 'ace-jump-char-mode)
+  )
 
 (provide 'dm-bindings)
