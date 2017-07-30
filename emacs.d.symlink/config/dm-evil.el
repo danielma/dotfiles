@@ -21,6 +21,33 @@
   (evil-mode 1)
   :config
   (define-key base-leader-map "w" evil-window-map)
+  (defhydra hydra-evil-window ()
+    "window"
+    ("h" evil-window-left             "left")
+    ("j" evil-window-down             "down")
+    ("k" evil-window-up               "up")
+    ("l" evil-window-right            "right")
+
+    ;; movement
+    ("H" evil-window-move-far-left    "far left")
+    ("J" evil-window-move-very-bottom "far bottom")
+    ("K" evil-window-move-very-top    "far top")
+    ("L" evil-window-move-far-right   "far right")
+    ("C-h" buf-move-left              "move left")
+    ("C-j" buf-move-down              "move down")
+    ("C-k" buf-move-up                "move up")
+    ("C-l" buf-move-right             "move right")
+
+    ;; size
+    ("-" evil-window-decrease-height "height -")
+    ("+" evil-window-increase-height "height +")
+    ("<" evil-window-decrease-width  "width -")
+    (">" evil-window-increase-width  "width +")
+
+    ("_" evil-window-set-height      "height full")
+    ("|" evil-window-set-width       "width full")
+    ("=" balance-windows             "balance")
+    )
   :bind (
 	 ("s-]" . evil-window-next)
 	 ("s-[" . evil-window-prev)
@@ -44,10 +71,11 @@
 	 :map evil-visual-state-map
 	 ("C-w" . interactive-wrap-with-pair)
 	 :map evil-window-map
-	 ("]" . buf-move-right)
-	 ("[" . buf-move-left)
-	 ("}" . buf-move-down)
-	 ("{" . buf-move-up)
+	 ("C-h" . buf-move-left)
+	 ("C-j" . buf-move-down)
+	 ("C-k" . buf-move-up)
+	 ("C-l" . buf-move-right)
+	 ("." . hydra-evil-window/body)
 	 ))
 
 (use-package evil-multiedit
@@ -70,5 +98,8 @@
 	;; ("RET" . evil-multiedit-toggle-or-restrict-region)
   )
 
+(use-package evil-matchit
+  :init
+  (global-evil-matchit-mode))
 
 (provide 'dm-evil)

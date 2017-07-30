@@ -93,13 +93,20 @@
   (setq elscreen-display-tab 30)
   (setq elscreen-tab-display-control nil)
   (setq elscreen-tab-display-kill-screen nil)
+  (defhydra hydra-elscreen ()
+    "screens"
+    ("p" elscreen-previous "previous")
+    ("n" elscreen-next     "next")
+    ("k" elscreen-kill     "kill")
+    )
   :bind (:map base-leader-map
-	 ("tn" . elscreen-create)
-	 ("tl" . elscreen-next)
-	 ("th" . elscreen-previous)
-	 ("tq" . elscreen-kill)
+	 ("tc" . elscreen-create)
+	 ("tn" . elscreen-next)
+	 ("tp" . elscreen-previous)
+	 ("tk" . elscreen-kill)
 	 ("tj" . elscreen-select-and-goto)
 	 ("tt" . elscreen-toggle-display-tab)
+	 ("t." . hydra-elscreen/body)
 	 :map global-map
 	 ("s-t" . elscreen-create)
 	 ("s-w" . elscreen-kill)
@@ -195,6 +202,9 @@
              :config 
              (global-origami-mode))
 
+(use-package help+)
+(use-package help-fns+)
+
 ;; -------------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -215,7 +225,7 @@
  '(epg-gpg-program "gpg2")
  '(evil-insert-state-modes
    (quote
-    (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode git-commit-mode)))
+    (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode)))
  '(exec-path-from-shell-variables (quote ("PATH" "MANPATH" "NVM_DIR")))
  '(initial-scratch-message nil)
  '(js-indent-level 2)
@@ -234,7 +244,7 @@
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+    (hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window magithub ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values

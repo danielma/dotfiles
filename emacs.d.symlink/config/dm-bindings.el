@@ -1,3 +1,5 @@
+(defvar base-leader-map nil "The main LEADER map.")
+
 (use-package bind-map
   :config
   (bind-map base-leader-map
@@ -29,10 +31,6 @@
     "hr" 'helm-resume
     "hk" 'helm-show-kill-ring
 
-    "ll" 'custom-flycheck-toggle-errors
-    "ln" 'flycheck-next-error
-    "lp" 'flycheck-previous-error
-
     ;; "mw" 'web-mode
     ;; "mj" 'js-mode
 
@@ -44,5 +42,14 @@
 
     "," 'ace-jump-char-mode)
   )
+
+(use-package hydra
+  :config
+  (defhydra hydra-buffers ()
+    "buffers"				;
+    ("p" previous-buffer "previous")
+    ("n" next-buffer "next"))
+  :bind (:map base-leader-map
+	      ("b." . hydra-buffers/body)))
 
 (provide 'dm-bindings)

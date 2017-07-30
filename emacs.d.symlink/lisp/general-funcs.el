@@ -51,15 +51,6 @@
 ;;   (interactive)
 ;;   (helm-ag-project-root (current-symbol-or-region)))
 
-;; TODO: this should open 20% below
-(defun custom-flycheck-toggle-errors ()
-  (interactive)
-  (if (get-buffer "*Flycheck errors*")
-      (progn
-        (delete-window (get-buffer-window (get-buffer "*Flycheck errors*")))
-        (kill-buffer "*Flycheck errors*"))
-    (flycheck-list-errors)))
-
 (defun edit-emacs ()
   (interactive)
   (find-file "~/.emacs.d/init.el"))
