@@ -59,7 +59,10 @@
 	 ("C-." . helm-M-x)
 	 :map base-leader-map
 	 ("<SPC>" . helm-M-x)
-	 ))
+	 ("ho" . helm-occur)
+	 ("hr" . helm-resume)
+	 ("hk" . helm-show-kill-ring))
+	 )
 
 (use-package buffer-move
   :commands (buf-move buf-move-right buf-move-left buf-move-up buf-move-down)

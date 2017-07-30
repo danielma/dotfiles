@@ -1,4 +1,4 @@
-(defvar base-leader-map nil "The main LEADER map.")
+(defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
 
 (use-package bind-map
   :config
@@ -27,9 +27,6 @@
     "ey" 'edit-yasnippet-dir
 
     "gB" 'browse-at-remote
-
-    "hr" 'helm-resume
-    "hk" 'helm-show-kill-ring
 
     ;; "mw" 'web-mode
     ;; "mj" 'js-mode
