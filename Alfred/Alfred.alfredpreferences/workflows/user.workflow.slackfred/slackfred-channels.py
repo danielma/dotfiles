@@ -63,6 +63,7 @@ def leave_channel(keys, query):
                         web.get('https://slack.com/api/groups.leave?token=' + api_key + '&channel=' + group['id']
                         + '&pretty=1')
 
+
 def join_channel(keys, query):
     for key in keys:
         api_key = str(key)
@@ -70,6 +71,7 @@ def join_channel(keys, query):
         for channels in channels_list['channels']:
             if query == channels['name']:
                 web.get('https://slack.com/api/channels.join?token=' + api_key + '&name=' + query + '&pretty=1')
+
 
 def main(wf):
 

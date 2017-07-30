@@ -9,12 +9,7 @@
 #
 
 """
-This module provides an API to run commands in background processes.
-Combine with the :ref:`caching API <caching-data>` to work from cached data
-while you fetch fresh data in the background.
-
-See :ref:`the User Manual <background-processes>` for more information
-and examples.
+Run background tasks
 """
 
 from __future__ import print_function, unicode_literals
@@ -38,12 +33,8 @@ def wf():
     return _wf
 
 
-def _log():
-    return wf().logger
-
-
 def _arg_cache(name):
-    """Return path to pickle cache file for arguments.
+    """Return path to pickle cache file for arguments
 
     :param name: name of task
     :type name: ``unicode``
@@ -51,11 +42,12 @@ def _arg_cache(name):
     :rtype: ``unicode`` filepath
 
     """
-    return wf().cachefile(name + '.argcache')
+
+    return wf().cachefile('{0}.argcache'.format(name))
 
 
 def _pid_file(name):
-    """Return path to PID file for ``name``.
+    """Return path to PID file for ``name``
 
     :param name: name of task
     :type name: ``unicode``
@@ -63,18 +55,19 @@ def _pid_file(name):
     :rtype: ``unicode`` filepath
 
     """
-    return wf().cachefile(name + '.pid')
+
+    return wf().cachefile('{0}.pid'.format(name))
 
 
 def _process_exists(pid):
-    """Check if a process with PID ``pid`` exists.
+    """Check if a process with PID ``pid`` exists
 
     :param pid: PID to check
     :type pid: ``int``
     :returns: ``True`` if process exists, else ``False``
     :rtype: ``Boolean``
-
     """
+
     try:
         os.kill(pid, 0)
     except OSError:  # not running
@@ -83,12 +76,13 @@ def _process_exists(pid):
 
 
 def is_running(name):
-    """Test whether task ``name`` is currently running.
+    """
+    Test whether task is running under ``name``
 
     :param name: name of task
-    :type name: unicode
+    :type name: ``unicode``
     :returns: ``True`` if task with name ``name`` is running, else ``False``
-    :rtype: bool
+    :rtype: ``Boolean``
 
     """
     pidfile = _pid_file(name)
@@ -119,30 +113,34 @@ def _background(stdin='/dev/null', stdout='/dev/null',
     :type stderr: filepath
 
     """
-    def _fork_and_exit_parent(errmsg):
-        try:
-            pid = os.fork()
-            if pid > 0:
-                os._exit(0)
-        except OSError as err:
-            _log().critical('%s: (%d) %s', errmsg, err.errno, err.strerror)
-            raise err
 
     # Do first fork.
-    _fork_and_exit_parent('fork #1 failed')
-
+    try:
+        pid = os.fork()
+        if pid > 0:
+            sys.exit(0)  # Exit first parent.
+    except OSError as e:
+        wf().logger.critical("fork #1 failed: ({0:d}) {1}".format(
+                             e.errno, e.strerror))
+        sys.exit(1)
     # Decouple from parent environment.
     os.chdir(wf().workflowdir)
+    os.umask(0)
     os.setsid()
-
     # Do second fork.
-    _fork_and_exit_parent('fork #2 failed')
-
+    try:
+        pid = os.fork()
+        if pid > 0:
+            sys.exit(0)  # Exit second parent.
+    except OSError as e:
+        wf().logger.critical("fork #2 failed: ({0:d}) {1}".format(
+                             e.errno, e.strerror))
+        sys.exit(1)
     # Now I am a daemon!
     # Redirect standard file descriptors.
-    si = open(stdin, 'r', 0)
-    so = open(stdout, 'a+', 0)
-    se = open(stderr, 'a+', 0)
+    si = file(stdin, 'r', 0)
+    so = file(stdout, 'a+', 0)
+    se = file(stderr, 'a+', 0)
     if hasattr(sys.stdin, 'fileno'):
         os.dup2(si.fileno(), sys.stdin.fileno())
     if hasattr(sys.stdout, 'fileno'):
@@ -152,14 +150,15 @@ def _background(stdin='/dev/null', stdout='/dev/null',
 
 
 def run_in_background(name, args, **kwargs):
-    r"""Cache arguments then call this script again via :func:`subprocess.call`.
+    """Pickle arguments to cache file, then call this script again via
+    :func:`subprocess.call`.
 
     :param name: name of task
-    :type name: unicode
+    :type name: ``unicode``
     :param args: arguments passed as first argument to :func:`subprocess.call`
     :param \**kwargs: keyword arguments to :func:`subprocess.call`
     :returns: exit code of sub-process
-    :rtype: int
+    :rtype: ``int``
 
     When you call this function, it caches its arguments and then calls
     ``background.py`` in a subprocess. The Python subprocess will load the
@@ -176,8 +175,9 @@ def run_in_background(name, args, **kwargs):
     return immediately and will not run the specified command.
 
     """
+
     if is_running(name):
-        _log().info('[%s] job already running', name)
+        wf().logger.info('Task `{0}` is already running'.format(name))
         return
 
     argcache = _arg_cache(name)
@@ -185,31 +185,30 @@ def run_in_background(name, args, **kwargs):
     # Cache arguments
     with open(argcache, 'wb') as file_obj:
         pickle.dump({'args': args, 'kwargs': kwargs}, file_obj)
-        _log().debug('[%s] command cached: %s', name, argcache)
+        wf().logger.debug('Command arguments cached to `{0}`'.format(argcache))
 
     # Call this script
     cmd = ['/usr/bin/python', __file__, name]
-    _log().debug('[%s] passing job to background runner: %r', name, cmd)
+    wf().logger.debug('Calling {0!r} ...'.format(cmd))
     retcode = subprocess.call(cmd)
     if retcode:  # pragma: no cover
-        _log().error('[%s] background runner failed with %d', retcode)
+        wf().logger.error('Failed to call task in background')
     else:
-        _log().debug('[%s] background job started', name)
+        wf().logger.debug('Executing task `{0}` in background...'.format(name))
     return retcode
 
 
 def main(wf):  # pragma: no cover
-    """Run command in a background process.
-
+    """
     Load cached arguments, fork into background, then call
-    :meth:`subprocess.call` with cached arguments.
+    :meth:`subprocess.call` with cached arguments
 
     """
-    log = wf.logger
+
     name = wf.args[0]
     argcache = _arg_cache(name)
     if not os.path.exists(argcache):
-        log.critical('[%s] command cache not found: %r', name, argcache)
+        wf.logger.critical('No arg cache found : {0!r}'.format(argcache))
         return 1
 
     # Load cached arguments
@@ -230,21 +229,23 @@ def main(wf):  # pragma: no cover
 
     # Write PID to file
     with open(pidfile, 'wb') as file_obj:
-        file_obj.write(str(os.getpid()))
+        file_obj.write('{0}'.format(os.getpid()))
 
     # Run the command
     try:
-        log.debug('[%s] running command: %r', name, args)
+        wf.logger.debug('Task `{0}` running'.format(name))
+        wf.logger.debug('cmd : {0!r}'.format(args))
 
         retcode = subprocess.call(args, **kwargs)
 
         if retcode:
-            log.error('[%s] command failed with status %d', name, retcode)
+            wf.logger.error('Command failed with [{0}] : {1!r}'.format(
+                            retcode, args))
 
     finally:
         if os.path.exists(pidfile):
             os.unlink(pidfile)
-        log.debug('[%s] job complete', name)
+        wf.logger.debug('Task `{0}` finished'.format(name))
 
 
 if __name__ == '__main__':  # pragma: no cover

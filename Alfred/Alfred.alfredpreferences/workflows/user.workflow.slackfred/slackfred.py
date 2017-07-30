@@ -2,7 +2,7 @@ import sys
 import argparse
 from workflow import Workflow, web, PasswordNotFound
 import json
-import webbrowser
+import subprocess
 
 def slack_keys():
     wf = Workflow()
@@ -39,6 +39,7 @@ def slack_list(keys):
                 slack_search.append({'name': channels['name'], 'team': slack_auth['team'],'team_id': slack_auth['team_id'], 'id': channels['id'], 'type': 'channel', 'api_key': api_key})
             for users in slack_users['members']:
                 slack_search.append({'name': users['name'], 'team': slack_auth['team'],'team_id': slack_auth['team_id'], 'id': users['id'], 'type': 'user', 'api_key': api_key})
+                slack_search.append({'name': users['profile']['real_name'], 'team': slack_auth['team'],'team_id': slack_auth['team_id'], 'id': users['id'], 'type': 'user', 'api_key': api_key})
             for groups in slack_groups['groups']:
                 if 'name' in groups:
                     slack_search.append({'name': groups['name'], 'team': slack_auth['team'],'team_id': slack_auth['team_id'], 'id': groups['id'], 'type': 'group', 'api_key': api_key})
@@ -78,7 +79,7 @@ def main(wf):
 
     if args.open:
         url = slack_urlopen(wf.args[1])
-        webbrowser.open(url)
+        subprocess.call(['open', url])
         return
 
     if len(wf.args):
@@ -92,9 +93,9 @@ def main(wf):
     slack_search = wf.cached_data('slackfred', wrapper, max_age=120)
 
     if query:
-        slack_search = wf.filter(query, slack_search, key=search_slack_names, min_score=20)
+        slack_search = wf.filter(query, slack_search, key=search_slack_names)
 
-    for names in sorted(slack_search, key=lambda k: len(k['type'])):
+    for names in slack_search:
         wf.add_item(title=names['name'],
                     subtitle=names['team'],
                     arg=json.dumps(names),

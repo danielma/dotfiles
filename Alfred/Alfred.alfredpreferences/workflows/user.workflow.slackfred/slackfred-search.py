@@ -1,6 +1,6 @@
 import sys
 import argparse
-import requests
+from time import sleep
 from workflow import Workflow, web, PasswordNotFound
 
 
@@ -33,10 +33,9 @@ def search_slack(keys, query):
                               '&count=10&pretty=1').json()
             if results['messages']['total'] > 0:
                 for result in results['messages']['matches']:
-                    if result['type'] == 'message':
-                        search_results.append({'text': result['text'], 'channel': result['channel']['name'],
-                                               'user': result['username'], 'team': slack_auth['team'],
-                                               'link': result['permalink']})
+                    search_results.append({'text': result['text'], 'channel': result['channel']['name'],
+                                           'user': result['username'], 'team': slack_auth['team'],
+                                           'link': result['permalink']})
             else:
                 search_results.append({'text': 'False', 'team': slack_auth['team']})
 
@@ -48,7 +47,12 @@ def main(wf):
     parser.add_argument('query', nargs='?', default=None)
     args = parser.parse_args(wf.args)
 
-    query = args.query
+    if ' ' in args.query:
+        query = '%20'.join(args.query.split())
+    else:
+        query = args.query
+
+    sleep(1)
 
     search_results = search_slack(keys=slack_keys(), query=query)
 
