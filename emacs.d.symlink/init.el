@@ -53,7 +53,8 @@
   :config
   (setq helm-completion-in-region-fuzzy-match t
 	helm-buffers-fuzzy-matching t
-	helm-mode-fuzzy-match t)
+	helm-mode-fuzzy-match t
+	helm-follow-mode-persistent t)
   (helm-mode)
   :bind (
 	 ("C-." . helm-M-x)
@@ -227,6 +228,7 @@
    (quote
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode)))
  '(exec-path-from-shell-variables (quote ("PATH" "MANPATH" "NVM_DIR")))
+ '(helm-source-names-using-follow (quote ("Occur")))
  '(initial-scratch-message nil)
  '(js-indent-level 2)
  '(line-number-mode nil)
