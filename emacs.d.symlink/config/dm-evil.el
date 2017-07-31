@@ -13,6 +13,17 @@
   (apply 'evil-yank (append (evil-operator-range t) '(?+)))
   (evil-normal-state))
 
+(defun my/window-x-sibling-p ()
+  (let ((w (get-buffer-window)))
+    (or (windmove-find-other-window 'right) (windmove-find-other-window 'left))))
+
+(defun my/window-percent (percent)
+  (interactive "N")
+  (let ((p (* percent 0.1)))
+    (if (my/window-x-sibling-p)
+	(evil-resize-window (round (* (frame-width) p)) t)
+      (evil-resize-window (round (* (frame-height) p))))))
+
 (use-package evil
   :init
   (setq evil-shift-width 2
@@ -43,6 +54,7 @@
     ("+" evil-window-increase-height "height +")
     ("<" evil-window-decrease-width  "width -")
     (">" evil-window-increase-width  "width +")
+    ("p" my/window-percent "percent")
 
     ("_" evil-window-set-height      "height full")
     ("|" evil-window-set-width       "width full")
@@ -75,6 +87,7 @@
 	 ("C-j" . buf-move-down)
 	 ("C-k" . buf-move-up)
 	 ("C-l" . buf-move-right)
+	 ("p" . my/window-percent)
 	 ("." . hydra-evil-window/body)
 	 ))
 
