@@ -225,7 +225,7 @@
 
                   ;; right
                   (format-mode-line `("%e"
-                                      ,(my/mode-line-guard-status)
+                                      ;;,(my/mode-line-guard-status)
                                       ,(my/mode-line-flycheck-status)
                                       " "
                                       mode-name

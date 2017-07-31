@@ -12,7 +12,7 @@
 
 (defun edit-dotfiles ()
   (interactive)
-  (dired "~/.dotfiles")
+  (dired "~/.dotfiles"))
 
 (defun force-reload ()
     "Revert buffer without confirmation."
@@ -85,6 +85,7 @@
     "dr" 'reveal-in-finder
 
     "ee" 'edit-emacs
+    "ed" 'edit-dotfiles
     "es" 'edit-scratch
     "ey" 'edit-yasnippet-dir
 

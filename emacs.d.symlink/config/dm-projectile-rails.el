@@ -46,6 +46,19 @@
      '(("app/policies/" "/policies/\\(.+?\\)\\(_policy\\)?\\.rb$"))
      "app/policies/${filename}_policy.rb")))
 
+(defcustom projectile-rails-component-dirs
+  '("app/javascript/application/components/" "app/javascript/church_center/components/" "app/javascript/shared/components/")
+  "The directory to look for javascript component files in."
+  :group 'projectile-rails
+  :type 'string)
+
+(defun my/projectile-rails-find-component ()
+  "Find a react component."
+  (interactive)
+  (projectile-rails-find-resource
+   "javascript: "
+   (--map (list it "/\\(.+\\)\\.[^.]+$") projectile-rails-component-dirs)))
+
 ;; (evil-leader/set-key
 ;;   "jc" 'projectile-rails-find-component
 ;;   "jt" 'my/projectile-rails-find-js-test)
@@ -53,6 +66,8 @@
 (use-package projectile-rails
   :init
   (projectile-rails-global-mode)
+  (setq projectile-rails-component-dir "app/javascript/"
+	projectile-rails-javascript-dirs (add-to-list 'projectile-rails-javascript-dirs "app/javascript/"))
   :config
   (bind-map-for-mode-inherit my/projectile-rails-command-map base-leader-map
     :minor-modes (projectile-rails-mode)
@@ -65,6 +80,7 @@
          ("A" . projectile-rails-find-current-stylesheet)
          ("R" . my/projectile-rails-find-rake-tasks)
          ("p" . my/projectile-rails-find-spec-or-policy)
+         ("w" . my/projectile-rails-find-component)
 	 :map projectile-rails-mode-goto-map
 	 ("p" . my/projectile-rails-goto-package-json)))
 

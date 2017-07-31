@@ -249,7 +249,8 @@
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
    (quote
-    ((eval setq-local flycheck-disabled-checkers
+    ((rufo-mode-use-bundler . t)
+     (eval setq-local flycheck-disabled-checkers
 	   (append flycheck-disabled-checkers
 		   (quote
 		    (ruby-reek))))
