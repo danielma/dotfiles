@@ -1,3 +1,65 @@
+(defun edit-emacs ()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
+
+(defun edit-scratch ()
+  (interactive)
+  (find-file "~/SCRATCH.md"))
+
+(defun edit-yasnippet-dir ()
+  (interactive)
+  (dired "~/.dotfiles/emacs.d.symlink/yasnippet-snippets"))
+
+(defun edit-dotfiles ()
+  (interactive)
+  (dired "~/.dotfiles")
+
+(defun force-reload ()
+    "Revert buffer without confirmation."
+    (interactive)
+    (revert-buffer :ignore-auto :noconfirm))
+
+(defun save-buffer-always ()
+  "Save this buffer even if it hasn't been modieifed."
+  (interactive)
+  (set-buffer-modified-p t)
+  (save-buffer))
+
+(defun toggle-comment-on-line ()
+  "Comment or uncomment current line."
+  (interactive)
+  (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
+
+(defun custom-comment-line ()
+  "Comment lines the way I want to."
+  (interactive)
+  (if (evil-visual-state-p)
+      (call-interactively 'comment-or-uncomment-region)
+      (call-interactively 'toggle-comment-on-line)))
+
+(defun current-symbol-or-region ()
+  "Return the symbol under the cursor or the selected region."
+  (let (from to sym)
+    (if (use-region-p)
+        (progn
+          (setq sym (buffer-substring-no-properties (mark) (point))))
+        (progn
+          (save-excursion
+            (skip-syntax-backward "w_") (setq from (point)))
+          (save-excursion
+            (skip-syntax-forward "w_") (setq to (point)))
+          (setq sym (buffer-substring-no-properties to from))))
+    sym))
+
+(defun replace-symbol ()
+  "EVIL: search for instances of the symbol under the cursor."
+  (interactive)
+  (evil-ex (concat "%s/" (current-symbol-or-region) "/")))
+
+(defun reveal-in-finder ()
+  (interactive)
+  (shell-command (concat "open -R " (buffer-file-name))))
+
 (defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
 
 (use-package bind-map
@@ -26,10 +88,6 @@
     "es" 'edit-scratch
     "ey" 'edit-yasnippet-dir
 
-    ;; "mw" 'web-mode
-    ;; "mj" 'js-mode
-
-    "ss" 'evil-search-word-forward
     "sr" 'replace-symbol
     "sa" 'find-symbol-in-project
 
