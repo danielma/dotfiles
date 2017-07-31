@@ -691,15 +691,15 @@ an alternate theme for use in the terminal.")
         (base0C (plist-get theme-colors :base01))
         (base0D (plist-get theme-colors :base01))
         (base0E (plist-get theme-colors :base01))
-        (base0F (plist-get theme-colors :base01)))
-    (custom-theme-set-variables
-     theme-name
-     '(ansi-color-names-vector
-       ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
-       [base00 base08 base0B base0A base0D base0E base0D base05])
-     '(ansi-term-color-vector
-       ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
-       [unspecified base00 base08 base0B base0A base0D base0E base0D base05]))))
+        (base0F (plist-get theme-colors :base01)))))
+    ;; (custom-theme-set-variables
+    ;;  theme-name
+    ;;  '(ansi-color-names-vector
+    ;;    ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
+    ;;    [base00 base08 base0B base0A base0D base0E base0D base05])
+    ;;  '(ansi-term-color-vector
+    ;;    ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
+    ;;    [unspecified base00 base08 base0B base0A base0D base0E base0D base05]))))
 
 ;;;###autoload
 (and load-file-name
