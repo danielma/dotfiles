@@ -214,9 +214,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector [base00 base08 base0B base0A base0D base0E base0D base05])
- '(ansi-term-color-vector
-   [unspecified base00 base08 base0B base0A base0D base0E base0D base05] t)
  '(column-number-mode nil)
  '(css-indent-offset 2)
  '(custom-safe-themes
@@ -289,8 +286,6 @@
       (quote rails-test)))))
  '(select-enable-clipboard nil)
  '(show-paren-mode t)
- '(term-scroll-show-maximum-output t)
- '(term-scroll-to-bottom-on-output t)
  '(writeroom-fullscreen-effect nil)
  '(writeroom-major-modes (quote (markdown-mode)))
  '(yas-triggers-in-field t))
