@@ -26,8 +26,6 @@
     "es" 'edit-scratch
     "ey" 'edit-yasnippet-dir
 
-    "gB" 'browse-at-remote
-
     ;; "mw" 'web-mode
     ;; "mj" 'js-mode
 

@@ -39,6 +39,7 @@
 		    '(display-buffer-same-window)))))
   :config
   (evil-magit-init)
+  (setq magit-blame-heading-format "%C | %s")
   :bind (:map base-leader-map
 	      ("gs" . magit-status)
 	      ("gc" . magit-commit)
@@ -59,5 +60,9 @@
     ?P "Simple Pull Request" 'my/magithub-pull-request)
   (magit-define-popup-action 'magithub-dispatch-popup
     ?h "Browse Default" 'my/magithub-browse-default))
+
+(use-package browse-at-remote
+  :bind (:map base-leader-map
+	 ("gB" . browse-at-remote)))
 
 (provide 'dm-magit)
