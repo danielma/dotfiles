@@ -2,7 +2,9 @@
   :config
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+  (smartparens-global-mode)
   )
+
 (use-package eslintd-fix)
 
 (use-package rjsx-mode

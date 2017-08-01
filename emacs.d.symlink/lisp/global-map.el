@@ -4,7 +4,7 @@
       (previous-buffer)
     (if (get-buffer "*terminal*")
 	(switch-to-buffer "*terminal*")
-      (term))))
+      (call-interactively 'term))))
 
 (define-key global-map (kbd "s-<return>") 'toggle-frame-fullscreen)
 (define-key global-map (kbd "s-s") 'save-buffer-always)

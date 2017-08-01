@@ -122,7 +122,9 @@
   (ido-mode 1)
   (ido-everywhere 1)
   :config
-  (flx-ido-mode 1))
+  (flx-ido-mode 1)
+  :bind (:map ido-completion-map
+	 ("C-k" . kill-whole-line)))
 
 (use-package ido-vertical-mode
   :config

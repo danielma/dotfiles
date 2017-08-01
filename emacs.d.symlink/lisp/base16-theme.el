@@ -460,6 +460,7 @@ an alternate theme for use in the terminal.")
      (js2-function-param-face                      :foreground base0D)
      (js2-instance-member-face                     :foreground base0D)
      (js2-private-function-call-face               :foreground base08)
+     (js2-function-param                           :foreground base06)
 
      ;; js3-mode
      (js3-warning-face                             :underline base09)
