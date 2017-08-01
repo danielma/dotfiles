@@ -158,6 +158,7 @@ an alternate theme for use in the terminal.")
 
      (header-line                                  :foreground base0E :background base04)
      (vertical-border                              :foreground base0000)
+     (fixed-pitch                                  :inherit default)
 
      ;; Font-lock stuff
      (font-lock-builtin-face                       :foreground base0C)
@@ -446,6 +447,9 @@ an alternate theme for use in the terminal.")
 
      (markdown-url-face                            :inherit link)
      (markdown-link-face                           :foreground base0D :underline t)
+     (markdown-code-face                           :foreground base06 :background base01)
+     (markdown-markup-face                         :foreground base06 :background base01)
+     (markdown-header-delimiter-face               :inherit nil)
 
      (hl-sexp-face                                 :background base03)
      (highlight-80+                                :background base03)

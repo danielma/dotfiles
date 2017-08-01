@@ -121,7 +121,6 @@
   :init
   (ido-mode 1)
   (ido-everywhere 1)
-  :config
   (flx-ido-mode 1)
   :bind (:map ido-completion-map
 	 ("C-k" . kill-whole-line)))
@@ -188,6 +187,8 @@
 (use-package which-key
   :config
   (which-key-mode))
+
+(use-package markdown-mode)
 
 (use-package dm-magit :ensure nil)
 (use-package dm-todo :ensure nil)
