@@ -45,7 +45,7 @@
 
 (custom-theme-set-faces
  'session-face
- '(default ((t (:weight normal :height 120 :width normal :family "Input Mono Compressed")))))
+ '(default ((t (:weight normal :height 120 :width normal :family "Iosevka Nerd Font")))))
 
 (provide-theme 'session-face)
 

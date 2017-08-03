@@ -11,6 +11,11 @@
 ;;                                     (+ 1 (string-match "/[^/]+/[^/]+/$" default-directory)) nil))))
 ;; (add-hook 'find-file-hook 'add-mode-line-dirtrack)
 
+(defface mode-line-powerline-symbol
+  '((t (:height 1.2)))
+  "Face used to make powerline symbols a little taller."
+  :group 'mode-line-powerline)
+
 (defface mode-line-evil
   '((t (:foreground "white" :weight bold :inherit mode-line)))
   "Meta-face used for property inheritance on all mode-line-evil faces."
@@ -94,7 +99,7 @@
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT aligned respectively."
   (let* ((available-width (- (window-total-width) (length left) 2)))
-    (format (format " %%s %%%ds " available-width) left right)))
+    (format (format "%%s %%%ds" available-width) left right)))
 
 (defvar mode-line-selected-window nil)
 
@@ -170,11 +175,14 @@
   "Return propertized mode line segment for KIND."
   (if (flycheck-has-current-errors-p kind)
       `(""
+	,(my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b2" (my/mode-line-flycheck-face kind))
         (:propertize
          ,(concat " " (number-to-string (my/flycheck-count-errors kind)) " ")
          face
          ,(my/mode-line-flycheck-face kind)
-         ))
+         )
+	,(my/mode-line-powerline-propertize (my/mode-line-flycheck-face kind) "\ue0b2" (my/mode-line-face 'normal))
+	)
     ""))
 
 (defun my/mode-line-flycheck-status ()
@@ -200,6 +208,11 @@
     ))
 
 (setq mode-line-guard-status 'ok)
+
+(defun my/mode-line-powerline-propertize (left-face text right-face)
+  "Take LEFT-FACE, TEXT, and RIGHT-FACE and return a propertized list with appropriate foreground and background."
+  `(:propertize ,text face (:background ,(face-attribute left-face :background) :foreground ,(face-attribute right-face :background) :inherit mode-line-powerline-symbol))
+  )
 ;; use the function in conjunction with :eval and format-mode-line in your mode-line-format
 ;; (progn
   (setq-default mode-line-format
@@ -207,19 +220,22 @@
                   ;; left
                   (format-mode-line `(
                                       "%e"
-                                      ("" (:propertize (" " (:eval (my/mode-line-evil-tag)) " ") face ,(my/mode-line-face 'evil)))
-                                      " "
+                                      ("" (:propertize ("  " (:eval (my/mode-line-evil-tag)) " ") face ,(my/mode-line-face 'evil)))
+				      ,(my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b0" (my/mode-line-face 'evil))
+				      " "
                                       mode-line-client
                                       mode-line-modified
                                       " "
-                                      ,(if (projectile-project-p)
-                                          `(""
-                                           (:propertize
-                                            (" " (:eval (projectile-project-name)) " ")
-                                            face
-                                            ,(my/mode-line-face 'accent)
-                                            )))
-                                      " "
+				      ,(if (projectile-project-p)
+					 `(""
+					   ,(my/mode-line-powerline-propertize (my/mode-line-face 'accent) "\ue0b0" (my/mode-line-face 'normal))
+					   (:propertize
+					    (" " (:eval (projectile-project-name)) " ")
+					    face
+					    ,(my/mode-line-face 'accent)
+					    )
+					   ,(my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b0" (my/mode-line-face 'accent))))
+				      " "
                                       mode-line-buffer-identification
                                       ))
 
@@ -230,11 +246,11 @@
                                       " "
                                       mode-name
                                       " "
+				      ,(my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b2" (my/mode-line-face 'accent))
                                       (""
                                        (:propertize
-                                        (,(format-time-string " %I:%M "))
+                                        (,(format-time-string " %I:%M  "))
                                         face ,(my/mode-line-face 'accent)))
-                                      " "
                                       ))
                   ))))
   ;; (force-mode-line-update))

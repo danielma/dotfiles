@@ -140,14 +140,14 @@ an alternate theme for use in the terminal.")
      (mode-line                                    :foreground base04
                                                    :background base02
                                                    :overline base0000
-                                                   :box (:line-width 3 :color base02))
+                                                   :box nil) ;; (:line-width 3 :color base02))
      (mode-line-buffer-id                          :foreground base07 :background nil)
      (mode-line-emphasis                           :foreground base06 :slant italic)
      (mode-line-highlight                          :foreground base0E :box nil :weight bold)
      (mode-line-inactive                           :foreground base03
                                                    :background base01
                                                    :overline base0000
-                                                   :box (:line-width 3 :color base01))
+                                                   :box nil) ;; (:line-width 3 :color base01))
      (region                                       :background base02)
      (secondary-selection                          :background base03)
      (error                                        :foreground base08 :weight bold)
@@ -227,19 +227,19 @@ an alternate theme for use in the terminal.")
      (flymake-errline                              :background base01 :underline base08)
      (mode-line-flycheck-error                     :background base08
                                                    :foreground base07
-                                                   :box (:line-width -1 :color base08))
+                                                   :box nil) ;; (:line-width -1 :color base08))
      (mode-line-flycheck-warning                   :background base09
                                                    :foreground base07
-                                                   :box (:line-width -1 :color base09))
+                                                   :box nil) ;; (:line-width -1 :color base09))
      (mode-line-flycheck-info                      :background base0B
                                                    :foreground base07
-                                                   :box (:line-width -1 :color base0B))
+                                                   :box nil) ;; (:line-width -1 :color base0B))
      (mode-line-flycheck-ok                        :background base0B
                                                    :foreground base07
-                                                   :box (:line-width -1 :color base0B))
+                                                   :box nil) ;; (:line-width -1 :color base0B))
      (mode-line-flycheck-running                   :background base0C
                                                    :foreground base07
-                                                   :box (:line-width -1 :color base0C))
+                                                   :box nil) ;; (:line-width -1 :color base0C))
 
      ;; Clojure errors
      (clojure-test-failure-face                    :background nil :inherit flymake-warnline)
@@ -652,25 +652,25 @@ an alternate theme for use in the terminal.")
      (mode-line-evil                          :foreground base06 :weight bold)
      (mode-line-evil-normal                   :inherit mode-line-evil
                                               :background base03
-                                              :box (:line-width -1 :color base03))
+                                              :box nil) ;; (:line-width -1 :color base03))
      (mode-line-evil-emacs                    :inherit mode-line-evil
                                               :background base0E
-                                              :box (:line-width -1 :color base0E))
+                                              :box nil) ;; (:line-width -1 :color base0E))
      (mode-line-evil-insert                   :inherit mode-line-evil
                                               :background base0D
-                                              :box (:line-width -1 :color base0D))
+                                              :box nil) ;; (:line-width -1 :color base0D))
      (mode-line-evil-visual                   :inherit mode-line-evil
                                               :background base09
-                                              :box (:line-width -1 :color base09))
+                                              :box nil) ;; (:line-width -1 :color base09))
      (mode-line-accent-active                 :inherit mode-line
                                               :background base01
-                                              :box (:line-width -1 :color base01))
+                                              :box nil) ;; (:line-width -1 :color base01))
      (mode-line-accent-inactive               :inherit mode-line-inactive
                                               :background base01
-                                              :box (:line-width -1 :color base01))
+                                              :box nil) ;; (:line-width -1 :color base01))
      (mode-line-dark-active                   :inherit mode-line
                                               :background base01
-                                              :box (:line-width -1 :color base01))
+                                              :box nil) ;; (:line-width -1 :color base01))
 
      ;; web-mode
      (web-mode-html-tag-face :foreground base04 :weight bold)
