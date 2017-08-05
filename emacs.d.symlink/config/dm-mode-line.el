@@ -176,7 +176,7 @@
   `(
     ,(my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b2" face)
     (:propertize ,(concat " " text " ") face ,face)
-    ,(my/mode-line-powerline-propertize face "\ue0b2" (my/mode-line-face 'normal))
+    ,(my/mode-line-powerline-propertize face "\ue0b2" (my/mode-line-face 'accent))
     )
   )
 
@@ -200,7 +200,8 @@
              ,(my/mode-line-flycheck-segment 'info)
              ))
           ((flycheck-running-p) (my/mode-line-flycheck-segment 'running))
-	  (flycheck-enabled-checkers (my/mode-line-flycheck-segment 'ok)))))
+	  (flycheck-enabled-checkers (my/mode-line-flycheck-segment 'ok))
+	  (t (my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b2" (my/mode-line-face 'accent))))))
 
 (defvar mode-line-guard-status 'ok "The current guard status for mode-line.")
 
@@ -210,6 +211,16 @@
       `("" (:propertize " \u2694 " face ,(my/mode-line-face 'accent)))
     `("" (:propertize " \u2694 " face ,(my/mode-line-flycheck-face 'error)))
     ))
+
+(defun my/mode-name ()
+  (let ((mode (pcase major-mode
+	       ('magit-status-mode "\ue725")
+	       ('ruby-mode "\ue791")
+	       ('web-mode "\ue60e")
+	       ('rjsx-mode "\ue7ba")
+	       ('emacs-lisp-mode "(\ue779)")
+	       (_ mode-name))))
+    `(:propertize ,(concat " " mode " ") face ,(my/mode-line-face 'accent))))
 
 (setq mode-line-guard-status 'ok)
 
@@ -247,15 +258,10 @@
                   (format-mode-line `("%e"
                                       ;;,(my/mode-line-guard-status)
                                       ,(my/mode-line-flycheck-status)
-                                      " "
-                                      mode-name
-                                      " "
-				      ,(my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b2" (my/mode-line-face 'accent))
-                                      (""
-                                       (:propertize
-                                        (,(format-time-string " %I:%M  "))
-                                        face ,(my/mode-line-face 'accent)))
-                                      ))
+				      ,(my/mode-name)
+				      ,(my/mode-line-powerline-propertize (my/mode-line-face 'accent) "\ue0b2" (my/mode-line-face 'normal))
+				      ,(format-time-string " %I:%M  "))
+                                      )
                   ))))
   ;; (force-mode-line-update))
  
