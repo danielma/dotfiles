@@ -171,19 +171,24 @@
   (let ((errors (flycheck-count-errors flycheck-current-errors)))
     (or (cdr (assq kind errors)) 0)))
 
+(defun my/mode-line-flycheck-wrap (text face)
+  "Return propertized TEXT with a FACE and powerline characters."
+  `(
+    ,(my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b2" face)
+    (:propertize ,(concat " " text " ") face ,face)
+    ,(my/mode-line-powerline-propertize face "\ue0b2" (my/mode-line-face 'normal))
+    )
+  )
+
 (defun my/mode-line-flycheck-segment (kind)
   "Return propertized mode line segment for KIND."
-  (if (flycheck-has-current-errors-p kind)
-      `(""
-	,(my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b2" (my/mode-line-flycheck-face kind))
-        (:propertize
-         ,(concat " " (number-to-string (my/flycheck-count-errors kind)) " ")
-         face
-         ,(my/mode-line-flycheck-face kind)
-         )
-	,(my/mode-line-powerline-propertize (my/mode-line-flycheck-face kind) "\ue0b2" (my/mode-line-face 'normal))
-	)
-    ""))
+  (cond ((eq kind 'ok)
+	 (my/mode-line-flycheck-wrap "\u2713" (my/mode-line-flycheck-face 'ok)))
+	((eq kind 'running)
+	 (my/mode-line-flycheck-wrap "\u2219" (my/mode-line-flycheck-face 'running)))
+	((flycheck-has-current-errors-p kind)
+	 (my/mode-line-flycheck-wrap (number-to-string (my/flycheck-count-errors kind)) (my/mode-line-flycheck-face kind)))
+	(t "")))
 
 (defun my/mode-line-flycheck-status ()
   "Full flycheck mode line string."
@@ -194,9 +199,8 @@
              ,(my/mode-line-flycheck-segment 'warning)
              ,(my/mode-line-flycheck-segment 'info)
              ))
-          ((flycheck-running-p) '("" (:propertize " \u2219 " face mode-line-flycheck-running)))
-          (t `("" (:propertize " \u2713 " face ,(my/mode-line-flycheck-face 'ok))))
-          )))
+          ((flycheck-running-p) (my/mode-line-flycheck-segment 'running))
+	  (flycheck-enabled-checkers (my/mode-line-flycheck-segment 'ok)))))
 
 (defvar mode-line-guard-status 'ok "The current guard status for mode-line.")
 

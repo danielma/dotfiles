@@ -2,7 +2,6 @@
   :config
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
-  (smartparens-global-mode)
   )
 
 (use-package eslintd-fix)
@@ -14,7 +13,7 @@
   :init
   (add-hook 'rjsx-mode-hook 'eslintd-fix-mode)
   (add-hook 'rjsx-mode-hook 'emmet-mode)
-  (add-hook 'rjsx-mode-hooo 'smartparens-mode)
+  (add-hook 'rjsx-mode-hook 'smartparens-mode)
   (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
   (add-hook 'rjsx-mode-hook (lambda ()
 			      (setq-local emmet-expand-jsx-className? t)
