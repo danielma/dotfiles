@@ -19,6 +19,7 @@
 			      (setq ruby-insert-encoding-magic-comment nil)
 			      (modify-syntax-entry ?_ "w")
 			      ))
+  (add-to-list 'auto-mode-alist '("\\.rb.spec\\'" . ruby-mode))
   (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
 (use-package ruby-end)

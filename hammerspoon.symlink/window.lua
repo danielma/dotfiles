@@ -119,20 +119,14 @@ hs.grid.setGrid("6x4")
 hs.grid.setMargins({0, 0})
 hyperBind('/', function()
     local gridSize = hs.grid.getGrid()
-    hs.grid.setGrid("4x4")
+    hs.grid.setGrid("6x4")
     hs.grid.show(function() hs.grid.setGrid(gridSize) end)
   end)
-
-hs.hotkey.bind(
-    'cmd-ctrl-alt-shift',
-    '/',
-    nil,
-    function()
-      local gridSize = hs.grid.getGrid()
-      hs.grid.setGrid("4x4")
-      hs.grid.show(function() hs.grid.setGrid(gridSize) end)
-    end
-)
+mehBind('/', function()
+    local gridSize = hs.grid.getGrid()
+    hs.grid.setGrid("6x4")
+    hs.grid.show(function() hs.grid.setGrid(gridSize) end)
+  end)
 
 -- undo for window operations
 undo = {}

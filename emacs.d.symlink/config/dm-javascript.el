@@ -17,7 +17,9 @@
   (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
   (add-hook 'rjsx-mode-hook (lambda ()
 			      (setq-local emmet-expand-jsx-className? t)
-			      (setq-local emmet-self-closing-tag-style " /"))))
+			      (setq-local emmet-self-closing-tag-style " /")))
+  :bind (:map rjsx-mode-map
+	 ("<" . nil)))
 
 (defun my-create-newline-and-enter-sexp (&rest _ignored)
   "Open a new brace or bracket expression, with relevant newlines and indent. "
