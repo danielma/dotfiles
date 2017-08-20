@@ -60,6 +60,14 @@
   (interactive)
   (shell-command (concat "open -R " (buffer-file-name))))
 
+(defun find-definition-in-file ()
+  (interactive)
+  (let ((keyword (pcase major-mode
+		   ('emacs-lisp-mode "defun")
+		   ('ruby-mode "def")
+		   (_ (error (concat "no definition keyword for " major-mode))))))
+    (evil-search (concat keyword " " (current-symbol-or-region)) t)))
+
 (defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
 
 (use-package bind-map
@@ -90,6 +98,7 @@
     "ey" 'edit-yasnippet-dir
 
     "sr" 'replace-symbol
+    "sd" 'find-definition-in-file
     "sa" 'find-symbol-in-project
 
     "T" text-tools-map
