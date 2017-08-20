@@ -16,7 +16,7 @@
         (lambda (command)
           (let ((executable (car command))
                 (arguments (cdr command)))
-            (if (string-suffix-p "rubocop" executable)
+            (if (and (string-suffix-p "rubocop" executable) (locate-dominating-file default-directory ".rubocop.yml"))
                 (append '("bundle" "exec" "rubocop") arguments)
               command))))
   (setq-default
