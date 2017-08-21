@@ -65,7 +65,8 @@
   (let ((keyword (pcase major-mode
 		   ('emacs-lisp-mode "defun")
 		   ('ruby-mode "def")
-		   (_ (error (concat "no definition keyword for " major-mode))))))
+		   ('web-mode "function")
+		   (_ (error (concat "no definition keyword for " (symbol-name major-mode)))))))
     (evil-search (concat keyword " " (current-symbol-or-region)) t)))
 
 (defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")

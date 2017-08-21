@@ -1,10 +1,21 @@
 (defun my-web-mode-setup ()
   (setq-local electric-indent-chars
               (append "{};" electric-indent-chars))
+  (if (equal web-mode-engine "php")
+      (my/web-mode-php-setup))
   (if (member web-mode-engine '("php" "erb"))
       (modify-syntax-entry ?_ "w"))
   (if (equal web-mode-content-type "javascript")
       (web-mode-set-content-type "jsx")))
+
+(defun my/web-mode-php-setup ()
+  "Web mode setup for php."
+  )
+
+(defun my/web-mode-control-colon ()
+  (interactive)
+  (insert ";")
+  (newline-and-indent))
 
 (use-package web-mode
   :commands web-mode
@@ -24,6 +35,8 @@
     (set width 2))
   (setq web-mode-engines-alist
 	'(("php" . "\\.module\\'")))
+  :bind (:map web-mode-map
+	      ("C-:" . my/web-mode-control-colon))
   )
 
 (use-package emmet-mode
