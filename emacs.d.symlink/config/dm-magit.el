@@ -1,7 +1,7 @@
 (defun my/magithub-pull-request ()
   "Simple pull request command."
   (interactive)
-  (magithub--command-with-editor "pull-request"))
+  (with-editor-async-shell-command "hub pull-request"))
 
 (defun my/magithub-browse-default ()
   "Browse the github repo."
