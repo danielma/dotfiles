@@ -24,19 +24,19 @@
 	magit-log-arguments (quote ("-n20" "--graph" "--decorate"))
 	magit-log-select-arguments (quote ("-n20" "--decorate"))
 	magit-popup-use-prefix-argument 'default
-	magit-save-repository-buffers nil)
-  (setq magit-display-buffer-function
-	(lambda (buffer)
-	  (display-buffer
-	   buffer (if (and (derived-mode-p 'magit-mode)
-			   (memq (with-current-buffer buffer major-mode)
-				 '(magit-process-mode
-				   magit-revision-mode
-				   magit-diff-mode
-				   magit-stash-mode
-				   magit-status-mode)))
-		      nil
-		    '(display-buffer-same-window)))))
+	magit-save-repository-buffers nil
+	magit-display-buffer-function (lambda (buffer)
+					(display-buffer
+					 buffer (if (and (derived-mode-p 'magit-mode)
+							 (memq (with-current-buffer buffer major-mode)
+							       '(magit-process-mode
+								 magit-revision-mode
+								 magit-diff-mode
+								 magit-stash-mode
+								 magit-status-mode)))
+						    nil
+						  '(display-buffer-same-window))))
+	magit-list-refs-namespaces '("refs/heads" "refs/remotes" "refs/pull"))
   :config
   (evil-magit-init)
   (setq magit-blame-heading-format "%C | %s")
