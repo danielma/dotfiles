@@ -18,8 +18,10 @@
   (add-hook 'rjsx-mode-hook (lambda ()
 			      (setq-local emmet-expand-jsx-className? t)
 			      (setq-local emmet-self-closing-tag-style " /")))
+  (evil-define-key 'insert rjsx-mode-map
+    (kbd "C-d") 'rjsx-delete-creates-full-tag)
   :bind (:map rjsx-mode-map
-	 ("<" . nil)))
+	      ))
 
 (defun my-create-newline-and-enter-sexp (&rest _ignored)
   "Open a new brace or bracket expression, with relevant newlines and indent. "

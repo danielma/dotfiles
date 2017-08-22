@@ -176,6 +176,8 @@
   (global-company-mode)
   (setq company-dabbrev-downcase nil
 	company-idle-delay 0.2)
+  :config
+  (setq company-global-modes '(not help-mode))
   :bind (:map company-active-map
               ("M-n" . nil)
               ("M-p" . nil)
@@ -237,6 +239,7 @@
  '(helm-source-names-using-follow (quote ("Occur")))
  '(initial-scratch-message nil)
  '(js-indent-level 2)
+ '(js2-missing-semi-one-line-override t)
  '(line-number-mode nil)
  '(line-spacing 1)
  '(mac-mouse-wheel-smooth-scroll t)

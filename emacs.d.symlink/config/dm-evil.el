@@ -61,6 +61,7 @@
     ("|" evil-window-set-width       "width full")
     ("=" balance-windows             "balance")
     )
+  (evil-define-key 'motion help-mode-map (kbd "<tab>") 'forward-button)
   :bind (
 	 ("s-]" . evil-window-next)
 	 ("s-[" . evil-window-prev)

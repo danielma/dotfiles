@@ -31,18 +31,22 @@
             (company-complete-common)
           (indent-for-tab-command)))))
 
+(defun my/no-yas ()
+  (equal major-mode 'help-mode))
+
 (use-package yasnippet
   :init
   (add-hook 'after-init-hook 'yas-global-mode)
   :config
   (add-hook 'web-mode-hook 'web-mode-add-yas-extra-modes)
+  (setq yas-dont-activate-functions (add-to-list 'yas-dont-activate-functions #'my/no-yas))
   :bind (:map company-mode-map
 	 ("<tab>" . tab-indent-or-complete)
 	 :map company-active-map
-	 ("<tab>" . complete-or-yas-expand))
+	 ("<tab>" . complete-or-yas-expand)
+	 :map yas-minor-mode-map
+	 ("<tab>" . tab-indent-or-complete))
   )
-
-(global-set-key [tab] 'tab-indent-or-complete)
 
 (add-hook 'after-init-hook 'yas-global-mode)
 

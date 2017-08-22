@@ -458,13 +458,12 @@ an alternate theme for use in the terminal.")
      (py-builtins-face                             :foreground base09 :weight normal)
 
      ;; js2-mode
-     (js2-warning-face                             :underline base09)
-     (js2-error-face                               :foreground nil :underline base08)
-     (js2-external-variable-face                   :foreground base0E)
-     (js2-function-param-face                      :foreground base0D)
-     (js2-instance-member-face                     :foreground base0D)
-     (js2-private-function-call-face               :foreground base08)
-     (js2-function-param                           :foreground base06)
+     (js2-warning                                  :underline base09)
+     (js2-error                                    :foreground nil :underline base08)
+     (js2-external-variable                        :foreground base0E)
+     (js2-function-param                           :foreground base0D)
+     (js2-instance-member                          :foreground base0D)
+     (js2-private-function-call                    :foreground base08)
 
      ;; js3-mode
      (js3-warning-face                             :underline base09)
