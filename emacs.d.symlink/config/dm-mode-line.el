@@ -174,9 +174,7 @@
 (defun my/mode-line-flycheck-wrap (text face)
   "Return propertized TEXT with a FACE and powerline characters."
   `(
-    ,(my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b2" face)
     (:propertize ,(concat " " text " ") face ,face)
-    ,(my/mode-line-powerline-propertize face "\ue0b2" (my/mode-line-face 'accent))
     )
   )
 
@@ -235,21 +233,18 @@
                   ;; left
                   (format-mode-line `(
                                       "%e"
-                                      ("" (:propertize ("  " (:eval (my/mode-line-evil-tag)) " ") face ,(my/mode-line-face 'evil)))
-				      ,(my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b0" (my/mode-line-face 'evil))
-				      " "
-                                      mode-line-client
-                                      mode-line-modified
-                                      " "
+                                      ("" (:propertize ("  " (:eval (my/mode-line-evil-tag)) "  ") face ,(my/mode-line-face 'evil)))
+				      ;; ,(if (frame-parameter nil 'client)
+				      ;; 	   " @ "
+				      ;; 	 )
+				      ,(if (buffer-modified-p) " \u25CB " " \u25CF ")
 				      ,(if (projectile-project-p)
 					 `(""
-					   ,(my/mode-line-powerline-propertize (my/mode-line-face 'accent) "\ue0b0" (my/mode-line-face 'normal))
 					   (:propertize
 					    (" " (:eval (projectile-project-name)) " ")
 					    face
 					    ,(my/mode-line-face 'accent)
-					    )
-					   ,(my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b0" (my/mode-line-face 'accent))))
+					    )))
 				      " "
                                       mode-line-buffer-identification
                                       ))
@@ -259,9 +254,7 @@
                                       ;;,(my/mode-line-guard-status)
                                       ,(my/mode-line-flycheck-status)
 				      ,(my/mode-name)
-				      ,(my/mode-line-powerline-propertize (my/mode-line-face 'accent) "\ue0b2" (my/mode-line-face 'normal))
-				      ,(format-time-string " %I:%M  "))
-                                      )
+                                      ))
                   ))))
   ;; (force-mode-line-update))
  
