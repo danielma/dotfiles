@@ -100,7 +100,6 @@
 
     "sr" 'replace-symbol
     "sd" 'find-definition-in-file
-    "sa" 'find-symbol-in-project
 
     "T" text-tools-map
 

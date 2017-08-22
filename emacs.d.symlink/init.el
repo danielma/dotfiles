@@ -64,8 +64,18 @@
 	 ("<SPC>" . helm-M-x)
 	 ("ho" . helm-occur)
 	 ("hr" . helm-resume)
+	 ("hb" . helm-bookmarks)
+	 ("hm" . helm-all-mark-rings)
 	 ("hk" . helm-show-kill-ring))
 	 )
+
+(use-package dumb-jump
+  :config
+  (setq dumb-jump-selector 'helm)
+  :bind (:map base-leader-map
+	 ("sa" . dumb-jump-go)
+	 ("sp" . dumb-jump-go-prompt)
+	 ("sl" . dumb-jump-quick-look)))
 
 (use-package buffer-move
   :commands (buf-move buf-move-right buf-move-left buf-move-up buf-move-down)
@@ -236,7 +246,9 @@
    (quote
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode)))
  '(exec-path-from-shell-variables (quote ("PATH" "MANPATH" "NVM_DIR")))
- '(helm-source-names-using-follow (quote ("Occur")))
+ '(helm-source-names-using-follow
+   (quote
+    ("Jump to: " "global-mark-ring" "mark-ring" "Occur")))
  '(initial-scratch-message nil)
  '(js-indent-level 2)
  '(js2-missing-semi-one-line-override t)
@@ -255,7 +267,7 @@
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (try hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+    (dumb-jump try hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
