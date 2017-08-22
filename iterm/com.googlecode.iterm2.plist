@@ -1428,6 +1428,13 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0x2e-0x40000</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Text</key>
+			<string>[17~</string>
+		</dict>
 		<key>0x68-0x180000</key>
 		<dict>
 			<key>Action</key>
@@ -1459,9 +1466,9 @@
 		<key>0x73-0x100000</key>
 		<dict>
 			<key>Action</key>
-			<integer>11</integer>
+			<integer>10</integer>
 			<key>Text</key>
-			<string>0x03 0x28 0x73</string>
+			<string>[15~</string>
 		</dict>
 		<key>0x9-0x40000</key>
 		<dict>
@@ -1658,11 +1665,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>1096 470 597 514 0 0 2560 1600 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>369 247 796 473 0 0 1440 900 </string>
+	<string>1119 867 958 451 0 0 2560 1600 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1440 900 0 0 1440 900 </string>
+	<string>0 4 1277 1596 0 0 2560 1600 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 521 570 379 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -3473,7 +3480,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-08-16T06:20:28Z</date>
+	<date>2017-08-17T15:09:04Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Selection Respects Soft Boundaries</key>
@@ -3481,7 +3488,7 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>ShowNewOutputIndicator</key>
 	<true/>
 	<key>ShowPaneTitles</key>
@@ -6477,7 +6484,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.beta.6</string>
+	<string>3.1.beta.7</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

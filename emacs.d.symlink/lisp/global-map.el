@@ -10,6 +10,9 @@
 (define-key global-map (kbd "s-s") 'save-buffer-always)
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
+;; iterm command-s
+(define-key global-map (kbd "<f5>") 'save-buffer-always)
+
 (define-key global-map (kbd "C-h C-f") 'find-function)
 (define-key global-map (kbd "C-'") 'company-yasnippet)
 (define-key global-map (kbd "s-T") 'switch-to-term)

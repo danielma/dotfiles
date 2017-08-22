@@ -58,6 +58,8 @@
   (helm-mode)
   :bind (
 	 ("C-." . helm-M-x)
+	 ;; iterm c-.
+	 ("<f6>" . helm-M-x)
 	 :map base-leader-map
 	 ("<SPC>" . helm-M-x)
 	 ("ho" . helm-occur)
