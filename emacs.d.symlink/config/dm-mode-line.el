@@ -199,7 +199,7 @@
              ))
           ((flycheck-running-p) (my/mode-line-flycheck-segment 'running))
 	  (flycheck-enabled-checkers (my/mode-line-flycheck-segment 'ok))
-	  (t (my/mode-line-powerline-propertize (my/mode-line-face 'normal) "\ue0b2" (my/mode-line-face 'accent))))))
+	  (t ""))))
 
 (defvar mode-line-guard-status 'ok "The current guard status for mode-line.")
 
