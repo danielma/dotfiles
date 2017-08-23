@@ -46,6 +46,34 @@
      '(("app/policies/" "/policies/\\(.+?\\)\\(_policy\\)?\\.rb$"))
      "app/policies/${filename}_policy.rb")))
 
+(defun my/projectile-rails-fixture-dirs ()
+   (--map (list it (concat it "\\(.+?\\)\\(?:_fabricator\\)?\\.\\(?:rb\\|yml\\)$"))
+          projectile-rails-fixture-dirs))
+
+(defun my/projectile-rails-select-fixture ()
+  (interactive)
+  (let* ((choices (my/projectile-choices (my/projectile-rails-fixture-dirs)))
+	 (filename (projectile-completing-read "type: " (hash-table-keys choices)))
+	 (filepath (projectile-rails-expand-root (gethash filename choices)))
+	 (fixture (my/projectile-rails-select-fixture-in-file filepath)))
+    (concat filename "(:" fixture ")")))
+
+(defun re-seq (regexp string)
+  "Get a list of all regexp matches in a string"
+  (save-match-data
+    (let ((pos 0)
+          matches)
+      (while (string-match regexp string pos)
+        (push (match-string 0 string) matches)
+        (setq pos (match-end 0)))
+      (reverse matches))))
+
+(defun my/projectile-rails-select-fixture-in-file (filename)
+  "Select a fixture in FILENAME."
+  (let ((yaml (with-temp-buffer (insert-file-contents filename) (buffer-substring-no-properties (point-min) (point-max)))))
+    (projectile-completing-read "fixture: " (re-seq "^[a-z_0-9]+" yaml)))
+  )
+
 (defcustom projectile-rails-component-dirs
   '("app/javascript/application/components/" "app/javascript/church_center/components/" "app/javascript/shared/components/")
   "The directory to look for javascript component files in."

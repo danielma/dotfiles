@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: rails fixture
+# key: fxt
+# --
+`(my/projectile-rails-select-fixture)`$0
