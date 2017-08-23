@@ -8,6 +8,16 @@
   (interactive)
   (magithub--command "browse"))
 
+(defun my/master ()
+  "Switch to master and update."
+  (interactive)
+
+  (if (magit-changed-files "HEAD")
+      (message "Can't switch. You have changes!")
+      (magit-checkout "master")
+      (magit-pull-from-upstream '()))
+  )
+
 (defun my/git-rebase-onto-master ()
   "Rebase the current branch onto origin/master."
   (interactive)
