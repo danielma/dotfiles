@@ -53,10 +53,17 @@
 (defun my/projectile-rails-select-fixture ()
   (interactive)
   (let* ((choices (my/projectile-choices (my/projectile-rails-fixture-dirs)))
-	 (filename (projectile-completing-read "type: " (hash-table-keys choices)))
-	 (filepath (projectile-rails-expand-root (gethash filename choices)))
+	 (type (my/projectile-rails-select-fixture-type))
+	 (filepath (projectile-rails-expand-root (gethash type choices)))
 	 (fixture (my/projectile-rails-select-fixture-in-file filepath)))
-    (concat filename "(:" fixture ")")))
+    (concat type "(:" fixture ")")))
+
+(defun my/projectile-rails-select-fixture-type ()
+  "Select a fixture type"
+  (interactive)
+  (let* ((choices (my/projectile-choices (my/projectile-rails-fixture-dirs)))
+	 (type (projectile-completing-read "type: " (hash-table-keys choices))))
+    type))
 
 (defun re-seq (regexp string)
   "Get a list of all regexp matches in a string"
@@ -64,9 +71,9 @@
     (let ((pos 0)
           matches)
       (while (string-match regexp string pos)
-        (push (match-string 0 string) matches)
+        (setq matches (append matches (list (match-string 0 string))))
         (setq pos (match-end 0)))
-      (reverse matches))))
+      matches)))
 
 (defun my/projectile-rails-select-fixture-in-file (filename)
   "Select a fixture in FILENAME."
