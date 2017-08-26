@@ -1665,11 +1665,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>1096 470 597 514 0 0 2560 1600 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>1119 867 958 451 0 0 2560 1600 </string>
+	<string>1119 746 796 473 0 0 2560 1440 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 4 1277 1596 0 0 2560 1600 </string>
+	<string>0 0 1440 900 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 521 570 379 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -3480,7 +3480,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-08-17T15:09:04Z</date>
+	<date>2017-08-23T20:28:06Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Selection Respects Soft Boundaries</key>
@@ -3488,7 +3488,7 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<false/>
+	<true/>
 	<key>ShowNewOutputIndicator</key>
 	<true/>
 	<key>ShowPaneTitles</key>

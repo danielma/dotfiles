@@ -82,6 +82,8 @@
 	 ("[b" . previous-buffer)
 	 ("]b" . next-buffer)
 	 ("C-." . helm-M-x)
+	 ("j" . evil-next-visual-line)
+	 ("k" . evil-previous-visual-line)
 	 :map evil-visual-state-map
 	 ("C-w" . interactive-wrap-with-pair)
 	 :map evil-window-map

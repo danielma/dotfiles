@@ -14,6 +14,7 @@
 
 (defun my/web-mode-control-colon ()
   (interactive)
+  (end-of-line)
   (insert ";")
   (newline-and-indent))
 

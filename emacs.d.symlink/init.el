@@ -153,6 +153,7 @@
   :if (memq window-system '(mac ns))
   :ensure t
   :config
+  (setq exec-path-from-shell-variables (quote ("PATH" "MANPATH" "NV_DIR" "BASE16_THEME")))
   (exec-path-from-shell-initialize))
 
 (use-package key-chord
@@ -203,6 +204,11 @@
   (which-key-mode))
 
 (use-package markdown-mode)
+(use-package writeroom-mode
+  :config
+  (add-hook 'writeroom-mode-hook (lambda () (nlinum-mode 0)))
+  (setq writeroom-extra-line-spacing 0.3
+	writeroom-restore-window-config t))
 
 (use-package dm-magit :ensure nil)
 (use-package dm-todo :ensure nil)
@@ -237,7 +243,7 @@
  '(css-indent-offset 2)
  '(custom-safe-themes
    (quote
-    ("6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" default)))
+    ("9ab255ab33b11529148334e8c703459fd38f484a28a8f94b219a09fa6efd9a98" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" default)))
  '(display-time-default-load-average nil)
  '(display-time-mode t)
  '(enh-ruby-add-encoding-comment-on-save nil)
@@ -245,7 +251,6 @@
  '(evil-insert-state-modes
    (quote
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode)))
- '(exec-path-from-shell-variables (quote ("PATH" "MANPATH" "NVM_DIR")))
  '(helm-source-names-using-follow
    (quote
     ("Jump to: " "global-mark-ring" "mark-ring" "Occur")))

@@ -37,9 +37,11 @@
    `(default ((t (:weight normal :width normal :slant normal :font ,font))))))
 
 
-(load-theme (if (member 'base16-onedark (custom-available-themes))
-                'base16-onedark
-              'base16-default-dark) t)
+(let* ((themename (getenv "BASE16_THEME"))
+       (theme (intern (concat "base16-" themename))))
+  (load-theme (if (member theme (custom-available-themes))
+		  theme
+		'base16-default-dark) t))
 
 (deftheme session-face)
 

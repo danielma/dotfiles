@@ -1,4 +1,5 @@
 (defun interactive-wrap-with-pair (pair)
+  "Interactively wraps."
   (interactive "c")
   (sp-wrap-with-pair (char-to-string pair)))
 
