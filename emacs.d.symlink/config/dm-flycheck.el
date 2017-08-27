@@ -22,16 +22,20 @@
   (setq-default
     flycheck-disabled-checkers (append flycheck-disabled-checkers '(javascript-jshint ruby-reek))
     flycheck-temp-prefix ".flycheck")
-  (defhydra hydra-flycheck ()
-    "flycheck"
-    ("l" custom-flycheck-toggle-errors "list")
-    ("n" flycheck-next-error           "next")
-    ("p" flycheck-previous-error       "previous"))
-  :bind (:map base-leader-map
-	 ("ll" . custom-flycheck-toggle-errors)
-	 ("ln" . flycheck-next-error)
-	 ("lp" . flycheck-previous-error)
-	 ("l." . hydra-flycheck/body))
+
+  ;; https://github.com/abo-abo/hydra/wiki/Flycheck
+  (defhydra hydra-flycheck
+    (base-leader-map "l"
+		     :pre (progn (setq hydra-lv t) (flycheck-list-errors))
+		     :post (progn (setq hydra-lv nil) (quit-windows-on "*Flycheck errors*"))
+		     :hint nil)
+    "Errors"
+    ("f"  flycheck-error-list-set-filter                            "Filter")
+    ("j"  flycheck-next-error                                       "Next")
+    ("k"  flycheck-previous-error                                   "Previous")
+    ("gg" flycheck-first-error                                      "First")
+    ("G"  (progn (goto-char (point-max)) (flycheck-previous-error)) "Last")
+    ("q"  nil))
   )
 
 (provide 'dm-flycheck)
