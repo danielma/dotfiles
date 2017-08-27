@@ -109,21 +109,16 @@
   (setq elscreen-display-tab 30)
   (setq elscreen-tab-display-control nil)
   (setq elscreen-tab-display-kill-screen nil)
-  (defhydra hydra-elscreen ()
+  (defhydra hydra-elscreen (base-leader-map "t")
     "screens"
-    ("p" elscreen-previous "previous")
-    ("n" elscreen-next     "next")
-    ("k" elscreen-kill     "kill")
+    ("c" elscreen-create :exit t)
+    ("n" elscreen-next)
+    ("p" elscreen-previous)
+    ("k" elscreen-kill)
+    ("j" elscreen-select-and-goto :exit t)
+    ("t" elscreen-toggle-display-tab)
     )
-  :bind (:map base-leader-map
-	 ("tc" . elscreen-create)
-	 ("tn" . elscreen-next)
-	 ("tp" . elscreen-previous)
-	 ("tk" . elscreen-kill)
-	 ("tj" . elscreen-select-and-goto)
-	 ("tt" . elscreen-toggle-display-tab)
-	 ("t." . hydra-elscreen/body)
-	 :map global-map
+  :bind (:map global-map
 	 ("s-t" . elscreen-create)
 	 ("s-w" . elscreen-kill)
 	 ("s-{" . elscreen-previous)
@@ -272,7 +267,7 @@
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (dumb-jump try hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+    (winner-mode dumb-jump try hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
