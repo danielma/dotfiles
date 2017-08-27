@@ -83,9 +83,6 @@
     "fq" 'delete-window
     "fr" 'force-reload
 
-    "bd" 'kill-this-buffer
-    "bs" 'helm-buffers-list
-
     "cd" 'cd
     "cl" 'custom-comment-line
     "ct" 'my/base16-set-theme
@@ -108,11 +105,24 @@
 
 (use-package hydra
   :config
-  (defhydra hydra-buffers ()
-    "buffers"				;
+  (defhydra hydra-buffers (base-leader-map "b")
+    "buffers"
+    ("d" kill-this-buffer "kill")
+    ("s" helm-buffers-list "list" :exit t)
     ("p" previous-buffer "previous")
-    ("n" next-buffer "next"))
-  :bind (:map base-leader-map
-	      ("b." . hydra-buffers/body)))
+    ("n" next-buffer "next")))
+
+(use-package winner-mode
+  :ensure nil
+  :init
+  (winner-mode 1)
+  (defun toggle-single-window (&optional window)
+    "Make WINDOW fill its frame. Execute `winner-undo` if it's already full."
+    (interactive)
+    (if (eq (count-windows) 1)
+	(winner-undo)
+      (delete-other-windows window)))
+  :bind (:map global-map
+	 ("C-x 1" . toggle-single-window)))
 
 (provide 'dm-bindings)
