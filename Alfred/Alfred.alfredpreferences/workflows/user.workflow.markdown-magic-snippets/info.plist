@@ -123,6 +123,23 @@ end alfred_script</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+  	tell application "Google Chrome"		get URL of active tab of first window	end tell
+end alfred_script</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>ACF5B43A-EE23-422E-9028-6147567521B8</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>autopaste</key>
 				<true/>
 				<key>clipboardtext</key>
@@ -151,23 +168,6 @@ end alfred_script</string>
 			<string>alfred.workflow.trigger.snippet</string>
 			<key>uid</key>
 			<string>3D5088C9-BF74-44A8-9FDA-D326B5FAF71B</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>applescript</key>
-				<string>on alfred_script(q)
-  	tell application "Google Chrome"		get URL of active tab of first window	end tell
-end alfred_script</string>
-				<key>cachescript</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.applescript</string>
-			<key>uid</key>
-			<string>ACF5B43A-EE23-422E-9028-6147567521B8</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
