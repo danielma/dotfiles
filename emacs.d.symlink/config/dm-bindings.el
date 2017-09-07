@@ -116,12 +116,12 @@
   :ensure nil
   :init
   (winner-mode 1)
-  (defun toggle-single-window (&optional window)
+  (defun toggle-single-window ()
     "Make WINDOW fill its frame. Execute `winner-undo` if it's already full."
     (interactive)
     (if (eq (count-windows) 1)
 	(winner-undo)
-      (delete-other-windows window)))
+      (delete-other-windows)))
   :bind (:map global-map
 	 ("C-x 1" . toggle-single-window)))
 

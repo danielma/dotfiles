@@ -177,19 +177,6 @@
     :config
     (nlinum-relative-setup-evil))
 
-(use-package company
-  :init
-  (global-company-mode)
-  (setq company-dabbrev-downcase nil
-	company-idle-delay 0.2)
-  :config
-  (setq company-global-modes '(not help-mode))
-  :bind (:map company-active-map
-              ("M-n" . nil)
-              ("M-p" . nil)
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous)))
-
 ;; LOAD ALL THE THINGS
 ; (dolist (elt (file-expand-wildcards "~/.emacs.d/autoload/*.el"))
 ;   (load elt))
@@ -204,6 +191,8 @@
   (add-hook 'writeroom-mode-hook (lambda () (nlinum-mode 0)))
   (setq writeroom-extra-line-spacing 0.3
 	writeroom-restore-window-config t))
+
+(use-package sass-mode)
 
 (use-package dm-magit :ensure nil)
 (use-package dm-todo :ensure nil)

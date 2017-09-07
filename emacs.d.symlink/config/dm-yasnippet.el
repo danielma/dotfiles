@@ -32,7 +32,26 @@
           (indent-for-tab-command)))))
 
 (defun my/no-yas ()
-  (equal major-mode 'help-mode))
+  (or
+   (equal major-mode 'help-mode)
+   (derived-mode-p 'compilation-mode)))
+
+(use-package company
+  :commands company-complete-common
+  :init
+  (global-company-mode)
+  (setq company-dabbrev-downcase nil
+	company-idle-delay 0.2)
+  :config
+  (setq company-global-modes '(not help-mode compilation-mode))
+  :bind (:map company-active-map
+              ("M-n" . nil)
+              ("M-p" . nil)
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous)
+	      ("<tab>" . tab-indent-or-complete)
+	(:map company-mode-map
+	      ("<tab>" . tab-indent-or-complete))))
 
 (use-package yasnippet
   :init
@@ -40,11 +59,7 @@
   :config
   (add-hook 'web-mode-hook 'web-mode-add-yas-extra-modes)
   (setq yas-dont-activate-functions (add-to-list 'yas-dont-activate-functions #'my/no-yas))
-  :bind (:map company-mode-map
-	 ("<tab>" . tab-indent-or-complete)
-	 :map company-active-map
-	 ("<tab>" . complete-or-yas-expand)
-	 :map yas-minor-mode-map
+  :bind (:map yas-minor-mode-map
 	 ("<tab>" . tab-indent-or-complete))
   )
 
