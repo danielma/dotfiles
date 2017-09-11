@@ -96,6 +96,10 @@
   :config
   (add-hook 'yaml-mode-hook (lambda () (modify-syntax-entry ?_ "w"))))
 
+(use-package swift-mode
+  :config
+  (setq swift-mode:basic-offset 2))
+
 (use-package dm-evil
              :ensure nil)
 

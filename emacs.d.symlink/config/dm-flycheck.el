@@ -36,6 +36,8 @@
     ("gg" flycheck-first-error                                      "First")
     ("G"  (progn (goto-char (point-max)) (flycheck-previous-error)) "Last")
     ("q"  nil))
+  :bind (:map base-leader-map
+	 ("ll" . hydra-flycheck/body))
   )
 
 (provide 'dm-flycheck)
