@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: react-set-state
+# key: ss
+# --
+this.setState({ ${1:${2:key}: ${3:value}} })$0
