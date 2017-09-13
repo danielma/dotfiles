@@ -1,7 +1,4 @@
-#ifndef CONFIG_USER_H
-#define CONFIG_USER_H
-
-#include "../../config.h"
+#include QMK_KEYBOARD_CONFIG_H
 
 #undef MOUSEKEY_INTERVAL
 #define MOUSEKEY_INTERVAL 5
@@ -14,5 +11,3 @@
 
 #undef TAPPING_TERM
 #undef IGNORE_MOD_TAP_INTERRUPT
-
-#endif

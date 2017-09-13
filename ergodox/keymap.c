@@ -1,7 +1,7 @@
 // Netable differences vs. the default firmware for the ErgoDox EZ:
 // 1. The Cmd key is now on the right side, making Cmd+Space easier.
 // 2. The media keys work on OSX (But not on Windows).
-#include "ergodox.h"
+#include QMK_KEYBOARD_H
 #include "debug.h"
 #include "action_layer.h"
 
@@ -10,16 +10,28 @@
 #define MDIA 2 // media keys
 #define NUMP 3 // numpad
 
+enum macro_keycodes {
+  KC_C_COLN,
+  KC_CMD_TAB,
+};
+
+#define _______ KC_TRNS
+
+// Macros
+
+#define M_COLN     M(KC_C_COLN)
+#define CMD_TAB    M(KC_CMD_TAB)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * | Grv    |   1  |   2  |   3  |   4  |   5  |Escape|           | No   |   6  |   7  |   8  |   9  |   _  |   =    |
+ * | CMD-Tab|   1  |   2  |   3  |   4  |   5  |NUMPAD|           | No   |   6  |   7  |   8  |   9  |   _  |   =    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |Tab/SYMB|   Q  |   W  |   E  |   R  |   T  | cmd  |           | Hyper|   Y  |   U  |   I  |   O  |   P  |   -    |
- * |--------+------+------+------+------+------| spc  |           |      |------+------+------+------+------+--------|
- * |Esc/MEH |A/MDIA|   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  :/; | '      |
- * |--------+------+------+------+------+------| Symb |           | Meh  |------+------+------+------+------+--------|
+ * |--------+------+------+------+------+------| spc  |           | (OS) |------+------+------+------+------+--------|
+ * |Esc     |A/MDIA|   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  :/; | '      |
+ * |--------+------+------+------+------+------| SYMB |           | Meh  |------+------+------+------+------+--------|
  * | SHIFT  |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |  /   |Caps/Shf|
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |Grv/L1| Ctrl | Symb | Lalt |Spc/Gu|                                       | SYMB |</LGui|  v   |  ^   |   >  |                  
@@ -34,11 +46,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 // If it accepts an argument (i.e, is a function), it doesn't need KC_.
 // Otherwise, it needs KC_*
-[BASE] = KEYMAP(  // layer 0 : default
+[BASE] = LAYOUT_ergodox(  // layer 0 : default
         // left hand
-        KC_GRV,         KC_1,          KC_2,             KC_3,           KC_4,         KC_5,            KC_ESC,
-        LT(SYMB,KC_TAB),KC_Q,          KC_W,             KC_E,           KC_R,         KC_T,            LGUI(KC_SPC),
-        MEH_T(KC_ESC),  LT(MDIA, KC_A),KC_S,             KC_D,           KC_F,         KC_G,
+	CMD_TAB,        KC_1,          KC_2,             KC_3,           KC_4,         KC_5,            TG(NUMP),
+	LT(SYMB,KC_TAB),KC_Q,          KC_W,             KC_E,           KC_R,         KC_T,            LGUI(KC_SPC),
+        KC_ESC,         LT(MDIA, KC_A),KC_S,             KC_D,           KC_F,         KC_G,
         SFT_T(KC_CAPS), CTL_T(KC_Z),   KC_X,             KC_C,           KC_V,         KC_B,            TG(SYMB),       
         LT(SYMB,KC_GRV),KC_LCTL,       MO(SYMB),         KC_LALT,        GUI_T(KC_SPC), 
                                                                                        KC_VOLD,         KC_VOLU,
@@ -47,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // right hand
              KC_NO,       KC_6,   KC_7,    KC_8,          KC_9,   KC_UNDS,          KC_EQL,
              KC_FN2,      KC_Y,   KC_U,    KC_I,          KC_O,   KC_P,             KC_MINUS,
-                          KC_H,   KC_J,    KC_K,          KC_L,   M(0),          KC_QUOT,
+                          KC_H,   KC_J,    KC_K,          KC_L,   M_COLN,           KC_QUOT,
              MEH_T(KC_NO),KC_N,   KC_M,    KC_COMM,       KC_DOT, KC_SLSH,          SFT_T(KC_CAPS),
                                   MO(SYMB),GUI_T(KC_LEFT),KC_DOWN,KC_UP,            KC_RIGHT,
              KC_MPLY,        KC_MNXT,      
@@ -76,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 // SYMBOLS
-[SYMB] = KEYMAP(
+[SYMB] = LAYOUT_ergodox(
        // left hand
        KC_TRNS,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,        KC_F6,
        KC_TRNS,KC_EXLM,KC_AT,  KC_LPRN,KC_RPRN,KC_PERC,      KC_TRNS,
@@ -118,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 // MEDIA AND MOUSE
-[MDIA] = KEYMAP(
+[MDIA] = LAYOUT_ergodox(
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS, KC_MS_U, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS,
@@ -159,7 +171,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 // Numpad
-[NUMP] = KEYMAP(
+[NUMP] = LAYOUT_ergodox(
        KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
@@ -189,7 +201,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
   if (record->event.pressed) {
     switch(id) {
-    case 0:
+    case KC_C_COLN:
       if (get_mods()&MOD_BIT(KC_LSHIFT)) {
         unregister_code(KC_LSHIFT);
         register_code(KC_SCLN);
@@ -201,6 +213,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         return false;
       }
       break;
+
+    case KC_CMD_TAB:
+      return (record->event.pressed ? MACRO( D(LGUI), T(TAB), END ) : MACRO( T(LGUI), END ));
     }
   }
 
@@ -257,7 +272,7 @@ void matrix_scan_user(void) {
  *                                 `--------------------'       `--------------------'
  /
 // Escape
-[ESCP] = KEYMAP(
+[ESCP] = LAYOUT_ergodox(
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
