@@ -37,6 +37,12 @@
       (call-interactively 'comment-or-uncomment-region)
       (call-interactively 'toggle-comment-on-line)))
 
+; https://stackoverflow.com/a/42862075/4499924
+(defun kill-other-buffers ()
+      "Kill all other buffers."
+      (interactive)
+      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+
 (defun current-symbol-or-region ()
   "Return the symbol under the cursor or the selected region."
   (let (from to sym)
