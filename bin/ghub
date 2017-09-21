@@ -1,0 +1,9 @@
+#!/bin/bash
+
+arg=$1
+token=$PERSONAL_GITHUB_API_TOKEN
+api_request="curl -s -H 'Authorization: token $token'"
+
+eval $api_request https://api.github.com/$arg
+
+

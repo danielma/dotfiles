@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+tmux capture-pane -p -S 0 |
+    grep http |
+    tail -r |
+    fzf --bind 'ctrl-o:execute(open -g {})' |
+    xargs open
