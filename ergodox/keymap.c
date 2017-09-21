@@ -48,9 +48,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Otherwise, it needs KC_*
 [BASE] = LAYOUT_ergodox(  // layer 0 : default
         // left hand
-	CMD_TAB,        KC_1,          KC_2,             KC_3,           KC_4,         KC_5,            TG(NUMP),
+	KC_GRV,         KC_1,          KC_2,             KC_3,           KC_4,         KC_5,            TG(NUMP),
 	LT(SYMB,KC_TAB),KC_Q,          KC_W,             KC_E,           KC_R,         KC_T,            LGUI(KC_SPC),
-        KC_ESC,         LT(MDIA, KC_A),KC_S,             KC_D,           KC_F,         KC_G,
+        MEH_T(KC_ESC),  LT(MDIA, KC_A),KC_S,             KC_D,           KC_F,         KC_G,
         SFT_T(KC_CAPS), CTL_T(KC_Z),   KC_X,             KC_C,           KC_V,         KC_B,            TG(SYMB),       
         LT(SYMB,KC_GRV),KC_LCTL,       MO(SYMB),         KC_LALT,        GUI_T(KC_SPC), 
                                                                                        KC_VOLD,         KC_VOLU,
@@ -215,7 +215,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
       break;
 
     case KC_CMD_TAB:
-      return (record->event.pressed ? MACRO( D(LGUI), T(TAB), END ) : MACRO( T(LGUI), END ));
+      return false; // (record->event.pressed ? MACRO( D(LGUI), T(TAB), END ) : MACRO( T(LGUI), END ));
     }
   }
 
