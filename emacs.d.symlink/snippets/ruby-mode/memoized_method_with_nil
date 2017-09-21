@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: memoized method with nil
+# key: def||
+# --
+def ${1:method}
+    return @$1 if defined?(@$1)
+
+    @$1 = $2
+end

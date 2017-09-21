@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: itn
+# key: itn
+# --
+it { is_expected.to_not $1 }$0
