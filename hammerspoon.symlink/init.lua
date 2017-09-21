@@ -39,6 +39,7 @@ apps = {
    {'k', 'Spark'},
    {'r', 'Trello'},
    {'m', 'Messages'},
+   {'p', 'Postman'},
    {'q', 'Sequel Pro'},
 }
 
