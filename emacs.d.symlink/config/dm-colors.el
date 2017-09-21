@@ -28,7 +28,7 @@
           (font (completing-read "Font name: "
                                  ;; x-list-fonts will fail with an error
                                  ;; if this frame doesn't support fonts.
-                                 (x-list-fonts "*" nil (selected-frame))
+                                 (x-list-fonts "*-normal-normal-*" nil (selected-frame))
                                  nil nil nil nil
                                  (frame-parameter nil 'font))))
      (list font)))
