@@ -30,9 +30,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |Tab/SYMB|   Q  |   W  |   E  |   R  |   T  | cmd  |           | Hyper|   Y  |   U  |   I  |   O  |   P  |   -    |
  * |--------+------+------+------+------+------| spc  |           | (OS) |------+------+------+------+------+--------|
- * |Esc     |A/MDIA|   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  :/; | '      |
+ * |Esc     |A/MDIA|   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |:/SYMB| '      |
  * |--------+------+------+------+------+------| SYMB |           | Meh  |------+------+------+------+------+--------|
- * | SHIFT  |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |  /   |Caps/Shf|
+ * | SHIFT  |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |/LGUI |Caps/Shf|
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |Grv/L1| Ctrl | Symb | Lalt |Spc/Gu|                                       | SYMB |</LGui|  v   |  ^   |   >  |                  
  *   `----------------------------------'                                       `----------------------------------'
@@ -60,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              KC_NO,       KC_6,   KC_7,    KC_8,          KC_9,   KC_UNDS,          KC_EQL,
              KC_FN2,      KC_Y,   KC_U,    KC_I,          KC_O,   KC_P,             KC_MINUS,
                           KC_H,   KC_J,    KC_K,          KC_L,   M_COLN,           KC_QUOT,
-             MEH_T(KC_NO),KC_N,   KC_M,    KC_COMM,       KC_DOT, KC_SLSH,          SFT_T(KC_CAPS),
+             MEH_T(KC_NO),KC_N,   KC_M,    KC_COMM,       KC_DOT, GUI_T(KC_SLSH),   SFT_T(KC_CAPS),
                                   MO(SYMB),GUI_T(KC_LEFT),KC_DOWN,KC_UP,            KC_RIGHT,
              KC_MPLY,        KC_MNXT,      
              KC_MPRV,
@@ -71,11 +71,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |           |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |   !  |   @  |   (  |   )  |   %  |      |           |      |   ^  |   7  |   8  |   9  |   |  |    +   |
+ * |        |   !  |   @  |   (  |   )  |   %  |      |           |      |   ^  |   <  |   >  |   |  |      |    +   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |   ~    |   `  |   #  |   {  |   }  |   >  |------|           |------|   &  |   4  |   5  |   6  |   ;  |    "   |
+ * |   ~    |   `  |   #  |   {  |   }  |      |------|           |------|   &  |   [  |   ]  |   ;  |      |    "   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |   $  |   [  |   ]  |   <  |      |           |      |   *  |   1  |   2  |   3  |   \  |        |
+ * |        |      |   $  |   [  |   ]  |      |      |           |      |   *  |   <  |   >  |   \  |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |      |      |      |      |      |                                       |      |   0  |   .  |   ,  |      |
  *   `----------------------------------'                                       `----------------------------------'
@@ -92,18 +92,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        // left hand
        KC_TRNS,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,        KC_F6,
        KC_TRNS,KC_EXLM,KC_AT,  KC_LPRN,KC_RPRN,KC_PERC,      KC_TRNS,
-       KC_TILD,KC_GRV, KC_HASH,KC_LCBR,KC_RCBR,LSFT(KC_DOT),
-       KC_TRNS,KC_TRNS,KC_DLR, KC_LBRC,KC_RBRC,LSFT(KC_COMM),KC_TRNS,
+       KC_TILD,KC_GRV, KC_HASH,KC_LCBR,KC_RCBR,KC_TRNS,
+       KC_TRNS,KC_TRNS,KC_DLR, KC_LBRC,KC_RBRC,KC_TRNS,      KC_TRNS,
        KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
                                        KC_TRNS,KC_TRNS,
                                                KC_TRNS,
                                KC_TRNS,KC_TRNS,KC_TRNS,
        // right hand
-       KC_F7,  KC_F8,    KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_TRNS,
-       KC_TRNS, KC_CIRC, KC_7,   KC_8,    KC_9,    KC_PIPE, KC_PLUS,
-                KC_AMPR, KC_4,   KC_5,    KC_6,    KC_SCLN, LSFT(KC_QUOT),
-       KC_TRNS, KC_ASTR, KC_1,   KC_2,    KC_3,    KC_BSLS, KC_TRNS,
-                         KC_TRNS,KC_0,    KC_DOT,  KC_COMM, KC_TRNS,
+       KC_F7,   KC_F8,   KC_F9,        KC_F10,         KC_F11,  KC_F12,  KC_TRNS,
+       KC_TRNS, KC_CIRC, LSFT(KC_COMM),LSFT(KC_DOT),   KC_PIPE, KC_TRNS, KC_PLUS,
+                KC_AMPR, KC_LBRC,      KC_RBRC,        KC_SCLN, KC_TRNS, LSFT(KC_QUOT),
+       KC_TRNS, KC_ASTR, KC_1,         KC_2,           KC_BSLS, KC_TRNS, KC_TRNS,
+                         KC_TRNS,      KC_0,           KC_DOT,  KC_COMM, KC_TRNS,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS
@@ -197,26 +197,31 @@ const uint16_t PROGMEM fn_actions[] = {
     [2] = ACTION_MODS_ONESHOT(MOD_LSFT | MOD_LALT | MOD_LCTL | MOD_LGUI), // FN2 - hyper oneshot
 };
 
+static uint16_t start;
+
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
-  if (record->event.pressed) {
-    switch(id) {
-    case KC_C_COLN:
-      if (get_mods()&MOD_BIT(KC_LSHIFT)) {
-        unregister_code(KC_LSHIFT);
-        register_code(KC_SCLN);
-        unregister_code(KC_SCLN);
-        register_code(KC_LSHIFT);
-        return false;
-      } else {
-        SEND_STRING(":");
-        return false;
+  switch(id) {
+  case KC_C_COLN:
+    if (record->event.pressed) {
+      start = timer_read();
+      layer_on(SYMB);
+    } else {
+      layer_off(SYMB);
+      if (timer_elapsed(start) < 150) {
+        if (get_mods()&MOD_BIT(KC_LSHIFT)) {
+          unregister_code(KC_LSHIFT);
+          register_code(KC_SCLN);
+          unregister_code(KC_SCLN);
+          register_code(KC_LSHIFT);
+        } else {
+          SEND_STRING(":");
+        }
       }
-      break;
-
-    case KC_CMD_TAB:
-      return false; // (record->event.pressed ? MACRO( D(LGUI), T(TAB), END ) : MACRO( T(LGUI), END ));
     }
+    break;
+  case KC_CMD_TAB:
+    return false; // (record->event.pressed ? MACRO( D(LGUI), T(TAB), END ) : MACRO( T(LGUI), END ));
   }
 
   return MACRO_NONE;

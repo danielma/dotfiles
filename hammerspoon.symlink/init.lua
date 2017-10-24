@@ -31,6 +31,7 @@ apps = {
    {'d', 'DevDocs'},
    {'e', 'Emacs'},
    {'c', 'Google Chrome'},
+   {'f', 'Safari'},
    {'g', '/Applications/Resolutions.app'},
    {'i', 'Spotify'},
    {'j', 'JQBX'},

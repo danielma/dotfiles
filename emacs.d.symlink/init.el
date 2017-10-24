@@ -92,6 +92,8 @@
   ("s--" . zoom-frm-out)
   ("s-0" . zoom-frm-unzoom))
 
+(use-package tramp)
+
 (use-package yaml-mode
   :config
   (add-hook 'yaml-mode-hook (lambda () (modify-syntax-entry ?_ "w"))))
@@ -159,7 +161,6 @@
   :config
   (key-chord-mode 1)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-  (key-chord-define evil-insert-state-map ",," 'ace-jump-mode)
   (key-chord-define evil-normal-state-map "''" 'helm-M-x))
 
 (use-package evil-visualstar
@@ -242,6 +243,7 @@
  '(helm-source-names-using-follow
    (quote
     ("Jump to: " "global-mark-ring" "mark-ring" "Occur")))
+ '(indent-tabs-mode nil)
  '(initial-scratch-message nil)
  '(js-indent-level 2)
  '(js2-missing-semi-one-line-override t)
@@ -260,44 +262,44 @@
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (winner-mode dumb-jump try hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+    (ace-jump-mode winner-mode dumb-jump try hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
    (quote
     ((rufo-mode-use-bundler . t)
      (eval setq-local flycheck-disabled-checkers
-	   (append flycheck-disabled-checkers
-		   (quote
-		    (ruby-reek))))
+           (append flycheck-disabled-checkers
+                   (quote
+                    (ruby-reek))))
      (eval when
-	   (and
-	    (buffer-file-name)
-	    (file-regular-p
-	     (buffer-file-name))
-	    (string-match-p "^[^.]"
-			    (buffer-file-name)))
-	   (unless
-	       (featurep
-		(quote package-build))
-	     (let
-		 ((load-path
-		   (cons "../package-build" load-path)))
-	       (require
-		(quote package-build))))
-	   (package-build-minor-mode)
-	   (set
-	    (make-local-variable
-	     (quote package-build-working-dir))
-	    (expand-file-name "../working/"))
-	   (set
-	    (make-local-variable
-	     (quote package-build-archive-dir))
-	    (expand-file-name "../packages/"))
-	   (set
-	    (make-local-variable
-	     (quote package-build-recipes-dir))
-	    default-directory))
+           (and
+            (buffer-file-name)
+            (file-regular-p
+             (buffer-file-name))
+            (string-match-p "^[^.]"
+                            (buffer-file-name)))
+           (unless
+               (featurep
+                (quote package-build))
+             (let
+                 ((load-path
+                   (cons "../package-build" load-path)))
+               (require
+                (quote package-build))))
+           (package-build-minor-mode)
+           (set
+            (make-local-variable
+             (quote package-build-working-dir))
+            (expand-file-name "../working/"))
+           (set
+            (make-local-variable
+             (quote package-build-archive-dir))
+            (expand-file-name "../packages/"))
+           (set
+            (make-local-variable
+             (quote package-build-recipes-dir))
+            default-directory))
      (projectile-project-type rails-test)
      (projectile-project-type
       (quote rails-test)))))
