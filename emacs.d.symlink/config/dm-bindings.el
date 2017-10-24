@@ -104,10 +104,14 @@
     "sr" 'replace-symbol
     "sd" 'find-definition-in-file
 
-    "T" text-tools-map
-
-    "," 'ace-jump-char-mode)
+    "T" text-tools-map)
   )
+
+(use-package ace-jump-mode
+  :config
+  (key-chord-define evil-insert-state-map ",," 'ace-jump-mode)
+  :bind (:map base-leader-map
+ 	("," . ace-jump-char-mode)))
 
 (use-package hydra
   :config
