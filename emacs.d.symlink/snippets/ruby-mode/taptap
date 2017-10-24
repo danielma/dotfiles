@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: tap tap
+# key: taptap
+# --
+tap { |x| ap(__method__ => x) }

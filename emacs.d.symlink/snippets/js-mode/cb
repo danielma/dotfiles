@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: callback
+# key: cb
+# --
+${1:then}((${2:value}) => $3)$0

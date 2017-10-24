@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: block
+# key: bk
+# --
+{ |${1:x}| $1$2 }$0
