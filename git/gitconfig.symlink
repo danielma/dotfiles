@@ -5,6 +5,8 @@
         email = drailskid@yahoo.com
 [credential]
         helper = osxkeychain
+[magit]
+	hideCampaign = true
 [alias]
         co = checkout
         promote = !$ZSH/bin/git-promote

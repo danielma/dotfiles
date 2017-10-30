@@ -3,4 +3,3 @@
 # you'll have access to them in your scripts.
 source ~/.localrc
 export PATH="$HOME/.rbenv/shims:$HOME/bin:./node_modules/.bin:$PATH"
-export NVM_DIR="/usr/local/var/nvm"

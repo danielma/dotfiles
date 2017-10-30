@@ -5,7 +5,6 @@
   core:
     disabledPackages: [
       "background-tips"
-      "exception-reporting"
       "metrics"
       "react"
       "language-gfm"
@@ -24,7 +23,7 @@
   drupal:
     fileTypesPhp: "module,install,inc,test,profile"
   editor:
-    fontFamily: "Input Mono Compressed"
+    fontFamily: "Iosevka Nerd Font"
     fontSize: 15
     invisibles: {}
     lineHeight: 1.2
@@ -33,6 +32,8 @@
     showIndentGuide: true
     showInvisibles: true
     softWrapAtPreferredLineLength: true
+  "exception-reporting":
+    userId: "f2642466-7a35-4e28-9964-5d95118857f7"
   "ide-flow":
     flowPath: "/usr/local/bin/flow"
   linter: {}
