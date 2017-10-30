@@ -13,3 +13,4 @@ git/gitconfig.symlink
 
 config.symlink/yarn
 config.symlink/configstore/update-notifier-npm.json
+config.symlink/heroku
