@@ -198,6 +198,8 @@ const uint16_t PROGMEM fn_actions[] = {
 };
 
 static uint16_t start;
+static bool keypressed;
+static bool shiftdownbefore;
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
@@ -205,11 +207,13 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
   case KC_C_COLN:
     if (record->event.pressed) {
       start = timer_read();
+      shiftdownbefore = get_mods()&MOD_BIT(KC_LSHIFT);
+      keypressed = false;
       layer_on(SYMB);
     } else {
       layer_off(SYMB);
-      if (timer_elapsed(start) < 150) {
-        if (get_mods()&MOD_BIT(KC_LSHIFT)) {
+      if (timer_elapsed(start) < 150 && !keypressed) {
+        if (get_mods()&MOD_BIT(KC_LSHIFT) || shiftdownbefore) {
           unregister_code(KC_LSHIFT);
           register_code(KC_SCLN);
           unregister_code(KC_SCLN);
@@ -226,6 +230,13 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 
   return MACRO_NONE;
 };
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (record->event.pressed) {
+    keypressed = true;
+  }
+  return true;
+}
 
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
