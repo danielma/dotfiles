@@ -13,6 +13,9 @@ export PROJECTS=~/Code
 
 source $ZSH/zsh/work.secret.zsh
 
+source $HOME/.asdf/asdf.sh
+source $HOME/.asdf/completions/asdf.bash
+
 # all of our zsh files
 typeset -U config_files
 config_files=($ZSH/**/*.zsh)
@@ -81,11 +84,12 @@ export FZF_DEFAULT_OPTS='
   --color 16,bg+:18,fg+:7,hl+:2,hl:2,pointer:6,prompt:6,info:5
 '
 
+
 if [[ "$PROFILE_STARTUP" == true ]]; then
     unsetopt xtrace
     exec 2>&3 3>&-
 fi
-PATH=/Users/danielma/pco-box/bin:/usr/local/bin:$PATH
+PATH=/Users/danielma/pco-box/bin:$PATH
 PATH=$HOME/.fastlane/bin:$PATH
 eval "$(rbenv init -)"
 export MYSQL_PORT_3306_TCP_ADDR=127.0.0.1

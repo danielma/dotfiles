@@ -16,9 +16,14 @@
 
 (require 'color)
 
+     ;; :base005 (my/lighten-hex base00 2)
+     ;; :base000 (my/darken-hex base00 2)
+     ;; :base0000 (my/darken-hex base00 4))))
 (defvar base16-shell-colors
   '(:base00 "black"
     :base005 "black"
+    :base000 "black"
+    :base0000 "black"
     :base01 "color-18"
     :base02 "color-19"
     :base03 "brightblack"
