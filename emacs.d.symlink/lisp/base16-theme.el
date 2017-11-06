@@ -25,6 +25,7 @@
     :base000 "black"
     :base0000 "black"
     :base01 "color-18"
+    :base015 "color-18"
     :base02 "color-19"
     :base03 "brightblack"
     :base04 "color-20"
@@ -116,10 +117,12 @@ an alternate theme for use in the terminal.")
 
 (defun my/base16-add-extra-colors (colors)
   "Add extra (non 16) colors to the color scheme."
-  (let ((base00 (plist-get colors :base00)))
+  (let ((base00 (plist-get colors :base00))
+        (base01 (plist-get colors :base01)))
 
     (-snoc
      colors
+     :base015 (my/lighten-hex base01 2)
      :base005 (my/lighten-hex base00 2)
      :base000 (my/darken-hex base00 2)
      :base0000 (my/darken-hex base00 4))))
@@ -297,6 +300,8 @@ an alternate theme for use in the terminal.")
      (whitespace-space-before-tab                  :foreground base08 :background base09)
      (whitespace-tab                               :foreground base04 :background base04)
      (whitespace-trailing                          :foreground base0A :background base08)
+
+     (leerzeichen                                  :foreground base015)
 
      ;; Parenthesis matching (built-in)
      (show-paren-match                             :foreground base03 :background base0D)
