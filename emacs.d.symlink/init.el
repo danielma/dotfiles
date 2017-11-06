@@ -72,6 +72,9 @@
 (use-package dumb-jump
   :config
   (setq dumb-jump-selector 'helm)
+  (setq dumb-jump-language-file-exts
+        (print (add-to-list 'dumb-jump-language-file-exts
+                     '(:language "php" :ext "module" :agtype "php"))))
   :bind (:map base-leader-map
 	 ("sa" . dumb-jump-go)
 	 ("sp" . dumb-jump-go-prompt)
@@ -242,7 +245,7 @@
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode)))
  '(helm-source-names-using-follow
    (quote
-    ("Jump to: " "global-mark-ring" "mark-ring" "Occur")))
+    ("Search at ~/Kalabox/living/code/" "Jump to: " "global-mark-ring" "mark-ring" "Occur")))
  '(indent-tabs-mode nil)
  '(initial-scratch-message nil)
  '(js-indent-level 2)
