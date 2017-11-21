@@ -30,7 +30,7 @@ apps = {
    {'1', '1Password 6'},
    {'d', 'DevDocs'},
    {'e', 'Emacs'},
-   {'c', 'Google Chrome'},
+   {'c', 'FirefoxDeveloperEdition'},
    {'f', 'Safari'},
    {'g', '/Applications/Resolutions.app'},
    {'i', 'Spotify'},

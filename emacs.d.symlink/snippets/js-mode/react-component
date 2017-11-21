@@ -3,10 +3,11 @@
 # key: r:component
 # --
 import React from "react"
-const { string } = React.PropTypes
+import { string } from "prop-types"
 
-export default React.createClass({
-  displayName: "`(s-upper-camel-case (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))`",
+export default class `(s-upper-camel-case (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))` extends React.Component {
+  static propTypes = {
+  }
 
   render() {
     return (
@@ -14,5 +15,5 @@ export default React.createClass({
         $0
       </div>
     )
-  },
-})
+  }
+}

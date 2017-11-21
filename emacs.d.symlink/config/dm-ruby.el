@@ -1,9 +1,8 @@
-(use-package rufo-mode
+(use-package rufo
   :init
   (add-hook 'ruby-mode-hook 'rufo-minor-mode)
   :config
-  (setq rufo-mode-user-bundler t)
-  :disabled)
+  (setq xrufo-mode-use-bundler t))
 
 (use-package ruby-mode
   :init

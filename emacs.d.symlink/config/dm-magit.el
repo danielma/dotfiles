@@ -49,7 +49,10 @@
 	magit-list-refs-namespaces '("refs/heads" "refs/remotes" "refs/pull"))
   :config
   (evil-magit-init)
-  (setq magit-blame-heading-format "%C | %s")
+  (setq magit-blame-heading-format "%C | %s"
+        magit-status-sections-hook (remove
+                                    'magit-insert-unpushed-to-upstream-or-recent
+                                    magit-status-sections-hook))
   :bind (:map base-leader-map
 	      ("gs" . magit-status)
 	      ("gc" . magit-commit)
