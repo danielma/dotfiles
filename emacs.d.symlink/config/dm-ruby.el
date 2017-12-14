@@ -2,7 +2,8 @@
   :init
   (add-hook 'ruby-mode-hook 'rufo-minor-mode)
   :config
-  (setq xrufo-mode-use-bundler t))
+  (setq xrufo-mode-use-bundler t)
+  :disabled)
 
 (use-package ruby-mode
   :init
@@ -35,6 +36,6 @@
       "o" 'ruby-refactor-convert-post-conditional)
     (bind-map-for-mode-inherit my/ruby-refactor-mode-map base-leader-map
       :major-modes (ruby-mode)
-      :bindings ("o" map))))
+      :bindings ("a" map))))
 
 (provide 'dm-ruby)

@@ -34,6 +34,7 @@
 (defun my/no-yas ()
   (or
    (equal major-mode 'help-mode)
+   (equal major-mode 'org-agenda-mode)
    (derived-mode-p 'compilation-mode)))
 
 (use-package company
@@ -43,7 +44,7 @@
   (setq company-dabbrev-downcase nil
 	company-idle-delay 0.2)
   :config
-  (setq company-global-modes '(not help-mode compilation-mode))
+  (setq company-global-modes '(not help-mode compilation-mode org-agenda-mode))
   :bind (:map company-active-map
               ("M-n" . nil)
               ("M-p" . nil)

@@ -24,6 +24,8 @@
 	(evil-resize-window (round (* (frame-width) p)) t)
       (evil-resize-window (round (* (frame-height) p))))))
 
+(use-package ace-window)
+
 (use-package evil
   :init
   (setq evil-shift-width 2
@@ -39,6 +41,8 @@
     ("j" evil-window-down             "down")
     ("k" evil-window-up               "up")
     ("l" evil-window-right            "right")
+
+    ("w" ace-window                   "ace-window")
 
     ;; movement
     ("H" evil-window-move-far-left    "far left")
@@ -93,6 +97,7 @@
          ("C-k" . buf-move-up)
          ("C-l" . buf-move-right)
          ("p" . my/window-percent)
+         ("w" . ace-window)
          ("." . hydra-evil-window/body)
          ))
 

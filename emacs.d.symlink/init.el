@@ -214,6 +214,7 @@
 (use-package dm-projectile-rails :ensure nil)
 (use-package dm-yasnippet :ensure nil)
 (use-package chord-pro-mode :ensure nil)
+(use-package dm-org :ensure nil)
 
 (require 'epa-file)
 (epa-file-enable)
@@ -257,15 +258,16 @@
  '(markdown-header-scaling t)
  '(ns-auto-hide-menu-bar t)
  '(ns-command-modifier (quote super))
- '(org-agenda-files (quote ("~/org/todo.org")))
+ '(org-agenda-files (quote ("~/Dropbox/org/agenda.org")))
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-irc org-mhe org-mouse org-rmail org-w3m)))
  '(org-pretty-entities t)
+ '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (rufo-mode ace-jump-mode winner-mode dumb-jump try hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+    (org-alert rufo-mode ace-jump-mode winner-mode dumb-jump try hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values

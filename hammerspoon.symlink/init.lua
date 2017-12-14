@@ -42,6 +42,7 @@ apps = {
    {'m', 'Messages'},
    {'p', 'Postman'},
    {'q', 'Sequel Pro'},
+   {'x', 'Xcode'},
 }
 
 for i, app in ipairs(apps) do
