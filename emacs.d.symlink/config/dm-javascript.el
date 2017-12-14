@@ -23,6 +23,18 @@
   :bind (:map rjsx-mode-map
 	      ))
 
+(use-package tide)
+
+(use-package typescript-mode
+  :mode "\\.tsx?\\'"
+  :after tide
+  :init
+  (add-hook 'typescript-mode 'tide-mode)
+  (add-hook 'typescript-mode 'smartparens-mode)
+  :custom
+  (typescript-indent-level 2)
+  )
+
 (defun my-create-newline-and-enter-sexp (&rest _ignored)
   "Open a new brace or bracket expression, with relevant newlines and indent. "
   (newline)
