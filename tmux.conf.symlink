@@ -123,6 +123,5 @@ set -g @plugin "tmux-plugins/tmux-open"
 run '~/.tmux/plugins/tpm/tpm'
 
 # run "emacs --daemon"
-set-option -g default-command "reattach-to-user-namespace -l zsh"
 
 bind-key "u" send-keys "fuzzy-url" Enter
