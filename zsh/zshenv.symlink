@@ -2,4 +2,3 @@
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
 source ~/.localrc
-export PATH="$HOME/.rbenv/shims:$HOME/bin:./node_modules/.bin:$PATH"
