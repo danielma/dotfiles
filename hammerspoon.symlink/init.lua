@@ -42,6 +42,7 @@ apps = {
    {'m', 'Messages'},
    {'p', 'Postman'},
    {'q', 'Sequel Pro'},
+   {'v', 'Visual Studio Code'},
    {'x', 'Xcode'},
 }
 
