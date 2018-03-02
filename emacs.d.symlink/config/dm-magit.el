@@ -34,9 +34,9 @@
 
 (defun my/magit-insert-org-todo ()
   "Insert org todos from the local ~/todo.org."
-  (magit-insert-section (org-todo)
-    (magit-insert-heading "Todo:")
-    (when (file-readable-p (my/magit-get-todo-file))
+  (when (file-readable-p (my/magit-get-todo-file))
+    (magit-insert-section (org-todo)
+      (magit-insert-heading "Todo:")
       (let ((contents (with-temp-buffer
                         (insert-file-contents (my/magit-get-todo-file))
                         (buffer-string))))
