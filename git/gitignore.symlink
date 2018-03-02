@@ -8,3 +8,6 @@ Termfile
 .#*
 
 .dir-locals.el
+diff.patch
+newdiff.patch
+todo.org
