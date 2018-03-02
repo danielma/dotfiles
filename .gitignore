@@ -12,6 +12,6 @@ git/gitconfig.symlink
 /Alfred/Alfred.alfredpreferences/workflows/user.workflow.private-*
 
 config.symlink/yarn
-config.symlink/configstore/update-notifier-npm.json
+config.symlink/configstore
 config.symlink/heroku
 config.symlink/asciinema
