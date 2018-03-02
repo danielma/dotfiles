@@ -77,6 +77,7 @@
                      '(:language "php" :ext "module" :agtype "php"))))
   :bind (:map base-leader-map
 	 ("sa" . dumb-jump-go)
+	 ("sA" . dumb-jump-go-other-window)
 	 ("sp" . dumb-jump-go-prompt)
 	 ("sl" . dumb-jump-quick-look)))
 
@@ -216,6 +217,12 @@
 (use-package chord-pro-mode :ensure nil)
 (use-package dm-org :ensure nil)
 
+(use-package emojify
+  :config
+  (global-emojify-mode)
+  (setq emojify-display-style 'unicode)
+  )
+
 (require 'epa-file)
 (epa-file-enable)
 
@@ -267,7 +274,8 @@
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (tide typescript-mode org-alert rufo-mode ace-jump-mode winner-mode dumb-jump try hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+    (emojify tide typescript-mode org-alert rufo-mode ace-jump-mode winner-mode dumb-jump try hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+ '(php-mode-coding-style (quote drupal))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
@@ -310,6 +318,7 @@
       (quote rails-test)))))
  '(select-enable-clipboard nil)
  '(show-paren-mode t)
+ '(typescript-indent-level 2)
  '(writeroom-fullscreen-effect nil)
  '(writeroom-major-modes (quote (markdown-mode)))
  '(yas-triggers-in-field t))
