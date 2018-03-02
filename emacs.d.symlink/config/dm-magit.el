@@ -27,6 +27,32 @@
    )
   (magit-rebase "origin/master" '("-i" "--autosquash")))
 
+(defun my/magit-get-todo-file ()
+  (let* ((toplevel (magit-toplevel))
+         (todo (concat toplevel "todo.org")))
+    todo))
+
+(defun my/magit-insert-org-todo ()
+  "Insert org todos from the local ~/todo.org."
+  (magit-insert-section (org-todo)
+    (magit-insert-heading "Todo:")
+    (when (file-readable-p (my/magit-get-todo-file))
+      (let ((contents (with-temp-buffer
+                        (insert-file-contents (my/magit-get-todo-file))
+                        (buffer-string))))
+        (insert contents))
+      (insert ?\n))))
+
+(defun my/magit-visit-org-todo ()
+  "Visits the org todo file."
+  (interactive)
+  (find-file (my/magit-get-todo-file)))
+
+(defvar magit-org-todo-section-map
+  (let ((m (make-sparse-keymap)))
+    (define-key m [remap magit-visit-thing] 'my/magit-visit-org-todo)
+    m))
+
 (use-package magit
   :init
   (setq magit-bury-buffer-function 'magit-mode-quit-window
@@ -49,10 +75,8 @@
 	magit-list-refs-namespaces '("refs/heads" "refs/remotes" "refs/pull"))
   :config
   (evil-magit-init)
-  (setq magit-blame-heading-format "%C | %s"
-        magit-status-sections-hook (remove
-                                    'magit-insert-unpushed-to-upstream-or-recent
-                                    magit-status-sections-hook))
+  (setq magit-blame-heading-format "%C | %s")
+  (magit-add-section-hook 'magit-status-sections-hook 'my/magit-insert-org-todo 'magit-insert-staged-changes t)
   :bind (:map base-leader-map
 	      ("gs" . magit-status)
 	      ("gc" . magit-commit)
