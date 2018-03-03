@@ -35,13 +35,25 @@
 (defun my/magit-insert-org-todo ()
   "Insert org todos from the local ~/todo.org."
   (when (file-readable-p (my/magit-get-todo-file))
-    (magit-insert-section (org-todo)
-      (magit-insert-heading "Todo:")
-      (let ((contents (with-temp-buffer
-                        (insert-file-contents (my/magit-get-todo-file))
-                        (buffer-string))))
-        (insert contents))
-      (insert ?\n))))
+    (let ((todos (with-temp-buffer
+                      (insert-file-contents (my/magit-get-todo-file))
+                      (org-mode)
+                      (org-element-map (org-element-parse-buffer) 'headline
+                        (lambda (headline)
+                          (let ((todo-keyword (org-element-property :todo-keyword headline))
+                                (todo-type (org-element-property :todo-type headline))
+                                (title (org-element-property :raw-value headline)))
+                            (and (eq todo-type 'todo)
+                                 (concat "* " (propertize todo-keyword 'face 'org-todo) " " title))))))))
+      (magit-insert-section (org-todo)
+        (magit-insert-heading "Todos:")
+        (--map
+         (progn
+           (magit-insert-section (org-todo)
+             (insert it)
+             (insert ?\n)))
+         todos)
+      (insert ?\n)))))
 
 (defun my/magit-visit-org-todo ()
   "Visits the org todo file."
