@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: assert fixture assumption
+# key: asfa
+# --
+assert("fixture assumption") { $1 }$0
