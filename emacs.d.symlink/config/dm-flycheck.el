@@ -12,6 +12,7 @@
   (global-flycheck-mode)
   :config
   (setq flycheck-javascript-eslint-executable "eslint_d")
+  (setq-default flycheck-emacs-lisp-load-path 'inherit)
   (setq flycheck-command-wrapper-function
         (lambda (command)
           (let ((executable (car command))
