@@ -1,6 +1,7 @@
 {
   "alfredsnippet" : {
     "snippet" : "🚻",
+    "dontautoexpand" : true,
     "uid" : "C1C85CE7-40BC-4DD2-BCFD-DB19D17F3B40",
     "name" : "🚻 :restroom:",
     "keyword" : ":restroom:"

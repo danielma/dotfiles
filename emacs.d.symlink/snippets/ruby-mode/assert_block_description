@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: assert block with description
+# key: asbd
+# --
+assert("$1") { $2 }$0
