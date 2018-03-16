@@ -55,4 +55,11 @@
 
 (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)
 
+(use-package whitespace
+  :init
+  (setq whitespace-line-column 100
+        whitespace-style '(face lines-tail))
+  :config
+  (global-whitespace-mode))
+
 (provide 'dm-colors)
