@@ -1,4 +1,5 @@
 (defun my-web-mode-setup ()
+  (nlinum-mode)
   (setq-local electric-indent-chars
               (append "{};" electric-indent-chars))
   (if (equal web-mode-engine "php")
@@ -26,6 +27,7 @@
   (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.module\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
   (add-hook 'web-mode-hook 'my-web-mode-setup)
   (define-abbrev-table 'web-mode-abbrev-table '(
 						("nd" "<% end %>")
