@@ -30,7 +30,7 @@
  ("frame-cmds" . "1a3014fd541c5417a71ce19fb032b9074b3d50d3")
  ("frame-fns" . "b675ee568c0133709c2c39a125395486cdf1c610")
  ("ghub" . "18bab447b69507802f0261dc284376276ae8a5c8")
- ("ghub-plus" . "80a8e9480839eddf1e4e48a23b03ae17d4dffe0d")
+ ("ghub-plus" . "15e4c59c459d907f925f178f08d3901e5e20683d")
  ("gntp.el" . "767571135e2c0985944017dc59b0be79af222ef5")
  ("goto-chg" . "e5b38e4e1378f6ea48fa9e8439f49c2998654aa4")
  ("haml-mode" . "1cbb2de8f0fc25f35448c5cad04642f28078f3bb")
