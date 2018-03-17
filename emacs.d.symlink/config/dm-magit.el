@@ -58,9 +58,9 @@
 	      ("gb" . magit-blame)))
 
 (use-package magit-org-todos
-  :load-path "/Users/danielma/Code/danielma/magit-org-todos"
+  :straight (:host github :repo "danielma/magit-org-todos")
   :config
-  (magit-org-todos/autoinsert))
+  (magit-org-todos-autoinsert))
 
 (use-package evil-magit
   :commands (evil-magit-init))

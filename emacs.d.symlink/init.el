@@ -2,16 +2,21 @@
 ;;; Code:
 ;;; Commentary:
 
-(require 'package) ;; You might already have this line
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (url (concat (if no-ssl "http" "https") "://melpa.org/packages/")))
-  (add-to-list 'package-archives (cons "melpa" url) t))
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(require 'package)
 (package-initialize)
 
+(let ((bootstrap-file (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))
+      (bootstrap-version 3))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -34,7 +39,7 @@
 (eval-when-compile
   (require 'use-package))
 (setq use-package-verbose t
-      use-package-always-ensure t)
+      straight-use-package-by-default t)
 
 (add-to-list 'load-path "~/.emacs.d/config/")
 (add-to-list 'load-path "~/.emacs.d/lisp/")
@@ -47,7 +52,7 @@
 ;; (dolist (width '(evil-shift-width))
 ;;         (set width 2))
 
-(use-package dm-bindings :ensure nil)
+(use-package dm-bindings :straight nil)
 
 (use-package helm
   :config
@@ -107,9 +112,9 @@
   (setq swift-mode:basic-offset 2))
 
 (use-package dm-evil
-             :ensure nil)
+             :straight nil)
 
-(use-package dm-projectile :ensure nil)
+(use-package dm-projectile :straight nil)
 
 (use-package elscreen
   :init
@@ -156,7 +161,6 @@
 
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
-  :ensure t
   :config
   (setq exec-path-from-shell-variables (quote ("PATH" "MANPATH" "NV_DIR" "BASE16_THEME")))
   (exec-path-from-shell-initialize))
@@ -203,19 +207,19 @@
 
 (use-package sass-mode)
 
-(use-package dm-magit :ensure nil)
-(use-package dm-todo :ensure nil)
-(use-package dm-minibuffer :ensure nil)
-(use-package dm-ruby :ensure nil)
-(use-package dm-flycheck :ensure nil)
-(use-package dm-javascript :ensure nil)
-(use-package dm-colors :ensure nil)
-(use-package dm-mode-line :ensure nil)
-(use-package dm-web-mode :ensure nil)
-(use-package dm-projectile-rails :ensure nil)
-(use-package dm-yasnippet :ensure nil)
-(use-package chord-pro-mode :ensure nil)
-(use-package dm-org :ensure nil)
+(use-package dm-magit :straight nil)
+(use-package dm-todo :straight nil)
+(use-package dm-minibuffer :straight nil)
+(use-package dm-ruby :straight nil)
+(use-package dm-flycheck :straight nil)
+(use-package dm-javascript :straight nil)
+(use-package dm-colors :straight nil)
+(use-package dm-mode-line :straight nil)
+(use-package dm-web-mode :straight nil)
+(use-package dm-projectile-rails :straight nil)
+(use-package dm-yasnippet :straight nil)
+(use-package chord-pro-mode :straight nil)
+(use-package dm-org :straight nil)
 
 (use-package emojify
   :config
@@ -274,7 +278,7 @@
  '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
    (quote
-    (magit-org-todos emojify tide typescript-mode org-alert rufo-mode ace-jump-mode winner-mode dumb-jump try hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+    (magit-org-todos emojify tide typescript-mode org-alert rufo-mode ace-jump-mode winner-mode dumb-jump hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(php-mode-coding-style (quote drupal))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)

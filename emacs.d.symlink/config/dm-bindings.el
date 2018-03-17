@@ -123,7 +123,7 @@
     ("n" next-buffer "next")))
 
 (use-package winner-mode
-  :ensure nil
+  :straight nil
   :init
   (winner-mode 1)
   (defun toggle-single-window ()
