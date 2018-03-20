@@ -178,7 +178,6 @@
 (use-package nlinum
   :config
   (add-hook 'prog-mode-hook 'nlinum-mode)
-  (add-hook 'text-mode-hook 'nlinum-mode)
   (setq nlinum-format " %d"))
   
 (use-package nlinum-relative
@@ -201,9 +200,14 @@
 (use-package markdown-mode)
 (use-package writeroom-mode
   :config
-  (add-hook 'writeroom-mode-hook (lambda () (nlinum-mode 0)))
+  (add-hook 'writeroom-mode-hook (lambda ()
+                                   (nlinum-mode 0)
+                                   (setq-local word-wrap t)))
   (setq writeroom-extra-line-spacing 0.3
-	writeroom-restore-window-config t))
+        writeroom-fullscreen-effect nil
+        writeroom-global-effects (quote ())
+        writeroom-maximize-window nil
+	writeroom-restore-window-config nil))
 
 (use-package sass-mode)
 
@@ -323,8 +327,6 @@
  '(select-enable-clipboard nil)
  '(show-paren-mode t)
  '(typescript-indent-level 2)
- '(writeroom-fullscreen-effect nil)
- '(writeroom-major-modes (quote (markdown-mode)))
  '(yas-triggers-in-field t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
