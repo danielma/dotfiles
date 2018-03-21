@@ -8,6 +8,7 @@ end
 
 require "hyper-symbols"
 require "window"
+require "browser"
 
 -- Sequential keybindings
 appModal = hs.hotkey.modal.new({}, "F16")
@@ -30,7 +31,7 @@ apps = {
    {'1', '1Password 6'},
    {'d', 'DevDocs'},
    {'e', 'Emacs'},
-   {'c', 'Firefox'},
+   {'c', launchBrowser},
    {'f', 'Safari'},
    {'g', '/Applications/Resolutions.app'},
    {'i', 'Spotify'},
@@ -52,8 +53,12 @@ for i, app in ipairs(apps) do
     app[1],
     nil,
     function()
-      launch(app[2])
-      appModal:exit()
+       if type(app[2]) == "string" then
+          launch(app[2])
+       else
+          app[2]()
+       end
+       appModal:exit()
     end
   )
 
@@ -62,7 +67,11 @@ for i, app in ipairs(apps) do
      app[1],
      nil,
      function()
-        launch(app[2])
+       if type(app[2]) == "string" then
+          launch(app[2])
+       else
+          app[2]()
+       end
      end
   )
 end
