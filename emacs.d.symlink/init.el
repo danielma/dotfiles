@@ -71,8 +71,8 @@
 	 ("hr" . helm-resume)
 	 ("hb" . helm-bookmarks)
 	 ("hm" . helm-all-mark-rings)
-	 ("hk" . helm-show-kill-ring))
-	 )
+	 ("hk" . helm-show-kill-ring)
+         ("hg" . helm-register)))
 
 (use-package dumb-jump
   :config
@@ -202,11 +202,13 @@
   :config
   (add-hook 'writeroom-mode-hook (lambda ()
                                    (nlinum-mode 0)
+                                   (visual-line-mode nil)
                                    (setq-local word-wrap t)))
   (setq writeroom-extra-line-spacing 0.3
         writeroom-fullscreen-effect nil
         writeroom-global-effects (quote ())
         writeroom-maximize-window nil
+        writeroom-width 100
 	writeroom-restore-window-config nil))
 
 (use-package sass-mode)
