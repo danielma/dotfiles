@@ -66,6 +66,7 @@
   :commands (evil-magit-init))
 
 (use-package magithub
+  :disabled
   :init
   (setq magithub-features '((pull-request-checkout . t))
 	magithub-api-timeout 10)
