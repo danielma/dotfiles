@@ -8,6 +8,7 @@
         {
             "complex_modifications": {
                 "parameters": {
+                    "basic.simultaneous_threshold_milliseconds": 50,
                     "basic.to_delayed_action_delay_milliseconds": 500,
                     "basic.to_if_alone_timeout_milliseconds": 200,
                     "basic.to_if_held_down_threshold_milliseconds": 500
@@ -99,7 +100,7 @@
                         "product_id": 45133,
                         "vendor_id": 7185
                     },
-                    "ignore": false,
+                    "ignore": true,
                     "manipulate_caps_lock_led": false,
                     "simple_modifications": []
                 },
