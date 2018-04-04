@@ -96,6 +96,35 @@
   )
 
 (use-package zoom-frm
+  :config
+  (defun my/zoom-frm-keep-frame-size (orig-fun &rest args)
+    ;; (frame-pixel-height)
+    ;; (set-frame-size
+    ;; (assq 'pix-height (frame-parameters))
+    ;; (frame-parameters)
+    (let (;; (corrective-height (frcmds-available-screen-pixel-height) (frcmds-effective-screen-pixel-bounds)
+          (fullscreen (frame-parameter nil 'fullscreen))
+          (orig-height (frame-height))
+          (orig-width (frame-width))
+          (orig-pixel-height (frame-pixel-height))
+          (orig-pixel-width (frame-pixel-width))
+          (res (apply orig-fun args))
+          (new-font-size (/ (face-attribute 'default :height) 10)))
+      ;; (message "H:%S W:%S" orig-pixel-height orig-pixel-width)
+      (if (memq fullscreen '(fullscreen fullboth))
+          (message "hi")
+          ;; (set-frame-size (selected-frame) orig-width orig-height)
+          (set-frame-size
+           (selected-frame)
+           (- orig-pixel-width (* new-font-size 2))
+           (- orig-pixel-height (/ new-font-size 4))
+           'PIXELWISE))
+      res))
+  (setq frame-inhibit-implied-resize nil)
+  (face-spec-recalc 'default (selected-frame))
+  (advice-add 'zoom-frm-in :around #'my/zoom-frm-keep-frame-size)
+  (advice-add 'zoom-frm-out :around #'my/zoom-frm-keep-frame-size)
+  (advice-add 'zoom-frm-unzoom :around #'my/zoom-frm-keep-frame-size)
   :bind
   ("s-=" . zoom-frm-in)
   ("s--" . zoom-frm-out)
