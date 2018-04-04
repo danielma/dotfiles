@@ -89,6 +89,7 @@
          ("C-." . helm-M-x)
          ("j" . evil-next-visual-line)
          ("k" . evil-previous-visual-line)
+         ("'" . evil-repeat-find-char)
          :map evil-visual-state-map
          ("C-w" . interactive-wrap-with-pair)
          :map evil-window-map
@@ -99,6 +100,8 @@
          ("p" . my/window-percent)
          ("w" . ace-window)
          ("." . hydra-evil-window/body)
+         :map base-leader-map
+         ("," . evil-avy-goto-char)
          ))
 
 (use-package evil-multiedit

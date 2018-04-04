@@ -34,6 +34,7 @@ apps = {
    {'c', launchBrowser},
    {'f', 'Safari'},
    {'g', '/Applications/Resolutions.app'},
+   {'h', 'Google Chrome'},
    {'i', 'Spotify'},
    {'j', 'JQBX'},
    {'s', '/Applications/Slack.app'},

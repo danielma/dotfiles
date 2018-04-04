@@ -168,6 +168,7 @@
 (use-package key-chord
   :config
   (key-chord-mode 1)
+  (key-chord-define evil-insert-state-map ",," 'evil-avy-goto-char)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
   (key-chord-define evil-normal-state-map "''" 'helm-M-x))
 
