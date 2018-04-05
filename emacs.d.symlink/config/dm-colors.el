@@ -60,6 +60,6 @@
   (setq whitespace-line-column 100
         whitespace-style '(face lines-tail))
   :config
-  (global-whitespace-mode))
+  (add-hook 'prog-mode-hook 'whitespace-mode))
 
 (provide 'dm-colors)

@@ -227,21 +227,6 @@
   :config
   (which-key-mode))
 
-(use-package markdown-mode)
-(use-package writeroom-mode
-  :config
-  (add-hook 'writeroom-mode-hook (lambda ()
-                                   (nlinum-mode 0)
-                                   (visual-line-mode nil)
-                                   (whitespace-mode 0)
-                                   (setq-local word-wrap t)))
-  (setq writeroom-extra-line-spacing 0.3
-        writeroom-fullscreen-effect nil
-        writeroom-global-effects (quote ())
-        writeroom-maximize-window nil
-        writeroom-width 100
-	writeroom-restore-window-config nil))
-
 (use-package sass-mode)
 
 (use-package dm-magit :straight nil)
@@ -257,6 +242,7 @@
 (use-package dm-yasnippet :straight nil)
 (use-package chord-pro-mode :straight nil)
 (use-package dm-org :straight nil)
+(use-package dm-prose :straight nil)
 
 (use-package emojify
   :config
