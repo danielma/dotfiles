@@ -11,7 +11,7 @@ chunkc core::load tiling.so
 chunkc set global_desktop_mode          bsp
 chunkc set global_desktop_offset_top    10
 chunkc set global_desktop_offset_right  10
-chunkc set global_desktop_offset_bottom 10
+chunkc set global_desktop_offset_bottom 50
 chunkc set global_desktop_offset_left   10
 chunkc set global_desktop_offset_gap    10
 
