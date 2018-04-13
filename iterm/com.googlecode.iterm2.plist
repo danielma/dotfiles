@@ -2258,11 +2258,11 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>InputMono-Regular 12</string>
+			<string>IosevkaNerdFontC-Extralight 12</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>SFMono-Regular 12</string>
+			<string>IBMPlexMono 12</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<false/>
 			<key>Open Toolbelt</key>
@@ -2482,7 +2482,7 @@
 			<key>Use Tab Color</key>
 			<false/>
 			<key>Vertical Spacing</key>
-			<real>1</real>
+			<real>0.91523319841867468</real>
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>

@@ -1,0 +1,22 @@
+
+chunkc core::plugin_dir /usr/local/opt/chunkwm/share/chunkwm/plugins
+
+chunkc core::hotload 1
+chunkc core::log_file stdout
+chunkc core::log_level error
+chunkc core::load border.so
+chunkc core::load tiling.so
+# chunkc core::load ffm.so
+
+chunkc set global_desktop_mode          bsp
+chunkc set global_desktop_offset_top    10
+chunkc set global_desktop_offset_right  10
+chunkc set global_desktop_offset_bottom 10
+chunkc set global_desktop_offset_left   10
+chunkc set global_desktop_offset_gap    10
+
+chunkc set desktop_padding_step_size 10
+chunkc set desktop_gap_step_size     5.0
+
+chunkc tiling::rule --owner Emacs --except "^$" --state tile
+chunkc tiling::desktop --deserialize ~/.dotfiles/chunkwm/layouts/dev-grid

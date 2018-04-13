@@ -8,7 +8,7 @@
   (add-hook 'markdown-mode-hook 'my/markdown-mode-setup))
 
 (defun my/writeroom-mode-setup ()
-  (nlinum-mode 0))
+  )
 
 (use-package writeroom-mode
   :config
