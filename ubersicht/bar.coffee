@@ -28,6 +28,13 @@ style: """
   > *
     padding: 10px
 
+    &:empty
+      padding: 0
+
+  > :first-child
+    border-top-left-radius: 5px
+    border-bottom-left-radius: 5px
+
   > :last-child
     border-top-right-radius: 5px
     border-bottom-right-radius: 5px

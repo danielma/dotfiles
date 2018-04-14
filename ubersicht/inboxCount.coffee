@@ -1,4 +1,4 @@
-command: "tmux list-windows -t inbox -F \"#W\" | grep inbox-cli | sed \"s/^inbox-cli (\\([0-9]*\\))/\\1/\""
+command: "tmux list-windows -t inbox -F \"#W\" 2>&1 | grep inbox-cli | sed \"s/^inbox-cli (\\([0-9]*\\))/\\1/\" || true"
 
 refreshFrequency: '1m'
 
@@ -7,6 +7,9 @@ refreshFrequency: '1m'
 render: (output) -> output
 
 update: (output, domEl) ->
-  $("#__uebersicht").find(".inboxCount").html(output)
+  if output
+    $("#__uebersicht").find(".inboxCount").html(output)
+  else
+    $("#__uebersicht").find(".inboxCount").html("")
 
 style: "display: none"
