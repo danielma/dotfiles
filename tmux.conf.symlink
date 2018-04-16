@@ -121,6 +121,7 @@ set -g message-bg colour166
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin "jlipps/tmux-safekill"
 set -g @plugin "tmux-plugins/tmux-open"
+set -g @plugin 'dalejung/tmux-select-pane-no-wrap'
 run '~/.tmux/plugins/tpm/tpm'
 
 # run "emacs --daemon"

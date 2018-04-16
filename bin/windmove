@@ -1,0 +1,38 @@
+#!/bin/sh
+
+CHUNKC_OWNER=$(chunkc tiling::query --window owner)
+
+if [[ $CHUNKC_OWNER != "iTerm2" ]]; then
+    chunkc tiling::window --focus $1
+    exit
+fi
+
+if [[ "west" == $1 ]]; then
+    AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh L)
+    if [[ $AT_EDGE ]]; then
+        chunkc tiling::window --focus $1
+    else
+        tmux select-pane -L
+    fi
+elif [[ "north" == $1 ]]; then
+    AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh U)
+    if [[ $AT_EDGE ]]; then
+        chunkc tiling::window --focus $1
+    else
+        tmux select-pane -U
+    fi
+elif [[ "east" == $1 ]]; then
+    AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh R)
+    if [[ $AT_EDGE ]]; then
+        chunkc tiling::window --focus $1
+    else
+        tmux select-pane -R
+    fi
+elif [[ "south" == $1 ]]; then
+    AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh D)
+    if [[ $AT_EDGE ]]; then
+        chunkc tiling::window --focus $1
+    else
+        tmux select-pane -D
+    fi
+fi
