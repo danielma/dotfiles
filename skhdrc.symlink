@@ -37,10 +37,10 @@ alt - space : open -a iTerm.app
 alt - w : chunkc tiling::window --close
 
 # focus window
-ctrl - h : windmove west
-ctrl - j : windmove south
-ctrl - k : windmove north
-ctrl - l : windmove east
+alt - h : ~/.dotfiles/bin/windmove west
+alt - j : ~/.dotfiles/bin/windmove south
+alt - k : ~/.dotfiles/bin/windmove north
+alt - l : ~/.dotfiles/bin/windmove east
 
 cmd - j : chunkc tiling::window --focus prev
 cmd - k : chunkc tiling::window --focus next

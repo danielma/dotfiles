@@ -1,38 +1,44 @@
 #!/bin/sh
 
+TERMINAL_OWNER="iTerm2"
 CHUNKC_OWNER=$(chunkc tiling::query --window owner)
 
-if [[ $CHUNKC_OWNER != "iTerm2" ]]; then
+if [[ $CHUNKC_OWNER == $TERMINAL_OWNER ]]; then
+  if [[ "west" == $1 ]]; then
+      AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh L)
+      if [[ $AT_EDGE ]]; then
+          chunkc tiling::window --focus $1
+      else
+          tmux select-pane -L
+      fi
+  elif [[ "north" == $1 ]]; then
+      AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh U)
+      if [[ $AT_EDGE ]]; then
+          chunkc tiling::window --focus $1
+      else
+          tmux select-pane -U
+      fi
+  elif [[ "east" == $1 ]]; then
+      AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh R)
+      if [[ $AT_EDGE ]]; then
+          chunkc tiling::window --focus $1
+      else
+          tmux select-pane -R
+      fi
+  elif [[ "south" == $1 ]]; then
+      AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh )
+      if [[ $AT_EDGE ]]; then
+          chunkc tiling::window --focus $1
+      else
+          tmux select-pane -
+      fi
+  fi
+elif [[ $CHUNKC_OWNER == "Emacs" ]]; then
+    EMACS_COMMAND=$(emacsclient -e "(chunkwm/move \"$1\")")
+    if [[ $EMACS_COMMAND == "1" ]]; then
+        chunkc tiling:window --focus $1
+    fi
+else
     chunkc tiling::window --focus $1
-    exit
 fi
-
-if [[ "west" == $1 ]]; then
-    AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh L)
-    if [[ $AT_EDGE ]]; then
-        chunkc tiling::window --focus $1
-    else
-        tmux select-pane -L
-    fi
-elif [[ "north" == $1 ]]; then
-    AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh U)
-    if [[ $AT_EDGE ]]; then
-        chunkc tiling::window --focus $1
-    else
-        tmux select-pane -U
-    fi
-elif [[ "east" == $1 ]]; then
-    AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh R)
-    if [[ $AT_EDGE ]]; then
-        chunkc tiling::window --focus $1
-    else
-        tmux select-pane -R
-    fi
-elif [[ "south" == $1 ]]; then
-    AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh D)
-    if [[ $AT_EDGE ]]; then
-        chunkc tiling::window --focus $1
-    else
-        tmux select-pane -D
-    fi
-fi
+    

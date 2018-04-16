@@ -30,4 +30,15 @@
 
 (global-set-key (kbd "C-c e") 'eval-and-replace)
 
+(defun chunkwm/move (dirstring)
+  "Move to DIRSTRING with chunkwm integration."
+  (let ((dir (pcase dirstring
+               ("north" 'above)
+               ("east" 'right)
+               ("south" 'below)
+               ("west" 'left))))
+    (if (window-in-direction dir)
+        (and (windmove-do-window-select dir) "0")
+      '1)))
+
 (provide 'global-map)
