@@ -41,7 +41,7 @@ setopt complete_aliases
 
 zle -N newtab
 
-bindkey -v
+bindkey -e
 
 # Use vim cli mode
 bindkey '^P' up-history
@@ -49,7 +49,6 @@ bindkey '^N' down-history
 bindkey '^A' beginning-of-line
 bindkey '^E' end-of-line
 bindkey '^F' forward-char
-bindkey '^B' backward-char
 
 # backspace and ^h working even after
 # returning from command mode
