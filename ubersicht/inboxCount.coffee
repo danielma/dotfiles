@@ -4,12 +4,16 @@ refreshFrequency: '1m'
 
 # render gets called after the shell command has executed. The command's output
 # is passed in as a string. Whatever it returns will get rendered as HTML.
-render: (output) -> output
+render: (output) -> parseInt(output, 10)
 
 update: (output, domEl) ->
-  if output
-    $("#__uebersicht").find(".inboxCount").html(output)
+  if output > 0
+    $("#__uebersicht").find(".inboxCount")
+      .html(output)
+      .removeClass("bg-base0B-FF-important fg-base00-important")
   else
-    $("#__uebersicht").find(".inboxCount").html("")
+    $("#__uebersicht").find(".inboxCount")
+      .html("✔")
+      .addClass("bg-base0B-FF-important fg-base00-important")
 
 style: "display: none"

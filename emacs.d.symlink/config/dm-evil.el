@@ -29,9 +29,9 @@
 (use-package evil
   :init
   (setq evil-shift-width 2
-	evil-shift-round t
-	evil-echo-state nil
-	windmove-wrap-around t)
+        evil-shift-round t
+        evil-echo-state nil
+        windmove-wrap-around t)
   (evil-mode 1)
   :config
   (define-key base-leader-map "w" evil-window-map)

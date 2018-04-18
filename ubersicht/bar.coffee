@@ -1,57 +1,46 @@
 refreshFrequency: false
 
-render: () -> """
-  <div class="inboxCount"></div>
-  <div class="currentWindow"></div>
-  <div class="bigSpace"></div>
-  <div class="musicBar"></div>
-  <div class="time"></div>
-"""
+render: (themeInfo) ->
+  """
+    <div id="bar" class="fg-base05 bg-base00-A5">
+      <div class="inboxCount bg-base08-FF"></div>
+      <div class="currentWindow"></div>
+      <div class="bigSpace"></div>
+      <div class="musicBar bg-base09-FF fg-base00"></div>
+      <div class="time bg-base0A-FF fg-base00"></div>
+    </div>
+  """
 
-# the CSS style for this widget, written using Stylus
-# (http://learnboost.github.io/stylus/)
 style: """
   left: 10px
   right: 10px
   bottom: 10px
-  background: rgba(#111, 0.65)
-  -webkit-backdrop-filter: blur(20px)
-  border-radius: 5px
-  box-sizing: border-box
-  color: #FAFAFA
-  font-family: IBM Plex Mono
-  font-size: 14px
-  font-weight: normal
-  line-height: 1
-  -webkit-font-smoothing: antialiased
-  display: flex
 
-  > *
-    padding: 10px
+  #bar
+    -webkit-backdrop-filter: blur(20px)
+    border-radius: 5px
+    box-sizing: border-box
+    font-family: IBM Plex Mono
+    font-size: 14px
+    font-weight: normal
+    line-height: 1
+    -webkit-font-smoothing: antialiased
+    display: flex
 
-    &:empty
-      padding: 0
+    > *
+      padding: 10px
 
-  > :first-child
-    border-top-left-radius: 5px
-    border-bottom-left-radius: 5px
+      &:empty
+        padding: 0
 
-  > :last-child
-    border-top-right-radius: 5px
-    border-bottom-right-radius: 5px
-        
-  .bigSpace
-    flex: 2
+    > :first-child
+      border-top-left-radius: 5px
+      border-bottom-left-radius: 5px
 
-  .inboxCount
-    background-color: #82A2BD
-    // color: #122418
+    > :last-child
+      border-top-right-radius: 5px
+      border-bottom-right-radius: 5px
 
-  .musicBar
-    background-color: #DC9364
-    color: #122418
-
-  .time
-    background-color: #EFC57A
-    color: #122418
+    .bigSpace
+      flex: 2
 """

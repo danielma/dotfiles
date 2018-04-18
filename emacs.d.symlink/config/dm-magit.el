@@ -48,7 +48,6 @@
 						  '(display-buffer-same-window))))
 	magit-list-refs-namespaces '("refs/heads" "refs/remotes" "refs/pull"))
   :config
-  (evil-magit-init)
   (setq magit-blame-heading-format "%C | %s")
   :bind (:map base-leader-map
 	      ("gs" . magit-status)
@@ -63,7 +62,9 @@
   (magit-org-todos-autoinsert))
 
 (use-package evil-magit
-  :commands (evil-magit-init))
+  :after magit
+  :init
+  (evil-magit-init))
 
 (use-package magithub
   :disabled
