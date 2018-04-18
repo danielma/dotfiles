@@ -128,4 +128,10 @@
   :init
   (global-evil-matchit-mode))
 
+(defun my/prog-mode-setup ()
+  "Setup prog mode."
+  (setq-local evil-shift-width 2))
+
+(add-hook 'prog-mode-hook 'my/prog-mode-setup)
+
 (provide 'dm-evil)

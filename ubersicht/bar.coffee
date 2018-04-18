@@ -20,7 +20,8 @@ style: """
   box-sizing: border-box
   color: #FAFAFA
   font-family: IBM Plex Mono
-  font-weight: 400
+  font-size: 14px
+  font-weight: normal
   line-height: 1
   -webkit-font-smoothing: antialiased
   display: flex

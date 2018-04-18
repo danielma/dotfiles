@@ -21,4 +21,5 @@ chunkc set desktop_gap_step_size     5.0
 chunkc tiling::rule --owner Emacs --except "^$" --state tile
 chunkc tiling::rule --owner Messages --state float
 chunkc tiling::rule --owner Spotify --state float
+chunkc tiling::rule --owner LICEcap --state float
 chunkc tiling::desktop --deserialize ~/.dotfiles/chunkwm/layouts/dev-grid

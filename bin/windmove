@@ -26,11 +26,11 @@ if [[ $CHUNKC_OWNER == $TERMINAL_OWNER ]]; then
           tmux select-pane -R
       fi
   elif [[ "south" == $1 ]]; then
-      AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh )
+      AT_EDGE=$(~/.tmux/plugins/tmux-select-pane-no-wrap/scripts/at_edge.sh D)
       if [[ $AT_EDGE ]]; then
           chunkc tiling::window --focus $1
       else
-          tmux select-pane -
+          tmux select-pane -D
       fi
   fi
 elif [[ $CHUNKC_OWNER == "Emacs" ]]; then
