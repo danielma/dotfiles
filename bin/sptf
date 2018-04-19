@@ -1,0 +1,64 @@
+#!/bin/bash
+
+CREDS=$(cat ~/.sptf-creds.json)
+
+REFRESH=$(echo $CREDS | jq -r '.refresh')
+ACCESS=$(echo $CREDS | jq -r '.access')
+CLIENT_ID=$(echo $CREDS | jq -r '.client_id')
+CLIENT_SECRET=$(echo $CREDS | jq -r '.client_secret')
+
+
+b64() {
+    echo -n "$1" | base64
+}
+
+refresh() {
+    auth=$(b64 "$CLIENT_ID:$CLIENT_SECRET")
+    curl --request POST \
+         --url https://accounts.spotify.com/api/token \
+         --header "authorization: Basic $auth" \
+         -d "grant_type=refresh_token&refresh_token=$REFRESH" \
+         -s
+}
+
+refreshAndSave() {
+    token=$(refresh | jq -r '.access_token')
+    cat ~/.sptf-creds.json  | jq -r "setpath([\"access\"]; \"$token\")" > /tmp/sptf-creds.json
+    cat /tmp/sptf-creds.json > ~/.sptf-creds.json
+}
+
+get() {
+    curl --request GET \
+         --url https://api.spotify.com/v1/$1 \
+         --header "authorization: Bearer $ACCESS" \
+         -s
+}
+
+getInfo() {
+    get "me/player/currently-playing"
+}
+
+getTrackId() {
+    info=$(getInfo)
+    echo $info | jq -r '.item.id'
+}
+
+saveToLibrary() {
+    echo $1
+    id=$(getTrackId)
+    echo $id
+}
+
+case $1 in
+    info)
+        getInfo
+        ;;
+    save)
+        saveToLibrary
+        ;;
+    *)
+        echo $1
+        ;;
+esac
+
+refreshAndSave
