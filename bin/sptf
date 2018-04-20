@@ -2,11 +2,16 @@
 
 CREDS=$(cat ~/.sptf-creds.json)
 
-REFRESH=$(echo $CREDS | jq -r '.refresh')
-ACCESS=$(echo $CREDS | jq -r '.access')
 CLIENT_ID=$(echo $CREDS | jq -r '.client_id')
 CLIENT_SECRET=$(echo $CREDS | jq -r '.client_secret')
 
+getRefreshToken() {
+    echo $CREDS | jq -r '.refresh'
+}
+
+getAccessToken() {
+    echo $CREDS | jq -r '.access'
+}
 
 b64() {
     echo -n "$1" | base64
@@ -14,10 +19,11 @@ b64() {
 
 refresh() {
     auth=$(b64 "$CLIENT_ID:$CLIENT_SECRET")
+    refresh=$(getRefreshToken)
     curl --request POST \
          --url https://accounts.spotify.com/api/token \
          --header "authorization: Basic $auth" \
-         -d "grant_type=refresh_token&refresh_token=$REFRESH" \
+         -d "grant_type=refresh_token&refresh_token=$refresh" \
          -sS
 }
 
@@ -30,17 +36,18 @@ refreshAndSave() {
 }
 
 _request() {
+    access=$(getAccessToken)
     >&2 echo "$1" "$2" "$3"
     if [ -z "$3" ]; then
         curl --request $1 \
              --url https://api.spotify.com/v1/$2 \
-             --header "authorization: Bearer $ACCESS" \
+             --header "authorization: Bearer $access" \
              --header "accept: application/json" \
              -sS
     else
         curl --request $1 \
              --url https://api.spotify.com/v1/$2 \
-             --header "authorization: Bearer $ACCESS" \
+             --header "authorization: Bearer $access" \
              --header "accept: application/json" \
              -d "$3" \
              -sS
