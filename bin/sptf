@@ -84,8 +84,11 @@ case $1 in
     save)
         saveToLibrary
         ;;
-    getTrackId)
-        getTrackId
+    to-month)
+        saveToMonthList
+        ;;
+    request)
+        request "$2" "$3" "$4"
         ;;
     *)
         echo $1
