@@ -18,35 +18,63 @@ refresh() {
          --url https://accounts.spotify.com/api/token \
          --header "authorization: Basic $auth" \
          -d "grant_type=refresh_token&refresh_token=$REFRESH" \
-         -s
+         -sS
 }
 
 refreshAndSave() {
+    >&2 echo 'refreshing token'
+    >&2 echo "$1"
     token=$(refresh | jq -r '.access_token')
     cat ~/.sptf-creds.json  | jq -r "setpath([\"access\"]; \"$token\")" > /tmp/sptf-creds.json
     cat /tmp/sptf-creds.json > ~/.sptf-creds.json
 }
 
-get() {
-    curl --request GET \
-         --url https://api.spotify.com/v1/$1 \
-         --header "authorization: Bearer $ACCESS" \
-         -s
+_request() {
+    >&2 echo "$1" "$2" "$3"
+    if [ -z "$3" ]; then
+        curl --request $1 \
+             --url https://api.spotify.com/v1/$2 \
+             --header "authorization: Bearer $ACCESS" \
+             --header "accept: application/json" \
+             -sS
+    else
+        curl --request $1 \
+             --url https://api.spotify.com/v1/$2 \
+             --header "authorization: Bearer $ACCESS" \
+             --header "accept: application/json" \
+             -d "$3" \
+             -sS
+    fi
+}
+
+request() {
+    result=$(_request "$1" "$2" "$3")
+
+    if [ -z "$result" ]; then
+        echo "$result"
+    else
+        error=$(echo "$result" | jq -re '.error.message | tostring')
+
+        if [[ "$error" == "null" ]]; then
+            echo "$result"
+        else
+            refreshAndSave "$result"
+            _request "$1" "$2" "$3"
+        fi
+    fi
 }
 
 getInfo() {
-    get "me/player/currently-playing"
+    request GET "me/player/currently-playing"
 }
 
 getTrackId() {
-    info=$(getInfo)
-    echo $info | jq -r '.item.id'
+    echo $(getInfo) | jq -r '.item.id'
 }
 
 saveToLibrary() {
-    echo $1
     id=$(getTrackId)
-    echo $id
+    request PUT "me/tracks" "{\"ids\": [\"$id\"]}"
 }
 
 case $1 in
@@ -56,9 +84,10 @@ case $1 in
     save)
         saveToLibrary
         ;;
+    getTrackId)
+        getTrackId
+        ;;
     *)
         echo $1
         ;;
 esac
-
-refreshAndSave
