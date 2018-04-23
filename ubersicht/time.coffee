@@ -1,4 +1,4 @@
-command: 'date "+%l:%M"'
+command: 'date +"%-m/%-e | %-l:%M"'
 
 refreshFrequency: '1m'
 
