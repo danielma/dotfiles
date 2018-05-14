@@ -1,16 +1,16 @@
 #!/bin/bash
 
-CREDS=$(cat ~/.sptf-creds.json)
+CREDS=~/.sptf-creds.json
 
-CLIENT_ID=$(echo $CREDS | jq -r '.client_id')
-CLIENT_SECRET=$(echo $CREDS | jq -r '.client_secret')
+CLIENT_ID=$(cat $CREDS | jq -r '.client_id')
+CLIENT_SECRET=$(cat $CREDS | jq -r '.client_secret')
 
 getRefreshToken() {
-    echo $CREDS | jq -r '.refresh'
+    cat $CREDS | jq -r '.refresh'
 }
 
 getAccessToken() {
-    echo $CREDS | jq -r '.access'
+    cat $CREDS | jq -r '.access'
 }
 
 b64() {
@@ -31,8 +31,8 @@ refreshAndSave() {
     >&2 echo 'refreshing token'
     >&2 echo "$1"
     token=$(refresh | jq -r '.access_token')
-    cat ~/.sptf-creds.json  | jq -r "setpath([\"access\"]; \"$token\")" > /tmp/sptf-creds.json
-    cat /tmp/sptf-creds.json > ~/.sptf-creds.json
+    cat $CREDS | jq -r "setpath([\"access\"]; \"$token\")" > /tmp/sptf-creds.json
+    cat /tmp/sptf-creds.json > $CREDS
 }
 
 _request() {

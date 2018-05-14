@@ -24,7 +24,7 @@
     fileTypesPhp: "module,install,inc,test,profile"
   editor:
     fontFamily: "Iosevka Nerd Font"
-    fontSize: 15
+    fontSize: 13
     invisibles: {}
     lineHeight: 1.2
     preferredLineLength: 100
