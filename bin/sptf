@@ -1,4 +1,5 @@
 #!/usr/bin/env xcrun swift
+// -*- mode: swift -*-
 
 import Foundation
 
