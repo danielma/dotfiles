@@ -41,7 +41,14 @@
       ad-redefinition-action 'accept
       backup-directory-alist `((".*" . ,temporary-file-directory))
       auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
-      create-lockfiles nil)
+      create-lockfiles nil
+      frame-resize-pixelwise t)
+
+;; (setq default-frame-alist '((undecorated . t)))
+;; (setq default-frame-alist '())
+
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 (fset 'evil-visual-update-x-selection 'ignore)
 
