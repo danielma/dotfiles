@@ -3,7 +3,26 @@
 
 import Foundation
 
-typealias JSONResponse = (json: [String: Any], response: URLResponse?, error: Error?)
+enum TerminalStyle: String {
+  case red = "31"
+  case purple = "38;5;5"
+  case darkGray = "90"
+  case reset = "0"
+
+  public func fullString() -> String {
+    return "\u{001B}[\(rawValue)m"
+  }
+}
+
+extension String {
+  func style(_ style: TerminalStyle) -> String {
+    let str = self.replacingOccurrences(of: TerminalStyle.reset.fullString(), with: TerminalStyle.reset.fullString() + style.fullString())
+
+    return style.fullString() + str + TerminalStyle.reset.fullString()
+  }
+}
+
+typealias JSONResponse = (json: [String: Any], response: HTTPURLResponse, error: Error?)
 
 enum HTTPMethod: String {
   case POST
@@ -53,7 +72,7 @@ struct Utils {
 
     let url = URL(string: urlString)!
     var data: Data?
-    var response: URLResponse?
+    var response: HTTPURLResponse!
     var error: Error?
 
     let semaphore = DispatchSemaphore(value: 0)
@@ -70,14 +89,14 @@ struct Utils {
 
     if let body = body {
       let stringBody = String(data: body, encoding: .ascii)
-      print("\(method.rawValue) \(urlString) \(stringBody ?? "")")
+      print("\(method.rawValue.style(.purple)) \(urlString) \(stringBody ?? "")".style(.darkGray))
     } else {
-      print("\(method.rawValue) \(urlString)")
+      print("\(method.rawValue.style(.purple)) \(urlString)".style(.darkGray))
     }
 
     let task = URLSession.shared.dataTask(with: request) { (taskData, taskResponse, taskError) in
       data = taskData
-      response = taskResponse
+      response = taskResponse as! HTTPURLResponse
       error = taskError
 
       semaphore.signal()
@@ -131,7 +150,7 @@ struct Spotify {
     return apiRequest(route, method: method, body: thisVarHelpsAvoidAmbiguity)
   }
 
-  static func refreshToken() -> String {
+  private static func refreshToken() -> String {
     let credentials = Credentials.load()
     let auth = Utils.b64("\(credentials.clientId):\(credentials.clientSecret)")
     let (json, response, _) = Utils.synchronousRequest(
@@ -149,7 +168,7 @@ struct Spotify {
     }
   }
 
-  static func refreshTokenAndSave() {
+  private static func refreshTokenAndSave() {
     let newToken = refreshToken()
 
     _ = Credentials.updateAccessToken(newToken)
@@ -163,6 +182,7 @@ struct Spotify {
     let currentlyPlaying = Spotify.currentlyPlaying().json
     let item = currentlyPlaying["item"] as! [String: Any]
     let id = item["id"] as! String
+    print(item["name"] as! String)
     let body = try! JSONEncoder().encode(["ids": [id]])
     return Spotify.apiRequest("me/tracks", method: .PUT, body: body)
   }
@@ -179,7 +199,12 @@ switch (command) {
 case "info":
   dump(Spotify.currentlyPlaying().json)
 case "save":
-  _ = Spotify.saveToLibrary()
+  let result = Spotify.saveToLibrary()
+  if result.json.count > 0 {
+    dump(result.json)
+  } else {
+    dump(result.response.statusCode)
+  }
 default:
   print("Unknown command: \(command)")
   exit(1)
