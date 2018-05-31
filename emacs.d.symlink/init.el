@@ -75,6 +75,7 @@
   (setq helm-completion-in-region-fuzzy-match t
 	helm-buffers-fuzzy-matching t
 	helm-mode-fuzzy-match t
+        helm-imenu-fuzzy-match t
 	helm-follow-mode-persistent t)
   (helm-mode)
   :bind (
@@ -88,7 +89,8 @@
 	 ("hb" . helm-bookmarks)
 	 ("hm" . helm-all-mark-rings)
 	 ("hk" . helm-show-kill-ring)
-         ("hg" . helm-register)))
+         ("hg" . helm-register)
+         ("hi" . helm-imenu)))
 
 (use-package dumb-jump
   :config
@@ -319,6 +321,7 @@
    (quote
     (magit-org-todos emojify tide typescript-mode org-alert rufo-mode ace-jump-mode winner-mode dumb-jump hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
  '(php-mode-coding-style (quote drupal))
+ '(ring-bell-function (quote ignore))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
