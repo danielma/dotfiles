@@ -35,24 +35,30 @@ struct Credentials: Codable {
   var accessToken: String
   var clientId: String
   var clientSecret: String
+}
 
-  static let file = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".sptf-creds-v2.json")
 
-  static func load() -> Credentials {
-    let fileData = try! Data(contentsOf: Credentials.file)
-    return try! JSONDecoder().decode(Credentials.self, from: fileData)
+struct DB: Codable {
+  var credentials: Credentials
+  var playlistIds: [String: String]
+
+  static let file = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".sptf.json")
+
+  static func load() -> DB {
+    let fileData = try! Data(contentsOf: DB.file)
+    return try! JSONDecoder().decode(DB.self, from: fileData)
   }
 
-  static func updateAccessToken(_ newToken: String) -> Credentials {
-    var existingCredentials = Credentials.load()
-    existingCredentials.accessToken = newToken
+  static func updateCredentials(_ newCredentials: Credentials) -> DB {
+    var existingDb = DB.load()
+    existingDb.credentials = newCredentials
 
-    let json = try! JSONEncoder().encode(existingCredentials)
+    let json = try! JSONEncoder().encode(existingDb)
     let output = String(data: json, encoding: .ascii)!
 
-    try! output.write(to: Credentials.file, atomically: true, encoding: .ascii)
+    try! output.write(to: DB.file, atomically: true, encoding: .ascii)
 
-    return existingCredentials
+    return existingDb
   }
 }
 
@@ -121,16 +127,26 @@ struct Utils {
 }
 
 struct Spotify {
-  private static func realApiRequest(_ route: String, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
+  var db: DB
+
+  var credentials: Credentials {
+    return db.credentials
+  }
+
+  init() {
+    self.db = DB.load()
+  }
+
+  private func realApiRequest(_ route: String, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
     return Utils.synchronousRequest(
       "https://api.spotify.com/v1/\(route)",
-      headers: ["Authorization": "Bearer \(Credentials.load().accessToken)"],
+      headers: ["Authorization": "Bearer \(credentials.accessToken)"],
       method: method,
       body: body
     )
   }
 
-  private static func apiRequest(_ route: String, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
+  mutating private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
     let initialResult = realApiRequest(route, method: method, body: body)
 
     if initialResult.0["error"] != nil {
@@ -141,17 +157,16 @@ struct Spotify {
     }
   }
 
-  private static func apiRequest(_ route: String, method: HTTPMethod? = nil, body: String? = nil) -> JSONResponse {
+  mutating private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: String? = nil) -> JSONResponse {
     return apiRequest(route, method: method, body: body?.data(using: .utf8))
   }
 
-  private static func apiRequest(_ route: String, method: HTTPMethod? = nil) -> JSONResponse {
+  mutating private func apiRequest(_ route: String, method: HTTPMethod? = nil) -> JSONResponse {
     let thisVarHelpsAvoidAmbiguity: Data? = nil
     return apiRequest(route, method: method, body: thisVarHelpsAvoidAmbiguity)
   }
 
-  private static func refreshToken() -> String {
-    let credentials = Credentials.load()
+  private func refreshToken() -> String {
     let auth = Utils.b64("\(credentials.clientId):\(credentials.clientSecret)")
     let (json, response, _) = Utils.synchronousRequest(
       "https://accounts.spotify.com/api/token",
@@ -168,23 +183,25 @@ struct Spotify {
     }
   }
 
-  private static func refreshTokenAndSave() {
+  mutating private func refreshTokenAndSave() {
     let newToken = refreshToken()
+    var newCredentials = db.credentials
+    newCredentials.accessToken = newToken
 
-    _ = Credentials.updateAccessToken(newToken)
+    self.db = DB.updateCredentials(newCredentials)
   }
 
-  static func currentlyPlaying() -> JSONResponse {
-    return Spotify.apiRequest("me/player/currently-playing")
+  mutating func currentlyPlaying() -> JSONResponse {
+    return apiRequest("me/player/currently-playing")
   }
 
-  static func saveToLibrary() -> JSONResponse {
-    let currentlyPlaying = Spotify.currentlyPlaying().json
-    let item = currentlyPlaying["item"] as! [String: Any]
+  mutating func saveToLibrary() -> JSONResponse {
+    let currentlyPlayingInfo = currentlyPlaying().json
+    let item = currentlyPlayingInfo["item"] as! [String: Any]
     let id = item["id"] as! String
     print(item["name"] as! String)
     let body = try! JSONEncoder().encode(["ids": [id]])
-    return Spotify.apiRequest("me/tracks", method: .PUT, body: body)
+    return apiRequest("me/tracks", method: .PUT, body: body)
   }
 }
 
@@ -194,12 +211,13 @@ if CommandLine.arguments.count == 1 {
 }
 
 let command = CommandLine.arguments[1]
+var spotify = Spotify()
 
 switch (command) {
 case "info":
-  dump(Spotify.currentlyPlaying().json)
+  dump(spotify.currentlyPlaying().json)
 case "save":
-  let result = Spotify.saveToLibrary()
+  let result = spotify.saveToLibrary()
   if result.json.count > 0 {
     dump(result.json)
   } else {
