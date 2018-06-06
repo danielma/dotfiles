@@ -49,16 +49,13 @@ struct DB: Codable {
     return try! JSONDecoder().decode(DB.self, from: fileData)
   }
 
-  static func updateCredentials(_ newCredentials: Credentials) -> DB {
-    var existingDb = DB.load()
-    existingDb.credentials = newCredentials
+  mutating func updateCredentials(_ newCredentials: Credentials) {
+    credentials = newCredentials
 
-    let json = try! JSONEncoder().encode(existingDb)
+    let json = try! JSONEncoder().encode(self)
     let output = String(data: json, encoding: .ascii)!
 
     try! output.write(to: DB.file, atomically: true, encoding: .ascii)
-
-    return existingDb
   }
 }
 
@@ -126,7 +123,7 @@ struct Utils {
   }
 }
 
-struct Spotify {
+class Spotify {
   var db: DB
 
   var credentials: Credentials {
@@ -146,7 +143,7 @@ struct Spotify {
     )
   }
 
-  mutating private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
+  private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
     let initialResult = realApiRequest(route, method: method, body: body)
 
     if initialResult.0["error"] != nil {
@@ -157,11 +154,11 @@ struct Spotify {
     }
   }
 
-  mutating private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: String? = nil) -> JSONResponse {
+  private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: String? = nil) -> JSONResponse {
     return apiRequest(route, method: method, body: body?.data(using: .utf8))
   }
 
-  mutating private func apiRequest(_ route: String, method: HTTPMethod? = nil) -> JSONResponse {
+  private func apiRequest(_ route: String, method: HTTPMethod? = nil) -> JSONResponse {
     let thisVarHelpsAvoidAmbiguity: Data? = nil
     return apiRequest(route, method: method, body: thisVarHelpsAvoidAmbiguity)
   }
@@ -183,19 +180,19 @@ struct Spotify {
     }
   }
 
-  mutating private func refreshTokenAndSave() {
+  private func refreshTokenAndSave() {
     let newToken = refreshToken()
     var newCredentials = db.credentials
     newCredentials.accessToken = newToken
 
-    self.db = DB.updateCredentials(newCredentials)
+    db.updateCredentials(newCredentials)
   }
 
-  mutating func currentlyPlaying() -> JSONResponse {
+  func currentlyPlaying() -> JSONResponse {
     return apiRequest("me/player/currently-playing")
   }
 
-  mutating func saveToLibrary() -> JSONResponse {
+  func saveToLibrary() -> JSONResponse {
     let currentlyPlayingInfo = currentlyPlaying().json
     let item = currentlyPlayingInfo["item"] as! [String: Any]
     let id = item["id"] as! String
