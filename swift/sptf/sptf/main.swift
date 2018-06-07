@@ -49,13 +49,21 @@ struct DB: Codable {
     return try! JSONDecoder().decode(DB.self, from: fileData)
   }
 
-  mutating func updateCredentials(_ newCredentials: Credentials) {
-    credentials = newCredentials
-
+  private mutating func save() {
     let json = try! JSONEncoder().encode(self)
     let output = String(data: json, encoding: .ascii)!
 
     try! output.write(to: DB.file, atomically: true, encoding: .ascii)
+  }
+
+  mutating func updateCredentials(_ newCredentials: Credentials) {
+    credentials = newCredentials
+    save()
+  }
+
+  mutating func addPlaylistId(name: String, id: String) {
+    playlistIds[name] = id
+    save()
   }
 }
 
@@ -124,6 +132,15 @@ struct Utils {
 }
 
 class Spotify {
+  struct Track {
+    var id: String
+    var name: String
+
+    var uri: String {
+      return "spotify:track:\(id)"
+    }
+  }
+
   var db: DB
 
   var credentials: Credentials {
@@ -188,27 +205,58 @@ class Spotify {
     db.updateCredentials(newCredentials)
   }
 
-  func currentlyPlaying() -> JSONResponse {
-    return apiRequest("me/player/currently-playing")
+  func currentTrack() -> Track {
+    let info = apiRequest("me/player/currently-playing").json
+    let item = info["item"] as! [String: Any]
+
+    return Track(id: item["id"] as! String, name: item["name"] as! String)
   }
 
   func saveToLibrary() -> JSONResponse {
-    let currentlyPlayingInfo = currentlyPlaying().json
-    let item = currentlyPlayingInfo["item"] as! [String: Any]
-    let id = item["id"] as! String
-    print(item["name"] as! String)
-    let body = try! JSONEncoder().encode(["ids": [id]])
+    let track = currentTrack()
+    print(track.name)
+    let body = try! JSONEncoder().encode(["ids": [track.id]])
     return apiRequest("me/tracks", method: .PUT, body: body)
   }
 
+  private var monthFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "MMMM yyyy"
+    return formatter
+  }()
+
+  typealias PlaylistId = String
+
+  enum PlaylistType {
+    case month
+  }
+
+  private func findOrCreatePlaylist(_ type: PlaylistType) -> PlaylistId {
+    let playlistName = "\(monthFormatter.string(from: Date())) Tracks"
+
+    if let playlistId = db.playlistIds[playlistName] {
+      return playlistId
+    } else {
+      let body = try! JSONEncoder().encode(["name": playlistName])
+      let createPlaylist = apiRequest("users/\(db.userId)/playlists", method: .POST, body: body)
+      let id = createPlaylist.json["id"] as! String
+
+      db.addPlaylistId(name: playlistName, id: id)
+
+      return id
+    }
+  }
+
   func saveToList() -> JSONResponse {
-    let body = try! JSONEncoder().encode(["name": "My Playlist"])
-    let createPlaylist = apiRequest("users/\(db.userId)/playlists", method: .POST, body: body)
-    let id = createPlaylist.json["id"] as! String
+    let trackUri = currentTrack().uri
+    let playlistId = findOrCreatePlaylist(.month)
+    let playlistTracksUrl = "users/\(db.userId)/playlists/\(playlistId)/tracks"
 
-    print(id)
-
-    return createPlaylist
+    return apiRequest(
+      playlistTracksUrl,
+      method: .POST,
+      body: try! JSONEncoder().encode(["uris": [trackUri]])
+    )
   }
 }
 
@@ -222,7 +270,7 @@ var spotify = Spotify()
 
 switch (command) {
 case "info":
-  dump(spotify.currentlyPlaying().json)
+  dump(spotify.currentTrack())
 case "save":
   let result = spotify.saveToLibrary()
   if result.json.count > 0 {
