@@ -212,11 +212,15 @@ class Spotify {
     return Track(id: item["id"] as! String, name: item["name"] as! String)
   }
 
+  private func addToLibrary(_ track: Track) -> JSONResponse {
+    let body = try! JSONEncoder().encode(["ids": [track.id]])
+    return apiRequest("me/tracks", method: .PUT, body: body)
+  }
+
   func saveToLibrary() -> JSONResponse {
     let track = currentTrack()
     print(track.name)
-    let body = try! JSONEncoder().encode(["ids": [track.id]])
-    return apiRequest("me/tracks", method: .PUT, body: body)
+    return addToLibrary(track)
   }
 
   private var monthFormatter: DateFormatter = {
@@ -248,7 +252,12 @@ class Spotify {
   }
 
   func saveToList() -> JSONResponse {
-    let trackUri = currentTrack().uri
+    let track = currentTrack()
+    let trackUri = track.uri
+    let result = addToLibrary(track)
+
+    guard result.response.statusCode == 200 else { fatalError("Couldn't save \(track.id) to library") }
+
     let playlistId = findOrCreatePlaylist(.month)
     let playlistTracksUrl = "users/\(db.userId)/playlists/\(playlistId)/tracks"
 
@@ -271,14 +280,14 @@ var spotify = Spotify()
 switch (command) {
 case "info":
   dump(spotify.currentTrack())
-case "save":
+case "add":
   let result = spotify.saveToLibrary()
   if result.json.count > 0 {
     dump(result.json)
   } else {
     dump(result.response.statusCode)
   }
-case "list":
+case "save":
   let result = spotify.saveToList()
   dump(result.json)
   dump(result.response.statusCode)
