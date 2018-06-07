@@ -37,9 +37,9 @@ struct Credentials: Codable {
   var clientSecret: String
 }
 
-
 struct DB: Codable {
   var credentials: Credentials
+  var userId: String
   var playlistIds: [String: String]
 
   static let file = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".sptf.json")
@@ -200,6 +200,16 @@ class Spotify {
     let body = try! JSONEncoder().encode(["ids": [id]])
     return apiRequest("me/tracks", method: .PUT, body: body)
   }
+
+  func saveToList() -> JSONResponse {
+    let body = try! JSONEncoder().encode(["name": "My Playlist"])
+    let createPlaylist = apiRequest("users/\(db.userId)/playlists", method: .POST, body: body)
+    let id = createPlaylist.json["id"] as! String
+
+    print(id)
+
+    return createPlaylist
+  }
 }
 
 if CommandLine.arguments.count == 1 {
@@ -220,6 +230,10 @@ case "save":
   } else {
     dump(result.response.statusCode)
   }
+case "list":
+  let result = spotify.saveToList()
+  dump(result.json)
+  dump(result.response.statusCode)
 default:
   print("Unknown command: \(command)")
   exit(1)
