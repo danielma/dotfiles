@@ -33,6 +33,12 @@
    '(("test/assets/javascripts/" "/javascripts/\\(.+\\)_test\\.js?$"))
    "test/assets/javascripts/${filename}_test.js"))
 
+(defun my/projectile-rails-find-vertex ()
+  (interactive)
+  (projectile-rails-find-resource
+   "vertex: "
+   '(("app/graphs/" "/graphs/\\(.+\\)_graph/vertices\\(/.+\\)_vertex.rb$"))))
+
 (defun my/projectile-rails-goto-package-json ()
   (interactive)
   (projectile-rails-goto-file "package.json"))
@@ -99,6 +105,8 @@
 ;;   "jt" 'my/projectile-rails-find-js-test)
 
 (use-package projectile-rails
+  :straight (:type git :host github :repo "danielma/projectile-rails" :branch "dma/use-all-matches-for-finding-resource"
+                   :upstream (:host github :repo "asok/projectile-rails"))
   :init
   (projectile-rails-global-mode)
   (setq projectile-rails-component-dir "app/javascript/"
@@ -116,6 +124,7 @@
          ("R" . my/projectile-rails-find-rake-tasks)
          ("p" . my/projectile-rails-find-spec-or-policy)
          ("w" . my/projectile-rails-find-component)
+         ("V" . my/projectile-rails-find-vertex)
 	 :map projectile-rails-mode-goto-map
 	 ("p" . my/projectile-rails-goto-package-json)))
 

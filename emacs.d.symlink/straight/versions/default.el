@@ -59,7 +59,7 @@
  ("pkg-info.el" . "76ba7415480687d05a4353b27fea2ae02b8d9d61")
  ("popup-el" . "80829dd46381754639fb764da11c67235fe63282")
  ("projectile" . "fba757dcee67479e579c164ec0f4f930793de6cd")
- ("projectile-rails" . "b5e516ef6a336bde32e4594408be15fd96b07e1b")
+ ("projectile-rails" . "9308625e127b6bf761143127845a9cd181adb08a")
  ("rainbow-delimiters" . "19b93892afa0494ba749c2ca9c154e04447ad778")
  ("rake" . "9c204334b03b4e899fadae6e59c20cf105404128")
  ("rjsx-mode" . "263a5fc3595dbc6caf4b66750772bef3e6de723a")
