@@ -258,6 +258,8 @@ class Spotify {
 
     guard result.response.statusCode == 200 else { fatalError("Couldn't save \(track.id) to library") }
 
+    print(track.name)
+
     let playlistId = findOrCreatePlaylist(.month)
     let playlistTracksUrl = "users/\(db.userId)/playlists/\(playlistId)/tracks"
 
@@ -280,7 +282,7 @@ var spotify = Spotify()
 switch (command) {
 case "info":
   dump(spotify.currentTrack())
-case "add":
+case "lib":
   let result = spotify.saveToLibrary()
   if result.json.count > 0 {
     dump(result.json)
