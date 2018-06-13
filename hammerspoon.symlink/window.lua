@@ -147,3 +147,38 @@ function undo:pop()
 end
 
 hs.hotkey.bind({"ctrl", "alt"}, "z", function() undo:pop() end)
+
+--- isolate window
+
+isolate = {}
+isolateWf = hs.window.filter.new()
+isolateWf:setCurrentSpace(true)
+isolateWf:setSortOrder(hs.window.filter.sortByFocused)
+
+function toggleIsolate()
+   local windows = isolateWf:getWindows()
+   local focusedWindow = fw()
+   local moreThanOneVisibleWindow = windows[2]
+
+   if moreThanOneVisibleWindow then
+      isolate = {}
+      for i, window in pairs(windows) do
+         if window:id() ~= focusedWindow:id() then
+            isolate[i] = window:id()
+            window:application():hide()
+         end
+      end
+
+      focusedWindow:focus()
+
+      return
+   end
+
+   for i, id in pairs(isolate) do
+      hadAnyStoredWindows = true
+
+      hs.window.find(id):application():unhide()
+   end
+end
+
+hs.hotkey.bind({"cmd", "alt"}, "h", function() toggleIsolate() end)
