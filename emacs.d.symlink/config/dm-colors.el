@@ -1,6 +1,8 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/Code/test/base16-builder-php/templates/emacs/build")
 
+;; (use-packge dimmer)
+
 (defun my/base16-set-theme (theme)
   "Set a base16 THEME by unloading all others."
   (interactive
