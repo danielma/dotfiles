@@ -12,13 +12,6 @@
    '(("app/presenters/" "/presenters/\\(.+?\\)\\(_presenter\\)?\\.rb$"))
    "app/presenters/${filename}_presenter.rb"))
 
-;; (defun projectile-rails-find-component ()
-;;   (interactive)
-;;   (projectile-rails-find-resource
-;;    "component: "
-;;    '(("app/assets/javascripts/components/" "/components/\\(.+\\.[jt]sx?\\)$"))
-;;    "app/assets/javascripts/components/${filename}.js"))
-
 (defun my/projectile-rails-find-rake-tasks ()
   (interactive)
   (projectile-rails-find-resource
@@ -98,7 +91,7 @@
   (interactive)
   (projectile-rails-find-resource
    "javascript: "
-   (--map (list it "/\\(.+\\)\\.[^.]+$") projectile-rails-component-dirs)))
+   (--map (list it "/javascript/\\(.+\\)\\.[^.]+$") projectile-rails-component-dirs)))
 
 ;; (evil-leader/set-key
 ;;   "jc" 'projectile-rails-find-component

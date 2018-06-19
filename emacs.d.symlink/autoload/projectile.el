@@ -22,7 +22,7 @@
   (my/projectile-find-resource
    "autload: "
    '(("emacs/autoload" "/autoload/\\(.+\\)\.el$"))
-   "emacs/autoloat/${filename}.el"))
+   "emacs/autoload/${filename}.el"))
 
 (defun my/projectile-open-scratch ()
   (interactive)
