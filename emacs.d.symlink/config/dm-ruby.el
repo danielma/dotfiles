@@ -19,10 +19,9 @@
 			      (setq ruby-insert-encoding-magic-comment nil)
 			      (modify-syntax-entry ?_ "w")
 			      ))
+  (add-hook 'ruby-mode-hook 'smartparens-strict-mode)
   (add-to-list 'auto-mode-alist '("\\.rb.spec\\'" . ruby-mode))
-  (add-hook 'ruby-mode-hook (lambda ()
-                              (if projectile-rails-mode
-                                  (rails-test-mode))))
+  (add-hook 'ruby-mode-hook 'rails-test-mode)
   (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
 (use-package ruby-end)

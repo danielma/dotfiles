@@ -250,6 +250,7 @@
 (use-package dm-magit :straight nil)
 (use-package dm-todo :straight nil)
 (use-package dm-minibuffer :straight nil)
+(use-package dm-guard :straight nil)
 (use-package dm-ruby :straight nil)
 (use-package dm-flycheck :straight nil)
 (use-package dm-javascript :straight nil)
