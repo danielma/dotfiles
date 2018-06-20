@@ -57,6 +57,8 @@
 
 (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)
 
+(set-frame-parameter (selected-frame) 'alpha 95)
+
 (use-package whitespace
   :init
   (setq whitespace-line-column 100

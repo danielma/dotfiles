@@ -20,6 +20,9 @@
 			      (modify-syntax-entry ?_ "w")
 			      ))
   (add-to-list 'auto-mode-alist '("\\.rb.spec\\'" . ruby-mode))
+  (add-hook 'ruby-mode-hook (lambda ()
+                              (if projectile-rails-mode
+                                  (rails-test-mode))))
   (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
 (use-package ruby-end)
