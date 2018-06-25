@@ -73,15 +73,14 @@ struct Utils {
     return encoded!.base64EncodedString()
   }
 
-  static func synchronousRequest(_ urlString: String, headers: [String: String]? = nil, method: HTTPMethod? = nil, body: String? = nil) -> JSONResponse {
-    return Utils.synchronousRequest(urlString, headers: headers, method: method, body: body?.data(using: .utf8))
+  static func synchronousRequest(_ url: URL, headers: [String: String]? = nil, method: HTTPMethod? = nil, body: String? = nil) -> JSONResponse {
+    return Utils.synchronousRequest(url, headers: headers, method: method, body: body?.data(using: .utf8))
   }
 
-  static func synchronousRequest(_ urlString: String, headers maybeHeaders: [String: String]? = nil, method maybeMethod: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
+  static func synchronousRequest(_ url: URL, headers maybeHeaders: [String: String]? = nil, method maybeMethod: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
     let method = maybeMethod ?? .GET
     let headers = maybeHeaders ?? [:]
 
-    let url = URL(string: urlString)!
     var data: Data?
     var response: HTTPURLResponse!
     var error: Error?
@@ -100,9 +99,9 @@ struct Utils {
 
     if let body = body {
       let stringBody = String(data: body, encoding: .ascii)
-      print("\(method.rawValue.style(.purple)) \(urlString) \(stringBody ?? "")".style(.darkGray))
+      print("\(method.rawValue.style(.purple)) \(url.absoluteString) \(stringBody ?? "")".style(.darkGray))
     } else {
-      print("\(method.rawValue.style(.purple)) \(urlString)".style(.darkGray))
+      print("\(method.rawValue.style(.purple)) \(url.absoluteString)".style(.darkGray))
     }
 
     let task = URLSession.shared.dataTask(with: request) { (taskData, taskResponse, taskError) in
@@ -141,6 +140,18 @@ class Spotify {
     }
   }
 
+  struct Playlist {
+    let id: String
+    let name: String
+
+    static func from(_ dict: [String: Any]) -> Playlist {
+      let id = dict["id"] as! String
+      let name = dict["name"] as! String
+
+      return Playlist(id: id, name: name)
+    }
+  }
+
   var db: DB
 
   var credentials: Credentials {
@@ -151,16 +162,16 @@ class Spotify {
     self.db = DB.load()
   }
 
-  private func realApiRequest(_ route: String, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
+  private func realApiRequest(_ route: URL, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
     return Utils.synchronousRequest(
-      "https://api.spotify.com/v1/\(route)",
+      route,
       headers: ["Authorization": "Bearer \(credentials.accessToken)"],
       method: method,
       body: body
     )
   }
 
-  private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
+  private func apiRequest(_ route: URL, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
     let initialResult = realApiRequest(route, method: method, body: body)
 
     if initialResult.0["error"] != nil {
@@ -169,6 +180,10 @@ class Spotify {
     } else {
       return initialResult
     }
+  }
+
+  private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
+    return apiRequest(URL(string: "https://api.spotify.com/v1/\(route)")!, method: method, body: body)
   }
 
   private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: String? = nil) -> JSONResponse {
@@ -180,10 +195,28 @@ class Spotify {
     return apiRequest(route, method: method, body: thisVarHelpsAvoidAmbiguity)
   }
 
+  private func apiRequestWithAllPages(_ route: String) -> [JSONResponse] {
+    var requests = [JSONResponse]()
+
+    let firstRequest = apiRequest(route)
+    requests.append(firstRequest)
+    var nextUrl = firstRequest.json["next"] as? String
+
+    while let str = nextUrl, let url = URL(string: str) {
+      let request = apiRequest(url)
+
+      requests.append(request)
+
+      nextUrl = request.json["next"] as? String
+    }
+
+    return requests
+  }
+
   private func refreshToken() -> String {
     let auth = Utils.b64("\(credentials.clientId):\(credentials.clientSecret)")
     let (json, response, _) = Utils.synchronousRequest(
-      "https://accounts.spotify.com/api/token",
+      URL(string: "https://accounts.spotify.com/api/token")!,
       headers: ["Authorization": "Basic \(auth)"],
       method: .POST,
       body: "grant_type=refresh_token&refresh_token=\(credentials.refreshToken)"
@@ -235,20 +268,42 @@ class Spotify {
     case month
   }
 
-  private func findOrCreatePlaylist(_ type: PlaylistType) -> PlaylistId {
-    let playlistName = "\(monthFormatter.string(from: Date())) Tracks"
+  private func lookupPlaylistByName(_ name: String) -> PlaylistId? {
+    let allPlaylists = getPlaylists()
+
+    if let playlist = allPlaylists.first(where: { $0.name == name }) {
+      return playlist.id
+    }
+
+    return nil
+  }
+
+  private func findOrCreatePlaylist(_ type: PlaylistType? = nil, name: String? = nil) -> PlaylistId {
+    let playlistName: String = {
+      switch type == .month {
+      case true:
+        return "\(monthFormatter.string(from: Date())) Tracks"
+      default:
+        return name!
+      }
+    }()
 
     if let playlistId = db.playlistIds[playlistName] {
       return playlistId
-    } else {
-      let body = try! JSONEncoder().encode(["name": playlistName])
-      let createPlaylist = apiRequest("users/\(db.userId)/playlists", method: .POST, body: body)
-      let id = createPlaylist.json["id"] as! String
-
-      db.addPlaylistId(name: playlistName, id: id)
-
-      return id
     }
+
+    if let playlistId = lookupPlaylistByName(playlistName) {
+      db.addPlaylistId(name: playlistName, id: playlistId)
+      return playlistId
+    }
+
+    let body = try! JSONEncoder().encode(["name": playlistName])
+    let createPlaylist = apiRequest("users/\(db.userId)/playlists", method: .POST, body: body)
+    let id = createPlaylist.json["id"] as! String
+
+    db.addPlaylistId(name: playlistName, id: id)
+
+    return id
   }
 
   func saveToList() -> JSONResponse {
@@ -268,6 +323,16 @@ class Spotify {
       method: .POST,
       body: try! JSONEncoder().encode(["uris": [trackUri]])
     )
+  }
+
+  private func getPlaylists() -> [Playlist] {
+    let requests = apiRequestWithAllPages("me/playlists")
+
+    return requests.flatMap { response in
+      (response.json["items"] as! [Any]).map { something in
+        Playlist.from(something as! [String: Any])
+      }
+    }
   }
 }
 
