@@ -19,7 +19,7 @@
       "vendor"
     ]
     telemetryConsent: "limited"
-    titleBar: "custom-inset"
+    titleBar: "hidden"
   drupal:
     fileTypesPhp: "module,install,inc,test,profile"
   editor:
