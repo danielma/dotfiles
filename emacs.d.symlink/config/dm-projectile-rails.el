@@ -91,7 +91,7 @@
   (interactive)
   (projectile-rails-find-resource
    "javascript: "
-   (--map (list it "/javascript/\\(.+\\)\\.[^.]+$") projectile-rails-component-dirs)))
+   (--map (list it "/javascript/\\(.+/\\)components/\\(.+\\)\\.[^.]+$") projectile-rails-component-dirs)))
 
 ;; (evil-leader/set-key
 ;;   "jc" 'projectile-rails-find-component
