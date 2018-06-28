@@ -1,13 +1,8 @@
-local browsers = { "Safari", "Firefox", "Google Chrome" }
-local defaultBrowser = "Firefox"
-local lastBrowser
+browsers = { "Safari", "Firefox", "Google Chrome" }
+lastBrowser = "Safari"
 
 function launchBrowser()
-   if lastBrowser then
-      launch(lastBrowser)
-   else
-      launch(defaultBrowser)
-   end
+   launch(lastBrowser)
 end
 
 function browserEvent(appName, eventType, app)
@@ -17,12 +12,15 @@ function browserEvent(appName, eventType, app)
 
    for _, browserName in pairs(browsers) do
       if browserName == appName then
-         lastBrowser = appName
+         if appName ~= lastBrowser then
+            print("changing browser from " .. lastBrowser .. " to " .. appName)
+            lastBrowser = appName
+         end
 
          break
       end
    end
 end
 
-local browserWatcher = hs.application.watcher.new(browserEvent)
+browserWatcher = hs.application.watcher.new(browserEvent)
 browserWatcher:start()
