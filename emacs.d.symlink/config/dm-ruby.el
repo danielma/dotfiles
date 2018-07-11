@@ -19,7 +19,7 @@
 			      (setq ruby-insert-encoding-magic-comment nil)
 			      (modify-syntax-entry ?_ "w")
 			      ))
-  (add-hook 'ruby-mode-hook 'smartparens-strict-mode)
+  (add-hook 'ruby-mode-hook 'smartparens-mode)
   (add-to-list 'auto-mode-alist '("\\.rb.spec\\'" . ruby-mode))
   (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 

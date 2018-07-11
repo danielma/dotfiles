@@ -20,6 +20,7 @@
              (test-name
               (cond
                ((string-match "_test.rb$" file-name) file-name)
+               ((string-match "^app/views" file-name) nil)
                ((string-match "^app/\\(.+\\).rb$" file-name)
                 (concat "test/" (match-string 1 file-name) "_test.rb"))
                ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)

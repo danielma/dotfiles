@@ -1674,17 +1674,17 @@
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>-920 880 400 129 -1440 302 1440 900 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>-1070 510 700 622 -1440 302 1440 900 </string>
+	<string>930 613 700 622 0 0 2560 1440 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>-972 418 606 495 -1440 302 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>171 847 1018 447 0 0 2560 1440 </string>
+	<string>170 922 918 512 0 0 2560 1440 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>368 485 361 400 0 0 1440 900 </string>
+	<string>10 60 2540 543 0 0 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>726 60 703 829 0 0 1440 900 </string>
+	<string>10 60 1265 543 0 0 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>0 0 1440 900 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -1895,9 +1895,9 @@
 			<key>Blinking Cursor</key>
 			<false/>
 			<key>Blur</key>
-			<true/>
+			<false/>
 			<key>Blur Radius</key>
-			<real>18.591997754783289</real>
+			<real>17.410245479060915</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -2448,7 +2448,7 @@
 			<key>Thin Strokes</key>
 			<integer>2</integer>
 			<key>Transparency</key>
-			<real>0.0</real>
+			<real>0.064227078045685282</real>
 			<key>Triggers</key>
 			<array>
 				<dict>
@@ -3437,6 +3437,8 @@
 	<false/>
 	<key>PasteFromClipboard</key>
 	<false/>
+	<key>PasteTabToStringTabStopSize</key>
+	<integer>4</integer>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -3493,7 +3495,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-05-31T14:27:59Z</date>
+	<date>2018-07-10T06:50:42Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -3503,6 +3505,8 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
+	<true/>
+	<key>ShowMetalFPSmeter</key>
 	<false/>
 	<key>ShowNewOutputIndicator</key>
 	<true/>
@@ -6501,7 +6505,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.6beta5</string>
+	<string>3.2.0beta5</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
