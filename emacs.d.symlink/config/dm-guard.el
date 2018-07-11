@@ -25,7 +25,6 @@
                 (concat "test/" (match-string 1 file-name) "_test.rb"))
                ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
                 (concat "test/models/" (rails-test--singularize (match-string 1 file-name)) "_test.rb"))
-               ((string-match ".rb$" file-name) file-name)
                (t nil))))
         (if test-name
             (emamux:send-command (concat "cd " (projectile-project-root) " && bin/rails test " test-name))))))
