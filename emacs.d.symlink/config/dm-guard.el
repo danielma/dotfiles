@@ -12,6 +12,13 @@
      ((string-match "\\(.+\\)s$" word) (match-string 1 word))
      (t (error (concat "Can't singularize " word))))))
 
+(defun rails-test--pluralize (word)
+  "Pluralize WORD very stupidly."
+  (save-match-data
+    (cond
+     ((string-match "\\(.+\\)y$" word) (concat (match-string 1 word) "ies"))
+     (t (concat word "s")))))
+
 (defun rails-test ()
   "Use tmux to execute a rails test."
   (interactive)
@@ -21,6 +28,11 @@
               (cond
                ((string-match "_test.rb$" file-name) file-name)
                ((string-match "^app/views" file-name) nil)
+               ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
+                (let* ((graph-dir (match-string 1 file-name))
+                       (vertex-name (match-string 2 file-name))
+                       (graph-test-dir (or (and (string-equal graph-dir "app_graph") "") "church_center")))
+                  (concat "test/integration/pco/api/" graph-test-dir "/" (rails-test--pluralize vertex-name) "_test.rb")))
                ((string-match "^app/\\(.+\\).rb$" file-name)
                 (concat "test/" (match-string 1 file-name) "_test.rb"))
                ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
