@@ -106,7 +106,7 @@ struct Utils {
 
     let task = URLSession.shared.dataTask(with: request) { (taskData, taskResponse, taskError) in
       data = taskData
-      response = taskResponse as! HTTPURLResponse
+      response = (taskResponse as! HTTPURLResponse)
       error = taskError
 
       semaphore.signal()
