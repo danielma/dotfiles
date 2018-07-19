@@ -271,6 +271,7 @@
 
 (require 'epa-file)
 (epa-file-enable)
+(setq epa-pinentry-mode 'loopback)
 
 (use-package origami
              :config 
