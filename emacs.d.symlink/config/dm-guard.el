@@ -37,7 +37,9 @@
                        (graph-test-dir (or (and (string-equal graph-dir "app_graph") "") "church_center")))
                   (concat "test/integration/pco/api/" graph-test-dir "/" (rails-test--pluralize vertex-name) "_test.rb")))
                ((string-match "^app/\\(.+\\).rb$" file-name)
-                (concat "test/" (match-string 1 file-name) "_test.rb"))
+                (if spec-mode
+                    (concat "spec/" (match-string 1 file-name) "_spec.rb")
+                  (concat "test/" (match-string 1 file-name) "_test.rb")))
                ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
                 (concat "test/models/" (rails-test--singularize (match-string 1 file-name)) "_test.rb"))
                (t nil))))
