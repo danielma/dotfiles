@@ -43,7 +43,7 @@ apps = {
    {'k', 'Spark'},
    {'r', 'Trello'},
    {'m', 'Messages'},
-   {'p', 'Postman'},
+   {'p', 'Insomnia'},
    {'q', 'Sequel Pro'},
    {'v', 'Visual Studio Code'},
    {'x', 'Xcode'},
