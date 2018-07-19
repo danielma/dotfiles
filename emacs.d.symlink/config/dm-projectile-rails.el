@@ -38,7 +38,7 @@
 
 (defun my/projectile-rails-find-spec-or-policy ()
   (interactive)
-  (if (file-exists-p (expand-file-name "spec" (projectile-project-root)))
+  (if (eq (projectile-project-type) 'rails-rspec)
       (projectile-rails-find-spec)
     (projectile-rails-find-resource
      "policy: "

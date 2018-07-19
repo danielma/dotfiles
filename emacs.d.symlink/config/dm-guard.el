@@ -23,10 +23,13 @@
   "Use tmux to execute a rails test."
   (interactive)
   (if projectile-rails-mode
-      (let* ((file-name (file-relative-name buffer-file-name (projectile-project-root)))
+      (let* ((spec-mode (eq (projectile-project-type) 'rails-rspec))
+             (test-cmd (if spec-mode "bundle exec rspec" "bin/rails test"))
+             (file-name (file-relative-name buffer-file-name (projectile-project-root)))
              (test-name
               (cond
                ((string-match "_test.rb$" file-name) file-name)
+               ((string-match "_spec.rb$" file-name) file-name)
                ((string-match "^app/views" file-name) nil)
                ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
                 (let* ((graph-dir (match-string 1 file-name))
@@ -39,7 +42,7 @@
                 (concat "test/models/" (rails-test--singularize (match-string 1 file-name)) "_test.rb"))
                (t nil))))
         (if test-name
-            (emamux:send-command (concat "cd " (projectile-project-root) " && bin/rails test " test-name))))))
+            (emamux:send-command (concat "cd " (projectile-project-root) " && " test-cmd " " test-name))))))
 
 (define-minor-mode rails-test-mode
   "Use emamux to test after saving a file."
