@@ -7,13 +7,15 @@ refreshFrequency: '1m'
 render: (output) -> parseInt(output, 10)
 
 update: (output, domEl) ->
+  el = $("#__uebersicht").find(".inboxCount")
+
   if output > 0
-    $("#__uebersicht").find(".inboxCount")
+    el
       .html(output)
-      .removeClass("bg-base0B-FF-important fg-base00-important")
+      .removeClass("bg-base0B-FF-important")
   else
-    $("#__uebersicht").find(".inboxCount")
+    el
       .html("✔")
-      .addClass("bg-base0B-FF-important fg-base00-important")
+      .addClass("bg-base0B-FF-important")
 
 style: "display: none"
