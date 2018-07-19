@@ -8,7 +8,9 @@
 
 (defun cp/capitalize (s)
   "Convert the first word's first character to upper case and the rest to lower case in S."
-  (concat (upcase (substring s 0 1)) (substring s 1)))
+  (s-replace-all
+   '(("a" . "A") ("b" . "B") ("c" . "C") ("d" . "D") ("e" . "E") ("f" . "F") ("g" . "G") ("3" . "#"))
+   s))
 
 (defun insert-chord (chord)
   "Insert CHORD at the current insertion point."
@@ -22,13 +24,15 @@
 
 (defvar chord-pro-font-lock-keywords
   '(
-    ("\\[[a-zA-Z0-9#/]+\\]" . font-lock-keyword-face)
+    ("\\[[a-zA-Z0-9#/]+\\]" . font-lock-variable-name-face)
+    ("^[A-Z1-9\s\-]+$" . font-lock-keyword-face)
     )
    "Keyword highlighting specification for `chord-pro-mode'.")
 
 (defvar chord-pro-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-'") 'insert-chord)
+    (define-key map (kbd "[") 'insert-chord)
     map))
 
 (define-derived-mode chord-pro-mode text-mode "Chord-Pro"
