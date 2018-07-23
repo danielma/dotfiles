@@ -63,6 +63,8 @@
               )
   )
 
+(use-package yasnippet-snippets)
+
 (add-hook 'after-init-hook 'yas-global-mode)
 
 (provide 'dm-yasnippet)
