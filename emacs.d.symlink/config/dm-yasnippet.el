@@ -45,14 +45,12 @@
 	company-idle-delay 0.2)
   :config
   (setq company-global-modes '(not help-mode compilation-mode org-agenda-mode))
-  :bind (:map company-active-map
-              ("M-n" . nil)
-              ("M-p" . nil)
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous)
-	      ("<tab>" . tab-indent-or-complete)
-	(:map company-mode-map
-	      ("<tab>" . tab-indent-or-complete))))
+  :bind (
+         :map company-active-map
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous)
+         :map evil-insert-state-map
+         ("<tab>" . tab-indent-or-complete)))
 
 (use-package yasnippet
   :init
@@ -61,7 +59,8 @@
   (add-hook 'web-mode-hook 'web-mode-add-yas-extra-modes)
   (setq yas-dont-activate-functions (add-to-list 'yas-dont-activate-functions #'my/no-yas))
   :bind (:map yas-minor-mode-map
-	 ("<tab>" . tab-indent-or-complete))
+	      ;; ("<tab>" . tab-indent-or-complete)
+              )
   )
 
 (add-hook 'after-init-hook 'yas-global-mode)
