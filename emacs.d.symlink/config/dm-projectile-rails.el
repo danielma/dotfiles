@@ -30,7 +30,7 @@
   (interactive)
   (projectile-rails-find-resource
    "vertex: "
-   '(("app/graphs/" "/graphs/\\(.+\\)_graph/vertices\\(/.+\\)_vertex.rb$"))))
+   '(("app/graphs/" "/graphs/\\(.+\\)_graph\\(.*\\)/vertices\\(/.+\\)_vertex.rb$"))))
 
 (defun my/projectile-rails-goto-package-json ()
   (interactive)

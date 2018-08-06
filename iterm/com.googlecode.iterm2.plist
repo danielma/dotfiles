@@ -5,7 +5,7 @@
 	<key>AdjustWindowForFontSizeChange</key>
 	<false/>
 	<key>AllowClipboardAccess</key>
-	<false/>
+	<true/>
 	<key>AlternateMouseScroll</key>
 	<false/>
 	<key>AnimateDimming</key>
@@ -1678,11 +1678,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>-972 418 606 495 -1440 302 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>170 922 918 512 0 0 2560 1440 </string>
+	<string>170 1076 796 486 0 0 2560 1600 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>10 60 2540 543 0 0 2560 1440 </string>
+	<string>10 74 2523 529 0 0 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>10 60 1265 543 0 0 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -3495,7 +3495,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-07-10T06:50:42Z</date>
+	<date>2018-07-24T00:55:55Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -6505,7 +6505,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.2.0beta5</string>
+	<string>3.2.0beta7</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

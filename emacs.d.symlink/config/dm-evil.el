@@ -81,6 +81,7 @@
          ("C-a" . beginning-of-line-text)
          ("C-e" . end-of-line)
          ("C-d" . delete-forward-char)
+         ("C-," . evil-find-char)
          ("M-RET" . expand-at-point)
          :map evil-normal-state-map
          ("M-RET" . newline)

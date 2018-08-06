@@ -298,7 +298,7 @@
  '(evil-insert-state-modes
    (quote
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode)))
- '(helm-imenu-fuzzy-match t t)
+ '(helm-imenu-fuzzy-match t)
  '(helm-source-names-using-follow
    (quote
     ("Search at ~/Code/groups/" "Search at ~/Kalabox/living/code/" "Jump to: " "global-mark-ring" "mark-ring" "Occur")))

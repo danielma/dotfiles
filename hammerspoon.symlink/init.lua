@@ -30,7 +30,7 @@ end
 apps = {
    {'1', '1Password 7'},
    {'b', 'Basecamp 3'},
-   {'d', 'DevDocs'},
+   {'d', 'Dash'},
    {'e', 'Emacs'},
    {'c', launchBrowser},
    {'f', 'Safari'},
@@ -46,7 +46,7 @@ apps = {
    {'p', 'Insomnia'},
    {'q', 'Sequel Pro'},
    {'v', 'Visual Studio Code'},
-   {'x', 'Xcode'},
+   {'x', 'Xcode-beta'},
 }
 
 for i, app in ipairs(apps) do

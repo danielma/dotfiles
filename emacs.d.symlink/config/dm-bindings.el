@@ -8,7 +8,7 @@
 
 (defun edit-yasnippet-dir ()
   (interactive)
-  (dired "~/.dotfiles/emacs.d.symlink/yasnippet-snippets"))
+  (dired "~/.dotfiles/emacs.d.symlink/snippets"))
 
 (defun edit-dotfiles ()
   (interactive)
