@@ -17,14 +17,28 @@
   (save-match-data
     (cond
      ((string-match "\\(.+\\)y$" word) (concat (match-string 1 word) "ies"))
+     ((string-match "\\(.+\\)tch$" word) (concat (match-string 1 word) "tches"))
      (t (concat word "s")))))
+
+(defvar rails-test-enabled
+  t
+  "Global variable that can disable rails-tests.")
+
+(defun rails-test-global-toggle ()
+  "Globally toggle rails-test runners."
+  (interactive)
+  (setq rails-test-enabled (not rails-test-enabled))
+  (message (if rails-test-enabled "Enabled" "Disabled")))
 
 (defun rails-test ()
   "Use tmux to execute a rails test."
   (interactive)
-  (if projectile-rails-mode
-      (let* ((spec-mode (eq (projectile-project-type) 'rails-rspec))
-             (test-cmd (if spec-mode "bundle exec rspec" "bin/rails test"))
+  (if (and rails-test-enabled projectile-rails-mode)
+      (let* ((spec-mode (or (eq (projectile-project-type) 'rails-rspec) (eq (projectile-project-type) 'ruby-rspec)))
+             (test-cmd (cond
+                        ((eq (projectile-project-type) 'rails-rspec) "bundle exec rspec")
+                        ((eq (projectile-project-type) 'ruby-rspec) "bundle exec rspec")
+                        (t "bin/rails test")))
              (file-name (file-relative-name buffer-file-name (projectile-project-root)))
              (test-name
               (cond
@@ -35,8 +49,12 @@
                 (let* ((graph-dir (match-string 1 file-name))
                        (vertex-name (match-string 2 file-name))
                        (graph-test-dir (or (and (string-equal graph-dir "app_graph") "") "church_center")))
-                  (concat "test/integration/pco/api/" graph-test-dir "/" (rails-test--pluralize vertex-name) "_test.rb")))
+                  (concat "test/integration/pco/api/" graph-dir "/" (rails-test--pluralize vertex-name) "_test.rb")))
                ((string-match "^app/\\(.+\\).rb$" file-name)
+                (if spec-mode
+                    (concat "spec/" (match-string 1 file-name) "_spec.rb")
+                  (concat "test/" (match-string 1 file-name) "_test.rb")))
+               ((string-match "^lib/\\(.+\\).rb$" file-name)
                 (if spec-mode
                     (concat "spec/" (match-string 1 file-name) "_spec.rb")
                   (concat "test/" (match-string 1 file-name) "_test.rb")))
