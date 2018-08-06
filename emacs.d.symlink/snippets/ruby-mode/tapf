@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: tap fail
+# key: tapf
+# --
+tap { |x| fail({ __method__ => x${1:.to_sql} }.inspect) }$0
