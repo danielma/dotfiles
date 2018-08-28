@@ -6,7 +6,5 @@
 	<string>Profile 3</string>
 	<key>indexChrome</key>
 	<true/>
-	<key>indexSafari</key>
-	<true/>
 </dict>
 </plist>

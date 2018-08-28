@@ -36,8 +36,9 @@
   (if (and rails-test-enabled projectile-rails-mode)
       (let* ((spec-mode (or (eq (projectile-project-type) 'rails-rspec) (eq (projectile-project-type) 'ruby-rspec)))
              (test-cmd (cond
-                        ((eq (projectile-project-type) 'rails-rspec) "bundle exec rspec")
+                        ((eq (projectile-project-type) 'rails-rspec) "bundle exec spring rspec")
                         ((eq (projectile-project-type) 'ruby-rspec) "bundle exec rspec")
+                        ((eq (projectile-project-type) 'ruby-test) "bundle exec rake test")
                         (t "bin/rails test")))
              (file-name (file-relative-name buffer-file-name (projectile-project-root)))
              (test-name

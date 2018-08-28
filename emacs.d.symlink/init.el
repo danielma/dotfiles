@@ -94,10 +94,8 @@
 
 (use-package dumb-jump
   :config
-  (setq dumb-jump-selector 'helm)
-  (setq dumb-jump-language-file-exts
-        (print (add-to-list 'dumb-jump-language-file-exts
-                     '(:language "php" :ext "module" :agtype "php"))))
+  (setq dumb-jump-selector 'helm
+        dumb-jump-aggressive t)
   :bind (:map base-leader-map
 	 ("sa" . dumb-jump-go)
 	 ("sA" . dumb-jump-go-other-window)
