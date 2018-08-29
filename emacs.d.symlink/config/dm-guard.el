@@ -20,6 +20,15 @@
      ((string-match "\\(.+\\)tch$" word) (concat (match-string 1 word) "tches"))
      (t (concat word "s")))))
 
+(defvar dm-guard-manual-test-buffer
+  nil
+  "Manually set the test buffer if guard patterns are insufficient.")
+(make-local-variable 'dm-guard-manual-test-buffer)
+
+(defvar dm-guard-known-project-types
+  '(rails-rspec ruby-rspec rails-test ruby-test)
+  "Known project types for dm-guard.")
+
 (defvar rails-test-enabled
   t
   "Global variable that can disable rails-tests.")
@@ -33,15 +42,17 @@
 (defun rails-test ()
   "Use tmux to execute a rails test."
   (interactive)
-  (if (and rails-test-enabled projectile-rails-mode)
-      (let* ((spec-mode (or (eq (projectile-project-type) 'rails-rspec) (eq (projectile-project-type) 'ruby-rspec)))
+  (if (and rails-test-enabled (projectile-project-p))
+      (let* ((project-type (projectile-project-type))
+             (spec-mode (or (eq project-type 'rails-rspec) (eq project-type 'ruby-rspec)))
              (test-cmd (cond
-                        ((eq (projectile-project-type) 'rails-rspec) "bundle exec spring rspec")
-                        ((eq (projectile-project-type) 'ruby-rspec) "bundle exec rspec")
-                        ((eq (projectile-project-type) 'ruby-test) "bundle exec rake test")
-                        (t "bin/rails test")))
-             (file-name (file-relative-name buffer-file-name (projectile-project-root)))
-             (test-name
+                        ((eq project-type 'rails-rspec) "bundle exec spring rspec")
+                        ((eq project-type 'ruby-rspec) "bundle exec rspec")
+                        ((eq project-type 'rails-test) "bin/rails test")
+                        (t "bundle exec rake test")))
+             (file-path (buffer-file-name dm-guard-manual-test-buffer))
+             (file-name (file-relative-name file-path (projectile-project-root)))
+             (test-path
               (cond
                ((string-match "_test.rb$" file-name) file-name)
                ((string-match "_spec.rb$" file-name) file-name)
@@ -57,13 +68,21 @@
                   (concat "test/" (match-string 1 file-name) "_test.rb")))
                ((string-match "^lib/\\(.+\\).rb$" file-name)
                 (if spec-mode
-                    (concat "spec/" (match-string 1 file-name) "_spec.rb")
-                  (concat "test/" (match-string 1 file-name) "_test.rb")))
+                    (concat "spec/lib/" (match-string 1 file-name) "_spec.rb")
+                  (concat "test/lib/" (match-string 1 file-name) "_test.rb")))
                ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
                 (concat "test/models/" (rails-test--singularize (match-string 1 file-name)) "_test.rb"))
-               (t nil))))
+               (t nil)))
+             (test-name
+              (cond ((and test-path (eq project-type 'ruby-test)) (concat "TEST=" test-path))
+                    (t test-path))))
         (if test-name
             (emamux:send-command (concat "cd " (projectile-project-root) " && " test-cmd " " test-name))))))
+
+(defun dm-guard-select-test-buffer (buffer)
+  "Select a BUFFER to use as the test file."
+  (interactive "b")
+  (setq-local dm-guard-manual-test-buffer (get-buffer buffer)))
 
 (define-minor-mode rails-test-mode
   "Use emamux to test after saving a file."
