@@ -4,7 +4,7 @@
 
 ;;; Code:
 
-(defun rails-test--singularize (word)
+(defun dm-guard--singularize (word)
   "Singularize WORD very stupidly."
   (save-match-data
     (cond
@@ -12,7 +12,7 @@
      ((string-match "\\(.+\\)s$" word) (match-string 1 word))
      (t (error (concat "Can't singularize " word))))))
 
-(defun rails-test--pluralize (word)
+(defun dm-guard--pluralize (word)
   "Pluralize WORD very stupidly."
   (save-match-data
     (cond
@@ -29,20 +29,20 @@
   '(rails-rspec ruby-rspec rails-test ruby-test)
   "Known project types for dm-guard.")
 
-(defvar rails-test-enabled
+(defvar dm-guard-enabled
   t
-  "Global variable that can disable rails-tests.")
+  "Global variable that can disable dm-guard.")
 
-(defun rails-test-global-toggle ()
-  "Globally toggle rails-test runners."
+(defun dm-guard-global-toggle ()
+  "Globally toggle dm-guard runners."
   (interactive)
-  (setq rails-test-enabled (not rails-test-enabled))
-  (message (if rails-test-enabled "Enabled" "Disabled")))
+  (setq dm-guard-enabled (not dm-guard-enabled))
+  (message (if dm-guard-enabled "Enabled" "Disabled")))
 
-(defun rails-test ()
+(defun dm-guard-test ()
   "Use tmux to execute a rails test."
   (interactive)
-  (if (and rails-test-enabled (projectile-project-p))
+  (if (and dm-guard-enabled (projectile-project-p))
       (let* ((project-type (projectile-project-type))
              (spec-mode (or (eq project-type 'rails-rspec) (eq project-type 'ruby-rspec)))
              (test-cmd (cond
@@ -61,7 +61,7 @@
                 (let* ((graph-dir (match-string 1 file-name))
                        (vertex-name (match-string 2 file-name))
                        (graph-test-dir (or (and (string-equal graph-dir "app_graph") "") "church_center")))
-                  (concat "test/integration/pco/api/" graph-dir "/" (rails-test--pluralize vertex-name) "_test.rb")))
+                  (concat "test/integration/pco/api/" graph-dir "/" (dm-guard--pluralize vertex-name) "_test.rb")))
                ((string-match "^app/\\(.+\\).rb$" file-name)
                 (if spec-mode
                     (concat "spec/" (match-string 1 file-name) "_spec.rb")
@@ -71,7 +71,7 @@
                     (concat "spec/lib/" (match-string 1 file-name) "_spec.rb")
                   (concat "test/lib/" (match-string 1 file-name) "_test.rb")))
                ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
-                (concat "test/models/" (rails-test--singularize (match-string 1 file-name)) "_test.rb"))
+                (concat "test/models/" (dm-guard--singularize (match-string 1 file-name)) "_test.rb"))
                (t nil)))
              (test-name
               (cond ((and test-path (eq project-type 'ruby-test)) (concat "TEST=" test-path))
@@ -84,14 +84,14 @@
   (interactive "b")
   (setq-local dm-guard-manual-test-buffer (get-buffer buffer)))
 
-(define-minor-mode rails-test-mode
+(define-minor-mode dm-guard-mode
   "Use emamux to test after saving a file."
   :init-value nil
-  :lighter " rails-test"
-  (cond ((bound-and-true-p rails-test-mode)
-         (add-hook 'after-save-hook #'rails-test t t))
+  :lighter " dm-guard"
+  (cond ((bound-and-true-p dm-guard-mode)
+         (add-hook 'after-save-hook #'dm-guard-test t t))
         (t
-         (remove-hook 'after-save-hook #'rails-test t))))
+         (remove-hook 'after-save-hook #'dm-guard-test t))))
 
 (use-package emamux)
 
