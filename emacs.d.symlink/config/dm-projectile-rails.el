@@ -104,7 +104,6 @@
   (projectile-rails-global-mode)
   (setq projectile-rails-component-dir "app/javascript/"
 	projectile-rails-javascript-dirs (add-to-list 'projectile-rails-javascript-dirs "app/javascript/"))
-  (add-hook 'projectile-rails-mode-hook 'rails-test-mode)
   :config
   (bind-map-for-mode-inherit my/projectile-rails-command-map base-leader-map
     :minor-modes (projectile-rails-mode)
