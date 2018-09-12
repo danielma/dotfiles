@@ -25,8 +25,7 @@
   (interactive)
   (if (minibufferp)
       (minibuffer-complete)
-    (if (or (not yas-minor-mode)
-            (null (do-yas-expand)))
+    (if (or (not yas-minor-mode) (null (do-yas-expand)))
         (if (check-expansion)
             (company-complete-common)
           (indent-for-tab-command)))))
@@ -49,6 +48,7 @@
          :map company-active-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous)
+         ("<tab>" . tab-indent-or-complete)
          :map evil-insert-state-map
          ("<tab>" . tab-indent-or-complete)))
 
