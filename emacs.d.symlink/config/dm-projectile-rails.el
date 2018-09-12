@@ -36,6 +36,12 @@
   (interactive)
   (projectile-rails-goto-file "package.json"))
 
+(defun my/projectile-rails-find-test-or-spec ()
+  (interactive)
+  (if (eq (projectile-project-type) 'rails-rspec)
+      (projectile-rails-find-spec)
+    (projectile-rails-find-test)))
+
 (defun my/projectile-rails-find-spec-or-policy ()
   (interactive)
   (if (eq (projectile-project-type) 'rails-rspec)
@@ -112,6 +118,7 @@
 	 :map projectile-rails-command-map
          ("f" . my/projectile-rails-find-presenter)
          ("s" . my/projectile-rails-find-service)
+         ("t" . my/projectile-rails-find-test-or-spec)
          ("a" . projectile-rails-find-stylesheet)
          ("A" . projectile-rails-find-current-stylesheet)
          ("R" . my/projectile-rails-find-rake-tasks)
