@@ -41,9 +41,13 @@ alt - h : ~/.dotfiles/bin/windmove west
 alt - j : ~/.dotfiles/bin/windmove south
 alt - k : ~/.dotfiles/bin/windmove north
 alt - l : ~/.dotfiles/bin/windmove east
+alt - y : ~/.dotfiles/bin/windmove west
+alt - n : ~/.dotfiles/bin/windmove south
+alt - i : ~/.dotfiles/bin/windmove north
+alt - o : ~/.dotfiles/bin/windmove east
 
-cmd - j : chunkc tiling::window --focus prev
-cmd - k : chunkc tiling::window --focus next
+# cmd - j : chunkc tiling::window --focus prev
+# cmd - k : chunkc tiling::window --focus next
 
 # equalize size of windows
 shift + alt - 0 : chunkc tiling::desktop --equalize
@@ -53,12 +57,20 @@ shift + alt - h : chunkc tiling::window --swap west
 shift + alt - j : chunkc tiling::window --swap south
 shift + alt - k : chunkc tiling::window --swap north
 shift + alt - l : chunkc tiling::window --swap east
+# shift + alt - y : chunkc tiling::window --swap west
+# shift + alt - n : chunkc tiling::window --swap south
+# shift + alt - i : chunkc tiling::window --swap north
+# shift + alt - o : chunkc tiling::window --swap east
 
 # move window
 shift + cmd - h : chunkc tiling::window --warp west
 shift + cmd - j : chunkc tiling::window --warp south
 shift + cmd - k : chunkc tiling::window --warp north
 shift + cmd - l : chunkc tiling::window --warp east
+# shift + cmd - y : chunkc tiling::window --warp west
+# shift + cmd - n : chunkc tiling::window --warp south
+# shift + cmd - i : chunkc tiling::window --warp north
+# shift + cmd - o : chunkc tiling::window --warp east
 
 # increase region size
 shift + alt - a : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge west
@@ -83,7 +95,7 @@ ctrl + alt - l : chunkc tiling::window --use-insertion-point east
 alt - r : chunkc tiling::desktop --rotate 90
 
 # mirror tree y-axis
-alt - y : chunkc tiling::desktop --mirror vertical
+# alt - y : chunkc tiling::desktop --mirror vertical
 
 # mirror tree x-axis
 alt - x : chunkc tiling::desktop --mirror horizontal
