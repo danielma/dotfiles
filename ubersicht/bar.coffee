@@ -3,7 +3,7 @@ refreshFrequency: false
 render: (themeInfo) ->
   """
     <div id="bar" class="fg-base05 bg-base00-A5">
-      <div class="inboxCount bg-base09-FF fg-base02"></div>
+      <div class="inboxCount bg-base0C-FF fg-base02"></div>
       <div class="currentWindow"></div>
       <div class="bigSpace"></div>
       <div class="musicBar bg-base0D-FF fg-base00"></div>
