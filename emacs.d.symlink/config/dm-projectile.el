@@ -17,7 +17,7 @@
     )
 
   (setq projectile-generic-command "ag -g \"\""
-        projectile-switch-project-action 'projectile-dired)
+        projectile-switch-project-action 'magit-status)
 
   :bind (:map projectile-command-map
 	("T" . projectile-find-implementation-or-test-other-window)))
