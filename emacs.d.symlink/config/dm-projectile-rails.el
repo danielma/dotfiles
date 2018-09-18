@@ -36,6 +36,10 @@
   (interactive)
   (projectile-rails-goto-file "package.json"))
 
+(defun my/projectile-rails-goto-gemfile-lock ()
+  (interactive)
+  (projectile-rails-goto-file "Gemfile.lock"))
+
 (defun my/projectile-rails-find-test-or-spec ()
   (interactive)
   (if (eq (projectile-project-type) 'rails-rspec)
@@ -126,6 +130,7 @@
          ("w" . my/projectile-rails-find-component)
          ("V" . my/projectile-rails-find-vertex)
 	 :map projectile-rails-mode-goto-map
+         ("G" . my/projectile-rails-goto-gemfile-lock)
 	 ("p" . my/projectile-rails-goto-package-json)))
 
 (provide 'dm-projectile-rails)
