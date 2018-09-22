@@ -35,18 +35,17 @@ apps = {
    {'c', launchBrowser},
    {'f', 'Safari'},
    {'g', '/Applications/Resolutions.app'},
-   {'h', 'Google Chrome'},
+   {'h', 'The Hit List'},
    {'i', 'Spotify'},
    {'j', 'JQBX'},
    {'s', '/Applications/Slack.app'},
    {'t', 'iTerm'},
-   {'k', 'Spark'},
    {'r', 'Trello'},
    {'m', 'Messages'},
    {'p', 'Insomnia'},
    {'q', 'Sequel Pro'},
    {'v', 'Visual Studio Code'},
-   {'x', 'Xcode-beta'},
+   {'x', 'Xcode'},
 }
 
 for i, app in ipairs(apps) do
