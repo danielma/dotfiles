@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "{ |e| e{cursor} }",
+    "uid" : "C287B6AC-CFB4-4148-AB26-54F164B1B920",
+    "name" : "Ruby Block",
+    "keyword" : "!bk"
+  }
+}

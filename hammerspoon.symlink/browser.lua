@@ -1,4 +1,8 @@
-browsers = { "Safari", "Firefox", "Google Chrome" }
+browsers = {
+   { "Safari", "com.apple.Safari" },
+   { "Firefox", "org.mozilla.firefox" },
+   { "Google Chrome", "com.google.chrome" }
+}
 lastBrowser = "Safari"
 
 function launchBrowser()
@@ -10,8 +14,8 @@ function browserEvent(appName, eventType, app)
       return
    end
 
-   for _, browserName in pairs(browsers) do
-      if browserName == appName then
+   for _, browser in ipairs(browsers) do
+      if browser[1] == appName then
          if appName ~= lastBrowser then
             print("changing browser from " .. lastBrowser .. " to " .. appName)
             lastBrowser = appName
@@ -24,3 +28,28 @@ end
 
 browserWatcher = hs.application.watcher.new(browserEvent)
 browserWatcher:start()
+
+function httpCallback(scheme, _, _, fullURL)
+   -- local allHandlers = hs.urlevent.getAllHandlersForScheme(scheme)
+   -- local handler = hs.fnutils.find(allHandlers, function(v)
+   --                                    return v == currentHandler
+   -- end)
+
+   -- if not handler then
+   --    m.log.e('Invalid browser handler: ' .. (currentHandler or 'nil'))
+   --    return
+   -- end
+
+   -- if not fullURL then
+   --    m.log.e('Attempt to open browser without url')
+   --    return
+   -- end
+   for _, browser in ipairs(browsers) do
+      if browser[1] == lastBrowser then
+         print(hs.urlevent.openURLWithBundle(fullURL, browser[2]))
+         break
+      end
+   end
+end
+
+hs.urlevent.httpCallback = httpCallback
