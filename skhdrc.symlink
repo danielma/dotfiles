@@ -98,7 +98,7 @@ alt - r : chunkc tiling::desktop --rotate 90
 # alt - y : chunkc tiling::desktop --mirror vertical
 
 # mirror tree x-axis
-alt - x : chunkc tiling::desktop --mirror horizontal
+# alt - x : chunkc tiling::desktop --mirror horizontal
 
 # toggle desktop offset
 alt - a : chunkc tiling::desktop --toggle offset

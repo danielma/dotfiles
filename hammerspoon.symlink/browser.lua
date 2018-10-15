@@ -3,7 +3,7 @@ browsers = {
    { "Firefox", "org.mozilla.firefox" },
    { "Google Chrome", "com.google.chrome" }
 }
-lastBrowser = "Safari"
+lastBrowser = "Google Chrome"
 
 function launchBrowser()
    launch(lastBrowser)
@@ -46,6 +46,9 @@ function httpCallback(scheme, _, _, fullURL)
    -- end
    for _, browser in ipairs(browsers) do
       if browser[1] == lastBrowser then
+         local frontmostApp = hs.application.frontmostApplication()
+         print(frontmostApp:bundleID())
+         local isHammerspoon = frontmostApp:bundleID() == "org.hammerspoon.Hammerspoon"
          print(hs.urlevent.openURLWithBundle(fullURL, browser[2]))
          break
       end

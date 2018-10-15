@@ -46,8 +46,8 @@
       (let* ((project-type (projectile-project-type))
              (spec-mode (or (eq project-type 'rails-rspec) (eq project-type 'ruby-rspec)))
              (test-cmd (cond
-                        ((eq project-type 'rails-rspec) "bundle exec spring rspec")
-                        ((eq project-type 'ruby-rspec) "bundle exec rspec")
+                        ((eq project-type 'rails-rspec) "bin/spring rspec")
+                        ((eq project-type 'ruby-rspec) "bundle exec rspec --color")
                         ((eq project-type 'rails-test) "bin/rails test")
                         (t "bundle exec rake test")))
              (file-path (buffer-file-name dm-guard-manual-test-buffer))

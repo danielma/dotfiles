@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: describe block
+# name: RSpec describe block
 # key: desc
 # --
 describe '$1' do
