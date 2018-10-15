@@ -54,7 +54,7 @@ makeandgo() {
 b16() {
     eval base16_$1
     emacsclient -e "(my/base16-set-theme \"$1\")"
-    osascript -e 'tell application "Übersicht" to refresh widget id "theme-coffee"' 2>/dev/null
+    open ~/.dotfiles/ubersicht/refresh-theme.app 2>/dev/null
 }
 
 alias md=makeandgo
