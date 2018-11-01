@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: it inline block form
+# key: itb
+# --
+it { is_expected.to $0 }

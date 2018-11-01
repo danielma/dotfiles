@@ -1,0 +1,56 @@
+// -*- mode: rjsx -*-
+
+let lastBrowser = jk
+
+finicky.setDefaultBrowser('com.google.Chrome');
+
+// Open social network links in Google Chrome
+finicky.onUrl(function(url, opts) {
+  if (url.match(/^https?:\/\/(youtube|facebook|twitter|linkedin)\.com/)) {
+    return {
+      bundleIdentifier: "com.google.Chrome"
+    };
+  }
+});
+
+// Open Spotify links in client
+finicky.onUrl(function(url, opts) {
+  if (url.match(/^https?:\/\/open\.spotify\.com/)) {
+    return {
+      bundleIdentifier: "com.spotify.client"
+    };
+  }
+});
+
+// Rewrite all Bing links to DuckDuckGo instead
+finicky.onUrl(function(url, opts) {
+  var url = url.replace(
+    /^https?:\/\/www\.bing\.com\/search/,
+    "https://duckduckgo.com"
+  );
+  return {
+    url: url
+  };
+});
+
+// Always open links from Mail in Safari
+finicky.onUrl(function(url, opts) {
+  var sourceApplication = opts && opts.sourceBundleIdentifier;
+  if (sourceApplication === "com.apple.mail") {
+    return {
+      bundleIdentifier: "com.apple.safari"
+    };
+  }
+});
+
+// // By supplying an array of bundle identifiers, finicky opens the url in the first one
+// // that's currently running. If none are running, the first app in the array is started.
+// finicky.onUrl(function(url, opts) {
+//   return {
+//     bundleIdentifier: [
+//       "org.mozilla.firefox",
+//       "com.google.Chrome",
+//       "com.apple.Safari",
+//     ]
+//   };
+// });

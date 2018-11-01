@@ -163,9 +163,15 @@ class Spotify {
   }
 
   private func realApiRequest(_ route: URL, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
+    var headers = ["Authorization": "Bearer \(credentials.accessToken)"]
+
+    if body != nil {
+      headers["Content-Type"] = "application/json"
+    }
+
     return Utils.synchronousRequest(
       route,
-      headers: ["Authorization": "Bearer \(credentials.accessToken)"],
+      headers: headers,
       method: method,
       body: body
     )
@@ -311,7 +317,10 @@ class Spotify {
     let trackUri = track.uri
     let result = addToLibrary(track)
 
-    guard result.response.statusCode == 200 else { fatalError("Couldn't save \(track.id) to library") }
+    guard result.response.statusCode == 200 else {
+      print(result.response)
+      fatalError("Couldn't save \(track.id) to library")
+    }
 
     print(track.name)
 
