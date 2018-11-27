@@ -14,6 +14,7 @@
   (add-hook 'rjsx-mode-hook 'eslintd-fix-mode)
   (add-hook 'rjsx-mode-hook 'emmet-mode)
   (add-hook 'rjsx-mode-hook 'smartparens-mode)
+  (add-hook 'rjsx-mode-hook 'dm-guard-mode)
   (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
   (add-hook 'rjsx-mode-hook (lambda ()
 			      (setq-local emmet-expand-jsx-className? t)

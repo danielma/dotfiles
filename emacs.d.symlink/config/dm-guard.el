@@ -45,16 +45,17 @@
   (if (and dm-guard-enabled (projectile-project-p))
       (let* ((project-type (projectile-project-type))
              (spec-mode (or (eq project-type 'rails-rspec) (eq project-type 'ruby-rspec)))
+             (file-path (buffer-file-name dm-guard-manual-test-buffer))
+             (file-name (file-relative-name file-path (projectile-project-root)))
              (test-cmd (cond
+                        ((string-match ".js$" file-name) "yarn run test-base-command -- --colors")
                         ((eq project-type 'rails-rspec) "bin/spring rspec")
                         ((eq project-type 'ruby-rspec) "bundle exec rspec --color")
                         ((eq project-type 'rails-test) "bin/rails test")
                         (t "bundle exec rake test")))
-             (file-path (buffer-file-name dm-guard-manual-test-buffer))
-             (file-name (file-relative-name file-path (projectile-project-root)))
              (test-path
               (cond
-               ((string-match "_test.rb$" file-name) file-name)
+               ((string-match "_test.\\(rb\\|js\\)$" file-name) file-name)
                ((string-match "_spec.rb$" file-name) file-name)
                ((string-match "^app/views" file-name) nil)
                ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
