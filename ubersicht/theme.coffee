@@ -47,7 +47,7 @@ flattenArray: (array) ->
 
 buildCss: (colors) ->
   backgrounds = Object.entries(colors).map ([key, value]) ->
-    ["FF", "A5"].map (opacity) ->
+    ["FF", "A5", "D0"].map (opacity) ->
       ".bg-#{key}-#{opacity} { background-color: #{value}#{opacity}; } " +
       ".bg-#{key}-#{opacity}-important { background-color: #{value}#{opacity} !important; }"
   foregrounds = Object.entries(colors).map ([key, value]) ->

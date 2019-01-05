@@ -38,7 +38,7 @@ apps = {
    {'h', 'The Hit List'},
    {'i', 'Spotify'},
    {'j', 'JQBX'},
-   {'s', '/Applications/Slack.app'},
+   {'s', 'Sblack'},
    {'t', 'iTerm'},
    {'r', 'Trello'},
    {'m', 'Messages'},

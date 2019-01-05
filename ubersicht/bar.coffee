@@ -2,7 +2,7 @@ refreshFrequency: false
 
 render: (themeInfo) ->
   """
-    <div id="bar" class="fg-base05 bg-base00-A5">
+    <div id="bar" class="fg-base05 bg-base00-D0">
       <div class="inboxCount bg-base0C-FF fg-base02"></div>
       <div class="currentWindow"></div>
       <div class="bigSpace"></div>
@@ -17,7 +17,6 @@ style: """
   bottom: 10px
 
   #bar
-    -webkit-backdrop-filter: blur(20px)
     border-radius: 5px
     box-sizing: border-box
     font-family: IBM Plex Mono
