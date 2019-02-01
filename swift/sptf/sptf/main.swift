@@ -231,6 +231,7 @@ class Spotify {
     if let accessToken = json["access_token"] as? String {
       return accessToken
     } else {
+      dump(json)
       dump(response)
       fatalError("Couldn't get a new access token!")
     }

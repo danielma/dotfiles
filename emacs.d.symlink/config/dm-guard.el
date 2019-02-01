@@ -48,7 +48,7 @@
              (file-path (buffer-file-name dm-guard-manual-test-buffer))
              (file-name (file-relative-name file-path (projectile-project-root)))
              (test-cmd (cond
-                        ((string-match ".js$" file-name) "yarn run test-base-command -- --colors")
+                        ((string-match ".js$" file-name) "yarn run test-base-command --colors")
                         ((eq project-type 'rails-rspec) "bin/spring rspec")
                         ((eq project-type 'ruby-rspec) "bundle exec rspec --color")
                         ((eq project-type 'rails-test) "bin/rails test")
@@ -78,7 +78,9 @@
               (cond ((and test-path (eq project-type 'ruby-test)) (concat "TEST=" test-path))
                     (t test-path))))
         (if test-name
-            (emamux:send-command (concat "cd " (projectile-project-root) " && " test-cmd " " test-name))))))
+            (let* ((command (concat test-cmd " " test-name))
+                   (full-command (concat "cd " (projectile-project-root) " && " command)))
+              (emamux:send-command (concat "clear; echo -e '" command "'; " full-command)))))))
 
 (defun dm-guard-select-test-buffer (buffer)
   "Select a BUFFER to use as the test file."

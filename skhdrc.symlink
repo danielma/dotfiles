@@ -30,9 +30,6 @@
 #                                  an EOL character signifies the end of the bind.
 
 
-# open terminal, blazingly fast compared to iTerm/Hyper
-alt - space : open -a iTerm.app
-
 # close focused window
 alt - w : chunkc tiling::window --close
 
