@@ -49,9 +49,10 @@
              (file-name (file-relative-name file-path (projectile-project-root)))
              (test-cmd (cond
                         ((string-match ".js$" file-name) "yarn run test-base-command --colors")
-                        ((eq project-type 'rails-rspec) "bin/spring rspec")
+                        ((eq project-type 'rails-rspec) "bin/spring rspec --format documentation")
                         ((eq project-type 'ruby-rspec) "bundle exec rspec --color")
                         ((eq project-type 'rails-test) "bin/rails test")
+                        ((eq project-type 'ruby-test) "ruby")
                         (t "bundle exec rake test")))
              (test-path
               (cond
@@ -75,8 +76,9 @@
                 (concat "test/models/" (dm-guard--singularize (match-string 1 file-name)) "_test.rb"))
                (t nil)))
              (test-name
-              (cond ((and test-path (eq project-type 'ruby-test)) (concat "TEST=" test-path))
-                    (t test-path))))
+              ;; (cond ((and test-path (eq project-type 'ruby-test)) (concat "TEST=" test-path))
+              ;;       (t test-path))))
+              test-path))
         (if test-name
             (let* ((command (concat test-cmd " " test-name))
                    (full-command (concat "cd " (projectile-project-root) " && " command)))

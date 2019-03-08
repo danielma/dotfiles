@@ -41,7 +41,8 @@
     fixOnSave: true
   "linter-rubocop":
     command: "/Users/danielma/.rbenv/shims/rubocop"
-  "linter-ui-default": {}
+  "linter-ui-default":
+    panelHeight: 69
   "markdown-writer": {}
   pigments: {}
   "release-notes":

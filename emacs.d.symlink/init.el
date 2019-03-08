@@ -187,7 +187,7 @@
 (use-package flx-ido
   :init
   (ido-mode 1)
-  (ido-everywhere 1)
+  ;; (ido-everywhere 1)
   (flx-ido-mode 1)
   :bind (:map ido-completion-map
 	 ("C-k" . kill-whole-line)))
@@ -263,7 +263,7 @@
 
 (use-package emojify
   :config
-  (global-emojify-mode)
+  ;; (global-emojify-mode false)
   (setq emojify-display-style 'unicode)
   )
 
@@ -296,10 +296,11 @@
  '(evil-insert-state-modes
    (quote
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode)))
- '(helm-imenu-fuzzy-match t)
+ '(helm-imenu-fuzzy-match t t)
+ '(helm-mode-fuzzy-match t)
  '(helm-source-names-using-follow
    (quote
-    ("Search at ~/Code/groups/" "Search at ~/Kalabox/living/code/" "Jump to: " "global-mark-ring" "mark-ring" "Occur")))
+    ("Search at ~/Code/accounts/" "Search at ~/Code/test/audited/" "Search at ~/Code/church-center/" "Search at ~/Code/marketing-site/" "Projectile files" "Search at ~/Code/helpdesk/" "Search at ~/Code/picodex/" "Search at ~/Code/api/" "Search at ~/Code/groups/" "Search at ~/Kalabox/living/code/" "Jump to: " "global-mark-ring" "mark-ring" "Occur")))
  '(indent-tabs-mode nil)
  '(initial-scratch-message nil)
  '(js-indent-level 2)
@@ -364,6 +365,7 @@
      (projectile-project-type
       (quote rails-test)))))
  '(select-enable-clipboard nil)
+ '(selectric-mode nil)
  '(show-paren-mode t)
  '(typescript-indent-level 2)
  '(yas-triggers-in-field t))
@@ -373,3 +375,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'downcase-region 'disabled nil)

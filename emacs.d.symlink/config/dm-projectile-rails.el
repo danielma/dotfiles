@@ -2,35 +2,35 @@
   (interactive)
   (projectile-rails-find-resource
    "service: "
-   '(("app/services/" "/services/\\(.+\\)\\.rb$"))
+   '(("app/services/" "\\(.+\\)\\.rb$"))
   "app/services/${filename}.rb"))
 
 (defun my/projectile-rails-find-presenter ()
   (interactive)
   (projectile-rails-find-resource
    "presenter: "
-   '(("app/presenters/" "/presenters/\\(.+?\\)\\(_presenter\\)?\\.rb$"))
+   '(("app/presenters/" "\\(.+?\\)\\(_presenter\\)?\\.rb$"))
    "app/presenters/${filename}_presenter.rb"))
 
 (defun my/projectile-rails-find-rake-tasks ()
   (interactive)
   (projectile-rails-find-resource
    "tasks: "
-   '(("lib/tasks/" "/tasks/\\(.+\\.rake\\)$"))
+   '(("lib/tasks/" "\\(.+\\.rake\\)$"))
    "lib/tasks/${filename}.rake"))
 
 (defun my/projectile-rails-find-js-test ()
   (interactive)
   (projectile-rails-find-resource
    "test: "
-   '(("test/assets/javascripts/" "/javascripts/\\(.+\\)_test\\.js?$"))
+   '(("test/assets/javascripts/" "\\(.+\\)_test\\.js?$"))
    "test/assets/javascripts/${filename}_test.js"))
 
 (defun my/projectile-rails-find-vertex ()
   (interactive)
   (projectile-rails-find-resource
    "vertex: "
-   '(("app/graphs/" "/graphs/\\(.+\\)_graph\\(.*\\)/vertices\\(/.+\\)_vertex.rb$"))))
+   '(("app/graphs/" "\\(.+\\)_graph\\(.*\\)/vertices\\(/.+\\)_vertex.rb$"))))
 
 (defun my/projectile-rails-goto-package-json ()
   (interactive)
@@ -52,7 +52,7 @@
       (projectile-rails-find-spec)
     (projectile-rails-find-resource
      "policy: "
-     '(("app/policies/" "/policies/\\(.+?\\)\\(_policy\\)?\\.rb$"))
+     '(("app/policies/" "\\(.+?\\)\\(_policy\\)?\\.rb$"))
      "app/policies/${filename}_policy.rb")))
 
 (defun my/projectile-rails-fixture-dirs ()
@@ -91,7 +91,7 @@
   )
 
 (defcustom projectile-rails-component-dirs
-  '("app/javascript/application/components/" "app/javascript/church_center/components/" "app/javascript/shared/components/")
+  '("app/javascript/")
   "The directory to look for javascript component files in."
   :group 'projectile-rails
   :type 'string)
@@ -101,7 +101,7 @@
   (interactive)
   (projectile-rails-find-resource
    "javascript: "
-   (--map (list it "/javascript/\\(.+/\\)components/\\(.+\\)\\.[^.]+$") projectile-rails-component-dirs)))
+   (--map (list it "\\(.+/\\)components/\\(.+\\)\\.[^.]+$") projectile-rails-component-dirs)))
 
 ;; (evil-leader/set-key
 ;;   "jc" 'projectile-rails-find-component
