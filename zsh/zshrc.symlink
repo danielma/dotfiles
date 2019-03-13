@@ -51,6 +51,16 @@ makeandgo() {
 	cd $1
 }
 
+dm() {
+    if [[ $1 == 'on' ]]; then
+        dark-mode on
+        b16 default-dark
+    else
+        dark-mode off
+        b16 mexico-light
+    fi
+}
+
 b16() {
     eval base16_$1
     emacsclient -e "(my/base16-set-theme \"$1\")"
