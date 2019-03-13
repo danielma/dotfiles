@@ -56,6 +56,11 @@
 	      ("gl" . magit-log-buffer-file)
 	      ("gb" . magit-blame)))
 
+(use-package forge
+  :after magit)
+
+(use-package github-review)
+
 (use-package magit-org-todos
   :straight (:host github :repo "danielma/magit-org-todos")
   :config
