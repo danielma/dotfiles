@@ -56,7 +56,7 @@
      "app/policies/${filename}_policy.rb")))
 
 (defun my/projectile-rails-fixture-dirs ()
-   (--map (list it (concat it "\\(.+?\\)\\(?:_fabricator\\)?\\.\\(?:rb\\|yml\\)$"))
+   (--map (list it "\\(.+?\\)\\(?:_fabricator\\)?\\.\\(?:rb\\|yml\\)$")
           projectile-rails-fixture-dirs))
 
 (defun my/projectile-rails-select-fixture ()

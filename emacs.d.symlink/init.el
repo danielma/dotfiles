@@ -60,6 +60,11 @@
 (add-to-list 'load-path "~/.emacs.d/config/")
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
+(progn
+  (add-to-list 'load-path "~/Code/test/emacs-libvterm/")
+  (let (vterm-install)
+    (require 'vterm)))
+
 (require 'text-tools)
 (require 'general-funcs)
 (require 'global-map)

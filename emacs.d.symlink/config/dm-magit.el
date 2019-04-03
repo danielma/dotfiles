@@ -25,7 +25,7 @@
    (magit-fetch-branch "origin" "master" nil)
    5 ;; timeout
    )
-  (magit-rebase "origin/master" '("-i" "--autosquash")))
+  (magit-rebase-branch "origin/master" '("-i" "--autosquash")))
 
 (use-package magit
   :init
