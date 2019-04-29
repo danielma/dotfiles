@@ -20,7 +20,7 @@
       (--filter (string-prefix-p "base16-" it) (mapcar 'symbol-name custom-enabled-themes))
     (disable-theme (intern it)))
   (load-theme (intern (concat "base16-" theme)) t)
-  (enable-theme 'session-face)
+  ;; (enable-theme 'session-face)
   )
 
 (defun my/set-custom-face (font)
@@ -45,15 +45,15 @@
 		  theme
 		'base16-default-dark) t))
 
-(deftheme session-face)
+;; (deftheme session-face)
 
-(custom-theme-set-faces
- 'session-face
- '(default ((t (:weight normal :height 120 :width normal :family "IBM Plex Mono")))))
+;; (custom-theme-set-faces
+;;  'session-face
+;;  '(default ((t (:weight normal :height 120 :width normal :family "IBM Plex Mono")))))
 
-(provide-theme 'session-face)
+;; (provide-theme 'session-face)
 
-(enable-theme 'session-face)
+;; (enable-theme 'session-face)
 
 (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)
 

@@ -38,7 +38,8 @@
     flowPath: "/usr/local/bin/flow"
   linter: {}
   "linter-eslint":
-    fixOnSave: true
+    autofix:
+      fixOnSave: true
   "linter-rubocop":
     command: "/Users/danielma/.rbenv/shims/rubocop"
   "linter-ui-default":

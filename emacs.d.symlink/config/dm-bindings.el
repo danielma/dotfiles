@@ -92,7 +92,7 @@
     "cd" 'cd
     "cl" 'custom-comment-line
     "ct" 'my/base16-set-theme
-    "cf" 'my/set-custom-face
+    "cf" 'helm-select-xfont
 
     "dr" 'reveal-in-finder
 
