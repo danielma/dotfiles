@@ -53,7 +53,7 @@
                         ((eq project-type 'ruby-rspec) "bundle exec rspec --color")
                         ((eq project-type 'rails-test) "bin/rails test")
                         ((eq project-type 'ruby-test) "ruby")
-                        (t "bundle exec rake test")))
+                        (t "ruby")))
              (test-path
               (cond
                ((string-match "_test.\\(rb\\|js\\)$" file-name) file-name)
