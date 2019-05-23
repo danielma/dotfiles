@@ -7,6 +7,6 @@ refreshFrequency: '1m'
 render: (output) -> output
 
 update: (output, domEl) ->
-  $("#__uebersicht").find(".time").html(output)
+  $("#uebersicht").find(".time").html(output)
 
 style: "display: none"

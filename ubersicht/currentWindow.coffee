@@ -7,6 +7,6 @@ refreshFrequency: '2s'
 render: (output) -> output
 
 update: (output, domEl) ->
-  $("#__uebersicht").find(".currentWindow").html(output)
+  $("#uebersicht").find(".currentWindow").html(output)
 
 style: "display: none"

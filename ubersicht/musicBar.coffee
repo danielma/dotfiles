@@ -7,6 +7,6 @@ refreshFrequency: '2s'
 render: (output) -> output
 
 update: (output, domEl) ->
-  $("#__uebersicht").find(".musicBar").html(output)
+  $("#uebersicht").find(".musicBar").html(output)
 
 style: "display: none"

@@ -7,7 +7,7 @@ refreshFrequency: '1m'
 render: (output) -> parseInt(output, 10)
 
 update: (output, domEl) ->
-  el = $("#__uebersicht").find(".inboxCount")
+  el = $("#uebersicht").find(".inboxCount")
 
   if output > 0
     el
