@@ -31,7 +31,7 @@ Returns a hash table with keys being short names and values being relative paths
     (loop for (dir re) in dirs do
           (loop for file in (projectile-dir-files (concat (projectile-project-root) dir)) do
                 (when (string-match re file)
-                  (puthash (match-string 1 file) file hash))))
+                  (puthash (match-string 1 file) (concat dir file) hash))))
     hash))
 
 (defun my/projectile-goto-file (filepath)
