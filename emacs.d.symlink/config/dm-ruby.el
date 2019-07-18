@@ -24,6 +24,8 @@
   (add-to-list 'auto-mode-alist '("\\.rb.spec\\'" . ruby-mode))
   (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
+(use-package prettier-js)
+
 (use-package ruby-end)
 
 (use-package ruby-refactor

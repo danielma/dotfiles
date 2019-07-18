@@ -49,7 +49,7 @@
              (file-name (file-relative-name file-path (projectile-project-root)))
              (test-cmd (cond
                         ((string-match ".js$" file-name) "yarn run test-base-command --colors")
-                        ((eq project-type 'rails-rspec) "bundle exec spring rspec")
+                        ((eq project-type 'rails-rspec) "bundle exec spring rspec --format=documentation")
                         ((eq project-type 'ruby-rspec) "bundle exec rspec --color")
                         ((eq project-type 'rails-test) "bin/rails test")
                         ((eq project-type 'ruby-test) "ruby")
