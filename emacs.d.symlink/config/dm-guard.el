@@ -43,46 +43,70 @@
   "Use tmux to execute a rails test."
   (interactive)
   (if (and dm-guard-enabled (projectile-project-p))
-      (let* ((project-type (projectile-project-type))
-             (spec-mode (or (eq project-type 'rails-rspec) (eq project-type 'ruby-rspec)))
-             (file-path (buffer-file-name dm-guard-manual-test-buffer))
-             (file-name (file-relative-name file-path (projectile-project-root)))
-             (test-cmd (cond
-                        ((string-match ".js$" file-name) "yarn run test-base-command --colors")
-                        ((eq project-type 'rails-rspec) "bundle exec spring rspec --format=documentation")
-                        ((eq project-type 'ruby-rspec) "bundle exec rspec --color")
-                        ((eq project-type 'rails-test) "bin/rails test")
-                        ((eq project-type 'ruby-test) "ruby")
-                        (t "ruby")))
-             (test-path
-              (cond
-               ((string-match "_test.\\(rb\\|js\\)$" file-name) file-name)
-               ((string-match "_spec.rb$" file-name) file-name)
-               ((string-match "^app/views" file-name) nil)
-               ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
-                (let* ((graph-dir (match-string 1 file-name))
-                       (vertex-name (match-string 2 file-name))
-                       (graph-test-dir (or (and (string-equal graph-dir "app_graph") "") "church_center")))
-                  (concat "test/integration/pco/api/" graph-dir "/" (dm-guard--pluralize vertex-name) "_test.rb")))
-               ((string-match "^app/\\(.+\\).rb$" file-name)
-                (if spec-mode
-                    (concat "spec/" (match-string 1 file-name) "_spec.rb")
-                  (concat "test/" (match-string 1 file-name) "_test.rb")))
-               ((string-match "^lib/\\(.+\\).rb$" file-name)
-                (if spec-mode
-                    (concat "spec/lib/" (match-string 1 file-name) "_spec.rb")
-                  (concat "test/lib/" (match-string 1 file-name) "_test.rb")))
-               ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
-                (concat "test/models/" (dm-guard--singularize (match-string 1 file-name)) "_test.rb"))
-               (t nil)))
-             (test-name
-              ;; (cond ((and test-path (eq project-type 'ruby-test)) (concat "TEST=" test-path))
-              ;;       (t test-path))))
-              test-path))
+      (let* ((test-cmd (--dm-guard-test-command))
+             (test-name (--dm-guard-test-name)))
         (if test-name
-            (let* ((command (concat test-cmd " " test-name))
-                   (full-command (concat "cd " (projectile-project-root) " && " command)))
-              (emamux:send-command (concat "clear; echo -e '" command "'; " full-command)))))))
+            (--dm-guard-clear-and-run (concat test-cmd " " test-name))))))
+
+(defun dm-guard-test-line ()
+  "Use tmux to execute the test on the current line."
+  (interactive)
+  (let* ((test-cmd (--dm-guard-test-command))
+         (test-name (--dm-guard-test-name))
+         (current-line (format-mode-line "%l")))
+    (if test-name
+        (--dm-guard-clear-and-run (concat test-cmd " " test-name ":" current-line)))))
+
+(defun --dm-guard-clear-and-run (command)
+  "Use tmux to clear and execute COMMAND."
+  (if command
+      (let ((full-command (concat "cd " (projectile-project-root) " && " command)))
+        (emamux:send-command (concat "clear; echo -e '" command "'; " full-command)))))
+
+(defun --dm-guard-test-command ()
+  "Generate the test command for a buffer."
+  (let* ((project-type (projectile-project-type))
+         (file-path (buffer-file-name dm-guard-manual-test-buffer))
+         (file-name (file-relative-name file-path (projectile-project-root)))
+         (test-cmd (cond
+                    ((string-match ".js$" file-name) "yarn run test-base-command --colors")
+                    ((eq project-type 'rails-rspec) "bundle exec spring rspec --format=documentation")
+                    ((eq project-type 'ruby-rspec) "bundle exec rspec --color")
+                    ((eq project-type 'rails-test) "bin/rails test")
+                    ((eq project-type 'ruby-test) "ruby")
+                    (t "ruby"))))
+    test-cmd))
+
+(defun --dm-guard-test-name ()
+  "Generate the test name for a buffer."
+  (let* ((project-type (projectile-project-type))
+         (spec-mode (or (eq project-type 'rails-rspec) (eq project-type 'ruby-rspec)))
+         (file-path (buffer-file-name dm-guard-manual-test-buffer))
+         (file-name (file-relative-name file-path (projectile-project-root)))
+         (test-path
+          (cond
+           ((string-match "_test.\\(rb\\|js\\)$" file-name) file-name)
+           ((string-match "_spec.rb$" file-name) file-name)
+           ((string-match "^app/views" file-name) nil)
+           ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
+            (let* ((graph-dir (match-string 1 file-name))
+                   (vertex-name (match-string 2 file-name))
+                   (graph-test-dir (or (and (string-equal graph-dir "app_graph") "") "church_center")))
+              (concat "test/integration/pco/api/" graph-dir "/" (dm-guard--pluralize vertex-name) "_test.rb")))
+           ((string-match "^app/\\(.+\\).rb$" file-name)
+            (if spec-mode
+                (concat "spec/" (match-string 1 file-name) "_spec.rb")
+              (concat "test/" (match-string 1 file-name) "_test.rb")))
+           ((string-match "^lib/\\(.+\\).rb$" file-name)
+            (if spec-mode
+                (concat "spec/lib/" (match-string 1 file-name) "_spec.rb")
+              (concat "test/lib/" (match-string 1 file-name) "_test.rb")))
+           ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
+            (concat "test/models/" (dm-guard--singularize (match-string 1 file-name)) "_test.rb"))
+           (t nil))))
+    ;; (cond ((and test-path (eq project-type 'ruby-test)) (concat "TEST=" test-path))
+    ;;       (t test-path))))
+    test-path))
 
 (defun dm-guard-select-test-buffer (buffer)
   "Select a BUFFER to use as the test file."
@@ -98,7 +122,9 @@
         (t
          (remove-hook 'after-save-hook #'dm-guard-test t))))
 
-(use-package emamux)
+(use-package emamux
+  :bind (:map base-leader-map
+              ("kl" . dm-guard-test-line)))
 
 (provide 'dm-guard)
 ;;; dm-guard.el ends here
