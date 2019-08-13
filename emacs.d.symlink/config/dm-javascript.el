@@ -26,12 +26,20 @@
 
 (use-package tide)
 
+(defun setup-tide-mode ()
+  "Setup for tide mode."
+  (eslintd-fix-mode +1)
+  (tide-setup)
+  (dm-guard-mode)
+  (eldoc-mode +1)
+  (smartparens-mode +1)
+  (tide-hl-identifier-mode +1))
+  
 (use-package typescript-mode
   :mode "\\.tsx?\\'"
   :after tide
   :init
-  (add-hook 'typescript-mode 'tide-mode)
-  (add-hook 'typescript-mode 'smartparens-mode)
+  (add-hook 'typescript-mode-hook #'setup-tide-mode)
   :custom
   (typescript-indent-level 2)
   )

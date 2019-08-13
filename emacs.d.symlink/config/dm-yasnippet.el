@@ -41,7 +41,8 @@
   :init
   (global-company-mode)
   (setq company-dabbrev-downcase nil
-	company-idle-delay 0.2)
+	company-idle-delay 0.2
+        company-tooltip-align-annotations t)
   :config
   (setq company-global-modes '(not help-mode compilation-mode org-agenda-mode))
   :bind (

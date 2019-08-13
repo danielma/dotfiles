@@ -69,7 +69,8 @@
          (file-path (buffer-file-name dm-guard-manual-test-buffer))
          (file-name (file-relative-name file-path (projectile-project-root)))
          (test-cmd (cond
-                    ((string-match ".js$" file-name) "yarn run test-base-command --colors")
+                    ((string-match ".js$" file-name) "yarn run test --colors")
+                    ((string-match ".ts$" file-name) "yarn run test --colors")
                     ((eq project-type 'rails-rspec) "bundle exec spring rspec --format=documentation")
                     ((eq project-type 'ruby-rspec) "bundle exec rspec --color")
                     ((eq project-type 'rails-test) "bin/rails test")
@@ -85,7 +86,7 @@
          (file-name (file-relative-name file-path (projectile-project-root)))
          (test-path
           (cond
-           ((string-match "_test.\\(rb\\|js\\)$" file-name) file-name)
+           ((string-match "\\(_\\|.\\)test.\\(rb\\|js\\|ts\\)$" file-name) file-name)
            ((string-match "_spec.rb$" file-name) file-name)
            ((string-match "^app/views" file-name) nil)
            ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
