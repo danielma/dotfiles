@@ -24,7 +24,8 @@
   :bind (:map rjsx-mode-map
 	      ))
 
-(use-package tide)
+(use-package tide
+  :after flycheck)
 
 (defun setup-tide-mode ()
   "Setup for tide mode."
@@ -33,6 +34,7 @@
   (dm-guard-mode)
   (eldoc-mode +1)
   (smartparens-mode +1)
+  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
   (tide-hl-identifier-mode +1))
   
 (use-package typescript-mode
@@ -40,9 +42,11 @@
   :after tide
   :init
   (add-hook 'typescript-mode-hook #'setup-tide-mode)
+  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
   :custom
   (typescript-indent-level 2)
   )
+
 
 (defun my-create-newline-and-enter-sexp (&rest _ignored)
   "Open a new brace or bracket expression, with relevant newlines and indent. "
