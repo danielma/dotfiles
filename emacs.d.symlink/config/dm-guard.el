@@ -33,20 +33,35 @@
   t
   "Global variable that can disable dm-guard.")
 
+(defvar dm-guard-line-mode
+  nil
+  "Global variable to run only the current test.")
+
 (defun dm-guard-global-toggle ()
   "Globally toggle dm-guard runners."
   (interactive)
   (setq dm-guard-enabled (not dm-guard-enabled))
   (message (if dm-guard-enabled "Enabled" "Disabled")))
 
+(defun dm-guard-line-mode ()
+  "Globally toggle line mode for runner."
+  (interactive)
+  (setq dm-guard-line-mode (not dm-guard-line-mode))
+  (message (if dm-guard-line-mode "Enabled" "Disabled")))
+
 (defun dm-guard-test ()
   "Use tmux to execute a rails test."
   (interactive)
   (if (and dm-guard-enabled (projectile-project-p))
-      (let* ((test-cmd (--dm-guard-test-command))
-             (test-name (--dm-guard-test-name)))
-        (if test-name
-            (--dm-guard-clear-and-run (concat test-cmd " " test-name))))))
+      (if (and dm-guard-line-mode (--dm-guard-is-test-file-p)) (dm-guard-test-line) (dm-guard-test-file))))
+
+(defun dm-guard-test-file ()
+  "Use tmux to execute a test for the current file."
+  (interactive)
+  (let* ((test-cmd (--dm-guard-test-command))
+         (test-name (--dm-guard-test-name)))
+    (if test-name
+        (--dm-guard-clear-and-run (concat test-cmd " " test-name)))))
 
 (defun dm-guard-test-line ()
   "Use tmux to execute the test on the current line."
@@ -78,16 +93,24 @@
                     (t "ruby"))))
     test-cmd))
 
+(defun --dm-guard-is-test-file-p (&optional buffer)
+  "Is the BUFFER a test or implementation?."
+  (let* ((file-path (buffer-file-name buffer)))
+    (cond
+     ((string-match "\\(_\\|.\\)test.\\(rb\\|js\\|ts\\)$" file-path) t)
+     ((string-match "_spec.rb$" file-path) t)
+     (t nil))))
+
 (defun --dm-guard-test-name ()
   "Generate the test name for a buffer."
   (let* ((project-type (projectile-project-type))
          (spec-mode (or (eq project-type 'rails-rspec) (eq project-type 'ruby-rspec)))
+         (is-test-file (--dm-guard-is-test-file-p dm-guard-manual-test-buffer))
          (file-path (buffer-file-name dm-guard-manual-test-buffer))
          (file-name (file-relative-name file-path (projectile-project-root)))
          (test-path
           (cond
-           ((string-match "\\(_\\|.\\)test.\\(rb\\|js\\|ts\\)$" file-name) file-name)
-           ((string-match "_spec.rb$" file-name) file-name)
+           (is-test-file file-name)
            ((string-match "^app/views" file-name) nil)
            ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
             (let* ((graph-dir (match-string 1 file-name))
