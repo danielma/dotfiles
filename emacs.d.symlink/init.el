@@ -329,7 +329,10 @@
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
-   '((rufo-mode-use-bundler . t)
+   '((eval push 'ruby-rubocop flycheck-disabled-checkers)
+     (eval push "ruby-rubocop" flycheck-disabled-checkers)
+     (eval push "ruby-rubocop")
+     (rufo-mode-use-bundler . t)
      (eval setq-local flycheck-disabled-checkers
            (append flycheck-disabled-checkers
                    '(ruby-reek)))

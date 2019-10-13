@@ -18,7 +18,9 @@
   (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
   (add-hook 'rjsx-mode-hook (lambda ()
 			      (setq-local emmet-expand-jsx-className? t)
-			      (setq-local emmet-self-closing-tag-style " /")))
+			      (setq-local emmet-self-closing-tag-style " /")
+                              (modify-syntax-entry ?_ "w")
+                              ))
   (evil-define-key 'insert rjsx-mode-map
     (kbd "C-d") 'rjsx-delete-creates-full-tag)
   :bind (:map rjsx-mode-map
@@ -34,6 +36,7 @@
   (dm-guard-mode)
   (eldoc-mode +1)
   (emmet-mode +1)
+  (modify-syntax-entry ?_ "w")
   (setq-local emmet-expand-jsx-className? t)
   (setq-local emmet-self-closing-tag-style " /")
   (smartparens-mode +1)

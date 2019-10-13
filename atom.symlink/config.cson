@@ -44,6 +44,7 @@
     command: "/Users/danielma/.rbenv/shims/rubocop"
   "linter-ui-default":
     panelHeight: 69
+    showPanel: true
   "markdown-writer": {}
   pigments: {}
   "release-notes":
