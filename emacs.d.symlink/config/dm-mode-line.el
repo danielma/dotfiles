@@ -210,10 +210,17 @@
     `("" (:propertize " \u2694 " face ,(my/mode-line-flycheck-face 'error)))
     ))
 
+(defun my/mode-line-prettier-status ()
+  "Mode line prettier indicator."
+  (if prettier-js-mode
+      `("" (:propertize " \u2695 " face ,(my/mode-line-face 'accent)))
+    `("")
+    ))
+
 (defun my/mode-name ()
   (let ((mode (pcase major-mode
 	       ('magit-status-mode "\ue725")
-	       ('ruby-mode "\ue791")
+	       ('ruby-mode "\u25c8") ;; "\uf48e") ;; \U0001f48e
 	       ('web-mode "\ue60e")
 	       ('rjsx-mode "\ue7ba")
 	       ('emacs-lisp-mode "(\ue779)")
@@ -251,6 +258,7 @@
 
                   ;; right
                   (format-mode-line `("%e"
+                                      ,(my/mode-line-prettier-status)
                                       ;;,(my/mode-line-guard-status)
                                       ,(my/mode-line-flycheck-status)
 				      ,(my/mode-name)
