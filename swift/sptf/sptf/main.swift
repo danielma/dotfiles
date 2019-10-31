@@ -134,6 +134,7 @@ class Spotify {
   struct Track {
     var id: String
     var name: String
+    var artistName: String
 
     var uri: String {
       return "spotify:track:\(id)"
@@ -248,8 +249,14 @@ class Spotify {
   func currentTrack() -> Track {
     let info = apiRequest("me/player/currently-playing").json
     let item = info["item"] as! [String: Any]
+    let artists = item["artists"] as! [[String: Any]]
+    let artist = artists[0]
 
-    return Track(id: item["id"] as! String, name: item["name"] as! String)
+    return Track(
+      id: item["id"] as! String,
+      name: item["name"] as! String,
+      artistName: artist["name"] as! String
+    )
   }
 
   private func addToLibrary(_ track: Track) -> JSONResponse {
@@ -315,6 +322,9 @@ class Spotify {
 
   func saveToList() -> JSONResponse {
     let track = currentTrack()
+
+    print("\(track.name) - \(track.artistName)")
+
     let trackUri = track.uri
     let result = addToLibrary(track)
 
@@ -322,8 +332,6 @@ class Spotify {
       print(result.response)
       fatalError("Couldn't save \(track.id) to library")
     }
-
-    print(track.name)
 
     let playlistId = findOrCreatePlaylist(.month)
     let playlistTracksUrl = "users/\(db.userId)/playlists/\(playlistId)/tracks"
@@ -366,8 +374,8 @@ case "lib":
   }
 case "save":
   let result = spotify.saveToList()
-  dump(result.json)
   dump(result.response.statusCode)
+  dump(result.json)
 default:
   print("Unknown command: \(command)")
   exit(1)
