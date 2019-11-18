@@ -59,6 +59,8 @@
 
 (set-frame-parameter (selected-frame) 'alpha 95)
 
+(global-prettify-symbols-mode 1)
+
 (use-package whitespace
   :init
   (setq whitespace-line-column 100
