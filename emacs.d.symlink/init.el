@@ -49,6 +49,7 @@
 
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
+;; (add-to-list 'default-frame-alist '(undecorated . t))
 
 (fset 'evil-visual-update-x-selection 'ignore)
 
@@ -60,10 +61,10 @@
 (add-to-list 'load-path "~/.emacs.d/config/")
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-(progn
-  (add-to-list 'load-path "~/Code/test/emacs-libvterm/")
-  (let (vterm-install)
-    (require 'vterm)))
+;;(progn
+;;  (add-to-list 'load-path "~/Code/test/emacs-libvterm/")
+;;  (let (vterm-install)
+;;    (require 'vterm)))
 
 (require 'text-tools)
 (require 'general-funcs)
