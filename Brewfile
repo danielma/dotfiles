@@ -18,7 +18,7 @@ brew "cask"
 # brew "ccat"
 brew "coreutils"
 brew "dark-mode"
-brew "diff-so-fancy", link: false
+brew "diff-so-fancy"
 brew "entr"
 brew "fzf"
 brew "git"
