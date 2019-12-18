@@ -295,17 +295,20 @@
  '(column-number-mode nil)
  '(css-indent-offset 2)
  '(custom-safe-themes
-   '("9ab255ab33b11529148334e8c703459fd38f484a28a8f94b219a09fa6efd9a98" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" default))
+   (quote
+    ("9ab255ab33b11529148334e8c703459fd38f484a28a8f94b219a09fa6efd9a98" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" default)))
  '(display-time-default-load-average nil)
  '(display-time-mode t)
  '(enh-ruby-add-encoding-comment-on-save nil)
  '(epg-gpg-program "gpg")
  '(evil-insert-state-modes
-   '(comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode))
+   (quote
+    (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode)))
  '(helm-imenu-fuzzy-match t t)
  '(helm-mode-fuzzy-match t)
  '(helm-source-names-using-follow
-   '("Search at ~/Code/pco-api/" "Search at ~/Code/pco-seeds/" "Projectile files" "Search at ~/Code/test/audited/" "Search at ~/Code/church-center/" "Search at ~/Code/helpdesk/" "Search at ~/Code/picodex/" "Search at ~/Code/api/" "Search at ~/Code/groups/" "Search at ~/Kalabox/living/code/" "Jump to: " "global-mark-ring" "mark-ring" "Occur"))
+   (quote
+    ("Search at ~/Code/giving/" "Search at ~/Code/ChurchCenterApp/" "Search at ~/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/stripe-3.3.1/" "Search at ~/Code/accounts/" "Jump to: " "Search at ~/Code/pco-api/" "Search at ~/Code/pco-seeds/" "Search at ~/Code/test/audited/" "Search at ~/Code/church-center/" "Search at ~/Code/helpdesk/" "Search at ~/Code/picodex/" "Search at ~/Code/api/" "Search at ~/Code/groups/" "Search at ~/Kalabox/living/code/" "global-mark-ring" "mark-ring" "Occur")))
  '(indent-tabs-mode nil)
  '(initial-scratch-message nil)
  '(js-indent-level 2)
@@ -316,27 +319,33 @@
  '(markdown-asymmetric-header t)
  '(markdown-header-scaling t)
  '(ns-auto-hide-menu-bar t)
- '(ns-command-modifier 'super)
- '(org-agenda-files '("~/Dropbox/org/agenda.org"))
+ '(ns-command-modifier (quote super))
+ '(org-agenda-files (quote ("~/Dropbox/org/agenda.org")))
  '(org-modules
-   '(org-bbdb org-bibtex org-docview org-gnus org-info org-irc org-mhe org-mouse org-rmail org-w3m))
+   (quote
+    (org-bbdb org-bibtex org-docview org-gnus org-info org-irc org-mhe org-mouse org-rmail org-w3m)))
  '(org-pretty-entities t)
- '(org-refile-targets '((org-agenda-files :maxlevel . 3)))
- '(org-todo-keywords '((sequence "TODO(t)" "DONE(d)")))
+ '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
+ '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
  '(package-selected-packages
-   '(magit-org-todos emojify tide typescript-mode org-alert rufo-mode ace-jump-mode winner-mode dumb-jump hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil))
- '(php-mode-coding-style 'drupal)
- '(ring-bell-function 'ignore)
+   (quote
+    (magit-org-todos emojify tide typescript-mode org-alert rufo-mode ace-jump-mode winner-mode dumb-jump hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
+ '(php-mode-coding-style (quote drupal))
+ '(ring-bell-function (quote ignore))
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
-   '((eval push 'ruby-rubocop flycheck-disabled-checkers)
+   (quote
+    ((eval push
+           (quote ruby-rubocop)
+           flycheck-disabled-checkers)
      (eval push "ruby-rubocop" flycheck-disabled-checkers)
      (eval push "ruby-rubocop")
      (rufo-mode-use-bundler . t)
      (eval setq-local flycheck-disabled-checkers
            (append flycheck-disabled-checkers
-                   '(ruby-reek)))
+                   (quote
+                    (ruby-reek))))
      (eval when
            (and
             (buffer-file-name)
@@ -345,23 +354,29 @@
             (string-match-p "^[^.]"
                             (buffer-file-name)))
            (unless
-               (featurep 'package-build)
+               (featurep
+                (quote package-build))
              (let
                  ((load-path
                    (cons "../package-build" load-path)))
-               (require 'package-build)))
+               (require
+                (quote package-build))))
            (package-build-minor-mode)
            (set
-            (make-local-variable 'package-build-working-dir)
+            (make-local-variable
+             (quote package-build-working-dir))
             (expand-file-name "../working/"))
            (set
-            (make-local-variable 'package-build-archive-dir)
+            (make-local-variable
+             (quote package-build-archive-dir))
             (expand-file-name "../packages/"))
            (set
-            (make-local-variable 'package-build-recipes-dir)
+            (make-local-variable
+             (quote package-build-recipes-dir))
             default-directory))
      (projectile-project-type rails-test)
-     (projectile-project-type 'rails-test)))
+     (projectile-project-type
+      (quote rails-test)))))
  '(select-enable-clipboard nil)
  '(selectric-mode nil)
  '(show-paren-mode t)

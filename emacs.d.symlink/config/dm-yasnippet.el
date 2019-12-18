@@ -53,6 +53,13 @@
          :map evil-insert-state-map
          ("<tab>" . tab-indent-or-complete)))
 
+;; (use-package lsp-mode)
+
+;; (use-package company-lsp
+;;   :init
+;;   (push 'company-lsp company-backends)
+;;   :after lsp-mode)
+
 (use-package yasnippet
   :init
   (add-hook 'after-init-hook 'yas-global-mode)

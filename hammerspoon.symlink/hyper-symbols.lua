@@ -30,25 +30,25 @@ f18 = hs.hotkey.bind({}, 'F18', pressedF18, releasedF18)
 
 symbolsTable = {
   {'a', {{'ctrl'}, 's'}},
-  {'b', {{'shift'}, '7'}},
-  {'c', {{'shift'}, '5'}},
-  {'s', {{'shift'}, '['}},
-  {'d', {{}, '['}},
-  {'f', {{'shift'}, '9'}},
-  {'g', {{}, '='}},
-  {'h', {{'shift'}, '-'}},
-  {'j', {{'shift'}, '0'}},
-  {'k', {{}, ']'}},
-  {'l', {{'shift'}, ']'}},
-  {';', {{'shift'}, '.'}},
-  {"'", {{}, '`'}},
-  {'r', {{}, '\\'}},
+  -- {'b', {{'shift'}, '7'}},
+  -- {'c', {{'shift'}, '5'}},
+  -- {'s', {{'shift'}, '['}},
+  -- {'d', {{}, '['}},
+  -- {'f', {{'shift'}, '9'}},
+  -- {'g', {{}, '='}},
+  -- {'h', {{'shift'}, '-'}},
+  -- {'j', {{'shift'}, '0'}},
+  -- {'k', {{}, ']'}},
+  -- {'l', {{'shift'}, ']'}},
+  -- {';', {{'shift'}, '.'}},
+  -- {"'", {{}, '`'}},
+  -- {'r', {{}, '\\'}},
   -- {'u', {{}, '/'}},
-  {'v', {{'shift'}, ','}},
-  {'m', {{'shift'}, '.'}},
-  {'n', {{'shift'}, '\\'}},
-  {'t', {{'shift'}, '='}},
-  {'y', {{}, '-'}},
+  -- {'v', {{'shift'}, ','}},
+  -- {'m', {{'shift'}, '.'}},
+  -- {'n', {{'shift'}, '\\'}},
+  -- {'t', {{'shift'}, '='}},
+  -- {'y', {{}, '-'}},
 }
 
 for i, keyTable in ipairs(symbolsTable) do
@@ -64,28 +64,28 @@ end
 
 hyperTable = {'q'}
 
-for i,key in ipairs(hyperTable) do
-  hyperModal:bind(
-    {},
-    key,
-    function()
-       hyperModal.triggered = true
-       hs.eventtap.keyStroke({'alt','shift','ctrl'}, key)
-    end
-  )
-end
+-- for i,key in ipairs(hyperTable) do
+--   hyperModal:bind(
+--     {},
+--     key,
+--     function()
+--        hyperModal.triggered = true
+--        hs.eventtap.keyStroke({'alt','shift','ctrl'}, key)
+--     end
+--   )
+-- end
 
 hyperAppsTable = { {'w', 'Emacs'} }
 
-for i, app in ipairs(hyperAppsTable) do
-  hyperModal:bind(
-    {},
-    app[1],
-    nil,
-    function()
-      launch(app[2])
-      hyperModal.triggered()
-      hyperModal:exit()
-    end
-  )
-end
+-- for i, app in ipairs(hyperAppsTable) do
+--   hyperModal:bind(
+--     {},
+--     app[1],
+--     nil,
+--     function()
+--       launch(app[2])
+--       hyperModal.triggered()
+--       hyperModal:exit()
+--     end
+--   )
+-- end

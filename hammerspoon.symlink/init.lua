@@ -6,7 +6,7 @@ function unpack(table, index)
   end
 end
 
--- require "hyper-symbols"
+require "hyper-symbols"
 require "window"
 require "browser"
 
