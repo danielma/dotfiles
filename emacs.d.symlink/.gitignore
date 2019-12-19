@@ -12,3 +12,5 @@ elpa
 eshell
 url
 bookmarks
+transient
+*.sqlite
