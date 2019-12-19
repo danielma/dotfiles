@@ -1,0 +1,1 @@
+for x in $(ls /usr/local/lib/node_modules/base16-builder/db/schemes/ | sed 's/.yml//'); do; base16-builder -b light -t ~/.dotfiles/emacs.d.symlink/themes/b16-emacs-template-light.ejs -s $x > templates/emacs/build/base16-$x-light-theme.el; done
