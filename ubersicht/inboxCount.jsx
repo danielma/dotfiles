@@ -6,19 +6,27 @@ export const refreshFrequency = 60000;
 export const initialState = { output: 0 };
 
 export function updateState(event, previousState) {
-  return { output: parseInt(event.output, 10) };
+  const output = parseInt(event.output, 10);
+
+  if (output !== previousState.output) {
+    doImperativeWork(output);
+  }
+
+  return { output };
 }
 
-export function render({ output }) {
+function doImperativeWork(count) {
   const el = document.querySelector("#uebersicht .inboxCount");
 
-  if (output > 0) {
-    el.innerHTML = output;
+  if (count > 0) {
+    el.innerHTML = count;
     el.classList.remove("bg-base0B-FF-important");
   } else {
     el.innerHTML = "✔";
     el.classList.add("bg-base0B-FF-important");
   }
+}
 
+export function render() {
   return null;
 }
