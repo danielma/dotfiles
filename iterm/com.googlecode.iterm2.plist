@@ -1670,9 +1670,9 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>458 426 620 392 0 0 1536 960 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>10 60 1516 890 0 0 1536 960 </string>
+	<string>1076 60 450 440 0 0 1536 960 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>10 60 1516 890 0 0 1536 960 </string>
+	<string>10 574 570 376 0 0 1536 960 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -2253,7 +2253,7 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>Menlo-Regular 11</string>
+			<string>IosevkaNerdFontComplete-Term 11</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
@@ -3352,24 +3352,25 @@
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
-		<string>Recursive Mono Lnr b029st</string>
-		<string>Recursive Mono Csl b029st</string>
+		<string>Iosevka Nerd Font</string>
 	</array>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1536, 960}}</string>
 		<key>topLeft</key>
-		<string>{199, 757}</string>
+		<string>{269, 595}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>19BDADEF-6D71-4AC9-B80F-4A8A6244C176</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>3</integer>
+	<integer>7</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
-	<real>598576137.13378</real>
+	<real>599170289.61034596</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
 	<true/>
+	<key>NoSyncPermissionToShowTip</key>
+	<false/>
 	<key>NoSyncRecordedVariables</key>
 	<dict>
 		<key>0</key>
@@ -4148,13 +4149,15 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-12-18T23:11:13Z</date>
+	<date>2020-01-02T15:24:28Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
 	<false/>
 	<key>SavePasteHistory</key>
 	<false/>
+	<key>Secure Input</key>
+	<true/>
 	<key>Selection Respects Soft Boundaries</key>
 	<true/>
 	<key>ShowBookmarkName</key>

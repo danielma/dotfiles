@@ -8,9 +8,7 @@ export const initialState = { output: 0 };
 export function updateState(event, previousState) {
   const output = parseInt(event.output, 10);
 
-  if (output !== previousState.output) {
-    doImperativeWork(output);
-  }
+  doImperativeWork(output);
 
   return { output };
 }
