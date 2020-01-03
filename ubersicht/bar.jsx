@@ -12,7 +12,7 @@ const Bar = styled("div")`
   /* border-radius: 5px; */
   box-sizing: border-box;
   font-family: IBM Plex Mono;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: normal;
   line-height: 1;
   display: flex;
