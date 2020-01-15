@@ -1670,7 +1670,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>458 426 620 392 0 0 1536 960 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1076 60 450 440 0 0 1536 960 </string>
+	<string>0 45 1536 915 0 0 1536 960 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>10 574 570 376 0 0 1536 960 </string>
 	<key>New Bookmarks</key>
@@ -2253,11 +2253,11 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>IosevkaNerdFontComplete-Term 11</string>
+			<string>IosevkaNerdFontComplete-Term 12</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>RecursiveMonoLinearB029st-Rg 12</string>
+			<string>IBMPlexMono-Medium 12</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<true/>
 			<key>Open Toolbelt</key>
@@ -3349,22 +3349,27 @@
 	<array>
 		<string>3.3.7</string>
 		<string>3.3.8beta3</string>
+		<string>3.3.8beta4</string>
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
-		<string>Iosevka Nerd Font</string>
+		<string>IBM Plex Mono</string>
 	</array>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1536, 960}}</string>
 		<key>topLeft</key>
-		<string>{269, 595}</string>
+		<string>{184, 829}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>19BDADEF-6D71-4AC9-B80F-4A8A6244C176</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>7</integer>
+	<integer>10</integer>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
+	<true/>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
+	<integer>0</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>599170289.61034596</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -4149,7 +4154,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-01-02T15:24:28Z</date>
+	<date>2020-01-05T21:49:02Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
@@ -4157,7 +4162,7 @@
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
-	<true/>
+	<false/>
 	<key>Selection Respects Soft Boundaries</key>
 	<true/>
 	<key>ShowBookmarkName</key>
@@ -7169,7 +7174,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.3.8beta3</string>
+	<string>3.3.8beta4</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

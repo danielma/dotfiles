@@ -1,6 +1,6 @@
 #!/bin/sh
 
-YABAI=0
+YABAI=1
 
 focus()
 {

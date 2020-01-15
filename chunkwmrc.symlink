@@ -8,7 +8,7 @@ chunkc core::log_level error
 chunkc core::load tiling.so
 # chunkc core::load ffm.so
 
-chunkc set global_desktop_mode          bsp
+chunkc set global_desktop_mode          float
 chunkc set global_desktop_offset_top    0
 chunkc set global_desktop_offset_right  0
 chunkc set global_desktop_offset_bottom 45
@@ -19,12 +19,11 @@ chunkc set desktop_padding_step_size 10
 chunkc set desktop_gap_step_size     5.0
 
 chunkc tiling::rule --owner "Emacs.*" --except "^$" --state tile &
-chunkc tiling::rule --owner Messages --state float &
-chunkc tiling::rule --owner Spotify --state float &
-chunkc tiling::rule --owner LICEcap --state float &
-chunkc tiling::rule --owner Delta --state float &
-chunkc tiling::rule --owner Chromium --state float &
-chunkc tiling::rule --owner Parcel --state float &
-chunkc tiling::rule --owner "1Password 7" --state float &
-chunkc tiling::rule --owner "Logic Pro X" --state float &
-chunkc tiling::desktop --deserialize ~/.dotfiles/chunkwm/layouts/dev-grid &
+chunkc tiling::rule --owner ".+" --state float &
+# chunkc tiling::rule --owner Spotify --state float &
+# chunkc tiling::rule --owner LICEcap --state float &
+# chunkc tiling::rule --owner Delta --state float &
+# chunkc tiling::rule --owner Chromium --state float &
+# chunkc tiling::rule --owner Parcel --state float &
+# chunkc tiling::rule --owner "1Password 7" --state float &
+# chunkc tiling::rule --owner "Logic Pro X" --state float

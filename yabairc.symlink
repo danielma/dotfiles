@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-yabai -m config debug_output on
+yabai -m config debug_output off
 
 # bar settings
 yabai -m config status_bar                   off
@@ -20,8 +20,8 @@ yabai -m config window_placement             second_child
 yabai -m config window_topmost               off
 yabai -m config window_opacity               off
 yabai -m config window_opacity_duration      0.0
-yabai -m config window_shadow                on
-yabai -m config window_border                on
+yabai -m config window_shadow                off
+yabai -m config window_border                off
 yabai -m config window_border_placement      inset
 yabai -m config window_border_width          4
 yabai -m config window_border_radius         -1.0
@@ -38,13 +38,14 @@ yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
 
 # general space settings
-yabai -m config layout                       bsp
-yabai -m config top_padding                  10
-yabai -m config bottom_padding               60
-yabai -m config left_padding                 10
-yabai -m config right_padding                10
+yabai -m config layout                       float
+yabai -m config top_padding                  0
+yabai -m config bottom_padding               45
+yabai -m config left_padding                 0
+yabai -m config right_padding                0
 yabai -m config window_gap                   10
 
-yabai -m rule --add app="Emacs" manage=on # --except "^$"
+yabai -m rule --add title='.+' manage=off
+# yabai -m rule --add app="Emacs.*" manage=on # --except "^$"
 
 echo "yabai configuration loaded.."
