@@ -98,6 +98,18 @@
          ("hg" . helm-register)
          ("hi" . helm-imenu)))
 
+(use-package helm-posframe
+  :disabled
+  :after helm
+  :init
+  (helm-posframe-disable)
+  :config
+  (setq helm-posframe-poshandler 'posframe-poshandler-frame-top-center
+        helm-posframe-width 920
+        helm-posframe-parameters
+        '((left-fringe . 10)
+          (right-fringe . 10))))
+
 (use-package dumb-jump
   :config
   (setq dumb-jump-selector 'helm
@@ -168,6 +180,8 @@
 (use-package dm-projectile :straight nil)
 
 (use-package dm-projects :straight nil)
+
+(use-package dm-box-drawing :straight nil)
 
 (use-package elscreen
   :init
