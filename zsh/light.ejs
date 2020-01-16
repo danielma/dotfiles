@@ -10,31 +10,31 @@ if [ "${TERM%%-*}" = 'linux' ]; then
     return 2>/dev/null || exit 0
 fi
 
-color00="<%- base["00"]["hex"].match(/.{2}/g).join('/') %>" # Base 00 - Black
+color00="<%- base["07"]["hex"].match(/.{2}/g).join('/') %>" # Base 00 - Black
 color01="<%- base["08"]["hex"].match(/.{2}/g).join('/') %>" # Base 08 - Red
 color02="<%- base["0B"]["hex"].match(/.{2}/g).join('/') %>" # Base 0B - Green
 color03="<%- base["0A"]["hex"].match(/.{2}/g).join('/') %>" # Base 0A - Yellow
 color04="<%- base["0D"]["hex"].match(/.{2}/g).join('/') %>" # Base 0D - Blue
 color05="<%- base["0E"]["hex"].match(/.{2}/g).join('/') %>" # Base 0E - Magenta
 color06="<%- base["0C"]["hex"].match(/.{2}/g).join('/') %>" # Base 0C - Cyan
-color07="<%- base["05"]["hex"].match(/.{2}/g).join('/') %>" # Base 05 - White
-color08="<%- base["03"]["hex"].match(/.{2}/g).join('/') %>" # Base 03 - Bright Black
+color07="<%- base["02"]["hex"].match(/.{2}/g).join('/') %>" # Base 05 - White
+color08="<%- base["04"]["hex"].match(/.{2}/g).join('/') %>" # Base 03 - Bright Black
 color09=$color01 # Base 08 - Bright Red
 color10=$color02 # Base 0B - Bright Green
 color11=$color03 # Base 0A - Bright Yellow
 color12=$color04 # Base 0D - Bright Blue
 color13=$color05 # Base 0E - Bright Magenta
 color14=$color06 # Base 0C - Bright Cyan
-color15="<%- base["07"]["hex"].match(/.{2}/g).join('/') %>" # Base 07 - Bright White
+color15="<%- base["00"]["hex"].match(/.{2}/g).join('/') %>" # Base 07 - Bright White
 color16="<%- base["09"]["hex"].match(/.{2}/g).join('/') %>" # Base 09
 color17="<%- base["0F"]["hex"].match(/.{2}/g).join('/') %>" # Base 0F
-color18="<%- base["01"]["hex"].match(/.{2}/g).join('/') %>" # Base 01
-color19="<%- base["02"]["hex"].match(/.{2}/g).join('/') %>" # Base 02
-color20="<%- base["04"]["hex"].match(/.{2}/g).join('/') %>" # Base 04
-color21="<%- base["06"]["hex"].match(/.{2}/g).join('/') %>" # Base 06
-color_foreground="<%- base["02"]["hex"].match(/.{2}/g).join('/') %>" # Base 02
-color_background="<%- base["07"]["hex"].match(/.{2}/g).join('/') %>" # Base 07
-color_cursor="<%- base["02"]["hex"].match(/.{2}/g).join('/') %>" # Base 02
+color18="<%- base["06"]["hex"].match(/.{2}/g).join('/') %>" # Base 01
+color19="<%- base["05"]["hex"].match(/.{2}/g).join('/') %>" # Base 02
+color20="<%- base["03"]["hex"].match(/.{2}/g).join('/') %>" # Base 04
+color21="<%- base["01"]["hex"].match(/.{2}/g).join('/') %>" # Base 06
+color_foreground="<%- base["02"]["hex"].match(/.{2}/g).join('/') %>" # Base 05
+color_background="<%- base["07"]["hex"].match(/.{2}/g).join('/') %>" # Base 00
+color_cursor="<%- base["02"]["hex"].match(/.{2}/g).join('/') %>" # Base 05
 
 if [ -n "$TMUX" ]; then
   # tell tmux to pass the escape sequences through

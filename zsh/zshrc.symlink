@@ -57,7 +57,7 @@ dm() {
         b16 default-dark
     else
         dark-mode off
-        b16 mexico-light
+        b16 default-light
     fi
 }
 
