@@ -17,6 +17,7 @@
     )
 
   (setq projectile-generic-command "ag -g \"\""
+        projectile-git-submodule-command "git submodule --quiet foreach 'echo $displaypath' | tr '\\n' '\\0'"
         projectile-switch-project-action 'magit-status)
 
   :bind (:map projectile-command-map

@@ -229,7 +229,7 @@
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
   :config
-  (setq exec-path-from-shell-variables (quote ("PATH" "MANPATH" "NV_DIR" "BASE16_THEME")))
+  (setq exec-path-from-shell-variables (quote ("PATH" "MANPATH" "BASE16_THEME")))
   (exec-path-from-shell-initialize))
 
 (use-package key-chord
@@ -350,7 +350,9 @@
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
    (quote
-    ((eval push
+    ((prettier-js-args "exec" "rbprettier")
+     (prettier-js-command . "bundle")
+     (eval push
            (quote ruby-rubocop)
            flycheck-disabled-checkers)
      (eval push "ruby-rubocop" flycheck-disabled-checkers)

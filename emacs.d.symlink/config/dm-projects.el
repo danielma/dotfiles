@@ -1,6 +1,3 @@
-(add-to-list 'safe-local-variable-values
-             '(prettier-js-command . "bundle"))
-
 (dir-locals-set-class-variables
  'login
  '(
