@@ -1,7 +1,13 @@
+(add-to-list 'safe-local-variable-values
+             '(prettier-js-command . "bundle"))
+
 (dir-locals-set-class-variables
  'login
  '(
-   ;; (ruby-mode . ((eval . (push 'ruby-rubocop flycheck-disabled-checkers))))
+   (ruby-mode . ((prettier-js-command . "bundle")
+                 (prettier-js-args . ("exec" "rbprettier"))
+                 (eval . (push 'ruby-rubocop flycheck-disabled-checkers))
+                 (eval . (prettier-js-mode))))
    ))
 
 (dir-locals-set-directory-class "~/Code/login" 'login)
