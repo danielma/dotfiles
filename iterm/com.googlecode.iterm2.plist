@@ -1670,9 +1670,11 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>458 426 620 392 0 0 1536 960 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 45 1536 915 0 0 1536 960 </string>
+	<string>1080 45 456 915 0 0 1536 960 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>10 574 570 376 0 0 1536 960 </string>
+	<string>320 886 570 379 0 0 2560 1440 </string>
+	<key>NSWindow Frame iTerm Window 2</key>
+	<string>364 163 570 379 0 0 2560 1440 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1933,6 +1935,8 @@
 			<false/>
 			<key>Disable Window Resizing</key>
 			<true/>
+			<key>Draw Powerline Glyphs</key>
+			<false/>
 			<key>Flashing Bell</key>
 			<false/>
 			<key>Foreground Color</key>
@@ -2253,7 +2257,7 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>IosevkaNerdFontComplete-Term 12</string>
+			<string>IosevkaNerdFontComplete- 12</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
@@ -2481,7 +2485,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Thin Strokes</key>
-			<integer>2</integer>
+			<integer>1</integer>
 			<key>Transparency</key>
 			<real>0.064227078045685282</real>
 			<key>Triggers</key>
@@ -3353,6 +3357,7 @@
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
+		<string>Iosevka Nerd Font</string>
 		<string>IBM Plex Mono</string>
 	</array>
 	<key>NoSyncFrame_SharedPreferences</key>
@@ -3360,12 +3365,12 @@
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1536, 960}}</string>
 		<key>topLeft</key>
-		<string>{184, 829}</string>
+		<string>{189, 813}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>19BDADEF-6D71-4AC9-B80F-4A8A6244C176</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>10</integer>
+	<integer>13</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -4092,10 +4097,12 @@
 	<false/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
+	<key>OptionClickMovesCursor</key>
+	<false/>
 	<key>PMPrintingExpandedStateForPrint2</key>
 	<false/>
 	<key>PassOnControlClick</key>
-	<false/>
+	<true/>
 	<key>PasteFromClipboard</key>
 	<false/>
 	<key>PasteTabToStringTabStopSize</key>
@@ -4154,11 +4161,11 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-01-05T21:49:02Z</date>
+	<date>2020-01-21T20:16:25Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
-	<false/>
+	<true/>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -4194,7 +4201,7 @@
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>5</integer>
 	<key>TabViewType</key>
-	<integer>1</integer>
+	<integer>0</integer>
 	<key>ThreeFingerEmulates</key>
 	<false/>
 	<key>TmuxDashboardLimit</key>

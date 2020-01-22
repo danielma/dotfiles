@@ -76,39 +76,7 @@
 
 (use-package dm-bindings :straight nil)
 
-(use-package helm
-  :config
-  (setq helm-completion-in-region-fuzzy-match t
-	helm-buffers-fuzzy-matching t
-	helm-mode-fuzzy-match t
-        helm-imenu-fuzzy-match t
-	helm-follow-mode-persistent t)
-  (helm-mode)
-  :bind (
-	 ("C-." . helm-M-x)
-	 ;; iterm c-.
-	 ("<f6>" . helm-M-x)
-	 :map base-leader-map
-	 ("<SPC>" . helm-M-x)
-	 ("ho" . helm-occur)
-	 ("hr" . helm-resume)
-	 ("hb" . helm-bookmarks)
-	 ("hm" . helm-all-mark-rings)
-	 ("hk" . helm-show-kill-ring)
-         ("hg" . helm-register)
-         ("hi" . helm-imenu)))
-
-(use-package helm-posframe
-  :disabled
-  :after helm
-  :init
-  (helm-posframe-disable)
-  :config
-  (setq helm-posframe-poshandler 'posframe-poshandler-frame-top-center
-        helm-posframe-width 920
-        helm-posframe-parameters
-        '((left-fringe . 10)
-          (right-fringe . 10))))
+(use-package dm-completion :straight nil)
 
 (use-package dumb-jump
   :config
@@ -310,7 +278,7 @@
  '(css-indent-offset 2)
  '(custom-safe-themes
    (quote
-    ("9ab255ab33b11529148334e8c703459fd38f484a28a8f94b219a09fa6efd9a98" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" default)))
+    ("f000ac0d2b8ecdbe47c0db98610d6ed8c9ba9185af75bd54232c9b5374372ef3" "9ab255ab33b11529148334e8c703459fd38f484a28a8f94b219a09fa6efd9a98" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" default)))
  '(display-time-default-load-average nil)
  '(display-time-mode t)
  '(enh-ruby-add-encoding-comment-on-save nil)
@@ -322,7 +290,7 @@
  '(helm-mode-fuzzy-match t)
  '(helm-source-names-using-follow
    (quote
-    ("Search at ~/Code/giving/" "Search at ~/Code/ChurchCenterApp/" "Search at ~/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/stripe-3.3.1/" "Search at ~/Code/accounts/" "Jump to: " "Search at ~/Code/pco-api/" "Search at ~/Code/pco-seeds/" "Search at ~/Code/test/audited/" "Search at ~/Code/church-center/" "Search at ~/Code/helpdesk/" "Search at ~/Code/picodex/" "Search at ~/Code/api/" "Search at ~/Code/groups/" "Search at ~/Kalabox/living/code/" "global-mark-ring" "mark-ring" "Occur")))
+    ("Projectile files" "Search at ~/.dotfiles/emacs.d.symlink/" "Search at ~/Code/ChurchCenterApp/" "Search at ~/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/stripe-3.3.1/" "Search at ~/Code/accounts/" "Jump to: " "Search at ~/Code/pco-api/" "Search at ~/Code/pco-seeds/" "Search at ~/Code/test/audited/" "Search at ~/Code/church-center/" "Search at ~/Code/helpdesk/" "Search at ~/Code/picodex/" "Search at ~/Code/api/" "Search at ~/Code/groups/" "Search at ~/Kalabox/living/code/" "global-mark-ring" "mark-ring" "Occur")))
  '(indent-tabs-mode nil)
  '(initial-scratch-message nil)
  '(js-indent-level 2)
