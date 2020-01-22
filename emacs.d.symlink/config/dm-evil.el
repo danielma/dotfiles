@@ -1,16 +1,24 @@
 (eval-when-compile
   (require 'use-package))
 
+(defun copy-from-osx ()
+  (shell-command-to-string "pbpaste"))
+
+(defun paste-to-osx (text &optional push)
+  (let ((process-connection-type nil))
+    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+      (process-send-string proc text)
+      (process-send-eof proc))))
+
 (defun system-paste ()
   "Always paste from the system clipboard."
   (interactive)
-  (evil-paste-before 1 ?+)
-  (forward-char))
+  (insert (copy-from-osx)))
 
-(defun system-yank ()
+(defun system-yank (start end)
   "Always yank from the system clipboard."
-  (interactive)
-  (apply 'evil-yank (append (evil-operator-range t) '(?+)))
+  (interactive "r")
+  (paste-to-osx (buffer-substring-no-properties start end))
   (evil-normal-state))
 
 (defun my/window-x-sibling-p ()

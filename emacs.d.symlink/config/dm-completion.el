@@ -45,25 +45,6 @@
         '((left-fringe . 10)
           (right-fringe . 10))))
 
-(use-package fuz
-  :disabled
-  :straight (:host github
-             :repo "rustify-emacs/fuz.el"
-             :branch "master"
-             :files ("*"))
-  :init
-  (unless (require 'fuz-core nil t)
-    (fuz-build-and-load-dymod)))
-
-(use-package snails
-  :disabled
-  :after exec-path-from-shell
-  :straight (:host github :repo "manateelazycat/snails"
-                   :branch "master" :no-byte-compile t)
-  :init
-  (evil-set-initial-state 'snails-mode 'emacs)
-  )
-
 (use-package ivy
   :init
   (ivy-mode 1)
@@ -100,6 +81,37 @@
           (t               . ivy-posframe-display-at-frame-top-center))))
 
 (use-package ivy-hydra)
+
+(use-package fuz
+  :disabled
+  :straight (:host github
+             :repo "rustify-emacs/fuz.el"
+             :branch "master"
+             :files ("*"))
+  :init
+  (unless (require 'fuz-core nil t)
+    (fuz-build-and-load-dymod)))
+
+(use-package ivy-fuz
+  :disabled
+  :straight (:host github
+             :repo "Silex/ivy-fuz.el"
+             :branch "master")
+  ;; :config
+  ;; (custom-set-variables
+  ;; '(ivy-sort-matches-functions-alist '((t . ivy-fuz-sort-fn)))
+  ;; '(ivy-re-builders-alist '((t . ivy-fuz-regex-fuzzy))))
+  ;; (add-to-list 'ivy-highlight-functions-alist '(ivy-fuz-regex-fuzzy . ivy-fuz-highlight-fn))
+  )
+
+(use-package snails
+  :disabled
+  :after exec-path-from-shell
+  :straight (:host github :repo "manateelazycat/snails"
+                   :branch "master" :no-byte-compile t)
+  :init
+  (evil-set-initial-state 'snails-mode 'emacs)
+  )
 
 (defalias 'my/m-x 'counsel-M-x)
 

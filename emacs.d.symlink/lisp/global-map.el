@@ -1,6 +1,10 @@
 (if (boundp 'mac-command-modifier)
     (progn
-      (setq mac-command-modifier 'super)))
+      (setq select-enable-clipboard nil
+            mac-option-modifier 'meta
+            mac-command-modifier 'super
+            )))
+
 
 (defun switch-to-term ()
   (interactive)

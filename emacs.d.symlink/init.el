@@ -276,7 +276,7 @@
  '(js2-missing-semi-one-line-override t)
  '(line-number-mode nil)
  '(line-spacing 1)
- '(mac-mouse-wheel-smooth-scroll t)
+ '(mac-mouse-wheel-smooth-scroll nil)
  '(markdown-asymmetric-header t)
  '(markdown-header-scaling t)
  '(ns-auto-hide-menu-bar t)
