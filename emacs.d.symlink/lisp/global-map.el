@@ -1,3 +1,7 @@
+(if (boundp 'mac-command-modifier)
+    (progn
+      (setq mac-command-modifier 'super)))
+
 (defun switch-to-term ()
   (interactive)
   (if (string-equal (buffer-name) "vterm")
@@ -8,6 +12,7 @@
 
 (define-key global-map (kbd "s-<return>") 'toggle-frame-fullscreen)
 (define-key global-map (kbd "s-s") 'save-buffer-always)
+(define-key global-map (kbd "s-q") 'save-buffers-kill-emacs)
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;; iterm command-s
@@ -15,6 +20,7 @@
 
 (define-key global-map (kbd "C-h C-f") 'find-function)
 (define-key global-map (kbd "C-'") 'company-yasnippet)
+(define-key global-map (kbd "C-.") 'my/m-x)
 (define-key global-map (kbd "s-T") 'switch-to-term)
 (define-key global-map (kbd "s-O") 'browse-url)
 

@@ -85,6 +85,8 @@
     :evil-keys ("SPC"))
 
   (bind-map-set-keys base-leader-map
+    "<SPC>" 'my/m-x
+
     "fs" 'save-buffer-always
     "fq" 'delete-window
     "fr" 'force-reload
@@ -92,7 +94,7 @@
     "cd" 'cd
     "cl" 'custom-comment-line
     "ct" 'my/base16-set-theme
-    "cf" 'helm-select-xfont
+    "cf" 'menu-set-font
 
     "dr" 'reveal-in-finder
 

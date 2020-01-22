@@ -5,15 +5,16 @@
   :config
   (define-key base-leader-map "p" projectile-command-map)
 
-  (setq projectile-generic-command "ag -g \"\""
+  (setq projectile-generic-command "rg --files"
         projectile-git-submodule-command "git submodule --quiet foreach 'echo $displaypath' | tr '\\n' '\\0'"
+        projectile-completion-system 'ivy
         projectile-switch-project-action 'magit-status)
 
   :bind (:map projectile-command-map
         ("a" . my/projectile-search)
 	("T" . projectile-find-implementation-or-test-other-window)))
 
-(defalias 'my/projectile-search 'projectile-grep)
+(defalias 'my/projectile-search 'counsel-projectile-rg)
 
 (defun my/projectile-choices (dirs)
   "Find files in directories by (dir re) pair.

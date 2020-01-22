@@ -220,7 +220,7 @@ an alternate theme for use in the terminal.")
      (company-preview-common                       :inherit secondary-selection)
 
      ;; ivy-mode
-     (ivy-current-match                            :foreground base09 :background base01)
+     (ivy-current-match                            :background base01)
      (ivy-minibuffer-match-face-1                  :foreground base0E)
      (ivy-minibuffer-match-face-2                  :foreground base0D)
      (ivy-minibuffer-match-face-3                  :foreground base0C)

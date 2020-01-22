@@ -11,6 +11,7 @@
   )
 
 (use-package writeroom-mode
+  :disabled
   :config
   (add-hook 'writeroom-mode-hook 'my/writeroom-mode-setup)
   (setq writeroom-extra-line-spacing 0.3
@@ -21,6 +22,7 @@
 	writeroom-restore-window-config nil))
 
 (use-package simplenote2
+  :disabled
   :config
   (setq simplenote2-markdown-notes-mode 'markdown-mode
         simplenote2-notes-mode 'markdown-mode

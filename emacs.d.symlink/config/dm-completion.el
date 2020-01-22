@@ -1,5 +1,3 @@
-(defalias 'my/m-x 'helm-M-x)
-
 (use-package helm
   :disabled
   :config
@@ -10,10 +8,7 @@
 	helm-follow-mode-persistent t)
   (helm-mode)
   :bind (
-	 ("C-." . my/m-x)
-	 ;; iterm c-.
 	 :map base-leader-map
-	 ("<SPC>" . my/m-x)
 	 ("ho" . helm-occur)
 	 ("hr" . helm-resume)
 	 ("hb" . helm-bookmarks)
@@ -61,11 +56,49 @@
     (fuz-build-and-load-dymod)))
 
 (use-package snails
+  :disabled
   :after exec-path-from-shell
   :straight (:host github :repo "manateelazycat/snails"
                    :branch "master" :no-byte-compile t)
   :init
   (evil-set-initial-state 'snails-mode 'emacs)
   )
+
+(use-package ivy
+  :init
+  (ivy-mode 1)
+  :config
+  (setq ivy-use-virtual-buffers t
+        enable-recursive-minibuffers t)
+  :bind (:map base-leader-map
+              ("bs" . ivy-switch-buffer)
+              ("ho" . swiper-thing-at-point)
+              ("hr" . ivy-resume)
+              ("hk" . counsel-yank-pop)
+              ("hi" . counsel-imenu)))
+
+(use-package counsel
+  :init
+  (counsel-mode 1))
+
+(use-package counsel-projectile
+  :init
+  (counsel-projectile-mode)
+  :config
+  (setq counsel-projectile-rg-initial-input '(ivy-thing-at-point)
+        counsel-projectile-switch-project-action 'magit-status))
+
+(use-package ivy-posframe
+  :init
+  (ivy-posframe-mode 1)
+  :config
+  (setq ivy-posframe-parameters '((left-fringe . 8)
+                                  (right-fringe . 8))
+        ivy-posframe-display-functions-alist
+        '((swiper          . ivy-posframe-display-at-point)
+          (complete-symbol . ivy-posframe-display-at-point)
+          (t               . ivy-posframe-display-at-frame-top-center))))
+
+(defalias 'my/m-x 'counsel-M-x)
 
 (provide 'dm-completion)
