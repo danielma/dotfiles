@@ -99,6 +99,8 @@
           (complete-symbol . ivy-posframe-display-at-point)
           (t               . ivy-posframe-display-at-frame-top-center))))
 
+(use-package ivy-hydra)
+
 (defalias 'my/m-x 'counsel-M-x)
 
 (provide 'dm-completion)
