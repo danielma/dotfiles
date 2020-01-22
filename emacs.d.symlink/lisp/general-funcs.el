@@ -9,12 +9,6 @@
   (newline-and-indent)
   (evil-open-above 1))
 
-;; TODO this would be nice
-;; (defun find-symbol-in-project ()
-;;   "Search for symbol in project using projectile-ag."
-;;   (interactive)
-;;   (helm-ag-project-root (current-symbol-or-region)))
-
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."

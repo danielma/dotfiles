@@ -87,7 +87,7 @@
          ("M-RET" . newline)
          ("[b" . previous-buffer)
          ("]b" . next-buffer)
-         ("C-." . helm-M-x)
+         ("C-." . my/m-x)
          ("j" . evil-next-visual-line)
          ("k" . evil-previous-visual-line)
          ("'" . evil-repeat-find-char)

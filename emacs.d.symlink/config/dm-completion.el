@@ -1,3 +1,5 @@
+(defalias 'my/m-x 'helm-M-x)
+
 (use-package helm
   :disabled
   :config
@@ -20,7 +22,21 @@
          ("hg" . helm-register)
          ("hi" . helm-imenu)))
 
-(setq my/m-x 'helm-M-x)
+(use-package helm-ag
+  :disabled
+  :after helm
+  :init
+  (setq helm-ag-fuzzy-match t)
+  (setq helm-ag-insert-at-point (quote symbol))
+  )
+
+(use-package helm-projectile
+  :disabled
+  :after projectile
+  :init
+  (helm-projectile-on)
+  :bind (:map projectile-command-map
+              ("a" . helm-projectile-ag)))
 
 (use-package helm-posframe
   :disabled

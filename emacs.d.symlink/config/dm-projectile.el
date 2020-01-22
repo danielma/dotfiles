@@ -5,23 +5,15 @@
   :config
   (define-key base-leader-map "p" projectile-command-map)
 
-  (use-package helm-projectile
-    :init
-    (helm-projectile-on)
-    :bind (:map projectile-command-map
-		("a" . helm-projectile-ag)))
-  (use-package helm-ag
-    :init
-    (setq helm-ag-fuzzy-match t)
-    (setq helm-ag-insert-at-point (quote symbol))
-    )
-
   (setq projectile-generic-command "ag -g \"\""
         projectile-git-submodule-command "git submodule --quiet foreach 'echo $displaypath' | tr '\\n' '\\0'"
         projectile-switch-project-action 'magit-status)
 
   :bind (:map projectile-command-map
+        ("a" . my/projectile-search)
 	("T" . projectile-find-implementation-or-test-other-window)))
+
+(defalias 'my/projectile-search 'projectile-grep)
 
 (defun my/projectile-choices (dirs)
   "Find files in directories by (dir re) pair.
