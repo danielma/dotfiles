@@ -53,6 +53,11 @@
          :map evil-insert-state-map
          ("<tab>" . tab-indent-or-complete)))
 
+(use-package company-posframe
+  :disabled
+  :init
+  (company-posframe-mode 1))
+
 ;; (use-package lsp-mode)
 
 ;; (use-package company-lsp
