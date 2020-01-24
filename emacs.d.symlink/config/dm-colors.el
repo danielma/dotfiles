@@ -62,6 +62,9 @@
 
 (global-prettify-symbols-mode 1)
 
+(custom-set-variables
+ '(line-spacing 0.2))
+
 (use-package whitespace
   :init
   (setq whitespace-line-column 100

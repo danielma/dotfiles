@@ -276,7 +276,6 @@
  '(js-indent-level 2)
  '(js2-missing-semi-one-line-override t)
  '(line-number-mode nil)
- '(line-spacing 1)
  '(mac-mouse-wheel-smooth-scroll nil)
  '(markdown-asymmetric-header t)
  '(markdown-header-scaling t)

@@ -3,10 +3,10 @@
   (interactive)
   (with-editor-async-shell-command "hub pull-request"))
 
-(defun my/magithub-browse-default ()
-  "Browse the github repo."
-  (interactive)
-  (magithub--command "browse"))
+;; (defun my/magithub-browse-default ()
+;;   "Browse the github repo."
+;;   (interactive)
+;;   (magithub--command "browse"))
 
 (defun my/master ()
   "Switch to master and update."

@@ -12,6 +12,8 @@
 	<false/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
+	<key>ApplePressAndHoldEnabled</key>
+	<false/>
 	<key>AppleScrollAnimationEnabled</key>
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
@@ -1670,9 +1672,9 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>458 426 620 392 0 0 1536 960 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1080 45 456 915 0 0 1536 960 </string>
+	<string>0 45 1536 915 0 0 1536 960 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>320 886 570 379 0 0 2560 1440 </string>
+	<string>155 485 570 379 0 0 1536 960 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>364 163 570 379 0 0 2560 1440 </string>
 	<key>New Bookmarks</key>
@@ -3351,9 +3353,10 @@
 	</array>
 	<key>NoSyncAllAppVersions</key>
 	<array>
-		<string>3.3.7</string>
 		<string>3.3.8beta3</string>
 		<string>3.3.8beta4</string>
+		<string>3.3.7</string>
+		<string>3.3.8beta5</string>
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
@@ -3370,7 +3373,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>19BDADEF-6D71-4AC9-B80F-4A8A6244C176</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>13</integer>
+	<integer>14</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -4161,11 +4164,11 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-01-21T20:16:25Z</date>
+	<date>2020-01-22T20:42:36Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
-	<true/>
+	<false/>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -7181,7 +7184,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.3.8beta4</string>
+	<string>3.3.8beta5</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

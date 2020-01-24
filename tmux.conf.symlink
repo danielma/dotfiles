@@ -76,12 +76,12 @@ set -g status-left-length 90
 
 # window status
 
-setw -g window-status-current-style fg=colour21,bg=colour12,none
-setw -g window-status-current-format '#[bg=colour8] #I #[bold,bg=colour12] #W ' #[fg=colour4]#F '
+setw -g window-status-current-style none
+setw -g window-status-current-format '#[bg=colour4,fg=colour00,none] #I #[bg=colour0,fg=colour7,none] #W ' #[fg=colour4]#F '
 # setw -g window-status-current-format ' #[bold]#W '
 
 setw -g window-status-style fg=colour13,bg=colour00,none
-setw -g window-status-format ' #[fg=colour12]#I #[fg=colour20]#W ' #[fg=colour19]#F '
+setw -g window-status-format '#[fg=colour12] #I #[fg=colour20] #W ' #[fg=colour19]#F '
 # setw -g window-status-format ' #[fg=colour20]#W ' #[fg=colour19]#F '
 
 setw -g window-status-bell-style fg=colour255,bg=colour1,bold
