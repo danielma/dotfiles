@@ -16,7 +16,6 @@
         please = push --force-with-lease
         pu = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
         rbm = !git fetch origin master && git rebase -i origin/master
-        wip = !git add -A && git commit -m "WIP"
         unwip = !$ZSH/bin/git-unwip
         sha = rev-parse HEAD
 [color]

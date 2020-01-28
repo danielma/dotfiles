@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [[ -a todo.org ]]
+then
+    git add -f todo.org
+fi
+
+if [[ -a notes.md ]]
+then
+    git add -f notes.md
+fi
+
+git add -A
+git commit -m "WIP"
