@@ -113,6 +113,10 @@
   (evil-set-initial-state 'snails-mode 'emacs)
   )
 
+(use-package smex
+  :init
+  (smex-initialize))
+
 (defalias 'my/m-x 'counsel-M-x)
 
 (provide 'dm-completion)

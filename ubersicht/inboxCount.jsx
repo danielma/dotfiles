@@ -1,7 +1,7 @@
 export const command =
   '/usr/local/bin/tmux list-windows -t inbox -F "#W" 2>&1 | grep inbox-cli | sed "s/^inbox-cli (\\([0-9]*\\))/\\1/"';
 
-export const refreshFrequency = 60000;
+export const refreshFrequency = 10000;
 
 export const initialState = { output: 0 };
 

@@ -52,12 +52,12 @@ makeandgo() {
 }
 
 dm() {
-    if [[ $1 == 'on' ]]; then
+    if [[ $(dark-mode status) == 'off' ]]; then
         dark-mode on
-        b16 default-dark
+        b16 monokai-dark
     else
         dark-mode off
-        b16 default-light
+        b16 google-light
     fi
 }
 

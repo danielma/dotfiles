@@ -58,4 +58,11 @@
 	 ("ll" . hydra-flycheck/body))
   )
 
+(use-package flycheck-posframe
+  :after flycheck
+  :config
+  (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode)
+  :init
+  (flycheck-posframe-configure-pretty-defaults))
+
 (provide 'dm-flycheck)

@@ -29,12 +29,14 @@
 (use-package tide
   :after flycheck)
 
+(use-package eldoc-box)
+
 (defun setup-tide-mode ()
   "Setup for tide mode."
   (eslintd-fix-mode +1)
   (tide-setup)
   (dm-guard-mode)
-  (eldoc-mode +1)
+  (eldoc-box-hover-at-point-mode +1)
   (emmet-mode +1)
   (modify-syntax-entry ?_ "w")
   (setq-local emmet-expand-jsx-className? t)
