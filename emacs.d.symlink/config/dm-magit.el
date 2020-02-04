@@ -61,10 +61,10 @@
 
 (use-package github-review)
 
-(use-package magit-org-todos
-  :straight (:host github :repo "danielma/magit-org-todos")
+(use-package dm-magit-markdown-todos
+  :straight nil
   :config
-  (magit-org-todos-autoinsert))
+  (magit-markdown-todos-autoinsert))
 
 (use-package evil-magit
   :after magit

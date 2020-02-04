@@ -5,6 +5,11 @@ then
     git add -f todo.org
 fi
 
+if [[ -a todo.md ]]
+then
+    git add -f todo.md
+fi
+
 if [[ -a notes.md ]]
 then
     git add -f notes.md
