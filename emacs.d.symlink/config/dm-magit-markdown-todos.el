@@ -45,7 +45,7 @@
     m))
 
 ;;;###autoload
-(defun magit-markdown-todos-insert-org-todos ()
+(defun magit-markdown-todos-insert-markdown-todos ()
   "Insert org todos from the local todo.md."
   (when (file-readable-p (magit-markdown-todos--todo-file-path))
     (let ((todos '()))
@@ -64,7 +64,7 @@
                 (add-to-list 'todos (list level checkbox title) t))))
           (forward-line 1)))
       (when (> (length todos) 0)
-        (magit-insert-section (org-todos-wrapper)
+        (magit-insert-section (markdown-todos-wrapper)
           (magit-insert-heading "Todos:")
           (dolist (todo todos)
             (let ((checkbox (nth 1 todo))
@@ -75,7 +75,6 @@
                 (insert (concat
                          "- "
                          (propertize checkbox 'face 'markdown-gfm-checkbox-face)
-                         " "
                          title))))
             (insert ?\n))
           (insert ?\n))))))
@@ -85,7 +84,7 @@
   "Automatically insert todo section into magit status buffer."
   (magit-add-section-hook
    'magit-status-sections-hook
-   'magit-markdown-todos-insert-org-todos
+   'magit-markdown-todos-insert-markdown-todos
    'magit-insert-staged-changes
    t))
 

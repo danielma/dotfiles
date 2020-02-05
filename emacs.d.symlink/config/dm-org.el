@@ -1,4 +1,5 @@
 (use-package org-alert
+  :disabled
   :config
   (setq alert-default-style 'notifier
         alert-fade-time 0))
