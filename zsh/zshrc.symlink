@@ -54,10 +54,11 @@ makeandgo() {
 dm() {
     if [[ $(dark-mode status) == 'off' ]]; then
         dark-mode on
-        b16 monokai-dark
+
+        b16 $(cat ~/.base16_theme-name-dark)
     else
         dark-mode off
-        b16 google-light
+        b16 $(cat ~/.base16_theme-name-light)
     fi
 }
 
@@ -65,6 +66,12 @@ b16() {
     eval base16_$1
     emacsclient -e "(my/base16-set-theme \"$1\")"
     open ~/.dotfiles/ubersicht/refresh-theme.app 2>/dev/null
+
+    if [[ $(echo $1 | grep "\-dark" --count) > 0 ]]; then
+        echo -n $1 > ~/.base16_theme-name-dark
+    else
+        echo -n $1 > ~/.base16_theme-name-light
+    fi
 }
 
 alias md=makeandgo

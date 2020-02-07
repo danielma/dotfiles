@@ -70,7 +70,7 @@
             (let ((checkbox (nth 1 todo))
                   (title (nth 2 todo))
                   (level (nth 0 todo)))
-              (magit-insert-section (org-todos title)
+              (magit-insert-section (markdown-todos title)
                 (dotimes (i level) (insert "  "))
                 (insert (concat
                          "- "

@@ -49,5 +49,6 @@ yabai -m rule --add title='.+' manage=off
 # yabai -m rule --add app="Emacs.*" manage=on # --except "^$"
 
 # yabai -m signal --add event=application_activated action="/Users/danielma/.dotfiles/bin/browser"
+yabai -m signal --add event=application_front_switched action="/Users/danielma/.dotfiles/bin/switch-app"
 
 echo "yabai configuration loaded.."
