@@ -4,12 +4,13 @@ require 'json'
 
 YABAI = '/usr/local/bin/yabai'
 
-APPS_THAT_SHOULD_ALWAYS_HIDE = ['Google Chrome', 'Spotify', 'Messages']
+APPS_THAT_SHOULD_ALWAYS_HIDE = ['Google Chrome', 'Brave Browser', 'Spotify', 'Messages']
 
 recent_pid = ENV['YABAI_RECENT_PROCESS_ID'].to_i
 current_pid = ENV['YABAI_PROCESS_ID'].to_i
 
-recent_app = File.basename(`ps -o comm= -p #{recent_pid}`.strip)
+@recent_app = File.basename(`ps -o comm= -p #{recent_pid}`.strip)
+current_app = File.basename(`ps -o comm= -p #{current_pid}`.strip)
 
 yabai_windows = JSON.parse(`#{YABAI} -m query --windows`)
 
@@ -19,6 +20,18 @@ recent_yabai_window = yabai_windows.find { |w| w["pid"] == recent_pid }
 # pp current_yabai_window
 # pp recent_yabai_window
 
-if APPS_THAT_SHOULD_ALWAYS_HIDE.include?(recent_app) && recent_yabai_window["floating"] == 1 && current_yabai_window["floating"].zero?
-  `osascript -e 'tell application "System Events" to tell process "#{recent_app}" to set visible to false'`
+def hide_the_last_app
+  `osascript -e 'tell application "System Events" to tell process "#{@recent_app}" to set visible to false'`
+end
+
+if APPS_THAT_SHOULD_ALWAYS_HIDE.include?(@recent_app) && APPS_THAT_SHOULD_ALWAYS_HIDE.include?(current_app)
+  hide_the_last_app
+
+  exit
+end
+
+if APPS_THAT_SHOULD_ALWAYS_HIDE.include?(@recent_app) && recent_yabai_window["floating"] == 1 && current_yabai_window["floating"].zero?
+  hide_the_last_app
+
+  exit
 end

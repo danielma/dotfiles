@@ -1,9 +1,10 @@
 browsers = {
    { "Safari", "com.apple.Safari" },
    { "Firefox", "org.mozilla.firefox" },
-   { "Google Chrome", "com.google.chrome" }
+   { "Google Chrome", "com.google.chrome" },
+   { "Brave Browser", "com.brave.browser" }
 }
-lastBrowser = "Google Chrome"
+lastBrowser = "Brave Browser"
 
 function launchBrowser()
    launch(lastBrowser)
