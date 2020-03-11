@@ -12,3 +12,4 @@ Termfile
 .dir-locals.el
 diff.patch
 newdiff.patch
+.prettier_d

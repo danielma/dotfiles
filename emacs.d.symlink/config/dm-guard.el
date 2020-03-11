@@ -89,7 +89,7 @@
                     ((eq project-type 'rails-rspec) "bundle exec spring rspec --format=documentation")
                     ((eq project-type 'ruby-rspec) "bundle exec rspec --color")
                     ((eq project-type 'rails-test) "bin/rails test")
-                    ((eq project-type 'ruby-test) "ruby")
+                    ((eq project-type 'ruby-test) "bundle exec ruby")
                     (t "ruby"))))
     test-cmd))
 

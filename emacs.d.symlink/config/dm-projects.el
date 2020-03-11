@@ -1,11 +1,12 @@
 (dir-locals-set-class-variables
  'login
  '(
-   (ruby-mode . ((prettier-js-command . "bundle")
-                 (prettier-js-args . ("exec" "rbprettier"))
+   (ruby-mode . ((prettier-js-command . "prettier_d")
+                 (prettier-js-args . ("--plugin" "/Users/danielma/.config/yarn/global/node_modules/@prettier/plugin-ruby"))
                  (eval . (push 'ruby-rubocop flycheck-disabled-checkers))
                  (eval . (prettier-js-mode))))
    ))
+   
 
 (dir-locals-set-directory-class "~/Code/login" 'login)
 

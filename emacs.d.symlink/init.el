@@ -276,6 +276,7 @@
  '(js-indent-level 2)
  '(js2-missing-semi-one-line-override t)
  '(line-number-mode nil)
+ '(line-spacing 0.2)
  '(mac-mouse-wheel-smooth-scroll nil)
  '(markdown-asymmetric-header t)
  '(markdown-header-scaling t)
@@ -297,8 +298,13 @@
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
    (quote
-    ((prettier-js-args "exec" "rbprettier")
+    ((prettier-js-args "--plugin" "/Users/danielma/.config/yarn/global/node_modules/@prettier/plugin-ruby")
+     (prettier-js-args "--plugin" "~/.config/yarn/global/node_modules/@prettier/plugin-ruby")
+     (prettier-js-args "--plugin ~/.config/yarn/global/node_modules/@prettier/plugin-ruby")
+     (checkdoc-package-keywords-flag)
+     (prettier-js-args "exec" "rbprettier")
      (prettier-js-command . "bundle")
+     (prettier-js-command . "prettier_d")
      (eval push
            (quote ruby-rubocop)
            flycheck-disabled-checkers)

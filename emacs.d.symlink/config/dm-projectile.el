@@ -8,7 +8,8 @@
   (setq projectile-generic-command "rg --files"
         projectile-git-submodule-command "git submodule --quiet foreach 'echo $displaypath' | tr '\\n' '\\0'"
         projectile-completion-system 'ivy
-        projectile-switch-project-action 'magit-status)
+        projectile-switch-project-action 'magit-status
+        projectile-create-missing-test-files t)
 
   :bind (:map projectile-command-map
         ("a" . my/projectile-search)

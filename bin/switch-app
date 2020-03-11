@@ -2,8 +2,22 @@
 
 require 'json'
 
+LOG = false
 YABAI = '/usr/local/bin/yabai'
 
+if LOG
+  LOG_FILE = File.open("#{__FILE__}.log", "a")
+
+  LOG_FILE.puts("---------")
+end
+
+def log(info)
+  return unless LOG
+
+  LOG_FILE.puts(info)
+end
+
+ON_SCREEN_APPS = ['Emacs', 'iTerm', 'Slack', 'Trello']
 APPS_THAT_SHOULD_ALWAYS_HIDE = ['Google Chrome', 'Brave Browser', 'Spotify', 'Messages']
 
 recent_pid = ENV['YABAI_RECENT_PROCESS_ID'].to_i
@@ -24,14 +38,23 @@ def hide_the_last_app
   `osascript -e 'tell application "System Events" to tell process "#{@recent_app}" to set visible to false'`
 end
 
-if APPS_THAT_SHOULD_ALWAYS_HIDE.include?(@recent_app) && APPS_THAT_SHOULD_ALWAYS_HIDE.include?(current_app)
-  hide_the_last_app
+if !ON_SCREEN_APPS.include?(@recent_app) && recent_yabai_window["floating"] == 1 && @recent_app != current_app
+  log "recent_app: #{@recent_app}"
+  log "current_app: #{current_app}"
 
-  exit
+  hide_the_last_app
 end
 
-if APPS_THAT_SHOULD_ALWAYS_HIDE.include?(@recent_app) && recent_yabai_window["floating"] == 1 && current_yabai_window["floating"].zero?
-  hide_the_last_app
+LOG_FILE.close if LOG
 
-  exit
-end
+# if APPS_THAT_SHOULD_ALWAYS_HIDE.include?(@recent_app) && APPS_THAT_SHOULD_ALWAYS_HIDE.include?(current_app)
+#   hide_the_last_app
+
+#   exit
+# end
+
+# if APPS_THAT_SHOULD_ALWAYS_HIDE.include?(@recent_app) && recent_yabai_window["floating"] == 1 && current_yabai_window["floating"].zero?
+#   hide_the_last_app
+
+#   exit
+# end

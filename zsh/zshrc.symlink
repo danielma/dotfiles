@@ -74,6 +74,17 @@ b16() {
     fi
 }
 
+# compctl -K _b16 b16
+
+# _b16() {
+#     local completions
+
+#     completions=(~/Code/test/base16-builder/templates/shell/build/base16-*)
+#     # completions="hello\ngoodbye"
+
+#     reply=("${(ps:\n:)completions}")
+# }
+
 alias md=makeandgo
 
 alias up="cd .."

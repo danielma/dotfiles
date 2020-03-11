@@ -21,13 +21,13 @@
   ;;     (setq-local flycheck-javascript-eslint-executable eslint))))
 
 (defun my/use-rubocop-from-bin ()
-  (let* ((root (locate-dominating-file
-                (or (buffer-file-name) default-directory)
-                "Gemfile"))
-         (rubocop (and root
-                       (expand-file-name "bin/rubocop" root))))
-    (when (and rubocop (file-executable-p rubocop))
-      (setq-local flycheck-ruby-rubocop-executable rubocop))))
+  (let ((root (locate-dominating-file
+               (or (buffer-file-name) default-directory)
+               "Gemfile")))
+    (when root
+      (setq flycheck-command-wrapper-function
+            (lambda (command)
+              (append '("bundle" "exec") command))))))
 
 (use-package flycheck
   :init
