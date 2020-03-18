@@ -43,4 +43,11 @@
       :major-modes (ruby-mode)
       :bindings ("a" map))))
 
+(use-package dm-rspec
+  :straight nil
+  :config
+  (bind-map-for-major-mode base-leader-map
+    :major-modes (rspec-mode)
+    :bindings ("a" rspec-mode-command-map)))
+
 (provide 'dm-ruby)
