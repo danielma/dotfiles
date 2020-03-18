@@ -25,7 +25,7 @@
                (or (buffer-file-name) default-directory)
                "Gemfile")))
     (when root
-      (setq flycheck-command-wrapper-function
+      (setq-local flycheck-command-wrapper-function
             (lambda (command)
               (append '("bundle" "exec") command))))))
 

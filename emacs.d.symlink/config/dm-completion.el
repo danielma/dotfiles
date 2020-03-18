@@ -50,13 +50,39 @@
   (ivy-mode 1)
   :config
   (setq ivy-use-virtual-buffers t
-        enable-recursive-minibuffers t)
+        enable-recursive-minibuffers t
+        ;; ivy-re-builders-alist '((projectile-completing-read . ivy--regex-fuzzy)
+        ;;                         (counsel-imenu . ivy--regex-fuzzy)
+        ;;                         (t . ivy--regex-plus)))
+        )
   :bind (:map base-leader-map
               ("bs" . ivy-switch-buffer)
               ("ho" . swiper-thing-at-point)
               ("hr" . ivy-resume)
               ("hk" . counsel-yank-pop)
               ("hi" . counsel-imenu)))
+
+(use-package fuz
+  :straight (:host github
+             :repo "rustify-emacs/fuz.el"
+             :branch "master"
+             :files ("*"))
+  :init
+  (unless (require 'fuz-core nil t)
+    (fuz-build-and-load-dymod)))
+
+(use-package ivy-fuz
+  :straight (:host github
+             :repo "Silex/ivy-fuz.el"
+             :branch "master")
+  :config
+  (setq
+   ivy-sort-matches-functions-alist '((projectile-completing-read . ivy-fuz-sort-fn)
+                                      (t . ivy--shorter-matches-first))
+   ivy-re-builders-alist '((projectile-completing-read . ivy-fuz-regex-fuzzy)
+                           (t . ivy--regex-plus)))
+  ;; (add-to-list 'ivy-highlight-functions-alist '(ivy-fuz-regex-fuzzy . ivy-fuz-highlight-fn))
+  )
 
 (use-package counsel
   :init
@@ -81,28 +107,6 @@
           (t               . ivy-posframe-display-at-frame-top-center))))
 
 (use-package ivy-hydra)
-
-(use-package fuz
-  :disabled
-  :straight (:host github
-             :repo "rustify-emacs/fuz.el"
-             :branch "master"
-             :files ("*"))
-  :init
-  (unless (require 'fuz-core nil t)
-    (fuz-build-and-load-dymod)))
-
-(use-package ivy-fuz
-  :disabled
-  :straight (:host github
-             :repo "Silex/ivy-fuz.el"
-             :branch "master")
-  ;; :config
-  ;; (custom-set-variables
-  ;; '(ivy-sort-matches-functions-alist '((t . ivy-fuz-sort-fn)))
-  ;; '(ivy-re-builders-alist '((t . ivy-fuz-regex-fuzzy))))
-  ;; (add-to-list 'ivy-highlight-functions-alist '(ivy-fuz-regex-fuzzy . ivy-fuz-highlight-fn))
-  )
 
 (use-package snails
   :disabled
