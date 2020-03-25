@@ -10,7 +10,7 @@
   (let ((map (make-sparse-keymap)))
     map))
 
-(defvar rsepc-mode-command-map
+(defvar rspec-mode-command-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "n") #'rspec-next-failing-spec)
     (define-key map (kbd "p") #'rspec-prev-failing-spec)
@@ -95,6 +95,7 @@
 
 (defun rspec-next-failing-spec ()
   "Visit the next failing spec."
+  (interactive)
   (let* ((spec-coordinates (rspec--failing-specs))
          (map (rspec--indexed-map))
          (buffer-coordinates (--map (rspec--spec-buffer-coordinate map it) spec-coordinates))
@@ -103,6 +104,7 @@
 
 (defun rspec-prev-failing-spec ()
   "Visit the previous failing spec."
+  (interactive)
   (let* ((spec-coordinates (rspec--failing-specs))
          (map (rspec--indexed-map))
          (buffer-coordinates (--map (rspec--spec-buffer-coordinate map it) spec-coordinates))

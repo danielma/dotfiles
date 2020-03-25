@@ -100,8 +100,8 @@
   "Find a react component."
   (interactive)
   (projectile-rails-find-resource
-   "javascript: "
-   (--map (list it "\\(.+/\\)components/\\(.+\\)\\.[^.]+$") projectile-rails-component-dirs)))
+   "components: "
+   (--map (list it "\\(.*/?\\)components/\\(.+\\)\\.[^.]+$") projectile-rails-component-dirs)))
 
 ;; (evil-leader/set-key
 ;;   "jc" 'projectile-rails-find-component

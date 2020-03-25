@@ -46,7 +46,7 @@
 (use-package dm-rspec
   :straight nil
   :config
-  (bind-map-for-major-mode base-leader-map
+  (bind-map-for-mode-inherit my/rspec-mode-leader-map base-leader-map
     :major-modes (rspec-mode)
     :bindings ("a" rspec-mode-command-map)))
 

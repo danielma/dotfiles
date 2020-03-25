@@ -45,13 +45,21 @@ function httpCallback(scheme, _, _, fullURL)
    --    m.log.e('Attempt to open browser without url')
    --    return
    -- end
-   for _, browser in ipairs(browsers) do
-      if browser[1] == lastBrowser then
-         local frontmostApp = hs.application.frontmostApplication()
-         print(frontmostApp:bundleID())
-         local isHammerspoon = frontmostApp:bundleID() == "org.hammerspoon.Hammerspoon"
-         print(hs.urlevent.openURLWithBundle(fullURL, browser[2]))
-         break
+   local spotifyRegex = "^https://open.spotify.com/"
+
+   if fullURL:match(spotifyRegex) then
+      fullURL = fullURL:gsub("^https://open.spotify.com/", "spotify://")
+
+      hs.urlevent.openURL(fullURL)
+   else
+      for _, browser in ipairs(browsers) do
+         if browser[1] == lastBrowser then
+            local frontmostApp = hs.application.frontmostApplication()
+            print(frontmostApp:bundleID())
+            local isHammerspoon = frontmostApp:bundleID() == "org.hammerspoon.Hammerspoon"
+            print(hs.urlevent.openURLWithBundle(fullURL, browser[2]))
+            break
+         end
       end
    end
 end

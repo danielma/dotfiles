@@ -8,13 +8,20 @@ YABAI = '/usr/local/bin/yabai'
 if LOG
   LOG_FILE = File.open("#{__FILE__}.log", "a")
 
+  # require 'awesome_print'
+  require 'pp'
+
   LOG_FILE.puts("---------")
 end
 
-def log(info)
+def log(info, awesome: false)
   return unless LOG
 
-  LOG_FILE.puts(info)
+  if awesome
+    PP.pp(info, LOG_FILE)
+  else
+    LOG_FILE.puts(info)
+  end
 end
 
 ON_SCREEN_APPS = ['Emacs', 'iTerm', 'Slack', 'Trello']
@@ -38,10 +45,12 @@ def hide_the_last_app
   `osascript -e 'tell application "System Events" to tell process "#{@recent_app}" to set visible to false'`
 end
 
-if !ON_SCREEN_APPS.include?(@recent_app) && recent_yabai_window["floating"] == 1 && @recent_app != current_app
-  log "recent_app: #{@recent_app}"
-  log "current_app: #{current_app}"
+log "recent_app: #{@recent_app}"
+log "current_app: #{current_app}"
+log recent_yabai_window, awesome: true
+log current_yabai_window, awesome: true
 
+if !ON_SCREEN_APPS.include?(@recent_app) && recent_yabai_window["floating"] == 1 && @recent_app != current_app && current_yabai_window["floating"].zero?
   hide_the_last_app
 end
 

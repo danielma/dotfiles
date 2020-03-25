@@ -78,6 +78,7 @@
   :config
   (setq
    ivy-sort-matches-functions-alist '((projectile-completing-read . ivy-fuz-sort-fn)
+                                      (counsel-M-x . nil)
                                       (t . ivy--shorter-matches-first))
    ivy-re-builders-alist '((projectile-completing-read . ivy-fuz-regex-fuzzy)
                            (t . ivy--regex-plus)))

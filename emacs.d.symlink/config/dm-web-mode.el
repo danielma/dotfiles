@@ -1,5 +1,4 @@
 (defun my-web-mode-setup ()
-  (nlinum-mode)
   (setq-local electric-indent-chars
               (append "{};" electric-indent-chars))
   (if (equal web-mode-engine "php")
@@ -7,7 +6,10 @@
   (if (member web-mode-engine '("php" "erb"))
       (modify-syntax-entry ?_ "w"))
   (if (equal web-mode-content-type "javascript")
-      (web-mode-set-content-type "jsx")))
+      (web-mode-set-content-type "jsx"))
+  (if (s-matches? "tsx?$" (file-name-extension (buffer-file-name)))
+      (setup-tide-mode))
+  )
 
 (defun my/web-mode-php-setup ()
   "Web mode setup for php."
@@ -28,7 +30,9 @@
   (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.module\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . web-mode))
   (add-hook 'web-mode-hook 'my-web-mode-setup)
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
   (define-abbrev-table 'web-mode-abbrev-table '(
 						("nd" "<% end %>")
 						("tt" "<%")

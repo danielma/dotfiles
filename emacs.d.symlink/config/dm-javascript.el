@@ -46,6 +46,7 @@
   (tide-hl-identifier-mode +1))
   
 (use-package typescript-mode
+  :disabled
   :mode "\\.tsx?\\'"
   :after tide
   :init
