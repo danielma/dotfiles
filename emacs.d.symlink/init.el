@@ -246,8 +246,8 @@
              :config 
              (global-origami-mode))
 
-(use-package help+)
-(use-package help-fns+)
+(use-package help+ :disabled)
+(use-package help-fns+ :disabled)
 
 ;; -------------------------------------------------------------------
 (custom-set-variables

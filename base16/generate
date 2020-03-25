@@ -1,0 +1,52 @@
+#!/bin/zsh
+
+# Build Emacs
+
+function buildTheme() {
+    themePath=$1
+    themeName=$(echo $(basename $1) | sed 's/.yml//')
+
+    echo "Building $themeName"
+
+    base16-builder \
+        -b light \
+        -t ~/.dotfiles/emacs.d.symlink/themes/b16-emacs-template-light.ejs \
+        -s $themePath \
+        > templates/emacs/build/base16-$themeName-light-theme.el
+
+    base16-builder \
+        -b dark \
+        -t ~/.dotfiles/emacs.d.symlink/themes/b16-emacs-template-dark.ejs \
+        -s $themePath \
+        > templates/emacs/build/base16-$themeName-dark-theme.el
+
+    base16-builder \
+        -b light \
+        -t ~/.dotfiles/zsh/light.ejs \
+        -s $themePath \
+        > templates/shell/build/base16-$themeName-light-theme.sh
+
+    base16-builder \
+        -b dark \
+        -t ~/.dotfiles/zsh/dark.ejs \
+        -s $themePath \
+        > templates/shell/build/base16-$themeName-dark-theme.sh
+}
+
+if [[ -d templates ]] && [[ -d templates/emacs/build ]] && [[ -d templates/shell/build ]]; then
+    echo 'Clearing existing templates'
+
+    rm templates/emacs/build/*.el
+    rm templates/shell/build/*-theme.sh
+else
+    echo 'I expected a templates folder. Probably run this from a base16-builder dir'
+    exit 1
+fi
+
+for scheme in $(ls /usr/local/lib/node_modules/base16-builder/db/schemes/*.yml); do
+    buildTheme $scheme
+done
+
+for scheme in $(ls $(dirname $0)/*.yml); do
+    buildTheme $scheme
+done
