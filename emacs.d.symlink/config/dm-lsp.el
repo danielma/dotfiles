@@ -3,9 +3,10 @@
 
 (use-package lsp-mode
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (js-mode . lsp)
+         ;; (js-mode . lsp)
          ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
+         (lsp-mode . lsp-enable-which-key-integration)
+         (lsp-mode . eldoc-box-hover-at-point-mode))
   :commands lsp)
 
 ;; optionally

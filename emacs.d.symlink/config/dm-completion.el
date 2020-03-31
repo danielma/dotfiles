@@ -51,9 +51,11 @@
   :config
   (setq ivy-use-virtual-buffers t
         enable-recursive-minibuffers t
-        ;; ivy-re-builders-alist '((projectile-completing-read . ivy--regex-fuzzy)
-        ;;                         (counsel-imenu . ivy--regex-fuzzy)
-        ;;                         (t . ivy--regex-plus)))
+        ivy-sort-matches-functions-alist '((counsel-M-x . nil)
+                                           (t . ivy--shorter-matches-first))
+        ivy-re-builders-alist '((projectile-completing-read . ivy--regex-fuzzy)
+                                (counsel-projectile-find-file . ivy--regex-fuzzy)
+                                (t . ivy--regex-plus))
         )
   :bind (:map base-leader-map
               ("bs" . ivy-switch-buffer)
@@ -63,6 +65,7 @@
               ("hi" . counsel-imenu)))
 
 (use-package fuz
+  :disabled
   :straight (:host github
              :repo "rustify-emacs/fuz.el"
              :branch "master"
@@ -72,17 +75,12 @@
     (fuz-build-and-load-dymod)))
 
 (use-package ivy-fuz
+  :disabled
+  :after fuz
+  :if (require 'fuz-core nil 'noerror)
   :straight (:host github
              :repo "Silex/ivy-fuz.el"
              :branch "master")
-  :config
-  (setq
-   ivy-sort-matches-functions-alist '((projectile-completing-read . ivy-fuz-sort-fn)
-                                      (counsel-M-x . nil)
-                                      (t . ivy--shorter-matches-first))
-   ivy-re-builders-alist '((projectile-completing-read . ivy-fuz-regex-fuzzy)
-                           (t . ivy--regex-plus)))
-  ;; (add-to-list 'ivy-highlight-functions-alist '(ivy-fuz-regex-fuzzy . ivy-fuz-highlight-fn))
   )
 
 (use-package counsel

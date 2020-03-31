@@ -272,6 +272,7 @@
  '(helm-source-names-using-follow
    (quote
     ("Projectile files" "Search at ~/.dotfiles/emacs.d.symlink/" "Search at ~/Code/ChurchCenterApp/" "Search at ~/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/stripe-3.3.1/" "Search at ~/Code/accounts/" "Jump to: " "Search at ~/Code/pco-api/" "Search at ~/Code/pco-seeds/" "Search at ~/Code/test/audited/" "Search at ~/Code/church-center/" "Search at ~/Code/helpdesk/" "Search at ~/Code/picodex/" "Search at ~/Code/api/" "Search at ~/Code/groups/" "Search at ~/Kalabox/living/code/" "global-mark-ring" "mark-ring" "Occur")))
+ '(highlight-indent-guides-method (quote character))
  '(indent-tabs-mode nil)
  '(initial-scratch-message nil)
  '(ivy-on-del-error-function (quote ignore))

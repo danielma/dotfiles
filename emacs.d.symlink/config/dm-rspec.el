@@ -114,6 +114,8 @@
 (define-derived-mode rspec-mode ruby-mode "RSpec"
   "Major mode for specs.")
 
+(flycheck-add-mode 'ruby-rubocop 'rspec-mode)
+
 (add-to-list 'auto-mode-alist
              (cons (purecopy "_spec\\.rb\\'") 'rspec-mode))
 

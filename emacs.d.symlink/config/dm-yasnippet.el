@@ -58,13 +58,6 @@
   :init
   (company-posframe-mode 1))
 
-;; (use-package lsp-mode)
-
-;; (use-package company-lsp
-;;   :init
-;;   (push 'company-lsp company-backends)
-;;   :after lsp-mode)
-
 (use-package yasnippet
   :init
   (add-hook 'after-init-hook 'yas-global-mode)
