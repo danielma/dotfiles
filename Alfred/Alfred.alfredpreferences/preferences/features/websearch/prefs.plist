@@ -17,10 +17,23 @@
 			<key>utf8</key>
 			<true/>
 		</dict>
+		<key>6F6B06CF-A2AD-48C1-A88C-3296801BAC4D</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>ghm</string>
+			<key>text</key>
+			<string>Github Repo (MCT)</string>
+			<key>url</key>
+			<string>https://github.com/ministrycentered/{query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
 		<key>9D8D9B7F-8CE5-43F8-8E71-5BB160252B9E</key>
 		<dict>
 			<key>enabled</key>
-			<false/>
+			<true/>
 			<key>keyword</key>
 			<string>ghmp</string>
 			<key>text</key>

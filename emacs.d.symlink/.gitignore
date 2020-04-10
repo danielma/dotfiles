@@ -14,3 +14,7 @@ url
 bookmarks
 transient
 *.sqlite
+
+smex-items
+
+.lsp-*

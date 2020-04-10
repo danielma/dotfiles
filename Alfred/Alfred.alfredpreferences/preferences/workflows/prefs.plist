@@ -6,5 +6,7 @@
 	<string>ma.daniel.itunes</string>
 	<key>defaultCreatedBy</key>
 	<string>Daniel Ma</string>
+	<key>showAlignmentGuides</key>
+	<true/>
 </dict>
 </plist>

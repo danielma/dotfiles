@@ -107,6 +107,10 @@
 ;;   "jc" 'projectile-rails-find-component
 ;;   "jt" 'my/projectile-rails-find-js-test)
 
+(use-package inf-ruby)
+(use-package inflections)
+(use-package rake)
+
 (use-package projectile-rails
   :straight (:type git :host github :repo "danielma/projectile-rails" :branch "dma/use-all-matches-for-finding-resource"
                    :upstream (:host github :repo "asok/projectile-rails"))

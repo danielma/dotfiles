@@ -14,10 +14,10 @@
   "Breaks an object when point is inside the block."
   (newline-and-indent)
 
-  (while (re-search-forward "{\\|(\\|,\\|}\\|)" (line-end-position) t)
+  (while (re-search-forward "\\[\\|{\\|(\\|,\\|\\]\\|}\\|)" (line-end-position) t)
     (let ((string-before (char-to-string (char-before))))
-      (cond ((s-contains? string-before "{(") (tt/-break-object))
-            ((s-contains? string-before "})") (tt/-break-object-end))
+      (cond ((s-contains? string-before "[{(") (tt/-break-object))
+            ((s-contains? string-before "]})") (tt/-break-object-end))
             (t (newline-and-indent))))))
 
 (defun tt/-break-object-end ()
@@ -30,7 +30,7 @@
       (progn
         (forward-char)
         (insert-char ?,)
-        (re-search-forward "}\\|)" (line-end-position))
+        (re-search-forward "\\]\\|}\\|)" (line-end-position))
         (backward-char)))
 
   (newline-and-indent)
@@ -42,7 +42,7 @@
   (interactive)
 
   ;; go to the beginning of this object
-  (re-search-backward "{\\|(" (line-beginning-position))
+  (re-search-backward "\\[\\|{\\|(" (line-beginning-position))
   (forward-char)
   (tt/-break-object)
   )

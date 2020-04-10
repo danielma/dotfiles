@@ -46,7 +46,6 @@
   (tide-hl-identifier-mode +1))
   
 (use-package typescript-mode
-  :disabled
   :mode "\\.tsx?\\'"
   :after tide
   :init
@@ -54,6 +53,9 @@
   (flycheck-add-mode 'javascript-eslint 'typescript-mode)
   :custom
   (typescript-indent-level 2)
+  :config
+  (font-lock-add-keywords 'typescript-mode
+                          '(("\\(?: </?\\([a-zA-Z0-9.]+\\)\\)" 1 'web-mode-html-tag-face)))
   )
 
 

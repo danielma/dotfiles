@@ -53,9 +53,12 @@
         enable-recursive-minibuffers t
         ivy-sort-matches-functions-alist '((counsel-M-x . nil)
                                            (t . ivy--shorter-matches-first))
-        ivy-re-builders-alist '((projectile-completing-read . ivy--regex-fuzzy)
-                                (counsel-projectile-find-file . ivy--regex-fuzzy)
-                                (t . ivy--regex-plus))
+        ivy-re-builders-alist '(;; (projectile-completing-read . ivy--regex-fuzzy)
+                                (counsel-rg . ivy--regex-plus)
+                                (swiper . ivy--regex-plus)
+                                (counsel-M-x . ivy--regex-plus)
+                                ;; (counsel-projectile-find-file . ivy--regex-fuzzy)
+                                (t . ivy--regex-fuzzy))
         )
   :bind (:map base-leader-map
               ("bs" . ivy-switch-buffer)
@@ -92,7 +95,7 @@
   (counsel-projectile-mode)
   :config
   (setq counsel-projectile-rg-initial-input '(ivy-thing-at-point)
-        counsel-projectile-switch-project-action 'magit-status))
+        counsel-projectile-switch-project-action 'my/projectile-switch-command))
 
 (use-package ivy-posframe
   :init

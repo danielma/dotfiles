@@ -1,16 +1,36 @@
+(defun projectile-rubygem-project-p ()
+  (or (projectile-verify-file-wildcard "*.gemspec") (projectile-verify-file "Gemfile")))
+
+(defun my/projectile-switch-command (&optional directory)
+  "If the project being switched to is a git repository, invoke
+magit-status on the project root directory. Use dired otherwise."
+  (interactive)
+  (let ((project-root (or directory (projectile-project-root))))
+    (if (and (executable-find "git")
+             (file-exists-p (concat project-root "/.git/index")))
+        (magit-status project-root)
+      (dired project-root))))
+
+(defun my/projectile-ignore-project (arg)
+  (s-contains? "/.rbenv/" arg))
+
 (use-package projectile
   :init
   (projectile-mode)
-
   :config
   (define-key base-leader-map "p" projectile-command-map)
-
-  (setq projectile-generic-command "rg --files"
-        projectile-git-submodule-command "git submodule --quiet foreach 'echo $displaypath' | tr '\\n' '\\0'"
-        projectile-completion-system 'ivy
-        projectile-switch-project-action 'magit-status
-        projectile-create-missing-test-files t)
-
+  (projectile-register-project-type 'rubygem 'projectile-rubygem-project-p
+                                    :compile "bundle"
+                                    :test "bundle exec rspec"
+                                    :test-suffix "_spec.rb")
+  :custom
+  (projectile-generic-command "rg --files")
+  (projectile-git-submodule-command "git submodule --quiet foreach 'echo $displaypath' | tr '\\n' '\\0'")
+  (projectile-completion-system 'ivy)
+  (projectile-switch-project-action 'my/projectile-switch-command) ;; you're looking in the wrong place. set counsel
+  (projectile-create-missing-test-files t)
+  (projectile-project-search-path '("~/Code/"))
+  (projectile-ignored-project-function 'my/projectile-ignore-project)
   :bind (:map projectile-command-map
         ("a" . my/projectile-search)
 	("T" . projectile-find-implementation-or-test-other-window)))

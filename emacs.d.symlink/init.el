@@ -86,7 +86,7 @@
 
 (use-package dumb-jump
   :config
-  (setq dumb-jump-selector 'helm
+  (setq dumb-jump-selector 'ivy
         dumb-jump-aggressive t)
   :bind (:map base-leader-map
 	 ("sa" . dumb-jump-go)
@@ -171,7 +171,8 @@
 (add-hook 'after-init-hook (lambda ()
 			     (if window-system
 				 (server-start))
-			     (setq-default abbrev-mode t)
+			     (setq-default abbrev-mode t
+                                           save-abbrevs nil)
 			     (global-hl-line-mode)))
 
 (use-package exec-path-from-shell
@@ -267,11 +268,6 @@
  '(evil-insert-state-modes
    (quote
     (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode)))
- '(helm-imenu-fuzzy-match t t)
- '(helm-mode-fuzzy-match t)
- '(helm-source-names-using-follow
-   (quote
-    ("Projectile files" "Search at ~/.dotfiles/emacs.d.symlink/" "Search at ~/Code/ChurchCenterApp/" "Search at ~/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/stripe-3.3.1/" "Search at ~/Code/accounts/" "Jump to: " "Search at ~/Code/pco-api/" "Search at ~/Code/pco-seeds/" "Search at ~/Code/test/audited/" "Search at ~/Code/church-center/" "Search at ~/Code/helpdesk/" "Search at ~/Code/picodex/" "Search at ~/Code/api/" "Search at ~/Code/groups/" "Search at ~/Kalabox/living/code/" "global-mark-ring" "mark-ring" "Occur")))
  '(highlight-indent-guides-method (quote character))
  '(indent-tabs-mode nil)
  '(initial-scratch-message nil)

@@ -47,9 +47,8 @@
 
 ;; (deftheme session-face)
 
-;; (custom-theme-set-faces
-;;  'session-face
-;;  '(default ((t (:weight normal :height 120 :width normal :family "IBM Plex Mono")))))
+(custom-set-faces
+ '(default ((t (:weight normal :height 120 :width normal :family "IBM Plex Mono")))))
 
 ;; (provide-theme 'session-face)
 
