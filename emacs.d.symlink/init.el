@@ -348,8 +348,7 @@
  '(select-enable-clipboard nil)
  '(selectric-mode nil)
  '(show-paren-mode t)
- '(typescript-indent-level 2)
- '(yas-triggers-in-field t))
+ '(typescript-indent-level 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

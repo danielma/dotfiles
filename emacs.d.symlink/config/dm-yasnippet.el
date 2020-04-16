@@ -5,13 +5,15 @@
 
 (defun do-yas-expand ()
   (let ((yas-fallback-behavior 'return-nil))
-    (yas-expand)))
+    (if (yas-active-snippets)
+        (yas-next-field-or-maybe-expand)
+      (yas-expand))))
 
-(defun complete-or-yas-expand ()
-  (interactive)
-  (if (or (not yas-minor-mode)
-	  (null (do-yas-expand)))
-      (company-complete-common)))
+;; (defun complete-or-yas-expand ()
+;;   (interactive)
+;;   (if (or (not yas-minor-mode)
+;; 	  (null (do-yas-expand)))
+;;       (company-complete-common)))
 
 (defun check-expansion ()
   (save-excursion
@@ -25,10 +27,7 @@
   (interactive)
   (if (minibufferp)
       (minibuffer-complete)
-    (if (or (not yas-minor-mode) (null (do-yas-expand)))
-        (if (check-expansion)
-            (company-complete-common)
-          (indent-for-tab-command)))))
+    (or (do-yas-expand) (company-complete))))
 
 (defun my/no-yas ()
   (or
@@ -37,7 +36,7 @@
    (derived-mode-p 'compilation-mode)))
 
 (use-package company
-  :commands company-complete-common
+  :commands company-complete-
   :init
   (global-company-mode)
   (setq company-dabbrev-downcase nil
@@ -64,12 +63,10 @@
   :config
   (add-hook 'web-mode-hook 'web-mode-add-yas-extra-modes)
   (setq yas-dont-activate-functions (add-to-list 'yas-dont-activate-functions #'my/no-yas))
-  :bind (:map yas-minor-mode-map
-	      ;; ("<tab>" . tab-indent-or-complete)
-              )
+  ;; :bind (:map yas-minor-mode-map)
+  :custom
+  (yas-triggers-in-field t)
   )
-
-(use-package yasnippet-snippets)
 
 (add-hook 'after-init-hook 'yas-global-mode)
 

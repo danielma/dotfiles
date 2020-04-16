@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: instance variable
+# key: @
+# --
+
+@${1:attr} = ${2:$1}

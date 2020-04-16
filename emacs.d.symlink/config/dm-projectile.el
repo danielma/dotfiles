@@ -1,5 +1,5 @@
 (defun projectile-rubygem-project-p ()
-  (or (projectile-verify-file-wildcard "*.gemspec") (projectile-verify-file "Gemfile")))
+  (projectile-verify-file-wildcard "*.gemspec"))
 
 (defun my/projectile-switch-command (&optional directory)
   "If the project being switched to is a git repository, invoke
@@ -23,6 +23,7 @@ magit-status on the project root directory. Use dired otherwise."
                                     :compile "bundle"
                                     :test "bundle exec rspec"
                                     :test-suffix "_spec.rb")
+  ;; (projectile-register-project-type 'generic '("README.md"))
   :custom
   (projectile-generic-command "rg --files")
   (projectile-git-submodule-command "git submodule --quiet foreach 'echo $displaypath' | tr '\\n' '\\0'")
