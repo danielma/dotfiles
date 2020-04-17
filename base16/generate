@@ -1,36 +1,43 @@
 #!/bin/zsh
 
-# Build Emacs
-
 function buildTheme() {
     themePath=$1
     themeName=$(echo $(basename $1) | sed 's/.yml//')
 
-    echo "Building $themeName"
 
-    base16-builder \
-        -b light \
-        -t ~/.dotfiles/emacs.d.symlink/themes/b16-emacs-template-light.ejs \
-        -s $themePath \
-        > templates/emacs/build/base16-$themeName-light-theme.el
+    if [[ "$themeName" =~ "-(light|dark)$" ]]; then
+        echo "Building $themeName"
+        base16-builder \
+            -t ~/.dotfiles/emacs.d.symlink/themes/b16-emacs-template-manual.ejs \
+            -s $themePath \
+            > templates/emacs/build/base16-$themeName-theme.el
 
-    base16-builder \
-        -b dark \
-        -t ~/.dotfiles/emacs.d.symlink/themes/b16-emacs-template-dark.ejs \
-        -s $themePath \
-        > templates/emacs/build/base16-$themeName-dark-theme.el
+        base16-builder \
+            -t ~/.dotfiles/zsh/dark.ejs \
+            -s $themePath \
+            > templates/shell/build/base16-$themeName-theme.sh
+    else
+        echo "Building $themeName with automatic variants"
+        base16-builder \
+            -t ~/.dotfiles/emacs.d.symlink/themes/b16-emacs-template-light.ejs \
+            -s $themePath \
+            > templates/emacs/build/base16-$themeName-light-theme.el
 
-    base16-builder \
-        -b light \
-        -t ~/.dotfiles/zsh/light.ejs \
-        -s $themePath \
-        > templates/shell/build/base16-$themeName-light-theme.sh
+        base16-builder \
+            -t ~/.dotfiles/emacs.d.symlink/themes/b16-emacs-template-dark.ejs \
+            -s $themePath \
+            > templates/emacs/build/base16-$themeName-dark-theme.el
 
-    base16-builder \
-        -b dark \
-        -t ~/.dotfiles/zsh/dark.ejs \
-        -s $themePath \
-        > templates/shell/build/base16-$themeName-dark-theme.sh
+        base16-builder \
+            -t ~/.dotfiles/zsh/light.ejs \
+            -s $themePath \
+            > templates/shell/build/base16-$themeName-light-theme.sh
+
+        base16-builder \
+            -t ~/.dotfiles/zsh/dark.ejs \
+            -s $themePath \
+            > templates/shell/build/base16-$themeName-dark-theme.sh
+    fi
 }
 
 if [[ -d templates ]] && [[ -d templates/emacs/build ]] && [[ -d templates/shell/build ]]; then

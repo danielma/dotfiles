@@ -1,0 +1,88 @@
+#!/usr/bin/env node
+
+const https = require('https')
+const fs = require('fs')
+const crypto = require('crypto')
+const yaml = require('js-yaml')
+const prepareColors = require('themer/lib/prepare')
+
+function tempfile() {
+  return new Promise((resolve) => {
+    require('crypto').randomBytes(48, function(err, buffer) {
+      resolve(`/tmp/${buffer.toString('hex')}`);
+    });
+  })
+}
+
+const themes = ['monkey']
+
+function request(url) {
+  return new Promise((resolve, reject) => {
+    https.get(url, (resp) => {
+      let data = '';
+
+      resp.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      resp.on('end', () => {
+        resolve({ status: resp.statusCode, data })
+      });
+    }).on("error", (err) => {
+      console.log("Error: " + err.message);
+      reject(err.message)
+    });
+  })
+}
+
+function transformThemerToB16(colors) {
+  if (colors.light || colors.dark) {
+    const light = colors.light && transformThemerToB16(colors.light)
+    const dark = colors.dark && transformThemerToB16(colors.dark)
+
+    return { light, dark }
+  } else {
+    return {
+      base00: colors.shade0.substring(1),
+      base01: colors.shade1.substring(1),
+      base02: colors.shade2.substring(1),
+      base03: colors.shade3.substring(1),
+      base04: colors.shade4.substring(1),
+      base05: colors.shade5.substring(1),
+      base06: colors.shade6.substring(1),
+      base07: colors.shade7.substring(1),
+      base08: colors.accent0.substring(1),
+      base09: colors.accent1.substring(1),
+      base0A: colors.accent2.substring(1),
+      base0B: colors.accent3.substring(1),
+      base0C: colors.accent4.substring(1),
+      base0D: colors.accent5.substring(1),
+      base0E: colors.accent6.substring(1),
+      base0F: colors.accent7.substring(1),
+    }
+  }
+}
+
+function main() {
+  themes.forEach(async (theme) => {
+    const temp = await tempfile()
+
+    console.log(temp)
+
+    const { data } = await request(`https://raw.githubusercontent.com/mjswensen/themer/master/cli/packages/themer-colors-${theme}/lib/index.js`)
+
+    fs.writeFileSync(temp, data)
+
+    const colors = transformThemerToB16(prepareColors(require(temp).colors))
+
+    if (colors.light) {
+      fs.writeFileSync(`${theme}-light.yml`, yaml.dump({ scheme: `${theme} light`, author: "Themer", ...colors.light }))
+    }
+
+    if (colors.dark) {
+      fs.writeFileSync(`${theme}-dark.yml`, yaml.dump({ scheme: `${theme} dark`, author: "Themer", ...colors.dark }))
+    }
+  })
+}
+
+main()

@@ -52,6 +52,7 @@
   (setq ivy-use-virtual-buffers t
         enable-recursive-minibuffers t
         ivy-sort-matches-functions-alist '((counsel-M-x . nil)
+                                           (counsel-yank-pop . nil)
                                            (t . ivy--shorter-matches-first))
         ivy-re-builders-alist '(;; (projectile-completing-read . ivy--regex-fuzzy)
                                 (counsel-rg . ivy--regex-plus)
