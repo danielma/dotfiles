@@ -27,7 +27,11 @@
   (interactive)
   (if (minibufferp)
       (minibuffer-complete)
-    (or (do-yas-expand) (company-complete))))
+    (or (do-yas-expand)
+        (and
+         (s-matches? "[^ \n\t]" (substring-no-properties (thing-at-point 'line)))
+         (company-complete))
+        (indent-for-tab-command))))
 
 (defun my/no-yas ()
   (or

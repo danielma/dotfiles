@@ -33,6 +33,10 @@
   t
   "Global variable that can disable dm-guard.")
 
+(defvar dm-guard-only-failures
+  nil
+  "Global variable to run only failres.")
+
 (defvar dm-guard-line-mode
   nil
   "Global variable to run only the current test.")
@@ -48,6 +52,12 @@
   (interactive)
   (setq dm-guard-line-mode (not dm-guard-line-mode))
   (message (if dm-guard-line-mode "Enabled" "Disabled")))
+
+(defun dm-guard-toggle-only-failures ()
+  "Globally toggle line mode for runner."
+  (interactive)
+  (setq dm-guard-only-failures (not dm-guard-only-failures))
+  (message (if dm-guard-only-failures "Enabled" "Disabled")))
 
 (defun dm-guard-test ()
   "Use tmux to execute a rails test."
@@ -78,6 +88,13 @@
       (let ((full-command (concat "cd " (projectile-project-root) " && " command)))
         (emamux:send-command (concat "clear; echo -e '" command "'; " full-command)))))
 
+(defun --dm-guard-rspec-test-command ()
+  "Generate the test command for rspec."
+  (let ((base "rspec --format=documentation --color"))
+    (if dm-guard-only-failures
+        (concat base " --only-failures")
+      base)))
+
 (defun --dm-guard-test-command ()
   "Generate the test command for a buffer."
   (let* ((project-type (projectile-project-type))
@@ -86,8 +103,8 @@
          (test-cmd (cond
                     ((string-match ".js$" file-name) "yarn run test --colors")
                     ((string-match ".ts$" file-name) "yarn run test --colors")
-                    ((eq project-type 'rails-rspec) "bundle exec spring rspec --format=documentation")
-                    ((eq project-type 'ruby-rspec) "bundle exec rspec --color")
+                    ((eq project-type 'rails-rspec) (concat "bundle exec spring " (--dm-guard-rspec-test-command)))
+                    ((eq project-type 'ruby-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'rails-test) "bin/rails test")
                     ((eq project-type 'ruby-test) "bundle exec ruby")
                     (t "ruby"))))
@@ -136,6 +153,10 @@
   "Select a BUFFER to use as the test file."
   (interactive "b")
   (setq-local dm-guard-manual-test-buffer (get-buffer buffer)))
+
+(defun dm-guard-clear-test-buffer ()
+  "Remove custom buffer for testing."
+  (setq-local dm-guard-manual-test-buffer nil))
 
 (define-minor-mode dm-guard-mode
   "Use emamux to test after saving a file."
