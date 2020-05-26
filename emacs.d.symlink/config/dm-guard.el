@@ -105,6 +105,7 @@
                     ((string-match ".ts$" file-name) "yarn run test --colors")
                     ((eq project-type 'rails-rspec) (concat "bundle exec spring " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'ruby-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
+                    ((eq project-type 'rubygem) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'rails-test) "bin/rails test")
                     ((eq project-type 'ruby-test) "bundle exec ruby")
                     (t "ruby"))))
@@ -156,6 +157,7 @@
 
 (defun dm-guard-clear-test-buffer ()
   "Remove custom buffer for testing."
+  (interactive)
   (setq-local dm-guard-manual-test-buffer nil))
 
 (define-minor-mode dm-guard-mode

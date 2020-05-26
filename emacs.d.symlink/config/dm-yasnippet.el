@@ -54,7 +54,8 @@
          ("C-p" . company-select-previous)
          ("<tab>" . tab-indent-or-complete)
          :map evil-insert-state-map
-         ("<tab>" . tab-indent-or-complete)))
+         ("<tab>" . tab-indent-or-complete)
+         ("C-i" . company-complete)))
 
 (use-package company-posframe
   :disabled

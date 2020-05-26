@@ -2,7 +2,7 @@
         protocol = https
 [user]
         name = Daniel Ma
-        email = dma@ministrycentered.com
+        email = dma@planningcenter.com
 [credential]
         helper = osxkeychain
 [magit]

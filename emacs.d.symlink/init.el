@@ -84,12 +84,18 @@
 
 (use-package dm-completion :straight nil)
 
+(defun my/custom-dumb-jump-go ()
+  (interactive)
+  (if (eq major-mode 'typescript-mode)
+      (tide-jump-to-definition)
+    (dumb-jump-go)))
+
 (use-package dumb-jump
   :config
   (setq dumb-jump-selector 'ivy
         dumb-jump-aggressive t)
   :bind (:map base-leader-map
-	 ("sa" . dumb-jump-go)
+	 ("sa" . my/custom-dumb-jump-go)
 	 ("sA" . dumb-jump-go-other-window)
 	 ("sp" . dumb-jump-go-prompt)
 	 ("sl" . dumb-jump-quick-look)))
@@ -171,9 +177,17 @@
 (add-hook 'after-init-hook (lambda ()
 			     (if window-system
 				 (server-start))
-			     (setq-default abbrev-mode t
-                                           save-abbrevs nil)
 			     (global-hl-line-mode)))
+
+(use-package abbrev
+  :straight nil
+  :config
+  (define-abbrev
+    global-abbrev-table "orgn" "organization")
+  :custom
+  (abbrev-mode t)
+  (save-abbrevs nil)
+  )
 
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
@@ -310,10 +324,6 @@
      (eval push "ruby-rubocop" flycheck-disabled-checkers)
      (eval push "ruby-rubocop")
      (rufo-mode-use-bundler . t)
-     (eval setq-local flycheck-disabled-checkers
-           (append flycheck-disabled-checkers
-                   (quote
-                    (ruby-reek))))
      (eval when
            (and
             (buffer-file-name)

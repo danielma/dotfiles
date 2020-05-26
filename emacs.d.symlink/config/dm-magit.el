@@ -35,17 +35,10 @@
 	magit-log-select-arguments (quote ("-n20" "--decorate"))
 	magit-popup-use-prefix-argument 'default
 	magit-save-repository-buffers nil
-	magit-display-buffer-function (lambda (buffer)
-					(display-buffer
-					 buffer (if (and (derived-mode-p 'magit-mode)
-							 (memq (with-current-buffer buffer major-mode)
-							       '(magit-process-mode
-								 magit-revision-mode
-								 magit-diff-mode
-								 magit-stash-mode
-								 magit-status-mode)))
-						    nil
-						  '(display-buffer-same-window))))
+        magit-display-buffer-function (lambda (buffer)
+                                        (if (equal (buffer-name) "*scratch*")
+                                            (display-buffer buffer '(display-buffer-same-window))
+                                          (magit-display-buffer-traditional buffer)))
 	magit-list-refs-namespaces '("refs/heads" "refs/remotes" "refs/pull"))
   :config
   (setq magit-blame-heading-format "%C | %s")
