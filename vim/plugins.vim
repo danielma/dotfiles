@@ -1,4 +1,5 @@
-call plug#begin()
+call plug#begin('~/.vim/plugged')
+
 
 " Tools
 "Plug 'scrooloose/nerdtree'
@@ -6,7 +7,7 @@ call plug#begin()
 "Plug 'skalnik/vim-vroom'
 "Plug 'tpope/vim-rbenv'
 
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'benekastah/neomake'
 "Plug 'easymotion/vim-easymotion'
@@ -17,7 +18,7 @@ Plug 'bronson/vim-trailing-whitespace'
 ""Plug 'powerline/powerline'
 "Plug 'jeetsukumaran/vim-buffergator'
 "Plug 'rking/ag.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 "Plug 'daylerees/colour-schemes', { 'rtp': 'vim/' }
 Plug 'rgarver/Kwbd.vim'
@@ -31,7 +32,7 @@ Plug 'tpope/vim-commentary'
 "Plug 'chriskempson/vim-tomorrow-theme'
 "Plug 'altercation/vim-colors-solarized'
 "Plug 'joshdick/onedark.vim'
-Plug 'chriskempson/base16-vim', { 'dir': '~/Code/test/base16-builder-php/templates/vim' }
+Plug 'chriskempson/base16-vim'
 
 "" Languages
 "Plug 'vim-ruby/vim-ruby'

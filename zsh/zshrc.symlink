@@ -67,6 +67,8 @@ b16() {
     emacsclient -e "(my/base16-set-theme \"$1\")"
     open ~/.dotfiles/ubersicht/refresh-theme.app 2>/dev/null
 
+    echo $1 > ~/.base16_theme-name
+
     if [[ $(echo $1 | grep "\-dark" --count) > 0 ]]; then
         echo -n $1 > ~/.base16_theme-name-dark
     else

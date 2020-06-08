@@ -7,6 +7,7 @@ function buildTheme() {
 
     if [[ "$themeName" =~ "-(light|dark)$" ]]; then
         echo "Building $themeName"
+
         base16-builder \
             -t ~/.dotfiles/emacs.d.symlink/themes/b16-emacs-template-manual.ejs \
             -s $themePath \
@@ -16,6 +17,12 @@ function buildTheme() {
             -t ~/.dotfiles/zsh/dark.ejs \
             -s $themePath \
             > templates/shell/build/base16-$themeName-theme.sh
+
+        base16-builder \
+            -t vim \
+            -s $themePath \
+            -b dark \
+            > ~/.config/nvim/colors/base16-$themeName.vim
     else
         echo "Building $themeName with automatic variants"
         base16-builder \
@@ -37,6 +44,18 @@ function buildTheme() {
             -t ~/.dotfiles/zsh/dark.ejs \
             -s $themePath \
             > templates/shell/build/base16-$themeName-dark-theme.sh
+
+        base16-builder \
+            -t vim \
+            -s $themePath \
+            -b dark \
+            > ~/.config/nvim/colors/base16-$themeName-dark.vim
+
+        base16-builder \
+            -t vim \
+            -s $themePath \
+            -b light \
+            > ~/.config/nvim/colors/base16-$themeName-light.vim
     fi
 }
 

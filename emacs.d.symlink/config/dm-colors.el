@@ -38,8 +38,13 @@
    'session-face
    `(default ((t (:weight normal :width normal :slant normal :font ,font))))))
 
+(defun get-string-from-file (filePath)
+  "Return filePath's file content."
+  (with-temp-buffer
+    (insert-file-contents filePath)
+    (buffer-string)))
 
-(let* ((themename (getenv "BASE16_THEME"))
+(let* ((themename (s-chomp (get-string-from-file "~/.base16_theme-name")))
        (theme (intern (concat "base16-" themename))))
   (load-theme (if (member theme (custom-available-themes))
 		  theme

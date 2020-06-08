@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: react-use-state
+# key: us
+# --
+const [${1:state}, set${1:$(s-upper-camel-case yas-text)}] = useState${2:<${3:type}>}(${4:defaultValue})$0

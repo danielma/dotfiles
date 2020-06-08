@@ -64,7 +64,7 @@
 	<key>description</key>
 	<string></string>
 	<key>disabled</key>
-	<false/>
+	<true/>
 	<key>name</key>
 	<string>Markdown</string>
 	<key>objects</key>
@@ -123,23 +123,6 @@ end alfred_script</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>applescript</key>
-				<string>on alfred_script(q)
-  	tell application "Google Chrome"		get URL of active tab of first window	end tell
-end alfred_script</string>
-				<key>cachescript</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.applescript</string>
-			<key>uid</key>
-			<string>ACF5B43A-EE23-422E-9028-6147567521B8</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>autopaste</key>
 				<true/>
 				<key>clipboardtext</key>
@@ -153,6 +136,23 @@ end alfred_script</string>
 			<string>95E9BF76-BB3A-4E52-839E-8340AA2A3C11</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+  	tell application "Google Chrome"		get URL of active tab of first window	end tell
+end alfred_script</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>ACF5B43A-EE23-422E-9028-6147567521B8</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
