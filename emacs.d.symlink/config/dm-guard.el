@@ -130,6 +130,10 @@
           (cond
            (is-test-file file-name)
            ((string-match "^app/views" file-name) nil)
+           ((string-match "^app/graphs/\\(.+\\).rb$" file-name)
+            (if spec-mode
+                (concat "spec/requests/graphs/" (match-string 1 file-name) "_spec.rb")
+              (concat "test/integration" (match-string 1 file-name) "_test.rb")))
            ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
             (let* ((graph-dir (match-string 1 file-name))
                    (vertex-name (match-string 2 file-name))

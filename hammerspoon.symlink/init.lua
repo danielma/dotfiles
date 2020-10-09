@@ -41,7 +41,7 @@ apps = {
    {'t', 'iTerm'},
    {'r', 'Trello'},
    {'m', 'Messages'},
-   {'n', 'Ulysses'},
+   {'n', 'iA Writer'},
    {'p', 'Paw'},
    {'q', 'TablePlus'},
    {'v', 'Visual Studio Code'},

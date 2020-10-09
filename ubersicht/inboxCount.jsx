@@ -14,7 +14,7 @@ export function updateState(event, previousState) {
 }
 
 function doImperativeWork(count) {
-  const el = document.querySelector("#uebersicht .inboxCount");
+  const el = document.querySelector("#bar .inboxCount");
 
   if (count > 0) {
     el.innerHTML = count;

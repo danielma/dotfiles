@@ -97,7 +97,7 @@
   :config
   (setq counsel-projectile-rg-initial-input '(ivy-thing-at-point)
         counsel-projectile-switch-project-action 'my/projectile-switch-command
-        counsel-rg-base-command "rg --with-filename --no-heading --line-number --color never --max-filesize 10K %s"))
+        counsel-rg-base-command "rg --with-filename --no-heading --line-number --color never --max-filesize 80K %s"))
 
 (use-package ivy-posframe
   :init

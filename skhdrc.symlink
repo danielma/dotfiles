@@ -215,3 +215,6 @@ ctrl + alt - s : yabai -m space --layout monocle
 ctrl + alt - d : yabai -m space --layout float
 
 ctrl + alt - w : yabai -m window --ratio abs:0.7
+
+ctrl + alt - right : yabai -m window --space next
+ctrl + alt - left : yabai -m window --space prev

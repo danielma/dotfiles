@@ -26,6 +26,7 @@
 	excludesfile = /Users/danielma/.gitignore
         editor = e
 	pager = diff-so-fancy | less --tabs=1,5 -R
+        commentChar = ";"
 [apply]
         whitespace = nowarn
 [mergetool]

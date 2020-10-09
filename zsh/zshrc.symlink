@@ -16,7 +16,7 @@ autoload -Uz compinit && compinit
 source $ZSH/zsh/work.secret.zsh
 
 source $HOME/.asdf/asdf.sh
-source $HOME/.asdf/completions/asdf.bash
+# source $HOME/.asdf/completions/asdf.bash
 
 # all of our zsh files
 typeset -U config_files

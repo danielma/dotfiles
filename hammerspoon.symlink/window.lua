@@ -91,9 +91,9 @@ hs.fnutils.each({"Left", "Right", "Up", "Down"}, function(arrow)
       rect(arrowMap[arrow].movement)
     )
 
-    hs.hotkey.bind({"ctrl", "alt"}, arrow, -- move windows by grid increments
-      function() undo:push(); hs.grid['pushWindow'..arrow](fw()) end
-    )
+    -- hs.hotkey.bind({"ctrl", "alt"}, arrow, -- move windows by grid increments
+    --   function() undo:push(); hs.grid['pushWindow'..arrow](fw()) end
+    -- )
 
     mehBind(arrow, rect(arrowMap[arrow].half))
     -- hs.hotkey.bind({"ctrl", "alt", "shift"}, arrow, -- resize windows by grid increments
