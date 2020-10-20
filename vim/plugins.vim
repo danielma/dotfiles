@@ -9,7 +9,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-Plug 'benekastah/neomake'
+" Plug 'benekastah/neomake'
 "Plug 'easymotion/vim-easymotion'
 "Plug 'junegunn/vim-easy-align'
 Plug 'terryma/vim-multiple-cursors'
@@ -48,5 +48,7 @@ Plug 'rhysd/vim-crystal'
 
 "" Tools
 "Plug 'junegunn/goyo.vim'
+Plug '907th/vim-auto-save'
+
 
 call plug#end()

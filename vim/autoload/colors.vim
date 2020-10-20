@@ -7,6 +7,7 @@ set cursorline
 
 if filereadable(expand("~/.base16_theme-name"))
   let base16colorspace=256
+  set bg=light
   execute "colorscheme base16-".join(readfile(expand("~/.base16_theme-name")), "")
 else
   colorscheme base16-default-light
