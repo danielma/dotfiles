@@ -73,39 +73,14 @@ nmap <Leader>ff :set foldmethod=syntax<CR>:set foldmethod=manual<CR>
 "  autocmd FileType markdown,mkd :Goyo 80
 "  autocmd FileType text         call pencil#init()
 "augroup END
+"
 
-"function SetMarkdownOptions()
-"  " Enable spellcheck.
-"  set spell spelllang=en_us
-"  set spellcapcheck=
-"  set guifont=Cousine:h18
-"  colors pencil
-"  set background=light
-"  set go -=r
-"endfunction
-
-"function! s:goyo_enter()
-"  call SetMarkdownOptions()
-"  let b:quitting = 0
-"  let b:quitting_bang = 0
-"  autocmd QuitPre <buffer> let b:quitting = 1
-"  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-"endfunction
-
-"function! s:goyo_leave()
-"  call SetDefaultVisualOptions()
-"  " Quit Vim if this is the only remaining buffer
-"  if b:quitting
-"    if b:quitting_bang
-"      q!
-"    else
-"      q
-"    endif
-"  endif
-"endfunction
-
-"autocmd! User GoyoEnter
-"autocmd! User GoyoLeave
-"autocmd  User GoyoEnter nested call <SID>goyo_enter()
-"autocmd  User GoyoLeave nested call <SID>goyo_leave()
-
+let g:auto_save = 0
+let g:goyo_width = "100%"
+let g:goyo_height = "100%"
+augroup ft_markdown
+  au!
+  au FileType markdown let b:auto_save = 1
+  au FileType markdown :Goyo
+  au FileType markdown nmap q :qa<CR>
+augroup END

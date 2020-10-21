@@ -9,14 +9,14 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-" Plug 'benekastah/neomake'
+Plug 'benekastah/neomake'
 "Plug 'easymotion/vim-easymotion'
 "Plug 'junegunn/vim-easy-align'
 Plug 'terryma/vim-multiple-cursors'
 "Plug 'danielma/vim-indent-guides'
 Plug 'bronson/vim-trailing-whitespace'
 ""Plug 'powerline/powerline'
-"Plug 'jeetsukumaran/vim-buffergator'
+Plug 'jeetsukumaran/vim-buffergator'
 "Plug 'rking/ag.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -32,7 +32,7 @@ Plug 'tpope/vim-commentary'
 "Plug 'chriskempson/vim-tomorrow-theme'
 "Plug 'altercation/vim-colors-solarized'
 "Plug 'joshdick/onedark.vim'
-Plug 'chriskempson/base16-vim'
+"Plug 'chriskempson/base16-vim'
 
 "" Languages
 "Plug 'vim-ruby/vim-ruby'
@@ -47,7 +47,7 @@ Plug 'rhysd/vim-crystal'
 "Plug 'tpope/vim-haml'
 
 "" Tools
-"Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
 Plug '907th/vim-auto-save'
 
 
