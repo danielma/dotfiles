@@ -137,28 +137,7 @@
 
 (use-package dm-box-drawing :straight nil)
 
-(use-package elscreen
-  :init
-  (elscreen-start)
-  :config
-  (setq elscreen-display-screen-number nil)
-  (setq elscreen-display-tab 30)
-  (setq elscreen-tab-display-control nil)
-  (setq elscreen-tab-display-kill-screen nil)
-  (defhydra hydra-elscreen (base-leader-map "t")
-    "screens"
-    ("c" elscreen-create :exit t)
-    ("n" elscreen-next)
-    ("p" elscreen-previous)
-    ("k" elscreen-kill)
-    ("j" elscreen-select-and-goto :exit t)
-    ("t" elscreen-toggle-display-tab)
-    )
-  :bind (:map global-map
-	 ("s-t" . elscreen-create)
-	 ("s-w" . elscreen-kill)
-	 ("s-{" . elscreen-previous)
-	 ("s-}" . elscreen-next)))
+(use-package dm-tabs :straight nil)
 
 (use-package flx-ido
   :init

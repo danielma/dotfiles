@@ -20,7 +20,6 @@
 (depends-on "diff-hl")
 (depends-on "drupal-mode")
 (depends-on "elixir-mode")
-(depends-on "elscreen")
 (depends-on "emmet-mode")
 (depends-on "enh-ruby-mode")
 (depends-on "epl")

@@ -651,11 +651,15 @@ an alternate theme for use in the terminal.")
      (custom-group-tag                             :foreground base0D)
      (custom-state                                 :foreground base0B)
 
-     ;; elscreen
+     ;; tabs
      (elscreen-tab-background-face                 :background base01 :box (:line-width 9 :color base01))
      (elscreen-tab-other-screen-face               :foreground base04 :background base01 :box (:line-width 9 :color base01))
      (elscreen-tab-current-screen-face             :foreground base07 :background base03 :box (:line-width 9 :color base03))
      (elscreen-tab-control-face                    :foreground base01)
+
+     (tab-bar                                      :background base01 :box (:line-width 7 :color base01))
+     (tab-bar-tab-inactive                         :foreground base04 :box (:line-width 7 :color base01))
+     (tab-bar-tab                                  :foreground base07 :background base03 :box (:line-width 7 :color base03))
 
      ;; mode line evil
      (mode-line-evil                          :foreground base06 :weight bold)
