@@ -7,11 +7,17 @@
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration)
          (lsp-mode . eldoc-box-hover-at-point-mode))
-  :commands lsp)
+  :commands lsp
+  :straight (lsp-mode
+             :type git
+             :flavor melpa
+             :host github
+             :repo "emacs-lsp/lsp-mode"
+             :files (:defaults "clients/*.el"))
+             )
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
-(use-package company-lsp :commands company-lsp)
 ;; if you are helm user
 ;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 ;; if you are ivy user

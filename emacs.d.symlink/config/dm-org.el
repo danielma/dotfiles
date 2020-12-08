@@ -8,7 +8,6 @@
   :config
   (setq org-directory "~/Dropbox/org"
         org-refile-targets '((org-agenda-files :maxlevel . 2))
-        org-agenda-files (quote ("~/Dropbox/org/agenda.org"))
         org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)")))
         org-outline-path-complete-in-steps nil
         org-refile-use-outline-path t

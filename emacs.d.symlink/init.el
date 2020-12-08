@@ -53,9 +53,11 @@
 ;; (setq default-frame-alist '((undecorated . t)))
 ;; (setq default-frame-alist '())
 
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
+;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
 ;; (add-to-list 'default-frame-alist '(undecorated . t))
+;; (add-to-list 'default-frame-alist '(drag-internal-border . 1))
+;; (add-to-list 'default-frame-alist '(internal-border-width . 5))
 
 (fset 'evil-visual-update-x-selection 'ignore)
 
@@ -225,6 +227,11 @@
 (use-package dm-org :straight nil)
 (use-package dm-prose :straight nil)
 (use-package dm-lsp :straight nil)
+
+(use-package rustic
+  :config
+  (setq rustic-format-on-save t
+        rustic-format-display-method 'display-buffer))
 
 (use-package emojify
   :config

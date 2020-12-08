@@ -1,3 +1,9 @@
+;;; dm-tabs --- My tabs configuration
+
+;;; Commentary:
+
+;;; Code:
+
 (use-package elscreen
   :disabled
   :init
@@ -30,7 +36,7 @@
 (use-package tab-bar
   :init
   (setq tab-bar-new-tab-choice "*scratch*"
-        tab-bar-show 1
+        tab-bar-show t
         tab-bar-new-button-show nil
         tab-bar-close-button-show nil
         tab-bar-tab-name-function 'dm-tab-bar-name)
@@ -51,3 +57,5 @@
 	 ("s-}" . tab-bar-switch-to-next-tab)))
 
 (provide 'dm-tabs)
+
+;;; dm-tabs.el ends here

@@ -59,7 +59,7 @@
                                 (swiper . ivy--regex-plus)
                                 (counsel-M-x . ivy--regex-plus)
                                 ;; (counsel-projectile-find-file . ivy--regex-fuzzy)
-                                (t . ivy--regex-fuzzy))
+                                (t . ivy--regex-plus))
         )
   :bind (:map base-leader-map
               ("bs" . ivy-switch-buffer)
@@ -121,9 +121,7 @@
   (evil-set-initial-state 'snails-mode 'emacs)
   )
 
-(use-package smex
-  :init
-  (smex-initialize))
+(use-package amx)
 
 (defalias 'my/m-x 'counsel-M-x)
 

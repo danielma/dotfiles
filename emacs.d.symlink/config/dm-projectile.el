@@ -34,9 +34,17 @@ magit-status on the project root directory. Use dired otherwise."
   (projectile-ignored-project-function 'my/projectile-ignore-project)
   :bind (:map projectile-command-map
         ("a" . my/projectile-search)
+        ("A" . my/projectile-search-in-dir)
 	("T" . projectile-find-implementation-or-test-other-window)))
 
 (defalias 'my/projectile-search 'counsel-projectile-rg)
+
+(defun my/projectile-search-in-dir ()
+  (interactive)
+  (let ((dir (counsel-read-directory-name (concat
+                                          (car (split-string counsel-ag-command))
+                                          " in directory: "))))
+    (counsel-rg "" dir)))
 
 (defun my/projectile-choices (dirs)
   "Find files in directories by (dir re) pair.

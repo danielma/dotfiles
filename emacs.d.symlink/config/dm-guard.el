@@ -17,6 +17,7 @@
   "Pluralize WORD very stupidly."
   (save-match-data
     (cond
+     ((equal "person" word) "people")
      ((string-match "\\(.+\\)y$" word) (concat (match-string 1 word) "ies"))
      ((string-match "\\(.+\\)tch$" word) (concat (match-string 1 word) "tches"))
      (t (concat word "s")))))
