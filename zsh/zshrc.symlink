@@ -130,3 +130,5 @@ export PATH=$HOME/pco-box/bin:$PATH
 eval "$(rbenv init -)"
 
 # zprof
+export MYSQL_READER_PORT_3306_TCP_ADDR=127.0.0.1
+export MYSQL_READER_PORT_3306_TCP_PORT=3307

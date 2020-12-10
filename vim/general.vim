@@ -76,11 +76,14 @@ nmap <Leader>ff :set foldmethod=syntax<CR>:set foldmethod=manual<CR>
 "
 
 let g:auto_save = 0
-let g:goyo_width = "100%"
-let g:goyo_height = "100%"
-augroup ft_markdown
-  au!
-  au FileType markdown let b:auto_save = 1
-  au FileType markdown :Goyo
-  au FileType markdown nmap q :qa<CR>
-augroup END
+
+function! g:NoteEdit()
+  let g:deoplete#enable_at_startup = 0
+  let b:auto_save = 1
+  let b:goyo_width = "100%"
+  let b:goyo_height = "100%"
+  nmap q :qa<CR>
+  execute "Goyo"
+endfunction
+
+command NoteEdit call g:NoteEdit()

@@ -105,10 +105,11 @@
   :config
   (setq ivy-posframe-parameters '((left-fringe . 8)
                                   (right-fringe . 8))
+        ivy-posframe-style 'frame-top-center
         ivy-posframe-display-functions-alist
         '((swiper          . ivy-posframe-display-at-point)
           (complete-symbol . ivy-posframe-display-at-point)
-          (t               . ivy-posframe-display-at-frame-top-center))))
+          (t               . ivy-posframe-display))))
 
 (use-package ivy-hydra)
 

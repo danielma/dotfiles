@@ -24,7 +24,7 @@ def log(info, awesome: false)
   end
 end
 
-ON_SCREEN_APPS = ['Emacs', 'iTerm', 'Slack', 'Trello', 'Tuple', 'Houseparty', 'Logic Pro X', 'Around', 'zoom.us']
+ON_SCREEN_APPS = ['Emacs', 'iTerm', 'Slack', 'Trello', 'Tuple', 'Houseparty', 'Logic Pro X', 'Around', 'zoom.us', 'Adobe Premiere Pro 2020']
 APPS_THAT_SHOULD_ALWAYS_HIDE = ['Google Chrome', 'Brave Browser', 'Spotify', 'Messages']
 
 recent_pid = ENV['YABAI_RECENT_PROCESS_ID'].to_i

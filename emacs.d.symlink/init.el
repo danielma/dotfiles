@@ -90,7 +90,7 @@
   (interactive)
   (if (eq major-mode 'typescript-mode)
       (tide-jump-to-definition)
-    (dumb-jump-go)))
+    (dumb-jump-go-prefer-external)))
 
 (use-package dumb-jump
   :config

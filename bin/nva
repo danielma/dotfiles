@@ -1,9 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 
 RG_PREFIX="rg -ilF --sortr modified --max-columns=300 "
 FZF_DEFAULT_COMMAND="$RG_PREFIX --files" \
   fzf --phony --reverse --color="border:240" \
     --bind "change:reload:$RG_PREFIX {q} || true" \
-    --bind "enter:execute(e {})" \
+    --bind "enter:execute(nvim -c 'NoteEdit' {})" \
+    --bind "ctrl-o:execute(echo {q} | awk -F'/' '{print \"# \" \$2}' | nvim -c 'NoteEdit' '{q}.md' -)" \
     --preview 'rg -iF --color always --heading --passthru {q} {}' \
     --preview-window=down:80%
