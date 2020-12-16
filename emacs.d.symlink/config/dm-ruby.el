@@ -25,7 +25,20 @@
   (add-to-list 'auto-mode-alist '("\\.rb.spec\\'" . ruby-mode))
   (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
-(use-package prettier-js)
+(defun prettier-js-in-projectile (orig-fun &rest args)
+  (if (projectile-project-p)
+      (let ((original-directory default-directory))
+        (message original-directory)
+        (cd (projectile-project-root))
+        (apply orig-fun args)
+        (cd original-directory))
+    (apply orig-fun args)))
+
+(use-package prettier-js
+  :config
+  (setq prettier-js-command "prettier_d")
+  (advice-add 'prettier-js :around 'prettier-js-in-projectile)
+  )
 
 (use-package ruby-end)
 
