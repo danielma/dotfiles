@@ -24,6 +24,7 @@ magit-status on the project root directory. Use dired otherwise."
                                     :test "bundle exec rspec"
                                     :test-suffix "_spec.rb")
   ;; (projectile-register-project-type 'generic '("README.md"))
+  (add-to-list 'projectile-project-root-files-bottom-up "Gemfile")
   :custom
   (projectile-generic-command "rg --files")
   (projectile-git-submodule-command "git submodule --quiet foreach 'echo $displaypath' | tr '\\n' '\\0'")
@@ -35,6 +36,7 @@ magit-status on the project root directory. Use dired otherwise."
   :bind (:map projectile-command-map
         ("a" . my/projectile-search)
         ("A" . my/projectile-search-in-dir)
+        ("F" . my/projectile-find-file-in-other-project)
 	("T" . projectile-find-implementation-or-test-other-window)))
 
 (defalias 'my/projectile-search 'counsel-projectile-rg)
@@ -45,6 +47,12 @@ magit-status on the project root directory. Use dired otherwise."
                                           (car (split-string counsel-ag-command))
                                           " in directory: "))))
     (counsel-rg "" dir)))
+
+(defun my/projectile-find-file-in-other-project ()
+  "Find a file in another project."
+  (interactive)
+  (let ((projectile-switch-project-action 'projectile-find-file))
+    (projectile-switch-project)))
 
 (defun my/projectile-choices (dirs)
   "Find files in directories by (dir re) pair.
