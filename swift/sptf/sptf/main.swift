@@ -130,6 +130,16 @@ struct Utils {
   }
 }
 
+enum Weekday: Int {
+  case Sunday = 1
+  case Monday
+  case Tuesday
+  case Wednesday
+  case Thursday
+  case Friday
+  case Saturday
+}
+
 class Spotify {
   struct Track {
     var id: String
@@ -140,10 +150,16 @@ class Spotify {
       return "spotify:track:\(id)"
     }
   }
-
+  
+  typealias PlaylistId = String
   struct Playlist {
-    let id: String
+    let id: PlaylistId
     let name: String
+    
+    enum Kind {
+      case month
+      case week(Weekday)
+    }
 
     static func from(_ dict: [String: Any]) -> Playlist {
       let id = dict["id"] as! String
@@ -275,12 +291,12 @@ class Spotify {
     formatter.dateFormat = "MMMM yyyy"
     return formatter
   }()
-
-  typealias PlaylistId = String
-
-  enum PlaylistType {
-    case month
-  }
+    
+  private var weekFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "MMM d"
+    return formatter
+  }()
 
   private func lookupPlaylistByName(_ name: String) -> PlaylistId? {
     let allPlaylists = getPlaylists()
@@ -292,23 +308,29 @@ class Spotify {
     return nil
   }
 
-  private func findOrCreatePlaylist(_ type: PlaylistType? = nil, name: String? = nil) -> PlaylistId {
+  private func findOrCreatePlaylist(_ type: Playlist.Kind? = nil, name: String? = nil) -> Playlist {
     let playlistName: String = {
-      switch type == .month {
-      case true:
+      switch type {
+      case .month:
         return "\(monthFormatter.string(from: Date())) Tracks"
+      case .week(let weekDay):
+        let now = Date()
+        
+        let startDate = Calendar.current.nextDate(after: now, matching: DateComponents(hour: 0, weekday: weekDay.rawValue), matchingPolicy: .nextTime, direction: .backward)!
+        let endDate = Calendar.current.nextDate(after: now, matching: DateComponents(hour: 0, weekday: weekDay.rawValue), matchingPolicy: .nextTime)!
+        return "\(weekFormatter.string(from: startDate))-\(weekFormatter.string(from: endDate)) Tracks"
       default:
         return name!
       }
     }()
 
     if let playlistId = db.playlistIds[playlistName] {
-      return playlistId
+      return Playlist(id: playlistId, name: playlistName)
     }
 
     if let playlistId = lookupPlaylistByName(playlistName) {
       db.addPlaylistId(name: playlistName, id: playlistId)
-      return playlistId
+      return Playlist(id: playlistId, name: playlistName)
     }
 
     let body = try! JSONEncoder().encode(["name": playlistName])
@@ -317,7 +339,17 @@ class Spotify {
 
     db.addPlaylistId(name: playlistName, id: id)
 
-    return id
+    return Playlist(id: id, name: playlistName)
+  }
+  
+  func addToPlaylist(track: Track, playlist: Playlist) -> JSONResponse {
+    let playlistTracksUrl = "users/\(db.userId)/playlists/\(playlist.id)/tracks"
+
+    return apiRequest(
+      playlistTracksUrl,
+      method: .POST,
+      body: try! JSONEncoder().encode(["uris": [track.uri]])
+    )
   }
 
   func saveToList() -> JSONResponse {
@@ -325,7 +357,6 @@ class Spotify {
 
     print("\(track.name) - \(track.artistName)")
 
-    let trackUri = track.uri
     let result = addToLibrary(track)
 
     guard result.response.statusCode == 200 else {
@@ -333,14 +364,17 @@ class Spotify {
       fatalError("Couldn't save \(track.id) to library")
     }
 
-    let playlistId = findOrCreatePlaylist(.month)
-    let playlistTracksUrl = "users/\(db.userId)/playlists/\(playlistId)/tracks"
+    let playlist = findOrCreatePlaylist(.month)
+    
+    return addToPlaylist(track: track, playlist: playlist)
+  }
+  
+  func newsletter() -> JSONResponse {
+    let track = currentTrack()
+    print("\(track.name) - \(track.artistName)")
 
-    return apiRequest(
-      playlistTracksUrl,
-      method: .POST,
-      body: try! JSONEncoder().encode(["uris": [trackUri]])
-    )
+    let playlist = findOrCreatePlaylist(.week(.Thursday))
+    return addToPlaylist(track: track, playlist: playlist)
   }
 
   private func getPlaylists() -> [Playlist] {
@@ -374,6 +408,10 @@ case "lib":
   }
 case "save":
   let result = spotify.saveToList()
+  dump(result.response.statusCode)
+  dump(result.json)
+case "newsletter":
+  let result = spotify.newsletter()
   dump(result.response.statusCode)
   dump(result.json)
 default:
