@@ -50,5 +50,7 @@ yabai -m rule --add title='.+' manage=off
 
 # yabai -m signal --add event=application_activated action="/Users/danielma/.dotfiles/bin/browser"
 yabai -m signal --add event=application_front_switched action="/Users/danielma/.dotfiles/bin/switch-app"
+yabai -m signal --add event=application_launched action="/Users/danielma/.dotfiles/bin/watch-apps launch"
+yabai -m signal --add event=application_terminated action="/Users/danielma/.dotfiles/bin/watch-apps terminate"
 
 echo "yabai configuration loaded.."

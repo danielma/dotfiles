@@ -1,0 +1,95 @@
+#!/Users/danielma/.rbenv/versions/2.6.3/bin/ruby
+
+require 'json'
+require 'rest-client'
+
+LOG = false
+
+if LOG
+  LOG_FILE = File.open("#{__FILE__}.log", "a")
+
+  require 'awesome_print'
+  require 'pp'
+
+  LOG_FILE.puts("---------")
+end
+
+def log(info, awesome: false)
+  return unless LOG
+
+  if awesome
+    PP.pp(info, LOG_FILE)
+  else
+    LOG_FILE.puts(info)
+  end
+end
+
+def db(new_value = nil)
+  file = "#{__FILE__}.db.json"
+
+  log(file)
+ 
+  if new_value
+    File.open(file, 'wb') do |f|
+      f.puts(new_value.to_json)
+    end
+  else
+    if File.exist?(file)
+      JSON.parse(File.read(file))
+    else
+      {}
+    end
+  end
+end
+
+stored_data = db
+launching = ARGV.last == 'launch'
+
+log(RbConfig.ruby)
+log(stored_data)
+log(launching)
+
+current_pid = ENV['YABAI_PROCESS_ID'].to_i
+current_app = if launching
+                File.basename(`ps -o comm= -p #{current_pid}`.strip).tap do |app|
+                  if (existing_key = stored_data.key(app))
+                    stored_data.delete(existing_key)
+                  end
+                  db(stored_data.merge(current_pid => app))
+                end
+              else
+                stored_data[current_pid.to_s].tap do |app|
+                  if app
+                    stored_data.delete(current_pid.to_s)
+                    db(stored_data)
+                  end
+                end
+              end
+
+if current_app.nil?
+  log("No app!")
+  exit
+end
+
+auto_slack_status = case current_app
+                    when 'zoom.us'
+                      ':zoom:'
+                    when 'Tuple'
+                      ':tuple:'
+                    end
+
+log(current_app)
+
+if auto_slack_status
+  RestClient.post(
+    "https://slack.com/api/users.profile.set",
+    {
+      profile: {
+        status_text: '',
+        status_emoji: launching ? auto_slack_status : nil,
+        status_expiration: 0
+      }
+    }.to_json,
+    { Authorization: "Bearer #{stored_data['token']}", content_type: :json }
+  )
+end
