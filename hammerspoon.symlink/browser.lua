@@ -32,20 +32,6 @@ browserWatcher = hs.application.watcher.new(browserEvent)
 browserWatcher:start()
 
 function httpCallback(scheme, _, _, fullURL)
-   -- local allHandlers = hs.urlevent.getAllHandlersForScheme(scheme)
-   -- local handler = hs.fnutils.find(allHandlers, function(v)
-   --                                    return v == currentHandler
-   -- end)
-
-   -- if not handler then
-   --    m.log.e('Invalid browser handler: ' .. (currentHandler or 'nil'))
-   --    return
-   -- end
-
-   -- if not fullURL then
-   --    m.log.e('Attempt to open browser without url')
-   --    return
-   -- end
    local spotifyRegex = "^https://open.spotify.com/"
 
    if fullURL:match(spotifyRegex) then
