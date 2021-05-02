@@ -26,7 +26,7 @@ magit-status on the project root directory. Use dired otherwise."
   ;; (projectile-register-project-type 'generic '("README.md"))
   (add-to-list 'projectile-project-root-files-bottom-up "Gemfile")
   :custom
-  (projectile-generic-command "rg --files")
+  (projectile-generic-command "rg --files -0")
   (projectile-git-submodule-command "git submodule --quiet foreach 'echo $displaypath' | tr '\\n' '\\0'")
   (projectile-completion-system 'ivy)
   (projectile-switch-project-action 'my/projectile-switch-command) ;; you're looking in the wrong place. set counsel

@@ -213,14 +213,14 @@
 (defun my/mode-line-prettier-status ()
   "Mode line prettier indicator."
   (if prettier-js-mode
-      `("" (:propertize " \u2695 " face ,(my/mode-line-face 'accent)))
+      `("" (:propertize " \uf789 " face ,(my/mode-line-face 'accent)))
     `("")
     ))
 
 (defun my/mode-name ()
   (let ((mode (pcase major-mode
 	       ('magit-status-mode "\ue725")
-	       ('ruby-mode "\u25c8") ;; "\uf48e") ;; \U0001f48e
+	       ('ruby-mode "\ue21e") ;; "\uf48e") ;; \U0001f48e
 	       ('web-mode "\ue60e")
 	       ('rjsx-mode "\ue7ba")
 	       ('emacs-lisp-mode "(\ue779)")

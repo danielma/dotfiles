@@ -35,11 +35,13 @@
 (use-package ace-window)
 
 (use-package evil
+  :custom
+  (evil-shift-width 2)
+  (evil-shift-round t)
+  (evil-echo-state nil)
+  (evil-symbol-word-search t)
+  (windmove-wrap-around t)
   :init
-  (setq evil-shift-width 2
-        evil-shift-round t
-        evil-echo-state nil
-        windmove-wrap-around t)
   (evil-mode 1)
   :config
   (define-key base-leader-map "w" evil-window-map)

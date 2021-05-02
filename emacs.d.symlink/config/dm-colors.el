@@ -53,7 +53,7 @@
 ;; (deftheme session-face)
 
 (custom-set-faces
- '(default ((t (:weight normal :height 120 :width normal :family "IBM Plex Mono")))))
+ '(default ((t (:weight normal :height 120 :width normal :family "JetBrains Mono")))))
 
 ;; (provide-theme 'session-face)
 

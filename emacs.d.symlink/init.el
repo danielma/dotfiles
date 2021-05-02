@@ -61,8 +61,9 @@
 
 (fset 'evil-visual-update-x-selection 'ignore)
 
-(eval-when-compile
-  (require 'use-package))
+;(eval-when-compile
+(require 'use-package)
+;)
 (setq use-package-verbose t
       straight-use-package-by-default t)
 
@@ -165,6 +166,8 @@
   :config
   (define-abbrev
     global-abbrev-table "orgn" "organization")
+  (define-abbrev
+    global-abbrev-table "orgns" "organizations")
   :custom
   (abbrev-mode t)
   (save-abbrevs nil)

@@ -50,6 +50,7 @@
   :after tide
   :init
   (add-hook 'typescript-mode-hook #'setup-tide-mode)
+  (add-hook 'typescript-mode-hook #'prettier-js-mode)
   (flycheck-add-mode 'javascript-eslint 'typescript-mode)
   :custom
   (typescript-indent-level 2)

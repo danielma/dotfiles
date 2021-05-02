@@ -5,6 +5,11 @@
   (setq xrufo-mode-use-bundler t)
   :disabled)
 
+(defun dm/ruby-mode-hook ()
+  (setq ruby-insert-encoding-magic-comment nil)
+  ;; (modify-syntax-entry ?_ "_")
+  )
+
 (use-package ruby-mode
   :init
   (define-abbrev-table 'ruby-mode-abbrev-table '(
@@ -15,10 +20,7 @@
 						 ("ass" "assert")
 						 ("AS::" "ActiveSupport::")
 						 ("AR::" "ActiveRecord::")))
-  (add-hook 'ruby-mode-hook (lambda ()
-			      (setq ruby-insert-encoding-magic-comment nil)
-			      (modify-syntax-entry ?_ "w")
-			      ))
+  (add-hook 'ruby-mode-hook 'dm/ruby-mode-hook)
   ;; (add-hook 'ruby-mode-hook #'lsp)
   (add-hook 'ruby-mode-hook 'dm-guard-mode)
   (add-hook 'ruby-mode-hook 'smartparens-mode)
@@ -45,8 +47,9 @@ If it runs, call ORIG-FUN with ARGS."
         (original-directory default-directory))
     (when root
       (cd root)
-      (apply orig-fun args)
-      (cd original-directory))))
+      (unwind-protect
+          (apply orig-fun args)
+        (cd original-directory)))))
 
 (use-package prettier-js
   :config
@@ -69,6 +72,8 @@ If it runs, call ORIG-FUN with ARGS."
     (bind-map-for-mode-inherit my/ruby-refactor-mode-map base-leader-map
       :major-modes (ruby-mode)
       :bindings ("a" map))))
+
+(use-package bundler)
 
 (use-package dm-rspec
   :straight nil
