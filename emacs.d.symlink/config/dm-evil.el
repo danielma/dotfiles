@@ -135,6 +135,11 @@
 	;; ("RET" . evil-multiedit-toggle-or-restrict-region)
   )
 
+(use-package undo-tree
+  :init
+  (global-undo-tree-mode)
+  (evil-set-undo-system 'undo-tree))
+
 (use-package evil-matchit
   :init
   (global-evil-matchit-mode))

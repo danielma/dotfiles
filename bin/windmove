@@ -20,7 +20,8 @@ owner()
     fi
 }
 
-TERMINAL_OWNER="iTerm2"
+# TERMINAL_OWNER="iTerm2"
+TERMINAL_OWNER="Alacritty"
 CHUNKC_OWNER=$(owner)
 
 if [[ $CHUNKC_OWNER == $TERMINAL_OWNER ]]; then

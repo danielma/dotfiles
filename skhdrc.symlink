@@ -133,10 +133,10 @@ alt - h : ~/.dotfiles/bin/windmove west
 alt - j : ~/.dotfiles/bin/windmove south
 alt - k : ~/.dotfiles/bin/windmove north
 alt - l : ~/.dotfiles/bin/windmove east
-alt - y : ~/.dotfiles/bin/windmove west
-alt - n : ~/.dotfiles/bin/windmove south
-alt - i : ~/.dotfiles/bin/windmove north
-alt - o : ~/.dotfiles/bin/windmove east
+# alt - y : ~/.dotfiles/bin/windmove west
+# alt - n : ~/.dotfiles/bin/windmove south
+# alt - i : ~/.dotfiles/bin/windmove north
+# alt - o : ~/.dotfiles/bin/windmove east
 
 # cmd - j : chunkc tiling::window --focus prev
 # cmd - k : chunkc tiling::window --focus next
@@ -208,6 +208,8 @@ alt - e : yabai -m window --toggle split
 alt - t : yabai -m window --toggle float; \
           [[ $(yabai -m query --windows --window | jq '.floating') == "1" ]] && yabai -m window --grid 8:8:1:1:6:6
 
+alt - y : yabai -m window --toggle float; \
+          [[ $(yabai -m query --windows --window | jq '.floating') == "1" ]] && yabai -m window --grid 1:1:0:0:1:1
 
 # change layout of desktop
 ctrl + alt - a : yabai -m space --layout bsp

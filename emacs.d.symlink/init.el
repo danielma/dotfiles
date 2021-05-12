@@ -1,5 +1,3 @@
-;;; .emacs --- take care of business
-;;; Code:
 ;;; Commentary:
 
 (require 'package)
@@ -120,8 +118,6 @@
   ("s-=" . zoom-all-frames-in)
   ("s--" . zoom-all-frames-out)
   ("s-0" . zoom-frm-unzoom))
-
-(use-package tramp)
 
 (use-package yaml-mode
   :config

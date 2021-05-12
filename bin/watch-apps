@@ -30,7 +30,7 @@ def db(new_value = nil)
   log(file)
  
   if new_value
-    File.open(file, 'wb') do |f|
+    File.open(file, 'w') do |f|
       f.puts(new_value.to_json)
     end
   else

@@ -67,7 +67,7 @@
 (global-prettify-symbols-mode 1)
 
 (custom-set-variables
- '(line-spacing 0.2))
+ '(line-spacing 0.1))
 
 (use-package whitespace
   :init

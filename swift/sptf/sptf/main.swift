@@ -317,7 +317,7 @@ class Spotify {
         let now = Date()
         
         let startDate = Calendar.current.nextDate(after: now, matching: DateComponents(hour: 0, weekday: weekDay.rawValue), matchingPolicy: .nextTime, direction: .backward)!
-        let endDate = Calendar.current.nextDate(after: now, matching: DateComponents(hour: 0, weekday: weekDay.rawValue), matchingPolicy: .nextTime)!
+        let endDate = Calendar.current.date(byAdding: .day, value: 6, to: startDate)!
         return "\(weekFormatter.string(from: startDate))-\(weekFormatter.string(from: endDate)) Tracks"
       default:
         return name!
@@ -371,10 +371,28 @@ class Spotify {
   
   func newsletter() -> JSONResponse {
     let track = currentTrack()
-    print("\(track.name) - \(track.artistName)")
+    let playlist = findOrCreatePlaylist(.week(.Friday))
 
-    let playlist = findOrCreatePlaylist(.week(.Thursday))
+    dump(track)
+
     return addToPlaylist(track: track, playlist: playlist)
+  }
+  
+  func findPlaylist(_ id: String) -> [Track] {
+    let response = apiRequest(
+      "playlists/\(id)",
+      method: .GET
+    )
+    
+    let tracks = response.json["tracks"] as! [String: Any]
+    let items = tracks["items"] as! [[String: Any]]
+    
+    return (items).map { i in
+      let t = i["track"] as! [String: Any]
+      let artists = t["artists"] as! [[String: Any]]
+      let artistName = artists.map { $0["name"] as! String }.joined(separator: " & ")
+      return Track(id: t["id"] as! String, name: t["name"] as! String, artistName: artistName)
+    }
   }
 
   private func getPlaylists() -> [Playlist] {
@@ -406,11 +424,14 @@ case "lib":
   } else {
     dump(result.response.statusCode)
   }
-case "save":
+case "p", "playlist":
+  let result = spotify.findPlaylist(CommandLine.arguments[2])
+  print(result.enumerated().map { "\($0 + 1). \($1.name) — \($1.artistName)" }.joined(separator: "\n"))
+case "s", "save":
   let result = spotify.saveToList()
   dump(result.response.statusCode)
   dump(result.json)
-case "newsletter":
+case "n", "newsletter":
   let result = spotify.newsletter()
   dump(result.response.statusCode)
   dump(result.json)
