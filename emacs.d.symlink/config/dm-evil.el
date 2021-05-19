@@ -115,6 +115,8 @@
          ("," . evil-avy-goto-char)
          ))
 
+(use-package iedit)
+
 (use-package evil-multiedit
   :bind (:map evil-visual-state-map
 	 ("R" . evil-multiedit-match-all)
