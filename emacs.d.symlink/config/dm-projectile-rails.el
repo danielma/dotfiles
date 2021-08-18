@@ -65,7 +65,10 @@
 	 (type (my/projectile-rails-select-fixture-type))
 	 (filepath (projectile-rails-expand-root (gethash type choices)))
 	 (fixture (my/projectile-rails-select-fixture-in-file filepath)))
-    (concat type "(:" fixture ")")))
+    ;; (string-match "[^a-zA-Z_]" "hello@my_guy")
+    (if (string-match "[^A-Za-z_]" fixture)
+        (concat type "(\"" fixture "\")")
+      (concat type "(:" fixture ")"))))
 
 (defun my/projectile-rails-select-fixture-type ()
   "Select a fixture type"
@@ -84,10 +87,20 @@
         (setq pos (match-end 0)))
       matches)))
 
+;; (let ((yaml-source "---
+;; andy_bernard_andy@dunder.mifflin:
+;;   hello: values
+
+;; "))
+;;   (re-seq "^[a-z][^: ]+" yaml-source))
+
 (defun my/projectile-rails-select-fixture-in-file (filename)
   "Select a fixture in FILENAME."
-  (let ((yaml (with-temp-buffer (insert-file-contents filename) (buffer-substring-no-properties (point-min) (point-max)))))
-    (projectile-completing-read "fixture: " (re-seq "^[a-z_0-9]+" yaml)))
+  (let* ((yaml-source (with-temp-buffer (insert-file-contents filename) (buffer-substring-no-properties (point-min) (point-max))))
+         ;; (parsed-yaml (yaml-parse-string yaml-source :object-type 'alist))
+         ;; (yaml-keys (mapcar 'car parsed-yaml)))
+         (yaml-keys (re-seq "^[a-z][^: ]+" yaml-source)))
+    (projectile-completing-read "fixture: " yaml-keys))
   )
 
 (defcustom projectile-rails-component-dirs
@@ -110,6 +123,9 @@
 (use-package inf-ruby)
 (use-package inflections)
 (use-package rake)
+
+;; (use-package yaml
+;;   :straight (:type git :host github :repo "zkry/yaml.el"))
 
 (use-package projectile-rails
   :straight (:type git :host github :repo "danielma/projectile-rails" :branch "dma/use-all-matches-for-finding-resource"
