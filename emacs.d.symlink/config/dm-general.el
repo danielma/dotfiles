@@ -34,5 +34,16 @@
                   (get-char-property (point) 'face))))
     (if face (message "Face: %s" face) (message "No face at %d" pos))))
 
+(defun chunkwm/move (dirstring)
+  "Move to DIRSTRING with chunkwm integration."
+  (let ((dir (pcase dirstring
+               ("north" 'above)
+               ("east" 'right)
+               ("south" 'below)
+               ("west" 'left))))
+    (if (window-in-direction dir)
+        (and (windmove-do-window-select dir) "0")
+      '1)))
+
 (provide 'dm-general)
 ;;; dm-general.el ends here

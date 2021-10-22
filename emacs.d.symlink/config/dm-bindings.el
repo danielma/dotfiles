@@ -1,8 +1,23 @@
+;;; dm-bindings.el --- Global bindings
+
+;;; Commentary:
+
+;;; Code:
+
+(if (boundp 'mac-command-modifier)
+    (progn
+      (setq select-enable-clipboard nil
+            mac-option-modifier 'meta
+            mac-command-modifier 'super
+            )))
+
 (defun edit-emacs ()
+  "Edit init.el."
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
 (defun edit-scratch ()
+  "Edit main scratch file."
   (interactive)
   (find-file "~/SCRATCH.md"))
 
@@ -77,6 +92,17 @@
 
 (defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
 
+(use-package emacs
+  :bind
+  (:map global-map
+        ("s-<return>" . toggle-frame-fullscreen)
+        ("s-s" . save-buffer-always)
+        ("C-h C-f" . find-function)
+        ("C-'" . company-yasnippet)
+        ("C-." . my/m-x)
+        ("s-O" . browse-url)
+        ))
+
 (use-package bind-map
   :config
   (bind-map base-leader-map
@@ -132,3 +158,4 @@
 	 ("C-x 1" . toggle-single-window)))
 
 (provide 'dm-bindings)
+;;; dm-bindings.el ends here

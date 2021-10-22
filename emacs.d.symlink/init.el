@@ -35,19 +35,14 @@
 (add-to-list 'load-path "~/.emacs.d/config/")
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-(require 'global-map)
-
 ;; set all widths to 2
 ;; (dolist (width '(evil-shift-width))
 ;;         (set width 2))
 
-(use-package dm-general :straight nil)
-
-(use-package dm-text :straight nil)
-
-(use-package dm-bindings :straight nil)
-
-(use-package dm-completion :straight nil)
+(require 'dm-general)
+(require 'dm-text)
+(require 'dm-bindings)
+(require 'dm-completion)
 
 (defun my/custom-dumb-jump-go ()
   (interactive)
@@ -281,7 +276,6 @@
             default-directory))
      (projectile-project-type rails-test)
      (projectile-project-type 'rails-test)))
- '(select-enable-clipboard nil)
  '(selectric-mode nil)
  '(show-paren-mode t)
  '(typescript-indent-level 2)
