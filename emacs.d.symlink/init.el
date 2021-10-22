@@ -35,12 +35,13 @@
 (add-to-list 'load-path "~/.emacs.d/config/")
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-(require 'general-funcs)
 (require 'global-map)
 
 ;; set all widths to 2
 ;; (dolist (width '(evil-shift-width))
 ;;         (set width 2))
+
+(use-package dm-general :straight nil)
 
 (use-package dm-text :straight nil)
 
