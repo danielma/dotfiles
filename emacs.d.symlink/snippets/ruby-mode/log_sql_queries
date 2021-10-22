@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: log sql queries
+# --
+def assert_sql_query_count(count)
+  queries = log_sql_queries(&Proc.new)
+
+  assert { queries.length == count }
+end
+
+def log_sql_queries
+  queries = []
+
+  subscriber = ActiveSupport::Notifications.subscribe("sql.active_record") do |*args|
+    queries.push(args.last[:sql].squish)
+  end
+
+  yield
+
+  queries
+ensure
+  ActiveSupport::Notifications.unsubscribe(subscriber)
+end

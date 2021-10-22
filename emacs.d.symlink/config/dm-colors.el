@@ -19,6 +19,7 @@
   (--each
       (--filter (string-prefix-p "base16-" it) (mapcar 'symbol-name custom-enabled-themes))
     (disable-theme (intern it)))
+  (custom-push-theme 'theme-face 'default 'user 'reset)
   (load-theme (intern (concat "base16-" theme)) t)
   ;; (enable-theme 'session-face)
   )

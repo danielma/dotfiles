@@ -40,12 +40,14 @@
         tab-bar-new-button-show nil
         tab-bar-close-button-show nil
         tab-bar-tab-name-function 'dm-tab-bar-name)
+  (evil-set-initial-state 'tab-switcher-mode 'emacs)
   (defhydra hydra-tab-bar (base-leader-map "t")
     "tabs"
     ("c" tab-bar-new-tab :exit t)
     ("n" tab-bar-switch-to-next-tab)
     ("p" tab-bar-switch-to-prev-tab)
     ("k" tab-bar-close-tab)
+    ("t" tab-bar-switch-to-tab :exit t)
     ("j" tab-bar-select-tab-by-name :exit t)
     )
   :config

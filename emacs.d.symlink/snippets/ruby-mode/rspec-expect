@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: exp
+# name: expect
 # key: exp
 # --
 expect($1).to $0

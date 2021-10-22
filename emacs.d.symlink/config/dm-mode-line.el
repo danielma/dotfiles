@@ -227,6 +227,20 @@
 	       (_ mode-name))))
     `(:propertize ,(concat " " mode " ") face ,(my/mode-line-face 'accent))))
 
+(defvar-local my--projectile-project-p 'unset)
+(defun my/projectile-project-p ()
+  "Cached version of projectile-project-p."
+  (if (eq my--projectile-project-p 'unset)
+      (setq my--projectile-project-p (projectile-project-p))
+    my--projectile-project-p))
+  
+(defvar-local my--projectile-project-name 'unset)
+(defun my/projectile-project-name ()
+  "Cached version of projectile-project-name."
+  (if (eq my--projectile-project-name 'unset)
+      (setq my--projectile-project-name (projectile-project-name))
+    my--projectile-project-name))
+
 (setq mode-line-guard-status 'ok)
 
 (defun my/mode-line-powerline-propertize (left-face text right-face)
@@ -245,10 +259,10 @@
 				      ;; 	   " @ "
 				      ;; 	 )
 				      ,(if (buffer-modified-p) " \u25CB " " \u25CF ")
-				      ,(if (projectile-project-p)
+				      ,(if (my/projectile-project-p)
 					 `(""
 					   (:propertize
-					    (" " (:eval (projectile-project-name)) " ")
+					    (" " (:eval (my/projectile-project-name)) " ")
 					    face
 					    ,(my/mode-line-face 'accent)
 					    )))

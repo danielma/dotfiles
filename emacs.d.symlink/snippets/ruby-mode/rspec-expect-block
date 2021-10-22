@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: expect block
+# key: expc
+# --
+expect { ${1:subject} }.to change { $2 }.$0

@@ -45,15 +45,17 @@
 If it runs, call ORIG-FUN with ARGS."
   (let ((root (my/prettierrc-location))
         (original-directory default-directory))
-    (when root
-      (cd root)
-      (unwind-protect
-          (apply orig-fun args)
-        (cd original-directory)))))
+    (if root
+        (progn
+          (cd root)
+          (unwind-protect
+              (apply orig-fun args)
+            (cd original-directory)))
+      (prettier-js-mode 0))))
 
 (use-package prettier-js
   :config
-  (setq prettier-js-command "prettier_d")
+  (setq prettier-js-command "prettier_d_slim")
   (advice-add 'prettier-js :around 'prettier-js-in-projectile)
   )
 

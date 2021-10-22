@@ -28,10 +28,10 @@ end
 
 -- Launch apps with Hyper-Enter
 apps = {
-   {'1', '1Password 7'},
+   {'1', '1Password'},
    {'b', 'Basecamp 3'},
    {'d', 'Dash'},
-   {'e', '/Applications/Emacs'},
+   {'e', 'Emacs'},
    {'c', launchBrowser},
    {'f', 'Safari'},
    {'h', '2Do'},

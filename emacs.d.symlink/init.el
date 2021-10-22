@@ -138,24 +138,16 @@
 
 (use-package dm-tabs :straight nil)
 
-(use-package flx-ido
-  :init
-  (ido-mode 1)
-  ;; (ido-everywhere 1)
-  (flx-ido-mode 1)
-  :bind (:map ido-completion-map
-	 ("C-k" . kill-whole-line)))
-
 (use-package ido-vertical-mode
   :config
   (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
   :init
   (ido-vertical-mode 1))
 
-(add-hook 'after-init-hook (lambda ()
-			     (if window-system
-				 (server-start))
-			     (global-hl-line-mode)))
+;; (add-hook 'after-init-hook (lambda ()
+;; 			     (if window-system
+;; 				 (server-start))
+;; 			     (global-hl-line-mode)))
 
 (use-package abbrev
   :straight nil
@@ -210,6 +202,9 @@
 
 (use-package sass-mode)
 
+;; (use-package tree-sitter)
+;; (use-package tree-sitter-langs)
+
 (use-package dm-magit :straight nil)
 (use-package dm-todo :straight nil)
 (use-package dm-minibuffer :straight nil)
@@ -233,9 +228,9 @@
         rustic-format-display-method 'display-buffer))
 
 (use-package emojify
-  :config
-  ;; (global-emojify-mode false)
-  (setq emojify-display-style 'unicode)
+  :custom
+  (emojify-display-style 'unicode)
+  (emojify-emoji-styles '(unicode))
   )
 
 (require 'epa-file)
@@ -258,19 +253,17 @@
  '(column-number-mode nil)
  '(css-indent-offset 2)
  '(custom-safe-themes
-   (quote
-    ("f000ac0d2b8ecdbe47c0db98610d6ed8c9ba9185af75bd54232c9b5374372ef3" "9ab255ab33b11529148334e8c703459fd38f484a28a8f94b219a09fa6efd9a98" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" default)))
+   '("1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5" "835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" "0ab2aa38f12640ecde12e01c4221d24f034807929c1f859cbca444f7b0a98b3a" "39e1d15a202583b1ec9ca98e7e54252f717bd6012cd5f4285ed153921b66cdfd" "13d390ab4e50fda339b620327790893dc8adab530ba4791ca44ba68f538d71c5" "f000ac0d2b8ecdbe47c0db98610d6ed8c9ba9185af75bd54232c9b5374372ef3" "9ab255ab33b11529148334e8c703459fd38f484a28a8f94b219a09fa6efd9a98" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" default))
  '(display-time-default-load-average nil)
  '(display-time-mode t)
  '(enh-ruby-add-encoding-comment-on-save nil)
  '(epg-gpg-program "gpg")
  '(evil-insert-state-modes
-   (quote
-    (comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode)))
- '(highlight-indent-guides-method (quote character))
+   '(comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode))
+ '(highlight-indent-guides-method 'character)
  '(indent-tabs-mode nil)
  '(initial-scratch-message nil)
- '(ivy-on-del-error-function (quote ignore))
+ '(ivy-on-del-error-function 'ignore)
  '(js-indent-level 2)
  '(js2-missing-semi-one-line-override t)
  '(line-number-mode nil)
@@ -279,33 +272,28 @@
  '(markdown-asymmetric-header t)
  '(markdown-header-scaling t)
  '(ns-auto-hide-menu-bar t)
- '(ns-command-modifier (quote super))
- '(org-agenda-files (quote ("~/Dropbox/org/agenda.org")))
+ '(ns-command-modifier 'super)
+ '(org-agenda-files '("~/Dropbox/org/agenda.org"))
  '(org-modules
-   (quote
-    (org-bbdb org-bibtex org-docview org-gnus org-info org-irc org-mhe org-mouse org-rmail org-w3m)))
+   '(org-bbdb org-bibtex org-docview org-gnus org-info org-irc org-mhe org-mouse org-rmail org-w3m))
  '(org-pretty-entities t)
- '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
- '(org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)"))))
+ '(org-refile-targets '((org-agenda-files :maxlevel . 3)) t)
+ '(org-todo-keywords '((sequence "TODO(t)" "DONE(d)")))
  '(package-selected-packages
-   (quote
-    (emojify tide typescript-mode org-alert rufo-mode ace-jump-mode winner-mode dumb-jump hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil)))
- '(php-mode-coding-style (quote drupal))
- '(ring-bell-function (quote ignore))
+   '(emojify tide typescript-mode org-alert rufo-mode ace-jump-mode winner-mode dumb-jump hydra evil-matchit help-fns+ help+ ruby-end rjsx-mode which-key js-mode use-package rufo pallet flycheck-package org-mobile-sync origami dashboard pinentry sx fish-mode company-sourcekit eslintd-fix php+-mode drupal-mode fzf swift-mode buffer-move ido-other-window ido-completing-read+ ruby-refactor evil-multiedit enh-ruby-mode evil-visualstar lua-mode mwe-log-commands suggest firebelly-theme gruvbox-theme rainbow-delimiters flycheck-elixir-credo markdown-mode flycheck evil-magit 0blayout slim-mode mmm-mode writeroom-mode rainbow-mode browse-at-remote company-mode yasnippet zoom-frm sass-mode emmet-mode alchemist elixir-mode sr-speedbar yaml-mode elscreen web-mode ## helm-dash projectile-rails helm-ag helm-projectile evil-leader projectile evil))
+ '(php-mode-coding-style 'drupal)
+ '(ring-bell-function 'ignore)
  '(ruby-end-insert-newline nil)
  '(ruby-refactor-add-parens t)
  '(safe-local-variable-values
-   (quote
-    ((prettier-js-args "--plugin" "/Users/danielma/.config/yarn/global/node_modules/@prettier/plugin-ruby")
+   '((prettier-js-args "--plugin" "/Users/danielma/.config/yarn/global/node_modules/@prettier/plugin-ruby")
      (prettier-js-args "--plugin" "~/.config/yarn/global/node_modules/@prettier/plugin-ruby")
      (prettier-js-args "--plugin ~/.config/yarn/global/node_modules/@prettier/plugin-ruby")
      (checkdoc-package-keywords-flag)
      (prettier-js-args "exec" "rbprettier")
      (prettier-js-command . "bundle")
      (prettier-js-command . "prettier_d")
-     (eval push
-           (quote ruby-rubocop)
-           flycheck-disabled-checkers)
+     (eval push 'ruby-rubocop flycheck-disabled-checkers)
      (eval push "ruby-rubocop" flycheck-disabled-checkers)
      (eval push "ruby-rubocop")
      (rufo-mode-use-bundler . t)
@@ -317,37 +305,32 @@
             (string-match-p "^[^.]"
                             (buffer-file-name)))
            (unless
-               (featurep
-                (quote package-build))
+               (featurep 'package-build)
              (let
                  ((load-path
                    (cons "../package-build" load-path)))
-               (require
-                (quote package-build))))
+               (require 'package-build)))
            (package-build-minor-mode)
            (set
-            (make-local-variable
-             (quote package-build-working-dir))
+            (make-local-variable 'package-build-working-dir)
             (expand-file-name "../working/"))
            (set
-            (make-local-variable
-             (quote package-build-archive-dir))
+            (make-local-variable 'package-build-archive-dir)
             (expand-file-name "../packages/"))
            (set
-            (make-local-variable
-             (quote package-build-recipes-dir))
+            (make-local-variable 'package-build-recipes-dir)
             default-directory))
      (projectile-project-type rails-test)
-     (projectile-project-type
-      (quote rails-test)))))
+     (projectile-project-type 'rails-test)))
  '(select-enable-clipboard nil)
  '(selectric-mode nil)
  '(show-paren-mode t)
- '(typescript-indent-level 2))
+ '(typescript-indent-level 2)
+ '(warning-suppress-log-types '((comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:weight normal :height 120 :width normal :family "JetBrains Mono")))))
 (put 'downcase-region 'disabled nil)

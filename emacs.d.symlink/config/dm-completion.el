@@ -45,21 +45,30 @@
         '((left-fringe . 10)
           (right-fringe . 10))))
 
+(use-package flx-ido
+  :disabled
+  :init
+  (ido-mode 1)
+  ;; (ido-everywhere 1)
+  (flx-ido-mode 1)
+  :bind (:map ido-completion-map
+	 ("C-k" . kill-whole-line)))
+
 (use-package ivy
   :init
   (ivy-mode 1)
   :config
   (setq ivy-use-virtual-buffers t
         enable-recursive-minibuffers t
-        ivy-sort-matches-functions-alist '((counsel-M-x . nil)
-                                           (counsel-yank-pop . nil)
-                                           (t . ivy--shorter-matches-first))
-        ivy-re-builders-alist '(;; (projectile-completing-read . ivy--regex-fuzzy)
-                                (counsel-rg . ivy--regex-plus)
-                                (swiper . ivy--regex-plus)
-                                (counsel-M-x . ivy--regex-plus)
-                                ;; (counsel-projectile-find-file . ivy--regex-fuzzy)
-                                (t . ivy--regex-plus))
+        ;; ivy-sort-matches-functions-alist '((counsel-M-x . nil)
+        ;;                                    (counsel-yank-pop . nil)
+        ;;                                    (t . ivy--shorter-matches-first))
+        ;; ivy-re-builders-alist '(;; (projectile-completing-read . ivy--regex-fuzzy)
+        ;;                         (counsel-rg . ivy--regex-plus)
+        ;;                         (swiper . ivy--regex-plus)
+        ;;                         (counsel-M-x . ivy--regex-plus)
+        ;;                         ;; (counsel-projectile-find-file . ivy--regex-fuzzy)
+        ;;                         (t . ivy--regex-plus))
         )
   :bind (:map base-leader-map
               ("bs" . ivy-switch-buffer)
@@ -69,23 +78,42 @@
               ("hi" . counsel-imenu)))
 
 (use-package fuz
-  :disabled
   :straight (:host github
              :repo "rustify-emacs/fuz.el"
              :branch "master"
              :files ("*"))
   :init
+  (require 'fuz)
   (unless (require 'fuz-core nil t)
     (fuz-build-and-load-dymod)))
 
 (use-package ivy-fuz
-  :disabled
   :after fuz
   :if (require 'fuz-core nil 'noerror)
   :straight (:host github
-             :repo "Silex/ivy-fuz.el"
+             :repo "weiwee/ivy-fuz.el"
              :branch "master")
-  )
+  :custom
+  ;; (ivy-sort-functions-alist '((t . nil)))
+  ;;                             ;; (counsel-minor . ivy-string<)
+  ;;                             ;; (counsel-colors-web . ivy-string<)
+  ;;                             ;; (counsel-unicode-char . ivy-string<)
+  ;;                             ;; (counsel-register . ivy-string<)
+  ;;                             ;; (counsel-mark-ring . ivy-string<)
+  ;;                             ;; (counsel-file-register . ivy-string<)
+  ;;                             ;; (counsel-describe-face . ivy-string<)
+  ;;                             ;; (counsel-info-lookup-symbol . ivy-string<)
+  ;;                             ;; (counsel-apropos . ivy-string<)
+  ;;                             ;; (counsel-describe-symbol . ivy-string<)
+  ;;                             ;; (read-file-name-internal . ivy-sort-file-function-default)
+  ;;                             ;; (t . ivy-string<)))
+  (ivy-sort-matches-functions-alist '((t . ivy-fuz-sort-fn)))
+  (ivy-re-builders-alist '((counsel-rg . ivy--regex-plus)
+                           (swiper . ivy--regex-plus)
+                           (t . ivy-fuz-regex-fuzzy)))
+  (ivy-fuz-sort-limit 10000)
+  :config
+  (add-to-list 'ivy-highlight-functions-alist '(ivy-fuz-regex-fuzzy . ivy-fuz-highlight-fn)))
 
 (use-package counsel
   :init
@@ -122,7 +150,18 @@
   (evil-set-initial-state 'snails-mode 'emacs)
   )
 
-(use-package amx)
+(use-package ivy-prescient
+  :disabled
+  :after
+  ivy
+  :init
+  (ivy-prescient-mode)
+  (prescient-persist-mode)
+  :custom
+  (prescient-filter-method '(literal regexp initialism fuzzy))
+  )
+
+;; (use-package amx)
 
 (defalias 'my/m-x 'counsel-M-x)
 

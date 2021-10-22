@@ -88,7 +88,7 @@
   "Use tmux to clear and execute COMMAND."
   (if command
       (let ((full-command (concat "cd " (projectile-project-root) " && " command)))
-        (emamux:send-command (concat "clear; echo -e '" command "'; " full-command)))))
+        (emamux:send-command (concat " clear; echo -e '" command "'; " full-command)))))
 
 (defun --dm-guard-rspec-test-command ()
   "Generate the test command for rspec."
@@ -105,7 +105,7 @@
          (test-cmd (cond
                     ((string-match ".js$" file-name) "yarn run test --colors")
                     ((string-match ".ts$" file-name) "yarn run test --colors")
-                    ((eq project-type 'rails-rspec) (concat "bundle exec spring " (--dm-guard-rspec-test-command)))
+                    ((eq project-type 'rails-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'ruby-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'rubygem) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'rails-test) "bin/rails test")
