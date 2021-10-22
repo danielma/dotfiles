@@ -92,7 +92,7 @@
          ("C-e" . end-of-line)
          ("C-d" . delete-forward-char)
          ("C-," . evil-find-char)
-         ("M-RET" . expand-at-point)
+         ("M-RET" . tt/expand-at-point)
          :map evil-normal-state-map
          ("M-RET" . newline)
          ("[b" . previous-buffer)
@@ -102,7 +102,7 @@
          ("k" . evil-previous-visual-line)
          ("'" . evil-repeat-find-char)
          :map evil-visual-state-map
-         ("C-w" . interactive-wrap-with-pair)
+         ;; ("C-w" . interactive-wrap-with-pair)
          :map evil-window-map
          ("C-h" . buf-move-left)
          ("C-j" . buf-move-down)

@@ -1,14 +1,3 @@
-(defun interactive-wrap-with-pair (pair)
-  "Interactively wraps."
-  (interactive "c")
-  (sp-wrap-with-pair (char-to-string pair)))
-
-(defun expand-at-point ()
-  "Insert a newline and put the cursor at the indented location above."
-  (interactive)
-  (newline-and-indent)
-  (evil-open-above 1))
-
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
