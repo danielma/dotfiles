@@ -1,17 +1,5 @@
 ;;; Commentary:
 
-(require 'package)
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
-  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
-  (when (< emacs-major-version 24)
-    ;; For important compatibility libraries like cl-lib
-    (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
-(package-initialize)
-
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -26,60 +14,35 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
-(setq straight-enable-use-package-integration t)
+(setq straight-enable-use-package-integration t
+      straight-use-package-by-default t)
 
 (menu-bar-mode 0)
 (if (display-graphic-p)
     (progn
-      (menu-bar-mode 1)
       (tool-bar-mode 0)
       (scroll-bar-mode 0)))
 
-(setq gc-cons-threshold 20000000)
+(custom-set-variables
+ '(inhibit-startup-message t)
+ '(make-backup-files nil)
+ '(backup-directory-alist `((".*" . ,temporary-file-directory)))
+ '(auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+ '(frame-resize-pixelwise t))
 
-(setq inhibit-startup-message t
-      inhibit-startup-echo-area-message t
-      make-backup-files nil
-      indent-tabs-mode nil
-      ns-use-native-fullscreen nil
-      ad-redefinition-action 'accept
-      backup-directory-alist `((".*" . ,temporary-file-directory))
-      auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
-      create-lockfiles nil
-      frame-resize-pixelwise t)
-
-;; (setq default-frame-alist '((undecorated . t)))
-;; (setq default-frame-alist '())
-
-;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
-;; (add-to-list 'default-frame-alist '(undecorated . t))
-;; (add-to-list 'default-frame-alist '(drag-internal-border . 1))
-;; (add-to-list 'default-frame-alist '(internal-border-width . 5))
-
-(fset 'evil-visual-update-x-selection 'ignore)
-
-;(eval-when-compile
-(require 'use-package)
-;)
-(setq use-package-verbose t
-      straight-use-package-by-default t)
+(add-hook 'after-init-hook (lambda () (if window-system (server-start))))
 
 (add-to-list 'load-path "~/.emacs.d/config/")
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-;;(progn
-;;  (add-to-list 'load-path "~/Code/test/emacs-libvterm/")
-;;  (let (vterm-install)
-;;    (require 'vterm)))
-
-(require 'text-tools)
 (require 'general-funcs)
 (require 'global-map)
 
 ;; set all widths to 2
 ;; (dolist (width '(evil-shift-width))
 ;;         (set width 2))
+
+(use-package dm-text :straight nil)
 
 (use-package dm-bindings :straight nil)
 
@@ -143,11 +106,6 @@
   (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
   :init
   (ido-vertical-mode 1))
-
-;; (add-hook 'after-init-hook (lambda ()
-;; 			     (if window-system
-;; 				 (server-start))
-;; 			     (global-hl-line-mode)))
 
 (use-package abbrev
   :straight nil

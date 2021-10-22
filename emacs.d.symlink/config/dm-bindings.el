@@ -106,7 +106,7 @@
     "sr" 'replace-symbol
     "sd" 'find-definition-in-file
 
-    "T" text-tools-map)
+    "T" dm-text-map)
   )
 
 (use-package hydra
