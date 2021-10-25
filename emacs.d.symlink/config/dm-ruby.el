@@ -59,13 +59,17 @@ If it runs, call ORIG-FUN with ARGS."
   (advice-add 'prettier-js :around 'prettier-js-in-projectile)
   )
 
-(use-package ruby-end)
+(use-package ruby-end
+  :custom
+  (ruby-end-insert-newline nil))
 
 (use-package ruby-refactor
   :requires bind-map
   :bind
   ;; (:map ruby-mode-map
   ;;       ("ae" . ruby-refactor-extract-to-method)))
+  :custom
+  (ruby-refactor-add-parens t)
   :config
   (let ((map (make-sparse-keymap)))
     (bind-keys :map map

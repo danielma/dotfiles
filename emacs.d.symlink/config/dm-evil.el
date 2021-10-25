@@ -41,6 +41,8 @@
   (evil-echo-state nil)
   (evil-symbol-word-search t)
   (windmove-wrap-around t)
+  ;; (evil-insert-state-modes
+  ;;  '(comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode))
   :init
   (evil-mode 1)
   :config

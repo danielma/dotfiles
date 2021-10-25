@@ -1,8 +1,6 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/Code/test/base16-builder/templates/emacs/build")
 
-;; (use-packge dimmer)
-
 (defun my/base16-set-theme (theme)
   "Set a base16 THEME by unloading all others."
   (interactive
@@ -21,26 +19,10 @@
     (disable-theme (intern it)))
   (custom-push-theme 'theme-face 'default 'user 'reset)
   (load-theme (intern (concat "base16-" theme)) t)
-  ;; (enable-theme 'session-face)
   )
 
-(defun my/set-custom-face (font)
-  "Interactively set the FONT for the custom theme."
-  (interactive
-   (let* ((completion-ignore-case t)
-          (font (completing-read "Font name: "
-                                 ;; x-list-fonts will fail with an error
-                                 ;; if this frame doesn't support fonts.
-                                 (x-list-fonts "*-normal-normal-*" nil (selected-frame))
-                                 nil nil nil nil
-                                 (frame-parameter nil 'font))))
-     (list font)))
-  (custom-theme-set-faces
-   'session-face
-   `(default ((t (:weight normal :width normal :slant normal :font ,font))))))
-
 (defun get-string-from-file (filePath)
-  "Return filePath's file content."
+  "Return FILEPATH's file content."
   (with-temp-buffer
     (insert-file-contents filePath)
     (buffer-string)))
@@ -51,30 +33,55 @@
 		  theme
 		'base16-default-dark) t))
 
-;; (deftheme session-face)
-
 (custom-set-faces
  '(default ((t (:weight normal :height 120 :width normal :family "JetBrains Mono")))))
-
-;; (provide-theme 'session-face)
-
-;; (enable-theme 'session-face)
 
 (if (display-graphic-p)
     (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend))
 
 (set-frame-parameter (selected-frame) 'alpha 95)
 
+(use-package emojify
+  :custom
+  (emojify-display-style 'unicode)
+  (emojify-emoji-styles '(unicode))
+  )
+
 (global-prettify-symbols-mode 1)
 
-(custom-set-variables
- '(line-spacing 0.1))
+(use-package paren
+  :init
+  (show-paren-mode t))
+
+(use-package emacs
+  :custom
+  (line-spacing 0))
 
 (use-package whitespace
-  :init
-  (setq whitespace-line-column 100
-        whitespace-style '(face lines-tail))
+  :custom
+  (whitespace-line-column 100)
+  (whitespace-style '(face lines-tail))
   :config
   (add-hook 'prog-mode-hook 'whitespace-mode))
 
+(use-package nlinum
+  :config
+  (add-hook 'prog-mode-hook 'nlinum-mode)
+  (setq nlinum-format " %d"))
+  
+(use-package nlinum-relative
+    :commands (nlinum-relative-on)
+    :custom
+    (nlinum-relative-current-symbol "")
+    (nlinum-relative-redisplay-delay 0.1)
+    :init
+    (add-hook 'nlinum-mode-hook 'nlinum-relative-on)
+    :config
+    (nlinum-relative-setup-evil))
+
+(use-package origami
+  :config 
+  (global-origami-mode))
+
 (provide 'dm-colors)
+;;; dm-colors.el ends here

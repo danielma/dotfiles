@@ -45,5 +45,9 @@
         (and (windmove-do-window-select dir) "0")
       '1)))
 
+(use-package emacs
+  :custom
+  (initial-scratch-message nil))
+
 (provide 'dm-general)
 ;;; dm-general.el ends here

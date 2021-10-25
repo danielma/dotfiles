@@ -114,10 +114,9 @@
         ("es" . edit-scratch)
         ("ey" . edit-yasnippet-dir)
 
-        ("sr" . replace-symbol)
-        ("sd" . dumb-jump-go))
+        ("sr" . replace-symbol))
   :bind-keymap
-  ("M-m" . base-leader-ap)
+  ("M-m" . base-leader-map)
   :config
   (bind-key "<SPC>" base-leader-map evil-normal-state-map)
   (bind-key "<SPC>" base-leader-map evil-visual-state-map)
