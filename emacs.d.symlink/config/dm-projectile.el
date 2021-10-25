@@ -1,9 +1,13 @@
+;;; dm-projectile.el --- Evil
+;;; Commentary:
+
+;;; Code:
+
 (defun projectile-rubygem-project-p ()
   (projectile-verify-file-wildcard "*.gemspec"))
 
 (defun my/projectile-switch-command (&optional directory)
-  "If the project being switched to is a git repository, invoke
-magit-status on the project root directory. Use dired otherwise."
+  "If the project being switched to is a git repository, invoke magit-status on the project root DIRECTORY.  Use dired otherwise."
   (interactive)
   (let ((project-root (or directory (projectile-project-root))))
     (if (and (executable-find "git")
@@ -23,7 +27,6 @@ magit-status on the project root directory. Use dired otherwise."
                                     :compile "bundle"
                                     :test "bundle exec rspec"
                                     :test-suffix "_spec.rb")
-  ;; (projectile-register-project-type 'generic '("README.md"))
   (add-to-list 'projectile-project-root-files-bottom-up "Gemfile")
   :custom
   (projectile-generic-command "rg --files -0")

@@ -49,5 +49,27 @@
   :custom
   (initial-scratch-message nil))
 
+(defun my/custom-dumb-jump-go ()
+  "Custom dumb jump command."
+  (interactive)
+  (if (eq major-mode 'typescript-mode)
+      (tide-jump-to-definition)
+    (dumb-jump-go-prefer-external)))
+
+(use-package dumb-jump
+  :config
+  (setq dumb-jump-selector 'ivy
+        dumb-jump-aggressive t)
+  :bind (:map base-leader-map
+	 ("sa" . my/custom-dumb-jump-go)
+	 ("sA" . dumb-jump-go-other-window)
+	 ("sd" . dumb-jump-go)
+	 ("sp" . dumb-jump-go-prompt)
+	 ("sl" . dumb-jump-quick-look)))
+
+(use-package undo-tree
+  :init
+  (global-undo-tree-mode))
+
 (provide 'dm-general)
 ;;; dm-general.el ends here

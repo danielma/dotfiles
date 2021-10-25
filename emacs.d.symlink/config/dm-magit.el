@@ -28,26 +28,23 @@
   (magit-rebase-branch "origin/master" '("-i" "--autosquash")))
 
 (use-package magit
-  :init
-  (setq magit-bury-buffer-function 'magit-mode-quit-window
-	;; magit-completing-read-function 'magit-ido-completing-read
-	magit-log-arguments (quote ("-n20" "--graph" "--decorate"))
-	magit-log-select-arguments (quote ("-n20" "--decorate"))
-	magit-popup-use-prefix-argument 'default
-	magit-save-repository-buffers nil
-        magit-display-buffer-function (lambda (buffer)
-                                        (if (equal (buffer-name) "*scratch*")
-                                            (display-buffer buffer '(display-buffer-same-window))
-                                          (magit-display-buffer-traditional buffer)))
-	magit-list-refs-namespaces '("refs/heads" "refs/remotes" "refs/pull"))
+  :custom
+  (magit-bury-buffer-function 'magit-mode-quit-window)
+  (magit-popup-use-prefix-argument 'default)
+  (magit-save-repository-buffers nil)
+  (magit-display-buffer-function (lambda (buffer)
+				   (if (equal (buffer-name) "*scratch*")
+				       (display-buffer buffer '(display-buffer-same-window))
+				     (magit-display-buffer-traditional buffer))))
   :config
-  (setq magit-blame-heading-format "%C | %s")
-  :bind (:map base-leader-map
-	      ("gs" . magit-status)
-	      ("gc" . magit-commit)
-	      ("gd" . magit-diff-buffer-file)
-	      ("gl" . magit-log-buffer-file)
-	      ("gb" . magit-blame)))
+  (bind-key "<SPC>" base-leader-map magit-mode-map)
+  :bind
+  (:map base-leader-map
+	("gs" . magit-status)
+	("gc" . magit-commit)
+	("gd" . magit-diff-buffer-file)
+	("gl" . magit-log-buffer-file)
+	("gb" . magit-blame)))
 
 (use-package forge
   :after magit)
@@ -59,22 +56,10 @@
   :config
   (magit-markdown-todos-autoinsert))
 
-(use-package evil-magit
-  :after magit
+(use-package evil-collection
+  :after (magit evil)
   :init
-  (evil-magit-init))
-
-(use-package magithub
-  :disabled
-  :init
-  (setq magithub-features '((pull-request-checkout . t))
-	magithub-api-timeout 10)
-  :config
-  (magithub-feature-autoinject t)
-  (magit-define-popup-action 'magithub-dispatch-popup
-    ?P "Simple Pull Request" 'my/magithub-pull-request)
-  (magit-define-popup-action 'magithub-dispatch-popup
-    ?h "Browse Default" 'my/magithub-browse-default))
+  (evil-collection-init))
 
 (use-package browse-at-remote
   :bind (:map base-leader-map

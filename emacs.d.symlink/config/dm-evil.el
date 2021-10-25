@@ -1,5 +1,7 @@
-(eval-when-compile
-  (require 'use-package))
+;;; dm-evil.el --- Evil
+;;; Commentary:
+
+;;; Code:
 
 (defun copy-from-osx ()
   (shell-command-to-string "pbpaste"))
@@ -32,9 +34,8 @@
 	(evil-resize-window (round (* (frame-width) p)) t)
       (evil-resize-window (round (* (frame-height) p))))))
 
-(use-package ace-window)
-
 (use-package evil
+  :after undo-tree
   :custom
   (evil-shift-width 2)
   (evil-shift-round t)
@@ -44,7 +45,10 @@
   ;; (evil-insert-state-modes
   ;;  '(comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode))
   :init
+  (setq evil-want-integration t
+	evil-want-keybinding nil)
   (evil-mode 1)
+  (evil-set-undo-system 'undo-tree)
   :config
   (define-key base-leader-map "w" evil-window-map)
   (defhydra hydra-evil-window ()
@@ -93,7 +97,6 @@
          ("C-a" . beginning-of-line-text)
          ("C-e" . end-of-line)
          ("C-d" . delete-forward-char)
-         ("C-," . evil-find-char)
          ("M-RET" . tt/expand-at-point)
          :map evil-normal-state-map
          ("M-RET" . newline)
@@ -102,7 +105,6 @@
          ("C-." . my/m-x)
          ("j" . evil-next-visual-line)
          ("k" . evil-previous-visual-line)
-         ("'" . evil-repeat-find-char)
          :map evil-visual-state-map
          ;; ("C-w" . interactive-wrap-with-pair)
          :map evil-window-map
@@ -111,7 +113,6 @@
          ("C-k" . buf-move-up)
          ("C-l" . buf-move-right)
          ("p" . my/window-percent)
-         ("w" . ace-window)
          ("." . hydra-evil-window/body)
          :map base-leader-map
          ("," . evil-avy-goto-char)
@@ -134,24 +135,7 @@
 	 :map evil-multiedit-insert-state-map
 	 ("C-n" . evil-multiedit-next)
 	 ("C-p" . evil-multiedit-prev))
-	;; ("RET" . evil-multiedit-toggle-or-restrict-region)
-	;; :map evil-motion-state-map
-	;; ("RET" . evil-multiedit-toggle-or-restrict-region)
   )
 
-(use-package undo-tree
-  :init
-  (global-undo-tree-mode)
-  (evil-set-undo-system 'undo-tree))
-
-(use-package evil-matchit
-  :init
-  (global-evil-matchit-mode))
-
-(defun my/prog-mode-setup ()
-  "Setup prog mode."
-  (setq-local evil-shift-width 2))
-
-(add-hook 'prog-mode-hook 'my/prog-mode-setup)
-
 (provide 'dm-evil)
+;;; dm-evil.el ends here

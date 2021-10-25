@@ -29,6 +29,7 @@
   (make-backup-files nil)
   (backup-directory-alist `((".*" . ,temporary-file-directory)))
   (auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+  (ring-bell-function 'ignore)
   (frame-resize-pixelwise t))
 
 (add-hook 'after-init-hook (lambda () (if window-system (server-start))))
@@ -40,42 +41,7 @@
 (require 'dm-text)
 (require 'dm-bindings)
 (require 'dm-completion)
-
-(defun my/custom-dumb-jump-go ()
-  "Custom dumb jump command."
-  (interactive)
-  (if (eq major-mode 'typescript-mode)
-      (tide-jump-to-definition)
-    (dumb-jump-go-prefer-external)))
-
-(use-package dumb-jump
-  :config
-  (setq dumb-jump-selector 'ivy
-        dumb-jump-aggressive t)
-  :bind (:map base-leader-map
-	 ("sa" . my/custom-dumb-jump-go)
-	 ("sA" . dumb-jump-go-other-window)
-	 ("sd" . dumb-jump-go)
-	 ("sp" . dumb-jump-go-prompt)
-	 ("sl" . dumb-jump-quick-look)))
-
-(use-package buffer-move
-  :commands (buf-move buf-move-right buf-move-left buf-move-up buf-move-down)
-  )
-
-(use-package rainbow-delimiters
-  :init
-  (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
-  )
-
-(use-package zoom-frm
-  :config
-  (setq frame-inhibit-implied-resize t)
-  (face-spec-recalc 'default (selected-frame))
-  :bind
-  ("s-=" . zoom-all-frames-in)
-  ("s--" . zoom-all-frames-out)
-  ("s-0" . zoom-frm-unzoom))
+(require 'dm-ui)
 
 (require 'dm-evil)
 
