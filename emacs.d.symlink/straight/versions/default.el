@@ -12,8 +12,6 @@
  ("dumb-jump" . "8f70acbe164553b225476fed55019ecddcf0bbd6")
  ("el-get" . "d76ac84ae9670de7bf7725b362cafe86688771f9")
  ("eldoc-box" . "f66f8d0641a0025d65da1ec21141ea594d6883da")
- ("emacs-bind-map" . "bf4181e3a41463684adfffc6c5c305b30480e30f")
- ("emacs-deferred" . "2239671d94b38d92e9b28d4e12fd79814cfb9c16")
  ("emacs-emojify" . "1b726412f19896abf5e4857d4c32220e33400b55")
  ("emacs-which-key" . "5fb30301cb3b4fca5a0e1ce8ec1ef59290b79199")
  ("emacsmirror-mirror" . "1c24bceb43e0e475656be908133a8eb6df3bf973")

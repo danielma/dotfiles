@@ -1,5 +1,4 @@
 ;;; dm-bindings.el --- Global bindings
-
 ;;; Commentary:
 
 ;;; Code:
@@ -22,17 +21,19 @@
   (find-file "~/SCRATCH.md"))
 
 (defun edit-yasnippet-dir ()
+  "Edit yasnippets."
   (interactive)
   (dired "~/.dotfiles/emacs.d.symlink/snippets"))
 
 (defun edit-dotfiles ()
+  "Open dotfiles."
   (interactive)
   (dired "~/.dotfiles"))
 
 (defun force-reload ()
-    "Revert buffer without confirmation."
-    (interactive)
-    (revert-buffer :ignore-auto :noconfirm))
+  "Revert buffer without confirmation."
+  (interactive)
+  (revert-buffer :ignore-auto :noconfirm))
 
 (defun save-buffer-always ()
   "Save this buffer even if it hasn't been modieifed."
@@ -48,7 +49,7 @@
 (defun custom-comment-line ()
   "Comment lines the way I want to."
   (interactive)
-  (if (evil-visual-state-p)
+  (if (region-active-p)
       (call-interactively 'comment-or-uncomment-region)
       (call-interactively 'toggle-comment-on-line)))
 
@@ -78,21 +79,14 @@
   (evil-ex (concat "%s/" (current-symbol-or-region) "/")))
 
 (defun reveal-in-finder ()
+  "Open dir."
   (interactive)
   (shell-command (concat "open -R " (buffer-file-name))))
-
-(defun find-definition-in-file ()
-  (interactive)
-  (let ((keyword (pcase major-mode
-		   ('emacs-lisp-mode "defun")
-		   ('ruby-mode "def")
-		   ('web-mode "function")
-		   (_ (error (concat "no definition keyword for " (symbol-name major-mode)))))))
-    (evil-search (concat keyword " " (current-symbol-or-region)) t)))
 
 (defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
 
 (use-package emacs
+  :after evil
   :bind
   (:map global-map
         ("s-<return>" . toggle-frame-fullscreen)
@@ -101,38 +95,33 @@
         ("C-'" . company-yasnippet)
         ("C-." . my/m-x)
         ("s-O" . browse-url)
-        ))
+        )
+  (:map base-leader-map
+        ("<SPC>" . my/m-x)
+        ("fs" . save-buffer-always)
+        ("fq" . delete-window)
+        ("fr" . force-reload)
 
-(use-package bind-map
+        ("cd" . cd)
+        ("cl" . custom-comment-line)
+        ("ct" . my/base16-set-theme)
+        ("cf" . menu-set-font)
+
+        ("dr" . reveal-in-finder)
+
+        ("ee" . edit-emacs)
+        ("ed" . edit-dotfiles)
+        ("es" . edit-scratch)
+        ("ey" . edit-yasnippet-dir)
+
+        ("sr" . replace-symbol)
+        ("sd" . dumb-jump-go))
+  :bind-keymap
+  ("M-m" . base-leader-ap)
   :config
-  (bind-map base-leader-map
-    :override-minor-modes t
-    :keys ("M-m")
-    :evil-keys ("SPC"))
-
-  (bind-map-set-keys base-leader-map
-    "<SPC>" 'my/m-x
-
-    "fs" 'save-buffer-always
-    "fq" 'delete-window
-    "fr" 'force-reload
-
-    "cd" 'cd
-    "cl" 'custom-comment-line
-    "ct" 'my/base16-set-theme
-    "cf" 'menu-set-font
-
-    "dr" 'reveal-in-finder
-
-    "ee" 'edit-emacs
-    "ed" 'edit-dotfiles
-    "es" 'edit-scratch
-    "ey" 'edit-yasnippet-dir
-
-    "sr" 'replace-symbol
-    "sd" 'find-definition-in-file
-
-    "T" dm-text-map)
+  (bind-key "<SPC>" base-leader-map evil-normal-state-map)
+  (bind-key "<SPC>" base-leader-map evil-visual-state-map)
+  (bind-key "T" dm-text-map base-leader-map)
   )
 
 (use-package hydra
@@ -140,7 +129,7 @@
   (defhydra hydra-buffers (base-leader-map "b")
     "buffers"
     ("d" kill-this-buffer "kill")
-    ("s" helm-buffers-list "list" :exit t)
+    ("s" ivy-switch-buffer "list" :exit t)
     ("p" previous-buffer "previous")
     ("n" next-buffer "next")))
 

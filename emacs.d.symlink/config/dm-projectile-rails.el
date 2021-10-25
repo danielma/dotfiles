@@ -128,6 +128,7 @@
 ;;   :straight (:type git :host github :repo "zkry/yaml.el"))
 
 (use-package projectile-rails
+  :disabled
   :straight (:type git :host github :repo "danielma/projectile-rails" :branch "dma/use-all-matches-for-finding-resource"
                    :upstream (:host github :repo "asok/projectile-rails"))
   :init

@@ -62,15 +62,19 @@ If it runs, call ORIG-FUN with ARGS."
 (use-package ruby-end)
 
 (use-package ruby-refactor
+  :requires bind-map
+  :bind
+  ;; (:map ruby-mode-map
+  ;;       ("ae" . ruby-refactor-extract-to-method)))
   :config
   (let ((map (make-sparse-keymap)))
-    (bind-map-set-keys map
-      "e" 'ruby-refactor-extract-to-method
-      "p" 'ruby-refactor-add-parameter
-      "l" 'ruby-refactor-extract-to-let
-      "v" 'ruby-refactor-extract-local-variable
-      "c" 'ruby-refactor-extract-constant
-      "o" 'ruby-refactor-convert-post-conditional)
+    (bind-keys :map map
+               ("e" . ruby-refactor-extract-to-method)
+               ("p" . ruby-refactor-add-parameter)
+               ("l" . ruby-refactor-extract-to-let)
+               ("v" . ruby-refactor-extract-local-variable)
+               ("c" . ruby-refactor-extract-constant)
+               ("o" . ruby-refactor-convert-post-conditional))
     (bind-map-for-mode-inherit my/ruby-refactor-mode-map base-leader-map
       :major-modes (ruby-mode)
       :bindings ("a" map))))
@@ -78,6 +82,7 @@ If it runs, call ORIG-FUN with ARGS."
 (use-package bundler)
 
 (use-package dm-rspec
+  :disabled
   :straight nil
   :config
   (bind-map-for-mode-inherit my/rspec-mode-leader-map base-leader-map

@@ -35,10 +35,6 @@
 (add-to-list 'load-path "~/.emacs.d/config/")
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-;; set all widths to 2
-;; (dolist (width '(evil-shift-width))
-;;         (set width 2))
-
 (require 'dm-general)
 (require 'dm-text)
 (require 'dm-bindings)
