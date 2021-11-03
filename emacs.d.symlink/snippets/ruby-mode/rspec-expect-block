@@ -2,4 +2,4 @@
 # name: expect block
 # key: expc
 # --
-expect { ${1:subject} }.to change { $2 }.$0
+expect { ${1:subject} }.to ${2:change \{ $3 \}.}$0

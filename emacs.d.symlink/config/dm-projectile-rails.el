@@ -64,11 +64,12 @@
   (let* ((choices (my/projectile-choices (my/projectile-rails-fixture-dirs)))
 	 (type (my/projectile-rails-select-fixture-type))
 	 (filepath (projectile-rails-expand-root (gethash type choices)))
-	 (fixture (my/projectile-rails-select-fixture-in-file filepath)))
+	 (fixture (my/projectile-rails-select-fixture-in-file filepath))
+	 (cleaned-type (s-replace "/" "_" type)))
     ;; (string-match "[^a-zA-Z_]" "hello@my_guy")
     (if (string-match "[^A-Za-z_]" fixture)
-        (concat type "(\"" fixture "\")")
-      (concat type "(:" fixture ")"))))
+        (concat cleaned-type "(\"" fixture "\")")
+      (concat cleaned-type "(:" fixture ")"))))
 
 (defun my/projectile-rails-select-fixture-type ()
   "Select a fixture type"
@@ -124,11 +125,8 @@
 (use-package inflections)
 (use-package rake)
 
-;; (use-package yaml
-;;   :straight (:type git :host github :repo "zkry/yaml.el"))
-
 (use-package projectile-rails
-  :disabled
+  :after bind-map
   :straight (:type git :host github :repo "danielma/projectile-rails" :branch "dma/use-all-matches-for-finding-resource"
                    :upstream (:host github :repo "asok/projectile-rails"))
   :init

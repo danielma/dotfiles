@@ -83,7 +83,7 @@
   (interactive)
   (shell-command (concat "open -R " (buffer-file-name))))
 
-(defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
+(use-package bind-map)
 
 (use-package emacs
   :after evil
@@ -118,8 +118,10 @@
   :bind-keymap
   ("M-m" . base-leader-map)
   :config
-  (bind-key "<SPC>" base-leader-map evil-normal-state-map)
-  (bind-key "<SPC>" base-leader-map evil-visual-state-map)
+  (bind-map base-leader-map
+    :keys ("M-m")
+    :evil-keys ("SPC")
+    :evil-states (normal visual))
   (bind-key "T" dm-text-map base-leader-map)
   )
 

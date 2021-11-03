@@ -20,6 +20,7 @@
 (menu-bar-mode 0)
 (if (display-graphic-p)
     (progn
+      ;; (set-frame-parameter (selected-frame) 'undecorated nil)
       (tool-bar-mode 0)
       (scroll-bar-mode 0)))
 
@@ -37,9 +38,18 @@
 (add-to-list 'load-path "~/.emacs.d/config/")
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
+(defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
+
 (require 'dm-general)
 (require 'dm-text)
 (require 'dm-bindings)
+
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns))
+  :config
+  (setq exec-path-from-shell-variables (quote ("PATH" "MANPATH" "BASE16_THEME")))
+  (exec-path-from-shell-initialize))
+
 (require 'dm-completion)
 (require 'dm-ui)
 
@@ -52,6 +62,8 @@
 (use-package dm-box-drawing :straight nil)
 
 (use-package dm-tabs :straight nil)
+
+(require 'dm-langs)
 
 (use-package ido-vertical-mode
   :config
@@ -70,12 +82,6 @@
   (abbrev-mode t)
   (save-abbrevs nil)
   )
-
-(use-package exec-path-from-shell
-  :if (memq window-system '(mac ns))
-  :config
-  (setq exec-path-from-shell-variables (quote ("PATH" "MANPATH" "BASE16_THEME")))
-  (exec-path-from-shell-initialize))
 
 (use-package key-chord
   :config
@@ -114,3 +120,17 @@
 ;; (setq epa-pinentry-mode 'loopback)
 
 ;;; init.el ends here
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("95b0bc7b8687101335ebbf770828b641f2befdcf6d3c192243a251ce72ab1692" default)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:weight normal :height 120 :width normal :family "JetBrains Mono")))))

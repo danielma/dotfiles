@@ -39,14 +39,14 @@ yabai -m config mouse_action2                resize
 
 # general space settings
 yabai -m config layout                       float
-yabai -m config top_padding                  0
-yabai -m config bottom_padding               45
+yabai -m config top_padding                  10
+yabai -m config bottom_padding               0
 yabai -m config left_padding                 0
 yabai -m config right_padding                0
 yabai -m config window_gap                   10
 
 yabai -m rule --add title='.+' manage=off
-# yabai -m rule --add app="Emacs.*" manage=on # --except "^$"
+# yabai -m rule --add app="Emacs" manage=on # --except "^$"
 
 # yabai -m signal --add event=application_activated action="/Users/danielma/.dotfiles/bin/browser"
 yabai -m signal --add event=application_front_switched action="/Users/danielma/.dotfiles/bin/switch-app"
