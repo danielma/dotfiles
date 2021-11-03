@@ -1,5 +1,7 @@
 #!/bin/sh
 
+exit 0
+
 if test ! $(which rbenv)
 then
   echo "  Installing rbenv for you."
