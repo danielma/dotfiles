@@ -23,9 +23,10 @@
 
 (defun get-string-from-file (filePath)
   "Return FILEPATH's file content."
-  (with-temp-buffer
-    (insert-file-contents filePath)
-    (buffer-string)))
+  (if (file-exists-p filePath)
+      (with-temp-buffer
+	(insert-file-contents filePath)
+	(buffer-string))))
 
 (let* ((themename (s-chomp (get-string-from-file "~/.base16_theme-name")))
        (theme (intern (concat "base16-" themename))))
