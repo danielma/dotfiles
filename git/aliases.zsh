@@ -6,8 +6,6 @@ then
   alias git=$hub_path
 fi
 
-source $ZSH/git/aliases.secret.zsh
-
 # The rest of my fun git aliases
 alias gl='git pull --prune'
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s -%Creset%C(yellow)%d%Creset %Cgreen(%cd)%Creset' --abbrev-commit --date=human"
