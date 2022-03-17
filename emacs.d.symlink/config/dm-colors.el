@@ -40,7 +40,7 @@
 (if (display-graphic-p)
     (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend))
 
-(set-frame-parameter (selected-frame) 'alpha 95)
+(set-frame-parameter (selected-frame) 'alpha 100)
 
 (use-package emojify
   :custom

@@ -36,6 +36,7 @@
 				   (if (equal (buffer-name) "*scratch*")
 				       (display-buffer buffer '(display-buffer-same-window))
 				     (magit-display-buffer-traditional buffer))))
+  (git-commit-major-mode 'markdown-mode)
   :config
   (bind-key "<SPC>" base-leader-map magit-mode-map)
   :bind

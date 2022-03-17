@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: for loop
+# key: for
+# --
+for (let i = 0; i < ${1:array}.length; i++) {
+    const item = $1[i]
+    $0
+}

@@ -4,6 +4,12 @@
 <dict>
 	<key>autoExpandMidString</key>
 	<true/>
+	<key>autoExpandSnippetsIgnoreApps</key>
+	<array>
+		<string>com.runningwithcrayons.Alfred-3</string>
+		<string>com.runningwithcrayons.Alfred-Preferences-3</string>
+		<string>org.gnu.Emacs</string>
+	</array>
 	<key>hotkey</key>
 	<dict>
 		<key>key</key>

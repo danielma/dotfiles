@@ -124,7 +124,7 @@
 (defun --dm-guard-test-name ()
   "Generate the test name for a buffer."
   (let* ((project-type (projectile-project-type))
-         (spec-mode (or (eq project-type 'rails-rspec) (eq project-type 'ruby-rspec)))
+         (spec-mode (projectile-verify-file "spec"))
          (is-test-file (--dm-guard-is-test-file-p dm-guard-manual-test-buffer))
          (file-path (buffer-file-name dm-guard-manual-test-buffer))
          (file-name (file-relative-name file-path (projectile-project-root)))
@@ -147,8 +147,8 @@
               (concat "test/" (match-string 1 file-name) "_test.rb")))
            ((string-match "^lib/\\(.+\\).rb$" file-name)
             (if spec-mode
-                (concat "spec/lib/" (match-string 1 file-name) "_spec.rb")
-              (concat "test/lib/" (match-string 1 file-name) "_test.rb")))
+                (concat "spec/" (match-string 1 file-name) "_spec.rb")
+              (concat "test/" (match-string 1 file-name) "_test.rb")))
            ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
             (concat "test/models/" (dm-guard--singularize (match-string 1 file-name)) "_test.rb"))
            (t nil))))

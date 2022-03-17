@@ -14,7 +14,11 @@
              :host github
              :repo "emacs-lsp/lsp-mode"
              :files (:defaults "clients/*.el"))
-             )
+  :custom 
+  ;; (lsp-disabled-clients '(ts-ls))
+  (lsp-headerline-breadcrumb-enable nil)
+  (lsp-lens-enable nil)
+  )
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)

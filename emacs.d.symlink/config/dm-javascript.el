@@ -27,6 +27,7 @@
 	      ))
 
 (use-package tide
+  :disabled
   :after flycheck)
 
 (use-package eldoc-box)
@@ -47,11 +48,13 @@
   
 (use-package typescript-mode
   :mode "\\.tsx?\\'"
-  :after tide
+  ;; :after tide
   :init
-  (add-hook 'typescript-mode-hook #'setup-tide-mode)
-  (add-hook 'typescript-mode-hook #'prettier-js-mode)
-  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
+  ;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
+  (add-hook 'typescript-mode-hook #'lsp)
+  ;; (add-hook 'typescript-mode-hook #'prettier-js-mode)
+  (add-hook 'typescript-mode-hook #'smartparens-mode)
+  ;; (flycheck-add-mode 'javascript-eslint 'typescript-mode)
   :custom
   (typescript-indent-level 2)
   :config
@@ -67,24 +70,24 @@
   (forward-line -1)
   (indent-according-to-mode))
 
-(defun my-javascript-mode-setup ()
-  (eslintd-fix-mode)
-  (setq-local electric-indent-chars
-              (append "<>" electric-indent-chars))
-  (font-lock-add-keywords 'js-jsx-mode
-                          '(("\\(?:</?\\([a-zA-Z0-9.]+\\)\\)" 1 'web-mode-html-tag-face)))
-  (emmet-mode 1)
-  (setq-local emmet-expand-jsx-className? t)
-  (setq-local emmet-self-closing-tag-style " /")
-  )
-
-(define-abbrev-table 'javascript-mode-abbrev-table '(
-                                                     ("aseq" "assert.equal")))
-(define-abbrev-table 'js-jsx-mode-abbrev-table '(
-                                                     ("aseq" "assert.equal")))
-
-(add-hook 'js-jsx-mode-hook #'smartparens-mode)
-(add-hook 'js-jsx-mode-hook 'my-javascript-mode-setup)
+;; (defun my-javascript-mode-setup ()
+;;   (eslintd-fix-mode)
+;;   (setq-local electric-indent-chars
+;;               (append "<>" electric-indent-chars))
+;;   (font-lock-add-keywords 'js-jsx-mode
+;;                           '(("\\(?:</?\\([a-zA-Z0-9.]+\\)\\)" 1 'web-mode-html-tag-face)))
+;;   (emmet-mode 1)
+;;   (setq-local emmet-expand-jsx-className? t)
+;;   (setq-local emmet-self-closing-tag-style " /")
+;;   )
+;; 
+;; (define-abbrev-table 'javascript-mode-abbrev-table '(
+;;                                                      ("aseq" "assert.equal")))
+;; (define-abbrev-table 'js-jsx-mode-abbrev-table '(
+;;                                                      ("aseq" "assert.equal")))
+;; 
+;; (add-hook 'js-jsx-mode-hook #'smartparens-mode)
+;; (add-hook 'js-jsx-mode-hook 'my-javascript-mode-setup)
 ;; (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js-jsx-mode))
 
 (provide 'dm-javascript)

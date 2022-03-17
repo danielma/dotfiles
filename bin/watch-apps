@@ -3,7 +3,7 @@
 require 'json'
 require 'rest-client'
 
-LOG = false
+LOG = true
 
 if LOG
   LOG_FILE = File.open("#{__FILE__}.log", "a")
@@ -74,8 +74,8 @@ end
 auto_slack_status = case current_app
                     when 'zoom.us'
                       ':zoom:'
-                    when 'Tuple'
-                      ':tuple:'
+                    when 'Tuple', 'Pop'
+                      ':pairing:'
                     end
 
 log(current_app)

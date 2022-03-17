@@ -3,7 +3,8 @@ browsers = {
    { "Firefox", "org.mozilla.firefox" },
    { "Google Chrome", "com.google.chrome" },
    { "Brave Browser", "com.brave.browser" },
-   { "Microsoft Edge", "com.microsoft.edgemac" }
+   { "Microsoft Edge", "com.microsoft.edgemac" },
+   { "Chromium", "org.chromium.Chromium" }
 }
 lastBrowser = "Microsoft Edge"
 

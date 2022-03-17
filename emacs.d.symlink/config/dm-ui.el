@@ -9,7 +9,8 @@
 
 (use-package whitespace
   :custom
-  (whitespace-line-column 100)
+  (fill-column 100)
+  (whitespace-line-column fill-column)
   (whitespace-style '(face lines-tail))
   :config
   (add-hook 'prog-mode-hook 'whitespace-mode))

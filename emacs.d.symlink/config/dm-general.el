@@ -4,21 +4,41 @@
 
 ;;; Code:
 
+(defun -s-contains (needle haystack)
+  (string-match-p (regexp-quote needle) haystack))
+
+
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
-(defun rename-file-and-buffer (new-name)
+(defun rename-file-and-buffer (new-name &optional buffer)
   "Renames both current buffer and file it's visiting to NEW-NAME."
-  (interactive "sNew name: ")
-  (let ((name (buffer-name))
-        (filename (buffer-file-name)))
-    (if (not filename)
-        (message "Buffer '%s' is not visiting a file!" name)
-      (if (get-buffer new-name)
-          (message "A buffer named '%s' already exists!" new-name)
-        (progn
-          (rename-file filename new-name 1)
-          (rename-buffer new-name)
-          (set-visited-file-name new-name)
-          (set-buffer-modified-p nil))))))
+  (interactive (list (read-string "New name: " (file-name-base (buffer-file-name)))))
+  (let* ((original-buffer (or buffer (current-buffer))))
+    (if (not (buffer-file-name original-buffer))
+	(message "Buffer '%s' is not visiting a file!" (buffer-name original-buffer))
+      (let* ((new-basename (file-name-base new-name))
+	     (filename (buffer-file-name original-buffer))
+	     (extension (file-name-extension (if (-s-contains "." new-name) new-name filename)))
+	     (dir (file-name-directory filename))
+	     (new-file (concat dir new-basename "." extension)))
+	(rename-file filename new-file 1)
+	(kill-buffer original-buffer)
+	(find-file new-file)))))
+
+(defun rename-file-and-counterpart (new-name)
+  "Renames both current buffer and counterpart to NEW-NAME."
+  (interactive (list (read-string "New name: " (file-name-base (buffer-file-name)))))
+  (let* ((projectile-create-missing-test-files t)
+	 (original-buffer (current-buffer))
+	 (counterpart (projectile-find-implementation-or-test (buffer-file-name)))
+	 (counterpart-buffer (find-buffer-visiting counterpart)))
+    (if (not counterpart-buffer)
+	(message "No counterpart buffer found!")
+      (let* ((counterpart-basename (file-name-base counterpart))
+	     (basename (file-name-base (buffer-file-name)))
+	     (counterpart-new-name (s-replace basename new-name counterpart-basename)))
+	(rename-file-and-buffer counterpart-new-name counterpart-buffer)
+	(rename-file-and-buffer new-name original-buffer)))))
+  
 
 (defun delete-this-file ()
   "Deletes the active buffer file."
@@ -47,13 +67,14 @@
 
 (use-package emacs
   :custom
+  (indent-tabs-mode nil)
   (initial-scratch-message nil))
 
 (defun my/custom-dumb-jump-go ()
   "Custom dumb jump command."
   (interactive)
   (if (eq major-mode 'typescript-mode)
-      (tide-jump-to-definition)
+      (lsp-find-definition)
     (dumb-jump-go-prefer-external)))
 
 (use-package dumb-jump

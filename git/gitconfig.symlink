@@ -30,12 +30,16 @@
     log = delta
     reflog = delta
     show = delta
+    blame = delta
 
 [interactive]
     diffFilter = delta --color-only --features=interactive
 
 [delta]
+    light = true
     features = decorations
+    navigate = true
+    syntax-theme = ansi
 
 [delta "interactive"]
     keep-plus-minus-markers = false

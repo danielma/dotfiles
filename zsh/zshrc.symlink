@@ -13,8 +13,6 @@ export PROJECTS=~/Code
 
 autoload -Uz compinit && compinit
 
-source $ZSH/zsh/work.secret.zsh
-
 source $HOME/.asdf/asdf.sh
 # source $HOME/.asdf/completions/asdf.bash
 
@@ -65,7 +63,7 @@ dm() {
 b16() {
     eval base16_$1
     emacsclient -e "(my/base16-set-theme \"$1\")"
-    open ~/.dotfiles/ubersicht/refresh-theme.app 2>/dev/null
+    # open ~/.dotfiles/ubersicht/refresh-theme.app 2>/dev/null
 
     echo $1 > ~/.base16_theme-name
 
@@ -98,7 +96,8 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 # export GUARD_NOTIFY=false
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+# [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+eval "$(zoxide init zsh --cmd j)"
 
 # fg Text
 # bg Background

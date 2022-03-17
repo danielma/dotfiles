@@ -26,6 +26,8 @@
 
 (use-package emacs
   :custom
+;;  (gc-cons-threshold 100000000)
+;;  (read-process-output-max (* 1024 1024)) ;; 1mb
   (inhibit-startup-message t)
   (make-backup-files nil)
   (backup-directory-alist `((".*" . ,temporary-file-directory)))
@@ -78,6 +80,8 @@
     global-abbrev-table "orgn" "organization")
   (define-abbrev
     global-abbrev-table "orgns" "organizations")
+  (define-abbrev
+    global-abbrev-table "Scoto" "ScopedToOrganization")
   :custom
   (abbrev-mode t)
   (save-abbrevs nil)
