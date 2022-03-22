@@ -21,7 +21,7 @@ set --export FZF_DEFAULT_COMMAND 'rg --files'
 
 # Work
 
-source work.fish
+source ~/.dotfiles/config.symlink/fish/work.fish
 
 # Dev
 
