@@ -23,5 +23,10 @@ set --export FZF_DEFAULT_COMMAND 'rg --files'
 
 source work.fish
 
+# Dev
+
 source ~/.asdf/asdf.fish
 
+# Path
+
+fish_add_path ~/.dotfiles/bin
