@@ -27,6 +27,10 @@
    )
   (magit-rebase-branch "origin/master" '("-i" "--autosquash")))
 
+(defun my/commit-mode-setup ()
+  "Set commit mode."
+  (setq-local fill-column 70))
+
 (use-package magit
   :custom
   (magit-bury-buffer-function 'magit-mode-quit-window)
@@ -39,6 +43,8 @@
   (git-commit-major-mode 'markdown-mode)
   :config
   (bind-key "<SPC>" base-leader-map magit-mode-map)
+  :hook
+  (git-commit-setup-hook my/commit-mode-setup)
   :bind
   (:map base-leader-map
 	("gs" . magit-status)

@@ -91,8 +91,6 @@ alias up="cd .."
 
 unset config_files
 
-export FZF_DEFAULT_COMMAND='ag -g ""'
-
 # export GUARD_NOTIFY=false
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -113,6 +111,8 @@ eval "$(zoxide init zsh --cmd j)"
 export FZF_DEFAULT_OPTS='
   --color 16,bg+:18,fg+:7,hl+:2,hl:2,pointer:6,prompt:6,info:5
 '
+export FZF_DEFAULT_COMMAND='rg --files'
+
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 export XDG_CONFIG_HOME=~/.config
