@@ -1,0 +1,67 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'json'
+require 'shellwords'
+
+pr = ARGV[0]
+
+raise 'Pass in PR #' if pr.nil?
+
+def squish(str)
+  str.gsub(/[[:space:]]+/, ' ').strip
+end
+
+raw_remote = `git remote get-url origin`
+repo = raw_remote.match(%r{(?<owner>\w+)/(?<name>\w+)\.git$})
+
+raise "Can't parse remote #{raw_remote.inspect}" if repo.nil?
+
+query = squish("
+{
+  repository(name: \"#{repo[:name]}\", owner: \"#{repo[:owner]}\") {
+    pullRequest(number: #{pr}) {
+      reviewThreads(first: 100) {
+        edges {
+          node {
+            comments(first: 10) {
+              edges {
+                node {
+                  author { login }
+                  body
+                  path
+                  diffHunk
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}")
+
+response = `gh api graphql -f query='#{query}'`
+json = JSON.parse(response)
+
+threads = json.dig('data', 'repository', 'pullRequest', 'reviewThreads', 'edges')
+              .map { _1.dig('node', 'comments', 'edges').map { |e| e['node'] } }
+
+printable_threads = threads.map do |thread|
+  diff_hunk = thread.dig(0, 'diffHunk')
+  path = thread.dig(0, 'path')
+
+  diff_hunk_with_header = "--- #{path}\n+++ #{path}\n" + diff_hunk
+
+  comments = thread.map do |comment|
+    "\n# #{comment.dig('author', 'login')}:\n\n#{comment['body']}"
+  end.join("\n")
+
+  pretty_comments = `echo #{Shellwords.escape(comments)} | bat -l markdown -p --color always`
+
+  "#{diff_hunk_with_header}\n#{pretty_comments}"
+end
+
+output = Shellwords.escape("PR ##{pr}\n\n#{printable_threads.join("\n")}")
+
+exec("echo #{output} | delta")
