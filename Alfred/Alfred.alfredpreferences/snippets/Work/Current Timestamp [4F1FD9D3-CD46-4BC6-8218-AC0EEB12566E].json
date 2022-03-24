@@ -1,8 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "{date:yyyy-MM-dd HH:mm:ss}",
-    "uid" : "4F1FD9D3-CD46-4BC6-8218-AC0EEB12566E",
-    "name" : "Current T\u0001imestamp",
-    "keyword" : "!dtime"
-  }
-}
