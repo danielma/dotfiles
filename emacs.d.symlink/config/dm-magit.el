@@ -44,7 +44,7 @@
   :config
   (bind-key "<SPC>" base-leader-map magit-mode-map)
   :hook
-  (git-commit-setup-hook my/commit-mode-setup)
+  (git-commit-setup . my/commit-mode-setup)
   :bind
   (:map base-leader-map
 	("gs" . magit-status)

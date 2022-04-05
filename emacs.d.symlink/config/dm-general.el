@@ -70,17 +70,19 @@
   (indent-tabs-mode nil)
   (initial-scratch-message nil))
 
-(defun my/custom-dumb-jump-go ()
+(defun my/custom-dumb-jump-go (arg)
   "Custom dumb jump command."
-  (interactive)
+  (interactive "P")
   (if (eq major-mode 'typescript-mode)
       (lsp-find-definition)
-    (dumb-jump-go-prefer-external)))
+    (let ((xref-auto-jump-to-first-definition (and arg t)))
+      (call-interactively 'evil-goto-definition))))
 
 (use-package dumb-jump
-  :config
-  (setq dumb-jump-selector 'ivy
-        dumb-jump-aggressive t)
+  :custom
+  (dumb-jump-selector 'ivy)
+  :init
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   :bind (:map base-leader-map
 	 ("sa" . my/custom-dumb-jump-go)
 	 ("sA" . dumb-jump-go-other-window)
@@ -88,9 +90,19 @@
 	 ("sp" . dumb-jump-go-prompt)
 	 ("sl" . dumb-jump-quick-look)))
 
+(use-package ivy-xref
+  :custom
+  (xref-show-definitions-function #'ivy-xref-show-defs)
+  (xref-show-xrefs-function #'ivy-xref-show-xrefs))
+
 (use-package undo-tree
   :init
   (global-undo-tree-mode))
+
+(use-package try
+  :config
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  )
 
 (provide 'dm-general)
 ;;; dm-general.el ends here

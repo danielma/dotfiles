@@ -17,17 +17,17 @@
   :group 'mode-line-powerline)
 
 (defface mode-line-evil
-  '((t (:foreground "white" :weight bold :inherit mode-line)))
+  '((t (:weight bold :inherit mode-line)))
   "Meta-face used for property inheritance on all mode-line-evil faces."
   :group 'mode-line-evil)
 
 (defface mode-line-evil-insert
-  '((t (:background "green" :inherit mode-line-evil)))
+  '((t (:inherit (ansi-color-green mode-line-evil) :foreground "white")))
   "Face used in evil color-coded segments when in Insert state."
   :group 'mode-line-evil)
 
 (defface mode-line-evil-normal
-  '((t (:background "red" :inherit mode-line-evil)))
+  '((t (:inherit (ansi-color-red mode-line-evil) :foreground "white")))
   "Face used in evil color-coded segments when in Normal state."
   :group 'mode-line-evil)
 
@@ -77,22 +77,22 @@
   :group 'mode-line-flycheck)
 
 (defface mode-line-flycheck-warning
-  '((t (:background "orange" :foreground "white" :inherit mode-line)))
+  '((t (:foreground "white" :inherit (ansi-color-bright-red mode-line))))
   "Flycheck warning face"
   :group 'mode-line-flycheck)
 
 (defface mode-line-flycheck-info
-  '((t (:background "yellow" :foreground "white" :inherit mode-line)))
+  '((t (:foreground "white" :inherit (ansi-color-yellow mode-line))))
   "Flycheck info face"
   :group 'mode-line-flycheck)
 
 (defface mode-line-flycheck-ok
-  '((t (:background "green" :foreground "white" :inherit mode-line)))
+  '((t (:foreground "white" :inherit (ansi-color-green mode-line))))
   "Flycheck ok face"
   :group 'mode-line-flycheck)
 
 (defface mode-line-flycheck-running
-  '((t (:background "blue" :foreground "white" :inherit mode-line)))
+  '((t (:foreground "white" :inherit (ansi-color-blue mode-line))))
   "Flycheck running face"
   :group 'mode-line-flycheck)
 
@@ -254,7 +254,7 @@
                   ;; left
                   (format-mode-line `(
                                       "%e"
-                                      ("" (:propertize ("  " (:eval (my/mode-line-evil-tag)) "  ") face ,(my/mode-line-face 'evil)))
+                                      ("" (:propertize (" " (:eval (my/mode-line-evil-tag)) " ") face ,(my/mode-line-face 'evil)))
 				      ;; ,(if (frame-parameter nil 'client)
 				      ;; 	   " @ "
 				      ;; 	 )

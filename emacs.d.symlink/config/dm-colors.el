@@ -1,6 +1,12 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/Code/test/base16-builder/templates/emacs/build")
 
+(use-package bespoke-themes
+  :straight (:host github :repo "mclear-tools/bespoke-themes" :branch "main")
+  :custom
+  (bespoke-set-variable-pitch t)
+  )
+
 (defun my/base16-set-theme (theme)
   "Set a base16 THEME by unloading all others."
   (interactive
@@ -35,10 +41,10 @@
 		'base16-default-dark) t))
 
 (custom-set-faces
- '(default ((t (:weight normal :height 120 :width normal :family "JetBrains Mono")))))
+ '(default ((t (:weight regular :height 140 :width regular :family "JetBrains Mono")))))
 
 (if (display-graphic-p)
-    (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend))
+    (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji") nil 'prepend))
 
 (set-frame-parameter (selected-frame) 'alpha 100)
 

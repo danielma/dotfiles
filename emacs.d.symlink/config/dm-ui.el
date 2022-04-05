@@ -15,20 +15,12 @@
   :config
   (add-hook 'prog-mode-hook 'whitespace-mode))
 
-(use-package nlinum
-  :config
-  (add-hook 'prog-mode-hook 'nlinum-mode)
-  (setq nlinum-format " %d"))
-  
-(use-package nlinum-relative
-    :commands (nlinum-relative-on)
-    :custom
-    (nlinum-relative-current-symbol "")
-    (nlinum-relative-redisplay-delay 0.1)
-    :init
-    (add-hook 'nlinum-mode-hook 'nlinum-relative-on)
-    :config
-    (nlinum-relative-setup-evil))
+(use-package display-line-numbers
+  :custom
+  (display-line-numbers-type 'relative)
+  :hook
+  (prog-mode . display-line-numbers-mode)
+  )
 
 (use-package origami
   :config 
@@ -51,7 +43,6 @@
   ("s-=" . zoom-all-frames-in)
   ("s--" . zoom-all-frames-out)
   ("s-0" . zoom-frm-unzoom))
-
 
 (provide 'dm-ui)
 ;;; dm-ui.el ends here

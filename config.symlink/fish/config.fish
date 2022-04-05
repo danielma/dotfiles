@@ -27,7 +27,7 @@ source ~/.dotfiles/config.symlink/fish/work.fish
 
 source ~/.asdf/asdf.fish
 
-set --export EDITOR 'nvim'
+# set --export EDITOR 'nvim'
 
 # Path
 

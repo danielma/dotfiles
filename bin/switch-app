@@ -52,7 +52,7 @@ log current_yabai_window, awesome: true
 
 if recent_yabai_window && current_app && current_yabai_window
   if !ON_SCREEN_APPS.include?(@recent_app) && recent_yabai_window["is-floating"] && @recent_app != current_app && !current_yabai_window["is-floating"]
-    hide_the_last_app
+    # hide_the_last_app
   end
 end
 
