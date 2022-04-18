@@ -33,16 +33,18 @@ def db(new_value = nil)
     File.open(file, 'w') do |f|
       f.puts(new_value.to_json)
     end
+  elsif File.exist?(file)
+    JSON.parse(File.read(file))
   else
-    if File.exist?(file)
-      JSON.parse(File.read(file))
-    else
-      {}
-    end
+    {}
   end
+rescue JSON::ParserError
+  File.open(file, 'w') { |f| f.puts('{}') }
+  {}
 end
 
 stored_data = db
+token = File.read("#{__FILE__}.token").chomp
 launching = ARGV.last == 'launch'
 
 log(RbConfig.ruby)
@@ -90,6 +92,6 @@ if auto_slack_status
         status_expiration: 0
       }
     }.to_json,
-    { Authorization: "Bearer #{stored_data['token']}", content_type: :json }
+    { Authorization: "Bearer #{token}", content_type: :json }
   )
 end
