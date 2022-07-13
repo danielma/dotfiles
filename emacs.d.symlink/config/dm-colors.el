@@ -40,13 +40,15 @@
 		  theme
 		'base16-default-dark) t))
 
+;; (custom-set-faces
+;;  '(default ((t (:weight regular :height 140 :width regular :family "Rec Mono Duotone")))))
 (custom-set-faces
  '(default ((t (:weight regular :height 140 :width regular :family "JetBrains Mono")))))
 
 (if (display-graphic-p)
     (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji") nil 'prepend))
 
-(set-frame-parameter (selected-frame) 'alpha 100)
+(set-frame-parameter (selected-frame) 'alpha 95)
 
 (use-package emojify
   :custom

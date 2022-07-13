@@ -33,7 +33,7 @@
              :repo "weiwee/ivy-fuz.el"
              :branch "master")
   :custom
-  (ivy-sort-matches-functions-alist '((t . ivy-fuz-sort-fn)))
+  (ivy-sort-matches-functions-alist '((swiper . ivy-sort-identity) (t . ivy-fuz-sort-fn)))
   (ivy-re-builders-alist '((counsel-rg . ivy--regex-plus)
                            (swiper . ivy--regex-plus)
                            (t . ivy-fuz-regex-fuzzy)))
@@ -68,6 +68,10 @@
 (use-package ivy-hydra)
 
 (defalias 'my/m-x 'counsel-M-x)
+
+(defun ivy-sort-identity (pattern cands)
+  "Identity sort that always returns the first argument."
+  cands)
 
 (provide 'dm-completion)
 ;;; dm-completion.el ends here

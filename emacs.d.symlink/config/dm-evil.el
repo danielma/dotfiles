@@ -47,9 +47,9 @@
   :init
   (setq evil-want-integration t
 	evil-want-keybinding nil)
+  :config
   (evil-mode 1)
   (evil-set-undo-system 'undo-tree)
-  :config
   (define-key base-leader-map "w" evil-window-map)
   (defhydra hydra-evil-window ()
     "window"
@@ -136,6 +136,18 @@
 	 ("C-n" . evil-multiedit-next)
 	 ("C-p" . evil-multiedit-prev))
   )
+
+(use-package key-chord
+  :after evil
+  :config
+  (key-chord-mode 1)
+  (key-chord-define evil-insert-state-map ",," 'evil-avy-goto-char)
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  (key-chord-define evil-normal-state-map "''" 'my/m-x))
+
+(use-package evil-visualstar
+  :config
+  (global-evil-visualstar-mode))
 
 (provide 'dm-evil)
 ;;; dm-evil.el ends here

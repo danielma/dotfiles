@@ -36,7 +36,7 @@
     diffFilter = delta --color-only --features=interactive
 
 [delta]
-    light = false
+    light = true
     features = decorations
     navigate = true
     syntax-theme = ansi

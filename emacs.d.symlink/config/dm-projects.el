@@ -9,4 +9,12 @@
 
 ;; (dir-locals-set-directory-class "~/Code/login" 'login)
 
+;; (evil-set-initial-state 'rg-mode 'emacs)
+
+(use-package rg
+  :init
+  (rg-enable-default-bindings)
+  :custom
+  (rg-custom-type-aliases '(("yuh" . "*"))))
+
 (provide 'dm-projects)

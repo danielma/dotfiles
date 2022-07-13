@@ -1,7 +1,7 @@
 (defun my/magithub-pull-request ()
   "Simple pull request command."
   (interactive)
-  (with-editor-async-shell-command "hub pull-request"))
+  (with-editor-async-shell-command "hub pull-request "))
 
 ;; (defun my/magithub-browse-default ()
 ;;   "Browse the github repo."
@@ -18,14 +18,32 @@
       (magit-pull-from-upstream '()))
   )
 
+(defun my/main ()
+  "Switch to main and update."
+  (interactive)
+  
+  (if (magit-changed-files "HEAD")
+      (message "Can't switch. You have changes!")
+      (magit-checkout "main")
+      (magit-pull-from-upstream '())))
+
 (defun my/git-rebase-onto-master ()
   "Rebase the current branch onto origin/master."
   (interactive)
   (accept-process-output
    (magit-fetch-branch "origin" "master" nil)
-   5 ;; timeout
+   10 ;; timeout
    )
   (magit-rebase-branch "origin/master" '("-i" "--autosquash")))
+
+(defun my/git-rebase-onto-main ()
+  "Rebase the current branch onto origin/main."
+  (interactive)
+  (accept-process-output
+   (magit-fetch-branch "origin" "main" nil)
+   10 ;; timeout
+   )
+  (magit-rebase-branch "origin/main" '("-i" "--autosquash")))
 
 (defun my/commit-mode-setup ()
   "Set commit mode."
@@ -36,10 +54,11 @@
   (magit-bury-buffer-function 'magit-mode-quit-window)
   (magit-popup-use-prefix-argument 'default)
   (magit-save-repository-buffers nil)
-  (magit-display-buffer-function (lambda (buffer)
-				   (if (equal (buffer-name) "*scratch*")
-				       (display-buffer buffer '(display-buffer-same-window))
-				     (magit-display-buffer-traditional buffer))))
+  ;; (magit-display-buffer-function (lambda (buffer)
+  ;;       			   (if (equal (buffer-name) "*scratch*")
+  ;;       			       (display-buffer buffer '(display-buffer-same-window))
+  ;;       			     (magit-display-buffer-traditional buffer))))
+  (magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1)
   (git-commit-major-mode 'markdown-mode)
   :config
   (bind-key "<SPC>" base-leader-map magit-mode-map)
@@ -71,5 +90,9 @@
 (use-package browse-at-remote
   :bind (:map base-leader-map
 	 ("gB" . browse-at-remote)))
+
+(defun browse-at-remote-pbcopy ()
+  (interactive)
+  (paste-to-osx (browse-at-remote-get-url)))
 
 (provide 'dm-magit)

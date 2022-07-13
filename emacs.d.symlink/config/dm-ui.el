@@ -44,5 +44,9 @@
   ("s--" . zoom-all-frames-out)
   ("s-0" . zoom-frm-unzoom))
 
+(use-package which-key
+  :config
+  (which-key-mode))
+
 (provide 'dm-ui)
 ;;; dm-ui.el ends here

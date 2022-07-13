@@ -67,41 +67,6 @@
 
 (require 'dm-langs)
 
-(use-package ido-vertical-mode
-  :config
-  (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
-  :init
-  (ido-vertical-mode 1))
-
-(use-package abbrev
-  :straight nil
-  :config
-  (define-abbrev
-    global-abbrev-table "orgn" "organization")
-  (define-abbrev
-    global-abbrev-table "orgns" "organizations")
-  (define-abbrev
-    global-abbrev-table "Scoto" "ScopedToOrganization")
-  :custom
-  (abbrev-mode t)
-  (save-abbrevs nil)
-  )
-
-(use-package key-chord
-  :config
-  (key-chord-mode 1)
-  (key-chord-define evil-insert-state-map ",," 'evil-avy-goto-char)
-  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-  (key-chord-define evil-normal-state-map "''" 'my/m-x))
-
-(use-package evil-visualstar
-  :config
-  (global-evil-visualstar-mode))
-
-(use-package which-key
-  :config
-  (which-key-mode))
-
 (use-package dm-magit :straight nil)
 (use-package dm-todo :straight nil)
 (use-package dm-minibuffer :straight nil)

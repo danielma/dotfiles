@@ -62,6 +62,19 @@
     map)
   "The map for my text tools.")
 
+(use-package abbrev
+  :straight nil
+  :config
+  (define-abbrev
+    global-abbrev-table "orgn" "organization")
+  (define-abbrev
+    global-abbrev-table "orgns" "organizations")
+  (define-abbrev
+    global-abbrev-table "Scoto" "ScopedToOrganization")
+  :custom
+  (abbrev-mode t)
+  (save-abbrevs nil)
+  )
 
 (provide 'dm-text)
 ;;; dm-text.el ends here
