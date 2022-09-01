@@ -24,9 +24,10 @@
   ;; (add-hook 'ruby-mode-hook #'lsp)
   (add-hook 'ruby-mode-hook 'dm-guard-mode)
   (add-hook 'ruby-mode-hook 'smartparens-mode)
-  (add-hook 'ruby-mode-hook 'prettier-js-mode)
+  ;; (add-hook 'ruby-mode-hook 'prettier-js-mode)
   (add-to-list 'auto-mode-alist '("\\.rb.spec\\'" . ruby-mode))
   (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
+
 
 (defvar-local my/prettierrc-location-cache nil)
 

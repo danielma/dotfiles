@@ -23,7 +23,7 @@
   )
 
 (use-package origami
-  :config 
+  :config
   (global-origami-mode))
 
 (use-package buffer-move
