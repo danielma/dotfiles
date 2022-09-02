@@ -7,7 +7,7 @@
   :demand t
   :custom
   (evil-want-integration t)
-  (evil-want-keybinding t)
+  (evil-want-keybinding nil)
   :config
   (evil-mode 1)
   :bind (
@@ -17,6 +17,11 @@
 	 ("C-a" . beginning-of-line-text)
 	 ("C-e" . end-of-line)
 	 ("C-d" . delete-forward-char)))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
 
 (if t
     t

@@ -13,6 +13,17 @@
   (selectrum-prescient-mode +1)
   (prescient-persist-mode +1))
 
+(use-package mini-frame
+  :custom
+  (mini-frame-show-parameters
+   '((top . 0)
+     (width . 0.7)
+     (left . 0.5))))
+
+(use-package company
+  :config
+  (global-company-mode))
+
 (if t
     t
 

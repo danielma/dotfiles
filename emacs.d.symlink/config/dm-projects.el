@@ -15,6 +15,13 @@
   :init
   (rg-enable-default-bindings)
   :custom
-  (rg-custom-type-aliases '(("yuh" . "*"))))
+  (rg-custom-type-aliases '(("yuh" . "*")))
+  :config
+  (rg-define-search rg-project-simple-literal "Simple Literal"
+    :format literal
+    :files "everything"
+    :dir project
+    :menu ("Search" "l" "Simple literal"))
+  )
 
 (provide 'dm-projects)
