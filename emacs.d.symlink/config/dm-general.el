@@ -4,10 +4,20 @@
 
 ;;; Code:
 
-(defun -s-contains (needle haystack)
-  (string-match-p (regexp-quote needle) haystack))
+(defun chunkwm/move (dirstring)
+  "Move to DIRSTRING with chunkwm integration."
+  (let ((dir (pcase dirstring
+               ("north" 'above)
+               ("east" 'right)
+               ("south" 'below)
+               ("west" 'left))))
+    (if (window-in-direction dir)
+        (and (windmove-do-window-select dir) "0")
+      '1)))
 
 
+(if t
+    t
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name &optional buffer)
   "Renames both current buffer and file it's visiting to NEW-NAME."
@@ -17,7 +27,7 @@
 	(message "Buffer '%s' is not visiting a file!" (buffer-name original-buffer))
       (let* ((new-basename (file-name-base new-name))
 	     (filename (buffer-file-name original-buffer))
-	     (extension (file-name-extension (if (-s-contains "." new-name) new-name filename)))
+	     (extension (file-name-extension (if (s-contains? "." new-name) new-name filename)))
 	     (dir (file-name-directory filename))
 	     (new-file (concat dir new-basename "." extension)))
 	(rename-file filename new-file 1)
@@ -54,17 +64,6 @@
                   (get-char-property (point) 'face))))
     (if face (message "Face: %s" face) (message "No face at %d" pos))))
 
-(defun chunkwm/move (dirstring)
-  "Move to DIRSTRING with chunkwm integration."
-  (let ((dir (pcase dirstring
-               ("north" 'above)
-               ("east" 'right)
-               ("south" 'below)
-               ("west" 'left))))
-    (if (window-in-direction dir)
-        (and (windmove-do-window-select dir) "0")
-      '1)))
-
 (use-package emacs
   :custom
   (indent-tabs-mode nil)
@@ -78,22 +77,22 @@
     (let ((xref-auto-jump-to-first-definition (and arg t)))
       (call-interactively 'evil-goto-definition))))
 
-(use-package dumb-jump
-  :custom
-  (dumb-jump-selector 'ivy)
-  :init
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  :bind (:map base-leader-map
-	 ("sa" . my/custom-dumb-jump-go)
-	 ("sA" . dumb-jump-go-other-window)
-	 ("sd" . dumb-jump-go)
-	 ("sp" . dumb-jump-go-prompt)
-	 ("sl" . dumb-jump-quick-look)))
+;; (use-package dumb-jump
+;;   :custom
+;;   (dumb-jump-selector 'ivy)
+;;   :init
+;;   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+;;   :bind (:map base-leader-map
+;; 	 ("sa" . my/custom-dumb-jump-go)
+;; 	 ("sA" . dumb-jump-go-other-window)
+;; 	 ("sd" . dumb-jump-go)
+;; 	 ("sp" . dumb-jump-go-prompt)
+;; 	 ("sl" . dumb-jump-quick-look)))
 
-(use-package ivy-xref
-  :custom
-  (xref-show-definitions-function #'ivy-xref-show-defs)
-  (xref-show-xrefs-function #'ivy-xref-show-xrefs))
+;; (use-package ivy-xref
+;;   :custom
+;;   (xref-show-definitions-function #'ivy-xref-show-defs)
+;;   (xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
 (use-package undo-tree
   :init
@@ -103,6 +102,7 @@
   :config
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   )
+)
 
 (provide 'dm-general)
 ;;; dm-general.el ends here

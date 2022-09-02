@@ -3,6 +3,24 @@
 
 ;;; Code:
 
+(use-package evil
+  :demand t
+  :custom
+  (evil-want-integration t)
+  (evil-want-keybinding t)
+  :config
+  (evil-mode 1)
+  :bind (
+	 :map evil-insert-state-map
+	 ("C-n" . next-line)
+	 ("C-p" . previous-line)
+	 ("C-a" . beginning-of-line-text)
+	 ("C-e" . end-of-line)
+	 ("C-d" . delete-forward-char)))
+
+(if t
+    t
+
 (defun copy-from-osx ()
   (shell-command-to-string "pbpaste"))
 
@@ -35,15 +53,13 @@
       (evil-resize-window (round (* (frame-height) p))))))
 
 (use-package evil
-  :after undo-tree
-  :custom
-  (evil-shift-width 2)
-  (evil-shift-round t)
-  (evil-echo-state nil)
-  (evil-symbol-word-search t)
-  (windmove-wrap-around t)
-  ;; (evil-insert-state-modes
-  ;;  '(comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode))
+  ;; :after undo-tree
+  ;; :custom
+  ;; (evil-shift-width 2)
+  ;; (evil-shift-round t)
+  ;; (evil-echo-state nil)
+  ;; (evil-symbol-word-search t)
+  ;; (windmove-wrap-around t)
   :init
   (setq evil-want-integration t
 	evil-want-keybinding nil)
@@ -148,6 +164,7 @@
 (use-package evil-visualstar
   :config
   (global-evil-visualstar-mode))
+)
 
 (provide 'dm-evil)
 ;;; dm-evil.el ends here

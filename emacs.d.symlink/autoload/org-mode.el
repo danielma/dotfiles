@@ -1,5 +1,0 @@
-(setq org-directory "~/org")
-(setq org-mobile-inbox-for-pull "~/org/flagged.org")
-(when (file-exists-p "~/Dropbox/Apps/MobileOrg")
-  (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-  (org-mobile-sync-mode 1))

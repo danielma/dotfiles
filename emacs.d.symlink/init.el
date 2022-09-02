@@ -17,12 +17,12 @@
 (setq straight-enable-use-package-integration t
       straight-use-package-by-default t)
 
-;; (menu-bar-mode t)
 (if (display-graphic-p)
     (progn
       ;; (set-frame-parameter (selected-frame) 'undecorated nil)
       (tool-bar-mode 0)
-      (scroll-bar-mode 0)))
+      (scroll-bar-mode 0))
+  (menu-bar-mode 0))
 
 (use-package emacs
   :custom
@@ -40,56 +40,53 @@
 (add-hook 'after-init-hook (lambda () (if window-system (server-start))))
 
 (add-to-list 'load-path "~/.emacs.d/config/")
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+;; (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-(defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
+;; (defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
 
-(require 'dm-general)
-(require 'dm-text)
 (require 'dm-bindings)
-
-(use-package exec-path-from-shell
-  :disabled
-  :if (memq window-system '(mac ns))
-  :config
-  (setq exec-path-from-shell-variables (quote ("PATH" "MANPATH" "BASE16_THEME")))
-  (exec-path-from-shell-initialize))
-
-(require 'dm-completion)
-(require 'dm-ui)
-
+(require 'dm-general)
 (require 'dm-evil)
 
-(use-package dm-projectile :straight nil)
+;; (require 'dm-text)
 
-(use-package dm-projects :straight nil)
+;; (require 'dm-completion)
+;; (require 'dm-ui)
 
-(use-package dm-box-drawing :straight nil)
 
-(use-package dm-tabs :straight nil)
+;; (use-package dm-projectile :straight nil)
 
-(require 'dm-langs)
+;; (use-package dm-projects :straight nil)
 
-(use-package dm-magit :straight nil)
-(use-package dm-todo :straight nil)
-(use-package dm-minibuffer :straight nil)
-(use-package dm-guard :straight nil)
-(use-package dm-ruby :straight nil)
-(use-package dm-flycheck :straight nil)
-(use-package dm-javascript :straight nil)
-(use-package dm-colors :straight nil)
-(use-package dm-mode-line :straight nil)
-(use-package dm-web-mode :straight nil)
-(use-package dm-projectile-rails :straight nil)
-(use-package dm-yasnippet :straight nil)
-(use-package chord-pro-mode :straight nil)
-(use-package dm-org :straight nil)
-(use-package dm-prose :straight nil)
-(use-package dm-lsp :straight nil)
+;; (use-package dm-box-drawing :straight nil)
+
+;; (use-package dm-tabs :straight nil)
+
+;; (require 'dm-langs)
+
+;; (use-package dm-magit :straight nil)
+;; (use-package dm-todo :straight nil)
+;; (use-package dm-minibuffer :straight nil)
+;; (use-package dm-guard :straight nil)
+;; (use-package dm-ruby :straight nil)
+;; (use-package dm-flycheck :straight nil)
+;; (use-package dm-javascript :straight nil)
+;; (use-package dm-colors :straight nil)
+;; (use-package dm-mode-line :straight nil)
+;; (use-package dm-web-mode :straight nil)
+;; (use-package dm-projectile-rails :straight nil)
+;; (use-package dm-yasnippet :straight nil)
+;; (use-package chord-pro-mode :straight nil)
+;; (use-package dm-org :straight nil)
+;; (use-package dm-prose :straight nil)
+;; (use-package dm-lsp :straight nil)
 
 ;; (require 'epa-file)
 ;; (epa-file-enable)
 ;; (setq epa-pinentry-mode 'loopback)
+
+;; only for testing
+(find-file "~/.emacs.d/init.el")
 
 ;;; init.el ends here
 
