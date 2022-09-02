@@ -50,13 +50,13 @@
 
 ;; (require 'dm-text)
 
-;; (require 'dm-completion)
+(require 'dm-completion)
 ;; (require 'dm-ui)
 
 
 ;; (use-package dm-projectile :straight nil)
 
-;; (use-package dm-projects :straight nil)
+(require 'dm-projects)
 
 ;; (use-package dm-box-drawing :straight nil)
 

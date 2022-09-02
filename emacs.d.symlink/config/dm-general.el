@@ -15,6 +15,10 @@
         (and (windmove-do-window-select dir) "0")
       '1)))
 
+(use-package try
+  :config
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  )
 
 (if t
     t
@@ -97,11 +101,6 @@
 (use-package undo-tree
   :init
   (global-undo-tree-mode))
-
-(use-package try
-  :config
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-  )
 )
 
 (provide 'dm-general)

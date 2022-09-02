@@ -3,6 +3,19 @@
 
 ;;; Code:
 
+(use-package selectrum
+  :config
+  (selectrum-mode +1))
+
+(use-package selectrum-prescient
+  :after selectrum
+  :config
+  (selectrum-prescient-mode +1)
+  (prescient-persist-mode +1))
+
+(if t
+    t
+
 (use-package ivy
   :init
   (ivy-mode 1)
@@ -72,6 +85,7 @@
 (defun ivy-sort-identity (pattern cands)
   "Identity sort that always returns the first argument."
   cands)
+)
 
 (provide 'dm-completion)
 ;;; dm-completion.el ends here
