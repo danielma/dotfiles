@@ -1,3 +1,9 @@
+(use-package magit)
+
+
+(if t
+    t
+
 (defun my/magithub-pull-request ()
   "Simple pull request command."
   (interactive)
@@ -94,5 +100,6 @@
 (defun browse-at-remote-pbcopy ()
   (interactive)
   (paste-to-osx (browse-at-remote-get-url)))
+)
 
 (provide 'dm-magit)

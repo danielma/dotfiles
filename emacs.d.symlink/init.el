@@ -42,25 +42,22 @@
 (add-to-list 'load-path "~/.emacs.d/config/")
 ;; (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-;; (defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
+(defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
+
+(require 'dm-general)
 
 (require 'dm-bindings)
-(require 'dm-general)
-(require 'dm-evil)
-
-;; (require 'dm-text)
-
 (require 'dm-completion)
+(require 'dm-evil)
+(require 'dm-magit)
+(require 'dm-projects)
+(require 'dm-tabs)
+(require 'dm-text)
+
 ;; (require 'dm-ui)
-
-
 ;; (use-package dm-projectile :straight nil)
 
-(require 'dm-projects)
-
 ;; (use-package dm-box-drawing :straight nil)
-
-;; (use-package dm-tabs :straight nil)
 
 ;; (require 'dm-langs)
 
@@ -103,10 +100,10 @@
  '(safe-local-variable-values
    '((lsp-enabled-clients ruby-syntax-tree-ls)
      (lsp-enabled-clients quote
-                          (ruby-syntax-tree-ls))
+			  (ruby-syntax-tree-ls))
      (eval when
-           (fboundp 'rainbow-mode)
-           (rainbow-mode 1)))))
+	   (fboundp 'rainbow-mode)
+	   (rainbow-mode 1)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

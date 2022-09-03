@@ -14,7 +14,12 @@
   (prescient-persist-mode +1))
 
 (use-package mini-frame
+  :config
+  (mini-frame-mode)
+  :init
+  (add-to-list 'mini-frame-ignore-commands 'evil-ex)
   :custom
+  (mini-frame-color-shift-step 4)
   (mini-frame-show-parameters
    '((top . 0)
      (width . 0.7)

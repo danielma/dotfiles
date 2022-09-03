@@ -5,6 +5,9 @@
 ;;; Code:
 (use-package s)
 
+(if t
+    t
+
 (defvar
   break-object-trailing-commas
   t
@@ -75,6 +78,7 @@
   (abbrev-mode t)
   (save-abbrevs nil)
   )
+)
 
 (provide 'dm-text)
 ;;; dm-text.el ends here

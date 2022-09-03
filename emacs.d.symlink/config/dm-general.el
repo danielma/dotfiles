@@ -20,6 +20,10 @@
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   )
 
+(use-package undo-tree
+  :init
+  (global-undo-tree-mode))
+
 (if t
     t
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
@@ -97,10 +101,6 @@
 ;;   :custom
 ;;   (xref-show-definitions-function #'ivy-xref-show-defs)
 ;;   (xref-show-xrefs-function #'ivy-xref-show-xrefs))
-
-(use-package undo-tree
-  :init
-  (global-undo-tree-mode))
 )
 
 (provide 'dm-general)
