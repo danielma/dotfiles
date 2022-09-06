@@ -53,8 +53,8 @@
 (require 'dm-projects)
 (require 'dm-tabs)
 (require 'dm-text)
+(require 'dm-ui)
 
-;; (require 'dm-ui)
 ;; (use-package dm-projectile :straight nil)
 
 ;; (use-package dm-box-drawing :straight nil)
@@ -110,3 +110,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:height 140 :width regular :weight normal :family "Rec Mono Duotone")))))
+(put 'narrow-to-region 'disabled nil)
