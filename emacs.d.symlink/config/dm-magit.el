@@ -88,11 +88,6 @@
   :config
   (magit-markdown-todos-autoinsert))
 
-(use-package evil-collection
-  :after (magit evil)
-  :init
-  (evil-collection-init))
-
 (use-package browse-at-remote
   :bind (:map base-leader-map
 	 ("gB" . browse-at-remote)))

@@ -16,7 +16,6 @@
 (use-package mini-frame
   :config
   (mini-frame-mode)
-  :init
   (add-to-list 'mini-frame-ignore-commands 'evil-ex)
   :custom
   (mini-frame-color-shift-step 4)

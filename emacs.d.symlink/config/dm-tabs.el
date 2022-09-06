@@ -22,10 +22,12 @@
   ;;   )
   :custom
   (tab-bar-new-tab-choice "*scratch*")
-  (tab-bar-show 1)
+  (tab-bar-show t)
   (tab-bar-new-button-show nil)
   (tab-bar-close-button-show nil)
   (tab-bar-tab-name-function 'dm-tab-bar-name)
+  :custom-face
+  (tab-bar     ((t :inherit default (:box (:line-width 4)))))
   :config
   (tab-bar-mode)
   )

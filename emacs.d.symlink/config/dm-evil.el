@@ -6,22 +6,18 @@
 (use-package evil
   :demand t
   :after undo-tree
-  :custom
-  (evil-disable-insert-state-bindings t)
-  (evil-echo-state nil)
-  (evil-symbol-word-search t)
-  (evil-undo-system 'undo-tree)
-  (evil-want-integration t)
-  (evil-want-keybinding nil)
+  ;; Custom doesn't work with evil _for some reason_
+  :init
+  (setq evil-disable-insert-state-bindings t
+	evil-echo-state nil
+	evil-symbol-word-search t
+	evil-undo-system 'undo-tree
+	evil-want-integration t
+	evil-want-keybinding nil)
   :config
-  (evil-mode 1))
-  ;; :bind (
-  ;; 	 :map evil-insert-state-map
-  ;; 	 ("C-n" . next-line)
-  ;; 	 ("C-p" . previous-line)
-  ;; 	 ("C-a" . beginning-of-line-text)
-  ;; 	 ("C-e" . end-of-line)
-  ;; 	 ("C-d" . delete-forward-char)))
+  (evil-mode 1)
+  :bind (:map evil-insert-state-map
+	      ("C-o" . evil-execute-in-normal-state)))
 
 (use-package evil-collection
   :after evil
