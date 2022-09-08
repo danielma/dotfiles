@@ -1,3 +1,14 @@
+
+(use-package emacs
+  :custom
+  (line-spacing 0)
+  :custom-face
+  (default ((t (:height 140 :width regular :weight regular :family "JetBrains Mono"))))
+  )
+
+(if t
+    t
+
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/Code/test/base16-builder/templates/emacs/build")
 
@@ -34,16 +45,43 @@
 	(insert-file-contents filePath)
 	(buffer-string))))
 
-(let* ((themename (s-chomp (get-string-from-file "~/.base16_theme-name")))
-       (theme (intern (concat "base16-" themename))))
-  (load-theme (if (member theme (custom-available-themes))
-		  theme
-		'base16-default-dark) t))
+;; (let* ((themename (s-chomp (get-string-from-file "~/.base16_theme-name")))
+;;        (theme (intern (concat "base16-" themename))))
+;;   (load-theme (if (member theme (custom-available-themes))
+;; 		  theme
+;; 		'base16-default-dark) t))
+
+(use-package ewal
+  :init (setq ewal-use-built-in-always-p nil
+              ewal-use-built-in-on-failure-p t
+              ewal-built-in-palette "sexy-material"))
+(use-package ewal-spacemacs-themes
+  :init (progn
+          (setq spacemacs-theme-underline-parens t)
+                ;; my:rice:font (font-spec
+                ;;               :family "Source Code Pro"
+                ;;               :weight 'semi-bold
+                ;;               :size 11.0))
+          ;; (show-paren-mode +1)
+          ;; (global-hl-line-mode)
+          ;; (set-frame-font my:rice:font nil t)
+          ;; (add-to-list  'default-frame-alist
+          ;;               `(font . ,(font-xlfd-name my:rice:font))))
+          )
+  :config (progn
+            (load-theme 'ewal-spacemacs-modern t)
+            (enable-theme 'ewal-spacemacs-modern)))
+;; (use-package ewal-evil-cursors
+;;   :after (ewal-spacemacs-themes)
+;;   :config (ewal-evil-cursors-get-colors
+;;            :apply t :spaceline t))
+;; (use-package spaceline
+;;   :after (ewal-evil-cursors winum)
+;;   :init (setq powerline-default-separator nil)
+;;   :config (spaceline-spacemacs-theme))
 
 ;; (custom-set-faces
 ;;  '(default ((t (:weight regular :height 140 :width regular :family "Rec Mono Duotone")))))
-(custom-set-faces
- '(default ((t (:weight regular :height 140 :width regular :family "JetBrains Mono")))))
 
 (if (display-graphic-p)
     (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji") nil 'prepend))
@@ -58,9 +96,7 @@
 
 (global-prettify-symbols-mode 1)
 
-(use-package emacs
-  :custom
-  (line-spacing 0))
+)
 
 (provide 'dm-colors)
 ;;; dm-colors.el ends here

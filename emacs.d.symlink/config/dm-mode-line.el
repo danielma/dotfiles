@@ -1,3 +1,128 @@
+;;; dm-mode-line.el --- -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
+
+(defvar mode-line-powerline-bracket-right
+  "\ue0b1")
+
+(defvar mode-line-powerline-bracket-left
+  "\ue0b3")
+
+(defvar mode-line-powerline-separator-right
+  "\ue0b0")
+
+(defvar mode-line-powerline-separator-left
+  "\ue0b2")
+
+(defvar mode-line-plz-put-evil-tag-here
+  "")
+
+(defun my/mode-line-powerline-highlight (source)
+  "Highlight SOURCE with powerline separators."
+  (list
+   (propertize (concat mode-line-powerline-separator-right " " source " ") 'face '(:inverse-video t))
+   mode-line-powerline-separator-right))
+
+(defun my/mode-line-powerline-highlight-right-only (source)
+  "Highlight SOURCE With powerline separator on the right."
+  (list
+   (propertize (concat " " source " ") 'face '(:inverse-video t))
+   mode-line-powerline-separator-right))
+
+(use-package emacs
+  :custom
+  (mode-line-format
+   '("%e" ;; mode-line-front-space
+     mode-line-plz-put-evil-tag-here
+     " "
+     (:propertize
+      ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
+      display
+      (min-width
+       (5.0)))
+     ;;; mode-line-frame-identification
+     " " mode-line-powerline-bracket-right " "
+     mode-line-buffer-identification
+     " "
+     (:eval (if (project-name)
+		(my/mode-line-powerline-highlight (project-name))))
+     "   " mode-line-position
+     ;; (vc-mode vc-mode)
+     "  " mode-line-modes mode-line-misc-info mode-line-end-spaces))
+  (mode-line-percent-position '(6 "%q"))
+
+  (evil-insert-state-tag "I")
+  (evil-normal-state-tag "N")
+  (evil-emacs-state-tag "E")
+  (evil-visual-line-tag "Vl")
+  (evil-visual-char-tag "V")
+  (evil-visual-block-tag "Vb"))
+
+;;; Evil state tag
+
+(with-eval-after-load 'evil
+  (defun my/evil-generate-mode-line-tag (orig-fun &rest args)
+    "Wrap around ORIG-FUN with ARGS to generate a better evil tag."
+    (let ((state-s (symbol-name (car args)))
+	  (orig-tag (apply orig-fun args)))
+      (if orig-tag
+	  (let ((tag (substring-no-properties orig-tag))
+		(face (intern (concat "mode-line-evil-state-" state-s))))
+	    (my/mode-line-powerline-highlight-right-only tag)))))
+	    ;; (list
+	    ;;  ;; (propertize mode-line-powerline-separator-right 'face face)
+	    ;;  (propertize tag 'face `(:inherit ,face :foreground "white"))
+	    ;;  (propertize mode-line-powerline-separator-right 'face `(:inherit ,face :inverse-video t))))))))
+
+  (advice-add 'evil-generate-mode-line-tag :around 'my/evil-generate-mode-line-tag))
+
+(defface mode-line-evil-state
+  `((t (:inherit mode-line :foreground ,(face-attribute 'mode-line :background))))
+  "Meta-face used for property inheritance on all mode-line-evil-state faces."
+  :group 'mode-line-evil-state)
+
+(defface mode-line-evil-state-insert
+  '((t (:inherit mode-line-evil-state :background "green")))
+  "Face used in evil color-coded segments when in Insert state."
+  :group 'mode-line-evil-state)
+
+(defface mode-line-evil-state-normal
+  '((t (:inherit mode-line-evil-state :background "red")))
+  "Face used in evil color-coded segments when in Normal state."
+  :group 'mode-line-evil-state)
+
+(defface mode-line-evil-state-visual
+  '((t (:inherit mode-line-evil-state :background "orange")))
+  "Face used in evil color-coded segments when in Visual{,-Block,-Line} state."
+  :group 'mode-line-evil-state)
+
+(defface mode-line-evil-state-replace
+  '((t (:inherit mode-line-evil-state :background "black")))
+  "Face used in evil color-coded segments when in Replace state."
+  :group 'mode-line-evil-state)
+
+(defface mode-line-evil-state-motion
+  '((t (:inherit mode-line-evil-state :background "blue")))
+  "Face used in evil color-coded segments when in Motion state."
+  :group 'mode-line-evil-state)
+
+(defface mode-line-evil-state-operator
+  '((t (:inherit mode-line-evil-state :background "violet")))
+  "Face used in evil color-coded segments when in Operator state."
+  :group 'mode-line-evil-state)
+
+(defface mode-line-evil-state-emacs
+  '((t (:inherit mode-line-evil-state :background "dark violet")))
+  "Face used in evil color-coded segments when in Emacs state."
+  :group 'mode-line-evil-state)
+
+;;; End evil state
+
+(if t
+    t
+
 ;; (progn
 ;;   (setq mode-line-format
 ;;         '("%e" mode-line-front-space " " mode-line-client mode-line-modified mode-line-remote " " mode-line-buffer-identification mode-line-position evil-mode-line-tag
@@ -15,46 +140,6 @@
   '((t (:height 1.2)))
   "Face used to make powerline symbols a little taller."
   :group 'mode-line-powerline)
-
-(defface mode-line-evil
-  '((t (:weight bold :inherit mode-line)))
-  "Meta-face used for property inheritance on all mode-line-evil faces."
-  :group 'mode-line-evil)
-
-(defface mode-line-evil-insert
-  '((t (:inherit (ansi-color-green mode-line-evil) :foreground "white")))
-  "Face used in evil color-coded segments when in Insert state."
-  :group 'mode-line-evil)
-
-(defface mode-line-evil-normal
-  '((t (:inherit (ansi-color-red mode-line-evil) :foreground "white")))
-  "Face used in evil color-coded segments when in Normal state."
-  :group 'mode-line-evil)
-
-(defface mode-line-evil-visual
-  '((t (:background "orange" :inherit mode-line-evil)))
-  "Face used in evil color-coded segments when in Visual{,-Block,-Line} state."
-  :group 'mode-line-evil)
-
-(defface mode-line-evil-replace
-  '((t (:background "black" :inherit mode-line-evil)))
-  "Face used in evil color-coded segments when in Replace state."
-  :group 'mode-line-evil)
-
-(defface mode-line-evil-motion
-  '((t (:background "blue" :inherit mode-line-evil)))
-  "Face used in evil color-coded segments when in Motion state."
-  :group 'mode-line-evil)
-
-(defface mode-line-evil-operator
-  '((t (:background "violet" :inherit mode-line-evil)))
-  "Face used in evil color-coded segments when in Operator state."
-  :group 'mode-line-evil)
-
-(defface mode-line-evil-emacs
-  '((t (:background "dark violet" :inherit mode-line-evil)))
-  "Face used in evil color-coded segments when in Emacs state."
-  :group 'mode-line-evil)
 
 (defface mode-line-accent-active
   '((t (:inherit mode-line)))
@@ -279,5 +364,6 @@
                                       ))
                   ))))
   ;; (force-mode-line-update))
+  )
  
 (provide 'dm-mode-line)

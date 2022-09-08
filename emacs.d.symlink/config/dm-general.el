@@ -4,16 +4,19 @@
 
 ;;; Code:
 
+;;; Windmove
+
 (defun chunkwm/move (dirstring)
   "Move to DIRSTRING with chunkwm integration."
-  (let ((dir (pcase dirstring
-               ("north" 'above)
-               ("east" 'right)
-               ("south" 'below)
-               ("west" 'left))))
-    (if (window-in-direction dir)
-        (and (windmove-do-window-select dir) "0")
-      '1)))
+  (let* ((dir (pcase dirstring
+		("north" 'above)
+		("east" 'right)
+		("south" 'below)
+		("west" 'left)))
+	 (other-window (window-in-direction dir)))
+    (if other-window (select-window other-window) '1)))
+
+;;; End windmove
 
 (use-package try
   :config
@@ -23,6 +26,10 @@
 (use-package undo-tree
   :init
   (global-undo-tree-mode))
+
+(use-package dumb-jump
+  :init
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 (if t
     t

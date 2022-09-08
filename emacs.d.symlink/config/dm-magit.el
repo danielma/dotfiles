@@ -1,5 +1,13 @@
+;;; dm-magit.el --- -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
+
 (use-package magit)
 
+(use-package forge
+  :after magit)
 
 (if t
     t

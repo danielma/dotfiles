@@ -1,3 +1,21 @@
+;;; dm-flycheck.el --- -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
+
+(use-package flycheck
+  :config
+  (global-flycheck-mode))
+
+(use-package flycheck-inline
+  :after flycheck
+  :config
+  (global-flycheck-inline-mode))
+
+(if t
+    t
+
 ;; todo: this should open in bottom 20%
 (defun custom-flycheck-toggle-errors ()
   (interactive)
@@ -64,5 +82,8 @@
   (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode)
   :init
   (flycheck-posframe-configure-pretty-defaults))
+)
 
 (provide 'dm-flycheck)
+
+;;; dm-flycheck.el ends here

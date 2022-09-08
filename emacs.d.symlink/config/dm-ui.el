@@ -1,4 +1,4 @@
-;;; dm-ui.el --- UI
+;;; dm-ui.el --- UI -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;;; Code:
@@ -6,7 +6,9 @@
 (use-package emacs
   :demand t
   :bind (:map global-map
-	      ("s-=" . global-text-scale-adjust)))
+	 ("s-=" . global-text-scale-adjust)
+	 :map minibuffer-mode-map
+	 ("C-k" . kill-whole-line)))
 
 (use-package display-line-numbers
   :custom
@@ -23,6 +25,28 @@
   :hook
   (prog-mode . whitespace-mode))
 
+;;; Consult
+
+(use-package consult
+  :bind (:map global-map
+	      ("M-g i" . consult-imenu)
+	      ("C-x b" . consult-buffer))
+  :config
+  (defun consult-symbol-at-point ()
+    "Search for the matching `symbol-at-point`."
+    (interactive)
+    (let ((sym (thing-at-point 'symbol)))
+      (consult-line sym))))
+
+;;; End consult
+
+(use-package xref
+  :custom
+  (xref-show-definitions-function 'consult-xref))
+
+(use-package marginalia
+  :config
+  (marginalia-mode 1))
 
 (use-package which-key
   :config

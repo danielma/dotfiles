@@ -13,7 +13,8 @@
 	evil-symbol-word-search t
 	evil-undo-system 'undo-tree
 	evil-want-integration t
-	evil-want-keybinding nil)
+	evil-want-keybinding nil
+	evil-mode-line-format '(before . mode-line-plz-put-evil-tag-here))
   :config
   (evil-mode 1)
   :bind (:map evil-insert-state-map
@@ -22,7 +23,9 @@
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-init))
+  (evil-collection-init (seq-difference evil-collection-mode-list '(rg (custom cus-edit))))
+  (evil-set-initial-state 'rg-mode 'emacs)
+  (evil-set-initial-state 'Custom-mode 'emacs))
 
 (if t
     t

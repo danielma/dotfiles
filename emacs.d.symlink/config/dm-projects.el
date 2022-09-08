@@ -1,3 +1,5 @@
+;;; dm-projects.el --- -*- lexical-binding: t -*-
+
 ;; (dir-locals-set-class-variables
 ;;  'login
 ;;  '(
@@ -23,5 +25,32 @@
     :dir project
     :menu ("Search" "l" "Simple literal"))
   )
+
+;;; Project
+
+(defun project-name (&optional project)
+  "Get the name of PROJECT."
+  (let ((project (or project (project-current nil))))
+    (if project
+	(let ((root (project-root project)))
+	  (file-name-nondirectory (directory-file-name root))))))
+
+(defun project-find-test-or-implementation (&optional buffer)
+  (interactive)
+  (let* ((buffer (or buffer (current-buffer)))
+	 (filename (buffer-file-name buffer))
+	 (basename (file-name-base filename))
+	 (project (project-current t))
+	 (root (project-root project))
+	 (maybe-test-dirs (list (file-name-concat root "spec") (file-name-concat root "test"))) ;; (file-name-concat root "test"))
+	 (test-dirs (-filter #'file-directory-p maybe-test-dirs))
+	 (fs (project-files project test-dirs))
+	 (matches (-filter (lambda (f) (s-contains? basename f)) fs)))
+    (cl-case (length matches)
+      (0 (message "No matches!"))
+      (1 (find-file (car matches)))
+      (t (find-file (funcall project-read-file-name-function "Alternate " matches nil 'file-name-history))))))
+
+;;; End Project
 
 (provide 'dm-projects)
