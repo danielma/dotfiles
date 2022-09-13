@@ -19,17 +19,22 @@
 (defvar mode-line-plz-put-evil-tag-here
   "")
 
-(defun my/mode-line-powerline-highlight (source)
-  "Highlight SOURCE with powerline separators."
-  (list
-   (propertize (concat mode-line-powerline-separator-right " " source " ") 'face '(:inverse-video t))
-   mode-line-powerline-separator-right))
-
-(defun my/mode-line-powerline-highlight-right-only (source)
-  "Highlight SOURCE With powerline separator on the right."
-  (list
-   (propertize (concat " " source " ") 'face '(:inverse-video t))
-   mode-line-powerline-separator-right))
+(defun my/mode-line-powerline-highlight (source &optional where)
+  "Highlight SOURCE with powerline separators WHERE (right, left, or default both)."
+  (let ((where (or where 'both)))
+    (cl-case where
+      ('both
+       (list
+	(propertize (concat mode-line-powerline-separator-right " " source " ") 'face '(:inverse-video t))
+	mode-line-powerline-separator-right))
+      ('right
+       (list
+	(propertize (concat " " source " ") 'face '(:inverse-video t))
+	mode-line-powerline-separator-right))
+      ('left
+       (list
+	(propertize (concat mode-line-powerline-separator-right " " source " ") 'face '(:inverse-video t))))
+      (t (error "WHERE must be right left or both")))))
 
 (use-package emacs
   :custom
@@ -51,14 +56,13 @@
      "   " mode-line-position
      ;; (vc-mode vc-mode)
      "  " mode-line-modes mode-line-misc-info mode-line-end-spaces))
-  (mode-line-percent-position '(6 "%q"))
+  (mode-line-percent-position '(6 "%q")))
 
-  (evil-insert-state-tag "I")
-  (evil-normal-state-tag "N")
-  (evil-emacs-state-tag "E")
-  (evil-visual-line-tag "Vl")
-  (evil-visual-char-tag "V")
-  (evil-visual-block-tag "Vb"))
+(use-package delight
+  :delight
+  (auto-revert-mode)
+  (evil-collection-unimpaired-mode)
+  (eldoc-mode))
 
 ;;; Evil state tag
 
@@ -68,9 +72,10 @@
     (let ((state-s (symbol-name (car args)))
 	  (orig-tag (apply orig-fun args)))
       (if orig-tag
-	  (let ((tag (substring-no-properties orig-tag))
-		(face (intern (concat "mode-line-evil-state-" state-s))))
-	    (my/mode-line-powerline-highlight-right-only tag)))))
+	  (let* ((tag (substring-no-properties orig-tag))
+		 (clean-tag (car (s-match "\\w+" tag)))
+		 (face (intern (concat "mode-line-evil-state-" state-s))))
+	    (my/mode-line-powerline-highlight clean-tag 'right)))))
 	    ;; (list
 	    ;;  ;; (propertize mode-line-powerline-separator-right 'face face)
 	    ;;  (propertize tag 'face `(:inherit ,face :foreground "white"))

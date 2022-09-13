@@ -24,6 +24,7 @@
   )
 
 (use-package undo-tree
+  :delight undo-tree-mode
   :init
   (global-undo-tree-mode))
 

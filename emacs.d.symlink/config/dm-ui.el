@@ -18,6 +18,7 @@
   )
 
 (use-package whitespace
+  :delight
   :custom
   (fill-column 100)
   (whitespace-line-column fill-column)
@@ -49,6 +50,7 @@
   (marginalia-mode 1))
 
 (use-package which-key
+  :delight
   :config
   (which-key-mode))
 

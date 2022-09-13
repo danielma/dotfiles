@@ -24,6 +24,7 @@
      (left . 0.5))))
 
 (use-package company
+  :delight company-mode
   :config
   (global-company-mode))
 

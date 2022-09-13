@@ -6,6 +6,8 @@
   (default ((t (:height 140 :width regular :weight regular :family "JetBrains Mono"))))
   )
 
+(load-theme 'modus-operandi)
+
 (if t
     t
 
