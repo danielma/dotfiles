@@ -1,3 +1,11 @@
+;;; dm-ruby.el --- -*- lexical-binding: t -*-
+
+(use-package ruby-mode
+  :delight "\ue21e")
+
+(if t
+    t
+
 (use-package rufo
   :init
   (add-hook 'ruby-mode-hook 'rufo-minor-mode)
@@ -93,5 +101,6 @@ If it runs, call ORIG-FUN with ARGS."
   (bind-map-for-mode-inherit my/rspec-mode-leader-map base-leader-map
     :major-modes (rspec-mode)
     :bindings ("a" rspec-mode-command-map)))
+)
 
 (provide 'dm-ruby)

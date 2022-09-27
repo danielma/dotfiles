@@ -5,6 +5,9 @@
 
 (use-package emacs
   :demand t
+  :custom
+  (tab-width 2)
+  (indent-tabs-mode nil)
   :bind (:map global-map
 	 ("s-=" . global-text-scale-adjust)
 	 :map minibuffer-mode-map
@@ -22,7 +25,7 @@
   :custom
   (fill-column 100)
   (whitespace-line-column fill-column)
-  (whitespace-style '(face lines-tail))
+  (whitespace-style '(face lines-tail tabs tab-mark))
   :hook
   (prog-mode . whitespace-mode))
 
@@ -53,6 +56,9 @@
   :delight
   :config
   (which-key-mode))
+
+(use-package dired-sidebar
+  :bind (("C-s-s" . dired-sidebar-toggle-sidebar)))
 
 (use-package origami
   :disabled

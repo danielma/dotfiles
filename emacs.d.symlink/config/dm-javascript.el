@@ -1,3 +1,12 @@
+;; -*- lexical-binding: t -*-
+
+(use-package js
+  :config
+  (defvaralias 'js-indent-level 'tab-width))
+
+(if t
+    t
+
 (use-package smartparens
   :config
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
@@ -89,5 +98,6 @@
 ;; (add-hook 'js-jsx-mode-hook #'smartparens-mode)
 ;; (add-hook 'js-jsx-mode-hook 'my-javascript-mode-setup)
 ;; (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js-jsx-mode))
+)
 
 (provide 'dm-javascript)

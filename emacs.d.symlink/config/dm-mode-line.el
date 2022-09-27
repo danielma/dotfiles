@@ -69,12 +69,12 @@
 (with-eval-after-load 'evil
   (defun my/evil-generate-mode-line-tag (orig-fun &rest args)
     "Wrap around ORIG-FUN with ARGS to generate a better evil tag."
-    (let ((state-s (symbol-name (car args)))
+    (let (; (state-s (symbol-name (car args)))
 	  (orig-tag (apply orig-fun args)))
       (if orig-tag
 	  (let* ((tag (substring-no-properties orig-tag))
-		 (clean-tag (car (s-match "\\w+" tag)))
-		 (face (intern (concat "mode-line-evil-state-" state-s))))
+		 (clean-tag (car (s-match "\\w+" tag))))
+		 ; (face (intern (concat "mode-line-evil-state-" state-s))))
 	    (my/mode-line-powerline-highlight clean-tag 'right)))))
 	    ;; (list
 	    ;;  ;; (propertize mode-line-powerline-separator-right 'face face)
@@ -372,3 +372,5 @@
   )
  
 (provide 'dm-mode-line)
+
+;;; dm-mode-line.el ends here

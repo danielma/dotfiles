@@ -1,4 +1,4 @@
-;;; dm-langs.el --- Misc langs
+;;; dm-langs.el --- Misc langs -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;;; Code:

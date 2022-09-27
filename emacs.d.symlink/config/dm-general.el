@@ -24,8 +24,11 @@
   )
 
 (use-package undo-tree
-  :delight undo-tree-mode
-  :init
+  :after delight
+  :delight
+  :custom
+  (undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+  :config
   (global-undo-tree-mode))
 
 (use-package dumb-jump

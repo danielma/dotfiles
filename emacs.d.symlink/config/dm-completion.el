@@ -24,7 +24,10 @@
      (left . 0.5))))
 
 (use-package company
-  :delight company-mode
+  :after delight
+  :delight
+  :bind (:map global-map
+	      ("C-'" . company-complete))
   :config
   (global-company-mode))
 

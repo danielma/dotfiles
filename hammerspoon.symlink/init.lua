@@ -41,10 +41,11 @@ apps = {
    {'t', 'Alacritty'},
    {'r', 'Trello'},
    {'m', 'Messages'},
-   {'n', 'iA Writer'},
+   {'n', 'Notion'},
    {'p', 'Paw'},
    {'q', 'TablePlus'},
    {'v', 'Visual Studio Code'},
+   {'w', 'iA Writer'},
    {'x', 'Xcode'},
 }
 

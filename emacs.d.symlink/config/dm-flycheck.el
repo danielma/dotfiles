@@ -4,9 +4,23 @@
 
 ;;; Code:
 
+(defun my/use-rubocop-from-bundle ()
+  (let ((root (locate-dominating-file
+	       (or (buffer-file-name) default-directory)
+	       "Gemfile")))
+    (when root
+      (setq-local flycheck-command-wrapper-function
+		  (lambda (command)
+		    (append '("bundle" "exec") command))))))
+
 (use-package flycheck
   :config
-  (global-flycheck-mode))
+  (global-flycheck-mode)
+  :custom
+  (flycheck-ruby-rubocop-executable "rubocop")
+  (flycheck-disabled-checkers '(ruby-reek))
+  :hook
+  (flycheck-mode . my/use-rubocop-from-bundle))
 
 (use-package flycheck-inline
   :after flycheck

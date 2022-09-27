@@ -22,6 +22,7 @@
 
 (use-package evil-collection
   :after evil
+  :ensure t
   :config
   (evil-collection-init (seq-difference evil-collection-mode-list '(rg (custom cus-edit))))
   (evil-set-initial-state 'rg-mode 'emacs)
