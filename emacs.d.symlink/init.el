@@ -59,11 +59,13 @@
 (require 'dm-langs)
 (require 'dm-magit)
 (require 'dm-mode-line)
+(require 'dm-prog)
 (require 'dm-projects)
 (require 'dm-ruby)
 (require 'dm-tabs)
 (require 'dm-text)
 (require 'dm-ui)
+(require 'dm-web-mode)
 
 ;; (use-package dm-projectile :straight nil)
 

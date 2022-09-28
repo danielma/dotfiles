@@ -9,6 +9,9 @@
 (use-package forge
   :after magit)
 
+(use-package browse-at-remote
+  :after magit)
+
 (if t
     t
 

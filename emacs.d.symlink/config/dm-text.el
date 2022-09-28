@@ -1,12 +1,9 @@
-;;; dm-text.el --- Special tools for me to manipulate text
+;;; dm-text.el --- Special tools for me to manipulate text -*- lexical-binding: t -*-
 
 ;;; Commentary:
 
 ;;; Code:
 (use-package s)
-
-(if t
-    t
 
 (defvar
   break-object-trailing-commas
@@ -66,19 +63,17 @@
   "The map for my text tools.")
 
 (use-package abbrev
+  :delight "\uf475"
   :straight nil
   :config
   (define-abbrev
     global-abbrev-table "orgn" "organization")
-  (define-abbrev
-    global-abbrev-table "orgns" "organizations")
   (define-abbrev
     global-abbrev-table "Scoto" "ScopedToOrganization")
   :custom
   (abbrev-mode t)
   (save-abbrevs nil)
   )
-)
 
 (provide 'dm-text)
 ;;; dm-text.el ends here
