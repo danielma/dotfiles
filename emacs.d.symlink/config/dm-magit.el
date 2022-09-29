@@ -4,7 +4,15 @@
 
 ;;; Code:
 
-(use-package magit)
+(defun my/commit-mode-setup ()
+  "Set commit mode."
+  (setq-local fill-column 70))
+
+(use-package magit
+  :custom
+  (git-commit-major-mode 'markdown-mode)
+  :hook
+  (git-commit-setup . my/commit-mode-setup))
 
 (use-package forge
   :after magit)

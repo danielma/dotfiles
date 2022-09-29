@@ -4,16 +4,22 @@
 
 ;;; Code:
 
+;;; Buffers
+
+(defadvice save-buffer (before save-buffer-always activate)
+  "always save buffer"
+  (set-buffer-modified-p t))
+
 ;;; Windmove
 
 (defun chunkwm/move (dirstring)
   "Move to DIRSTRING with chunkwm integration."
   (let* ((dir (pcase dirstring
-		("north" 'above)
-		("east" 'right)
-		("south" 'below)
-		("west" 'left)))
-	 (other-window (window-in-direction dir)))
+		            ("north" 'above)
+		            ("east" 'right)
+		            ("south" 'below)
+		            ("west" 'left)))
+	       (other-window (window-in-direction dir)))
     (if other-window (select-window other-window) '1)))
 
 ;;; End windmove
