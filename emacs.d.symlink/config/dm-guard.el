@@ -1,4 +1,4 @@
-;;; dm-guard --- Does the job of Guard, but uses emacs file save hooks instead of watching
+;;; dm-guard --- Does the job of Guard, but uses emacs file save hooks instead of watching -*- lexical-binding: t -*-
 
 ;;; Commentary:
 
@@ -64,7 +64,7 @@
 (defun dm-guard-test ()
   "Use tmux to execute a rails test."
   (interactive)
-  (if (and dm-guard-enabled (projectile-project-p))
+  (if (and dm-guard-enabled (project-current))
       (if (and dm-guard-line-mode (--dm-guard-is-test-file-p)) (dm-guard-test-line) (dm-guard-test-file))))
 
 (defun dm-guard-test-file ()
@@ -87,7 +87,7 @@
 (defun --dm-guard-clear-and-run (command)
   "Use tmux to clear and execute COMMAND."
   (if command
-      (let ((full-command (concat "cd " (projectile-project-root) " && " command)))
+      (let ((full-command (concat "cd " (project-root (project-current)) " && " command)))
         (emamux:send-command (concat " clear; echo -e '" command "'; " full-command)))))
 
 (defun --dm-guard-rspec-test-command ()
@@ -99,9 +99,9 @@
 
 (defun --dm-guard-test-command ()
   "Generate the test command for a buffer."
-  (let* ((project-type (projectile-project-type))
+  (let* ((project-type 'rails-rspec) ; (projectile-project-type))
          (file-path (buffer-file-name dm-guard-manual-test-buffer))
-         (file-name (file-relative-name file-path (projectile-project-root)))
+         (file-name (file-relative-name file-path (project-root (project-current))))
          (test-cmd (cond
                     ((string-match ".js$" file-name) "yarn run test --colors")
                     ((string-match ".ts$" file-name) "yarn run test --colors")
@@ -123,11 +123,11 @@
 
 (defun --dm-guard-test-name ()
   "Generate the test name for a buffer."
-  (let* ((project-type (projectile-project-type))
-         (spec-mode (projectile-verify-file "spec"))
+  (let* ((project-type 'rails-rspec) ; (projectile-project-type))
+         (spec-mode (project-verify-file "spec"))
          (is-test-file (--dm-guard-is-test-file-p dm-guard-manual-test-buffer))
          (file-path (buffer-file-name dm-guard-manual-test-buffer))
-         (file-name (file-relative-name file-path (projectile-project-root)))
+         (file-name (file-relative-name file-path (project-root (project-current))))
          (test-path
           (cond
            (is-test-file file-name)

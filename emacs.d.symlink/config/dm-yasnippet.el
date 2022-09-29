@@ -1,3 +1,18 @@
+;;; -*- lexical-binding: t -*-
+
+(use-package yasnippet
+  ;; :hook
+  ;; (web-mode . web-mode-add-yas-extra-modes)
+  :config
+  (yas-global-mode 1)
+  ;; (setq yas-dont-activate-functions (add-to-list 'yas-dont-activate-functions #'my/no-yas))
+  :custom
+  (yas-triggers-in-field t)
+  )
+
+(if t
+    t
+
 (defun web-mode-add-yas-extra-modes ()
   (if (string= "erb" web-mode-engine)
       (add-to-list 'yas--extra-modes 'html-erb-mode)
@@ -61,18 +76,6 @@
   :disabled
   :init
   (company-posframe-mode 1))
-
-(use-package yasnippet
-  :init
-  (add-hook 'after-init-hook 'yas-global-mode)
-  :config
-  (add-hook 'web-mode-hook 'web-mode-add-yas-extra-modes)
-  (setq yas-dont-activate-functions (add-to-list 'yas-dont-activate-functions #'my/no-yas))
-  ;; :bind (:map yas-minor-mode-map)
-  :custom
-  (yas-triggers-in-field t)
-  )
-
-(add-hook 'after-init-hook 'yas-global-mode)
+)
 
 (provide 'dm-yasnippet)

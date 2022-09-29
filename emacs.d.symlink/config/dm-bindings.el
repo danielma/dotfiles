@@ -5,11 +5,12 @@
 
 (use-package emacs
   :bind (
-	 ("C-x C-:" . comment-line)
-	 :map global-map
-	 ("C-:" . execute-extended-command)
-	 ))
-  
+	       ("C-x C-:" . comment-line)
+	       :map global-map
+         ("M-RET" . tt/expand-at-point)
+	       ("C-:" . execute-extended-command)
+	       ))
+
 
 ;; (if (boundp 'mac-command-modifier)
 ;;     (progn

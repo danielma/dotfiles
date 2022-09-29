@@ -7,7 +7,7 @@
 ;;                  (prettier-js-args . ("--plugin" "/Users/danielma/.config/yarn/global/node_modules/@prettier/plugin-ruby"))
 ;;                  (eval . (prettier-js-mode))))
 ;;    ))
-   
+
 
 ;; (dir-locals-set-directory-class "~/Code/login" 'login)
 
@@ -32,20 +32,26 @@
   "Get the name of PROJECT."
   (let ((project (or project (project-current nil))))
     (if project
-	(let ((root (project-root project)))
-	  (file-name-nondirectory (directory-file-name root))))))
+	      (let ((root (project-root project)))
+	        (file-name-nondirectory (directory-file-name root))))))
+
+                                        ; useful from Projectile
+(defun project-verify-file (file)
+  "Check whether FILE exists in the current project."
+  (let ((root (project-root (project-current))))
+    (file-exists-p (expand-file-name file root))))
 
 (defun project-find-test-or-implementation (&optional buffer)
   (interactive)
   (let* ((buffer (or buffer (current-buffer)))
-	 (filename (buffer-file-name buffer))
-	 (basename (file-name-base filename))
-	 (project (project-current t))
-	 (root (project-root project))
-	 (maybe-test-dirs (list (file-name-concat root "spec") (file-name-concat root "test"))) ;; (file-name-concat root "test"))
-	 (test-dirs (-filter #'file-directory-p maybe-test-dirs))
-	 (fs (project-files project test-dirs))
-	 (matches (-filter (lambda (f) (s-contains? basename f)) fs)))
+         (filename (buffer-file-name buffer))
+         (basename (file-name-base filename))
+         (project (project-current t))
+         (root (project-root project))
+         (maybe-test-dirs (list (file-name-concat root "spec") (file-name-concat root "test"))) ;; (file-name-concat root "test"))
+         (test-dirs (-filter #'file-directory-p maybe-test-dirs))
+         (fs (project-files project test-dirs))
+         (matches (-filter (lambda (f) (s-contains? basename f)) fs)))
     (cl-case (length matches)
       (0 (message "No matches!"))
       (1 (find-file (car matches)))

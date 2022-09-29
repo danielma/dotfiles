@@ -1,7 +1,9 @@
 ;;; dm-ruby.el --- -*- lexical-binding: t -*-
 
 (use-package ruby-mode
-  :delight "\ue21e")
+  :delight "\ue21e"
+  :hook
+  (ruby-mode . dm-guard-mode))
 
 (if t
     t

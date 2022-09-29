@@ -6,7 +6,11 @@
   (default ((t (:height 140 :width regular :weight regular :family "JetBrains Mono"))))
   )
 
-(load-theme 'modus-operandi)
+(use-package doom-themes)
+
+(load-theme 'doom-opera-light)
+
+;; (load-theme 'modus-operandi)
 
 (if t
     t
