@@ -9,6 +9,7 @@
 	       :map global-map
          ("M-RET" . tt/expand-at-point)
 	       ("C-:" . execute-extended-command)
+	       ("C-." . execute-extended-command)
 	       ))
 
 

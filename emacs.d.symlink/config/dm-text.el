@@ -51,8 +51,6 @@
   "Insert a newline and put the cursor at the indented location above."
   (interactive)
   (newline-and-indent)
-  (newline-and-indent)
-  (forward-line -1)
   (indent-according-to-mode))
 
 (defvar

@@ -3,7 +3,12 @@
 
 ;;; Code:
 
+(defun my/yaml-mode-setup ()
+  (add-to-list 'whitespace-style 'spaces))
+
 (use-package yaml-mode
+  :hook
+  (yaml-mode . my/yaml-mode-setup)
   :config
   (add-hook 'yaml-mode-hook (lambda () (modify-syntax-entry ?_ "w"))))
 

@@ -3,15 +3,20 @@
 
 ;;; Code:
 
+(defun global-text-scale-adjust-by-two ()
+  (interactive)
+  (global-text-scale-adjust 2))
+
 (use-package emacs
   :demand t
   :custom
   (tab-width 2)
   (indent-tabs-mode nil)
   :bind (:map global-map
-	 ("s-=" . global-text-scale-adjust)
-	 :map minibuffer-mode-map
-	 ("C-k" . kill-whole-line)))
+              ("s-=" . global-text-scale-adjust-by-two)
+              ("s--" . global-text-scale-adjust-by-two)
+              :map minibuffer-mode-map
+              ("C-k" . kill-whole-line)))
 
 (use-package display-line-numbers
   :custom
@@ -33,14 +38,17 @@
 
 (use-package consult
   :bind (:map global-map
-	      ("M-g i" . consult-imenu)
-	      ("C-x b" . consult-buffer))
+	            ("M-g i" . consult-imenu)
+	            ("C-x b" . consult-buffer))
   :config
   (defun consult-symbol-at-point ()
     "Search for the matching `symbol-at-point`."
     (interactive)
     (let ((sym (thing-at-point 'symbol)))
       (consult-line sym))))
+
+(use-package consult-flycheck
+  :after consult)
 
 ;;; End consult
 

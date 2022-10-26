@@ -29,6 +29,7 @@ end
 -- Launch apps with Hyper-Enter
 apps = {
    {'1', '1Password'},
+   {'a', 'Asana'},
    {'b', 'Basecamp 3'},
    {'d', 'Dash'},
    {'e', 'Emacs'},

@@ -88,6 +88,7 @@
   "Use tmux to clear and execute COMMAND."
   (if command
       (let ((full-command (concat "cd " (project-root (project-current)) " && " command)))
+        (emamux:send-keys "^c")
         (emamux:send-command (concat " clear; echo -e '" command "'; " full-command)))))
 
 (defun --dm-guard-rspec-test-command ()

@@ -130,8 +130,10 @@
   :ensure t
   :custom
   (doom-modeline-buffer-encoding 'nondefault)
+  (doom-modeline-hud t)
+  (doom-modeline-env-version nil)
+  (doom-modeline-workspace-name nil)
   :init (doom-modeline-mode 1))
-
 
 (if t
     t
