@@ -47,15 +47,29 @@
 
 (use-package posframe)
 
+(defun mars/company-backend-with-yas (backends)
+  "Add :with company-yasnippet to company BACKENDS.
+Taken from https://github.com/syl20bnr/spacemacs/pull/179."
+  (if (and (listp backends) (memq 'company-yasnippet backends))
+      backends
+    (append (if (consp backends)
+                backends
+              (list backends))
+            '(:with company-yasnippet))))
+
 (use-package company
-  :after delight
+  :after (delight yasnippet)
   :delight
   :custom
   (company-dabbrev-downcase nil) ; otherwise everything was lowercase
   :bind (:map global-map
-	      ("C-'" . company-complete))
+              ("C-'" . company-complete)
+              :map company-active-map
+              ("<tab>" . company-complete-selection))
   :config
-  (global-company-mode))
+  (global-company-mode)
+  ;; add yasnippet to all backends
+  (setq company-backends (mapcar #'mars/company-backend-with-yas company-backends)))
 
 (if t
     t
