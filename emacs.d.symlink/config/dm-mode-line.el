@@ -133,6 +133,7 @@
   (doom-modeline-hud t)
   (doom-modeline-env-version nil)
   (doom-modeline-workspace-name nil)
+  (doom-modeline-minor-modes t)
   :init (doom-modeline-mode 1))
 
 (if t

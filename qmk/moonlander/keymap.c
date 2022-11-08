@@ -65,9 +65,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [1] = LAYOUT_moonlander(
     KC_TRANSPARENT, KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,         
-    KC_TRANSPARENT, KC_EXLM,        KC_AT,          KC_LCBR,        KC_RCBR,        KC_PIPE,        KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_CIRC,        KC_LABK,        KC_RABK,        KC_PIPE,        KC_ASTR,        KC_PLUS,         
-    KC_TILD,        KC_GRAVE,       KC_HASH,        KC_LPRN,        KC_RPRN,        KC_GRAVE,       KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_AMPR,        KC_LBRACKET,    KC_RBRACKET,    KC_SCLN,        KC_TRANSPARENT, LSFT(KC_QUOT), 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_DLR,         KC_LBRACKET,    KC_RBRACKET,    KC_TILD,                                        KC_ASTR,        KC_1,           KC_2,           KC_BSLASH,      KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_EXLM,        KC_AT,          KC_LCBR,        KC_RCBR,        KC_PERC,        KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_CIRC,        KC_LABK,        KC_RABK,        KC_PIPE,        KC_ASTR,        KC_PLUS,         
+    KC_TILD,        KC_GRAVE,       KC_HASH,        KC_LPRN,        KC_RPRN,        KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_AMPR,        KC_LBRACKET,    KC_RBRACKET,    KC_SCLN,        KC_TRANSPARENT, LSFT(KC_QUOT), 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_DLR,         KC_LBRACKET,    KC_RBRACKET,    KC_TRANSPARENT, KC_ASTR,        KC_1,           KC_2,           KC_BSLASH,      KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_COMMA,       KC_TRANSPARENT, HSV_86_255_128, KC_TRANSPARENT, RGB_MOD,                                                                                                        RGB_TOG,        KC_TRANSPARENT, KC_0,           KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, RGB_VAI,        TOGGLE_LAYER_COLOR,                RGB_SLD,        RGB_HUD,        KC_TRANSPARENT
   ),

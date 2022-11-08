@@ -61,7 +61,7 @@
   "The map for my text tools.")
 
 (use-package abbrev
-  :delight "\uf475"
+  :delight
   :straight nil
   :config
   (define-abbrev

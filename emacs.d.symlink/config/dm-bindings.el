@@ -10,7 +10,17 @@
          ("M-RET" . tt/expand-at-point)
 	       ("C-:" . execute-extended-command)
 	       ("C-." . execute-extended-command)
-	       ))
+         ("C-h C-f" . find-function)
+	       )
+  :custom (select-enable-clipboard . nil))
+
+(defun with-select-clipboard (orig-fun &rest args)
+  "Execute the ORIG-FUN with ARGS with `select-enable-clipboard' enabled."
+  (let ((select-enable-clipboard t))
+    (apply orig-fun args)))
+
+(advice-add 'ns-copy-including-secondary :around #'with-select-clipboard)
+(advice-add 'yank :around #'with-select-clipboard)
 
 
 ;; (if (boundp 'mac-command-modifier)

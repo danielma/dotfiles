@@ -25,6 +25,7 @@
   ;;                        "stree" "format"))
   ;;       apheleia-formatters)
   (push '(syntax-tree . ("stree" "format" "--print-width=100" "--plugins=plugin/single_quotes")) apheleia-formatters)
+  (push '(rubyfmt . ("rubyfmt" "--")) apheleia-formatters)
   (push '(emacs-lisp-mode . lisp-indent) apheleia-mode-alist)
   (setf (alist-get 'ruby-mode apheleia-mode-alist)
         '(syntax-tree)))

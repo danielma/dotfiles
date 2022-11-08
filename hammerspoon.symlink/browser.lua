@@ -4,9 +4,10 @@ browsers = {
    { "Google Chrome", "com.google.chrome" },
    { "Brave Browser", "com.brave.browser" },
    { "Microsoft Edge", "com.microsoft.edgemac" },
-   { "Chromium", "org.chromium.Chromium" }
+   { "Chromium", "org.chromium.Chromium" },
+   { "Arc", "company.thebrowser.Browser" }
 }
-lastBrowser = "Microsoft Edge"
+lastBrowser = "Arc"
 
 function launchBrowser()
    launch(lastBrowser)

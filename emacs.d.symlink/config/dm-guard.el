@@ -167,18 +167,31 @@
   (interactive)
   (setq-local dm-guard-manual-test-buffer nil))
 
+(defvar dm-guard-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map "l" 'dm-guard-test-line)
+    (define-key map "t" 'dm-guard-test)
+    (define-key map "b" 'dm-guard-select-test-buffer)
+    map)
+  "The global map for dm-guard.")
+
+(defvar dm-guard-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map "\C-ck" dm-guard-map)
+    map)
+  "Keymap of dm-guard.")
+
 (define-minor-mode dm-guard-mode
   "Use emamux to test after saving a file."
   :init-value nil
-  :lighter " dm-guard"
+  :lighter " guard"
+  :map dm-guard-mode-map
   (cond ((bound-and-true-p dm-guard-mode)
          (add-hook 'after-save-hook #'dm-guard-test t t))
         (t
          (remove-hook 'after-save-hook #'dm-guard-test t))))
 
-(use-package emamux
-  :bind (:map base-leader-map
-              ("kl" . dm-guard-test-line)))
+(use-package emamux)
 
 (provide 'dm-guard)
 ;;; dm-guard.el ends here

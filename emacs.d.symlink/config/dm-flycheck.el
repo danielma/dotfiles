@@ -14,12 +14,15 @@
 		                (append '("bundle" "exec") command))))))
 
 (use-package flycheck
+  :after delight
   :config
   (global-flycheck-mode)
+  :delight
   :custom
   (flycheck-ruby-rubocop-executable "rubocop")
   (flycheck-disabled-checkers '(ruby-reek))
   :hook
+  (flycheck-mode . my/use-eslint-from-node-modules)
   (flycheck-mode . my/use-rubocop-from-bundle))
 
 (use-package flycheck-inline
@@ -34,6 +37,20 @@
   :init
   (flycheck-posframe-configure-pretty-defaults))
 
+;; use local eslint from node_modules before global
+;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+(defun my/use-eslint-from-node-modules ()
+  ;; (setq-local flycheck-javascript-eslint-executable "eslint_d"))
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (eslint (and root
+                      (expand-file-name "node_modules/.bin/eslint"
+                                        root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
+
+
 (if t
     t
 
@@ -45,19 +62,6 @@
           (delete-window (get-buffer-window (get-buffer "*Flycheck errors*")))
           (kill-buffer "*Flycheck errors*"))
       (flycheck-list-errors)))
-
-  ;; use local eslint from node_modules before global
-  ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
-  (defun my/use-eslint-from-node-modules ()
-    (setq-local flycheck-javascript-eslint-executable "eslint_d"))
-  ;; (let* ((root (locate-dominating-file
-  ;;               (or (buffer-file-name) default-directory)
-  ;;               "node_modules"))
-  ;;        (eslint (and root
-  ;;                     (expand-file-name "node_modules/.bin/eslint"
-  ;;                                       root))))
-  ;;   (when (and eslint (file-executable-p eslint))
-  ;;     (setq-local flycheck-javascript-eslint-executable eslint))))
 
   (defun my/use-rubocop-from-bin ()
     (let ((root (locate-dominating-file

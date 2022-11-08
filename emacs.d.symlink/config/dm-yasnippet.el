@@ -3,6 +3,7 @@
 (use-package yasnippet
   ;; :hook
   ;; (web-mode . web-mode-add-yas-extra-modes)
+  :delight yas-minor-mode
   :config
   (yas-global-mode 1)
   ;; (setq yas-dont-activate-functions (add-to-list 'yas-dont-activate-functions #'my/no-yas))
