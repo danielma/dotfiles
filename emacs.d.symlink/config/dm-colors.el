@@ -5,7 +5,7 @@
 ;;; Code:
 
 (defun my/doom-theme-setup ()
-  (load-theme 'doom-gruvbox))
+  (load-theme 'doom-opera-light))
 
 (use-package doom-themes
   :hook (after-init . my/doom-theme-setup))

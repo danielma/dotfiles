@@ -26,6 +26,7 @@
   (flycheck-mode . my/use-rubocop-from-bundle))
 
 (use-package flycheck-inline
+  :disabled
   :after flycheck
   :config
   (global-flycheck-inline-mode))

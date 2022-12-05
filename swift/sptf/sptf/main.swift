@@ -16,7 +16,9 @@ enum TerminalStyle: String {
 
 extension String {
   func style(_ style: TerminalStyle) -> String {
-    let str = self.replacingOccurrences(of: TerminalStyle.reset.fullString(), with: TerminalStyle.reset.fullString() + style.fullString())
+    let str = self.replacingOccurrences(
+      of: TerminalStyle.reset.fullString(),
+      with: TerminalStyle.reset.fullString() + style.fullString())
 
     return style.fullString() + str + TerminalStyle.reset.fullString()
   }
@@ -42,7 +44,8 @@ struct DB: Codable {
   var userId: String
   var playlistIds: [String: String]
 
-  static let file = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".sptf.json")
+  static let file = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(
+    ".sptf.json")
 
   static func load() -> DB {
     let fileData = try! Data(contentsOf: DB.file)
@@ -73,11 +76,17 @@ struct Utils {
     return encoded!.base64EncodedString()
   }
 
-  static func synchronousRequest(_ url: URL, headers: [String: String]? = nil, method: HTTPMethod? = nil, body: String? = nil) -> JSONResponse {
-    return Utils.synchronousRequest(url, headers: headers, method: method, body: body?.data(using: .utf8))
+  static func synchronousRequest(
+    _ url: URL, headers: [String: String]? = nil, method: HTTPMethod? = nil, body: String? = nil
+  ) -> JSONResponse {
+    return Utils.synchronousRequest(
+      url, headers: headers, method: method, body: body?.data(using: .utf8))
   }
 
-  static func synchronousRequest(_ url: URL, headers maybeHeaders: [String: String]? = nil, method maybeMethod: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
+  static func synchronousRequest(
+    _ url: URL, headers maybeHeaders: [String: String]? = nil,
+    method maybeMethod: HTTPMethod? = nil, body: Data? = nil
+  ) -> JSONResponse {
     let method = maybeMethod ?? .GET
     let headers = maybeHeaders ?? [:]
 
@@ -99,7 +108,9 @@ struct Utils {
 
     if let body = body {
       let stringBody = String(data: body, encoding: .ascii)
-      print("\(method.rawValue.style(.purple)) \(url.absoluteString) \(stringBody ?? "")".style(.darkGray))
+      print(
+        "\(method.rawValue.style(.purple)) \(url.absoluteString) \(stringBody ?? "")".style(
+          .darkGray))
     } else {
       print("\(method.rawValue.style(.purple)) \(url.absoluteString)".style(.darkGray))
     }
@@ -118,7 +129,8 @@ struct Utils {
 
     if let taskData = data {
       if taskData.count > 0 {
-        let jsonSerialized = try! JSONSerialization.jsonObject(with: taskData, options: []) as! [String: Any]
+        let jsonSerialized =
+          try! JSONSerialization.jsonObject(with: taskData, options: []) as! [String: Any]
 
         return (jsonSerialized, response, error)
       } else {
@@ -150,12 +162,12 @@ class Spotify {
       return "spotify:track:\(id)"
     }
   }
-  
+
   typealias PlaylistId = String
   struct Playlist {
     let id: PlaylistId
     let name: String
-    
+
     enum Kind {
       case month
       case week(Weekday)
@@ -179,7 +191,9 @@ class Spotify {
     self.db = DB.load()
   }
 
-  private func realApiRequest(_ route: URL, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
+  private func realApiRequest(_ route: URL, method: HTTPMethod? = nil, body: Data? = nil)
+    -> JSONResponse
+  {
     var headers = ["Authorization": "Bearer \(credentials.accessToken)"]
 
     if body != nil {
@@ -194,7 +208,9 @@ class Spotify {
     )
   }
 
-  private func apiRequest(_ route: URL, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
+  private func apiRequest(_ route: URL, method: HTTPMethod? = nil, body: Data? = nil)
+    -> JSONResponse
+  {
     let initialResult = realApiRequest(route, method: method, body: body)
 
     if initialResult.0["error"] != nil {
@@ -205,11 +221,16 @@ class Spotify {
     }
   }
 
-  private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: Data? = nil) -> JSONResponse {
-    return apiRequest(URL(string: "https://api.spotify.com/v1/\(route)")!, method: method, body: body)
+  private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: Data? = nil)
+    -> JSONResponse
+  {
+    return apiRequest(
+      URL(string: "https://api.spotify.com/v1/\(route)")!, method: method, body: body)
   }
 
-  private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: String? = nil) -> JSONResponse {
+  private func apiRequest(_ route: String, method: HTTPMethod? = nil, body: String? = nil)
+    -> JSONResponse
+  {
     return apiRequest(route, method: method, body: body?.data(using: .utf8))
   }
 
@@ -276,8 +297,7 @@ class Spotify {
   }
 
   private func addToLibrary(_ track: Track) -> JSONResponse {
-    let body = try! JSONEncoder().encode(["ids": [track.id]])
-    return apiRequest("me/tracks", method: .PUT, body: body)
+    return apiRequest("me/tracks?ids=\(track.id)", method: .PUT)
   }
 
   func saveToLibrary() -> JSONResponse {
@@ -291,7 +311,7 @@ class Spotify {
     formatter.dateFormat = "MMMM yyyy"
     return formatter
   }()
-    
+
   private var weekFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "MMM d"
@@ -315,10 +335,13 @@ class Spotify {
         return "\(monthFormatter.string(from: Date())) Tracks"
       case .week(let weekDay):
         let now = Date()
-        
-        let startDate = Calendar.current.nextDate(after: now, matching: DateComponents(hour: 0, weekday: weekDay.rawValue), matchingPolicy: .nextTime, direction: .backward)!
+
+        let startDate = Calendar.current.nextDate(
+          after: now, matching: DateComponents(hour: 0, weekday: weekDay.rawValue),
+          matchingPolicy: .nextTime, direction: .backward)!
         let endDate = Calendar.current.date(byAdding: .day, value: 6, to: startDate)!
-        return "\(weekFormatter.string(from: startDate))-\(weekFormatter.string(from: endDate)) Tracks"
+        return
+          "\(weekFormatter.string(from: startDate))-\(weekFormatter.string(from: endDate)) Tracks"
       default:
         return name!
       }
@@ -341,7 +364,7 @@ class Spotify {
 
     return Playlist(id: id, name: playlistName)
   }
-  
+
   func addToPlaylist(track: Track, playlist: Playlist) -> JSONResponse {
     let playlistTracksUrl = "users/\(db.userId)/playlists/\(playlist.id)/tracks"
 
@@ -365,10 +388,10 @@ class Spotify {
     }
 
     let playlist = findOrCreatePlaylist(.month)
-    
+
     return addToPlaylist(track: track, playlist: playlist)
   }
-  
+
   func newsletter() -> JSONResponse {
     let track = currentTrack()
     let playlist = findOrCreatePlaylist(.week(.Friday))
@@ -377,16 +400,16 @@ class Spotify {
 
     return addToPlaylist(track: track, playlist: playlist)
   }
-  
+
   func findPlaylist(_ id: String) -> [Track] {
     let response = apiRequest(
       "playlists/\(id)",
       method: .GET
     )
-    
+
     let tracks = response.json["tracks"] as! [String: Any]
     let items = tracks["items"] as! [[String: Any]]
-    
+
     return (items).map { i in
       let t = i["track"] as! [String: Any]
       let artists = t["artists"] as! [[String: Any]]
@@ -414,7 +437,7 @@ if CommandLine.arguments.count == 1 {
 let command = CommandLine.arguments[1]
 var spotify = Spotify()
 
-switch (command) {
+switch command {
 case "info":
   dump(spotify.currentTrack())
 case "lib":
@@ -426,7 +449,8 @@ case "lib":
   }
 case "p", "playlist":
   let result = spotify.findPlaylist(CommandLine.arguments[2])
-  print(result.enumerated().map { "\($0 + 1). \($1.name) — \($1.artistName)" }.joined(separator: "\n"))
+  print(
+    result.enumerated().map { "\($0 + 1). \($1.name) — \($1.artistName)" }.joined(separator: "\n"))
 case "s", "save":
   let result = spotify.saveToList()
   dump(result.response.statusCode)
@@ -439,4 +463,3 @@ default:
   print("Unknown command: \(command)")
   exit(1)
 }
-

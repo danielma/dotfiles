@@ -59,9 +59,7 @@
              (extension (file-name-extension (if (s-contains? "." new-name) new-name filename)))
              (dir (file-name-directory filename))
              (new-file (concat dir new-basename "." extension)))
-        (rename-file filename new-file 1)
-        (kill-buffer original-buffer)
-        (find-file new-file)))))
+        (rename-visited-file new-file)))))
 
 (defun rename-file-and-counterpart (new-name)
   "Renames both current buffer and counterpart to NEW-NAME."

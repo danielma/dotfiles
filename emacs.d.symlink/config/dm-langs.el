@@ -18,6 +18,9 @@
   (setq rustic-format-on-save t
         rustic-format-display-method 'display-buffer))
 
+(use-package swift-mode
+  :hook
+  (swift-mode . lsp))
 
 (provide 'dm-langs)
 ;;; dm-langs.el ends here

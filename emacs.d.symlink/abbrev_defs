@@ -1,0 +1,12 @@
+;;-*-coding: utf-8;-*-
+(define-abbrev-table 'ruby-mode-abbrev-table
+  '(
+    ("AR::" "ActiveRecord::" nil :count 0)
+    ("AS::" "ActiveSupport::" nil :count 0)
+    ("aseq" "assert_equal" nil :count 0)
+    ("aspd" "assert_predicate" nil :count 0)
+    ("ass" "assert" nil :count 0)
+    ("dsc" "described_class" nil :count 0)
+    ("sbj" "subject" nil :count 0)
+   ))
+

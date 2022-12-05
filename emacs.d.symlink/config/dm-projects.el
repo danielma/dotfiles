@@ -1,17 +1,11 @@
 ;;; dm-projects.el --- -*- lexical-binding: t -*-
 
-;; (dir-locals-set-class-variables
-;;  'login
-;;  '(
-;;    (ruby-mode . ((prettier-js-command . "prettier_d")
-;;                  (prettier-js-args . ("--plugin" "/Users/danielma/.config/yarn/global/node_modules/@prettier/plugin-ruby"))
-;;                  (eval . (prettier-js-mode))))
-;;    ))
+(dir-locals-set-class-variables
+ 'people
+ '(
+   (ruby-mode . ((apheleia--syntax-tree-single-quotes . nil)))))
 
-
-;; (dir-locals-set-directory-class "~/Code/login" 'login)
-
-;; (evil-set-initial-state 'rg-mode 'emacs)
+(dir-locals-set-directory-class "~/Code/people" 'people)
 
 (use-package rg
   :init
@@ -85,12 +79,17 @@
         (cond ((project-verify-file "spec") 'ruby-rspec)
               ((project-verify-file "test") 'ruby-test)))))
 
+(defun project--swift-project-type ()
+  "Get the Swift project type."
+  (if (project-verify-file "Package.swift") 'swift-package))
+
 (defun project-type (&optional project)
   "Get the type of PROJECT."
   (with-project project
                 (or project-project-type
                     (setq project-project-type
                           (or (project--ruby-project-type)
+                              (project--swift-project-type)
                               'unknown)))))
 
 (defun project-find-test-or-implementation (&optional buffer find-file-func)

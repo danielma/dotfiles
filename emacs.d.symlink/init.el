@@ -60,6 +60,7 @@
 (require 'dm-guard)
 (require 'dm-javascript)
 (require 'dm-langs)
+(require 'dm-lsp)
 (require 'dm-magit)
 (require 'dm-mode-line)
 (require 'dm-prog)
@@ -115,7 +116,9 @@
  '(ediff-merge-split-window-function 'split-window-vertically)
  '(line-number-mode nil)
  '(safe-local-variable-values
-   '((lsp-enabled-clients ruby-syntax-tree-ls)
+   '((apheleia--syntax-tree-single-quotes)
+     (apheleia--syntax-tree-single-quotes nil)
+     (lsp-enabled-clients ruby-syntax-tree-ls)
      (lsp-enabled-clients quote
                           (ruby-syntax-tree-ls))
      (eval when

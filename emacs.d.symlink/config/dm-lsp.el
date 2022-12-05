@@ -17,6 +17,7 @@
   :custom 
   ;; (lsp-disabled-clients '(ts-ls))
   (lsp-headerline-breadcrumb-enable nil)
+  (lsp-enable-file-watchers nil)
   (lsp-lens-enable nil)
   )
 
@@ -34,6 +35,11 @@
 ;; optionally if you want to use debugger
 ;; (use-package dap-mode)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+(use-package lsp-sourcekit
+  :after lsp-mode
+  :config
+  (setq lsp-sourcekit-executable "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp"))
 
 
 (provide 'dm-lsp)

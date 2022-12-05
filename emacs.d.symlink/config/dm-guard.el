@@ -98,9 +98,10 @@
         (concat base " --only-failures")
       base)))
 
+
 (defun --dm-guard-test-command ()
   "Generate the test command for a buffer."
-  (let* ((project-type 'rails-rspec) ; (projectile-project-type))
+  (let* ((project-type (project-type))
          (file-path (buffer-file-name dm-guard-manual-test-buffer))
          (file-name (file-relative-name file-path (project-root (project-current))))
          (test-cmd (cond
@@ -111,6 +112,7 @@
                     ((eq project-type 'rubygem) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'rails-test) "bin/rails test")
                     ((eq project-type 'ruby-test) "bundle exec ruby")
+                    ((eq project-type 'swift-package) "swift test")
                     (t "ruby"))))
     test-cmd))
 
@@ -124,38 +126,36 @@
 
 (defun --dm-guard-test-name ()
   "Generate the test name for a buffer."
-  (let* ((project-type 'rails-rspec) ; (projectile-project-type))
+  (let* ((project-type (project-type))
          (spec-mode (project-verify-file "spec"))
          (is-test-file (--dm-guard-is-test-file-p dm-guard-manual-test-buffer))
          (file-path (buffer-file-name dm-guard-manual-test-buffer))
-         (file-name (file-relative-name file-path (project-root (project-current))))
-         (test-path
-          (cond
-           (is-test-file file-name)
-           ((string-match "^app/views" file-name) nil)
-           ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
-            (let* ((graph-dir (match-string 1 file-name))
-                   (vertex-name (match-string 2 file-name))
-                   (graph-test-dir (or (and (string-equal graph-dir "app_graph") "") "church_center")))
-              (concat "test/integration/pco/api/" graph-dir "/" (dm-guard--pluralize vertex-name) "_test.rb")))
-           ((string-match "^app/graphs/\\(.+\\).rb$" file-name)
-            (if spec-mode
-                (concat "spec/requests/graphs/" (match-string 1 file-name) "_spec.rb")
-              (concat "test/integration" (match-string 1 file-name) "_test.rb")))
-           ((string-match "^app/\\(.+\\).rb$" file-name)
-            (if spec-mode
-                (concat "spec/" (match-string 1 file-name) "_spec.rb")
-              (concat "test/" (match-string 1 file-name) "_test.rb")))
-           ((string-match "^lib/\\(.+\\).rb$" file-name)
-            (if spec-mode
-                (concat "spec/" (match-string 1 file-name) "_spec.rb")
-              (concat "test/" (match-string 1 file-name) "_test.rb")))
-           ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
-            (concat "test/models/" (dm-guard--singularize (match-string 1 file-name)) "_test.rb"))
-           (t nil))))
-    ;; (cond ((and test-path (eq project-type 'ruby-test)) (concat "TEST=" test-path))
-    ;;       (t test-path))))
-    test-path))
+         (file-name (file-relative-name file-path (project-root (project-current)))))
+    (cond
+     ((eq project-type 'swift-package) "")
+     (t (cond
+         (is-test-file file-name)
+         ((string-match "^app/views" file-name) nil)
+         ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
+          (let* ((graph-dir (match-string 1 file-name))
+                 (vertex-name (match-string 2 file-name))
+                 (graph-test-dir (or (and (string-equal graph-dir "app_graph") "") "church_center")))
+            (concat "test/integration/pco/api/" graph-dir "/" (dm-guard--pluralize vertex-name) "_test.rb")))
+         ((string-match "^app/graphs/\\(.+\\).rb$" file-name)
+          (if spec-mode
+              (concat "spec/requests/graphs/" (match-string 1 file-name) "_spec.rb")
+            (concat "test/integration" (match-string 1 file-name) "_test.rb")))
+         ((string-match "^app/\\(.+\\).rb$" file-name)
+          (if spec-mode
+              (concat "spec/" (match-string 1 file-name) "_spec.rb")
+            (concat "test/" (match-string 1 file-name) "_test.rb")))
+         ((string-match "^lib/\\(.+\\).rb$" file-name)
+          (if spec-mode
+              (concat "spec/" (match-string 1 file-name) "_spec.rb")
+            (concat "test/" (match-string 1 file-name) "_test.rb")))
+         ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
+          (concat "test/models/" (dm-guard--singularize (match-string 1 file-name)) "_test.rb"))
+         (t nil))))))
 
 (defun dm-guard-select-test-buffer (buffer)
   "Select a BUFFER to use as the test file."

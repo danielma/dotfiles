@@ -11,6 +11,8 @@
 	       ("C-:" . execute-extended-command)
 	       ("C-." . execute-extended-command)
          ("C-h C-f" . find-function)
+         ("s-}" . tab-bar-switch-to-next-tab)
+         ("s-{" . tab-bar-switch-to-prev-tab)
 	       )
   :custom (select-enable-clipboard . nil))
 
