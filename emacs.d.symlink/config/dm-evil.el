@@ -34,6 +34,23 @@
   (evil-set-initial-state 'rg-mode 'emacs)
   (evil-set-initial-state 'Custom-mode 'emacs))
 
+;; (use-package evil-textobj-tree-sitter
+;;   :after evil
+;;   :config
+;;   ;; bind `function.outer`(entire function block) to `f` for use in things like `vaf`, `yaf`
+;;   (define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
+;;   ;; bind `function.inner`(function block without name and args) to `f` for use in things like `vif`, `yif`
+;;   (define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner"))
+;;   )
+
+;; (treesit-query-compile 'tsx)
+;; (treesit-query-validate 'tsx "(call_expression) @c")
+
+;; (treesit-query-range
+;;  (treesit-buffer-root-node 'tsx)
+;;  "(call_expression) @c"
+;;  )
+
 (use-package evil-multiedit
   :bind (:map evil-visual-state-map
               ("R" . evil-multiedit-match-all)

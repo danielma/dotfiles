@@ -1,12 +1,17 @@
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+
 (setq lsp-keymap-prefix "s-l")
+
+;; (use-package eldoc-box
+;;   :delight eldoc-box-hover-at-point-mode)
 
 (use-package lsp-mode
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
          ;; (js-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration)
-         (lsp-mode . eldoc-box-hover-at-point-mode))
+         ;; (lsp-mode . eldoc-box-hover-at-point-mode))
+         )
   :commands lsp
   :straight (lsp-mode
              :type git
@@ -14,11 +19,15 @@
              :host github
              :repo "emacs-lsp/lsp-mode"
              :files (:defaults "clients/*.el"))
+  :config
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.build\\'")
   :custom 
   ;; (lsp-disabled-clients '(ts-ls))
   (lsp-headerline-breadcrumb-enable nil)
-  (lsp-enable-file-watchers nil)
+  (lsp-enable-file-watchers t)
   (lsp-lens-enable nil)
+  (lsp-ui-doc-show-with-cursor t)
+  (lsp-ui-doc-position 'at-point)
   )
 
 ;; optionally

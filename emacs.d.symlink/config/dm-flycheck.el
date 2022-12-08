@@ -21,6 +21,9 @@
   :custom
   (flycheck-ruby-rubocop-executable "rubocop")
   (flycheck-disabled-checkers '(ruby-reek))
+  :bind (:map flycheck-command-map
+              ("l" . consult-flycheck)
+              ("L" . flycheck-list-errors))
   :hook
   (flycheck-mode . my/use-eslint-from-node-modules)
   (flycheck-mode . my/use-rubocop-from-bundle))

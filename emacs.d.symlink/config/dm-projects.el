@@ -55,6 +55,11 @@
   `(let ((project (or ,project (project-current nil))))
      (if project ,@body)))
 
+(defmacro with-project-default-directory (&rest body)
+  "Execute BODY with project root as default directory."
+  `(let ((default-directory (project-root (project-current))))
+     ,@body))
+
 (defvar-local project-project-type nil)
 
 (defvar project-type-mappings
