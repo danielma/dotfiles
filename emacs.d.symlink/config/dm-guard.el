@@ -43,6 +43,18 @@
   nil
   "Global variable to run only the current test.")
 
+(defvar dm-guard-terminal
+  'async-shell
+  "Which terminal to use for running tests.")
+
+(defvar dm-guard-async-shell-buffer
+  nil
+  "Side buffer for running tests.")
+
+(defvar dm-guard-async-shell-process
+  nil
+  "Process for running tests.")
+
 (defun dm-guard-global-toggle ()
   "Globally toggle dm-guard runners."
   (interactive)
@@ -84,12 +96,39 @@
     (if test-name
         (--dm-guard-clear-and-run (concat test-cmd " " test-name ":" current-line)))))
 
+(defun --dm-guard-ensure-async-shell-buffer ()
+  "Make sure the test buffer exists."
+  (or (and (buffer-live-p dm-guard-async-shell-buffer) dm-guard-async-shell-buffer)
+      (let ((buffer (generate-new-buffer "*Guard Process*")))
+        (setq dm-guard-async-shell-buffer buffer)
+        (with-current-buffer buffer
+          (shell-mode)
+          (setq-local process-environment (append (comint-term-environment) process-environment)))
+        (--dm-guard-ensure-async-shell-buffer))))
+
 (defun --dm-guard-clear-and-run (command)
   "Use tmux to clear and execute COMMAND."
   (if command
       (let ((full-command (concat "cd " (project-root (project-current)) " && " command)))
-        (emamux:send-keys "^c")
-        (emamux:send-command (concat " clear; echo -e '" command "'; " full-command)))))
+        (pcase dm-guard-terminal
+          ('emamux
+           (emamux:send-keys "^c")
+           (emamux:send-command (concat " clear; echo -e '" command "'; " full-command)))
+          ('async-shell
+           (let ((buf (--dm-guard-ensure-async-shell-buffer)))
+             (display-buffer-in-side-window buf '((side . right) (window-width . 0.2)))
+             (with-current-buffer buf
+               (if dm-guard-async-shell-process (delete-process dm-guard-async-shell-process))
+               (erase-buffer)
+               (insert command "\n\n")
+               (setq dm-guard-async-shell-process
+                     (make-process
+                      :name "Guard tests"
+                      :buffer buf
+                      :command (list shell-file-name shell-command-switch full-command)
+                      :filter 'comint-output-filter
+                      :sentinel #'ignore)))))
+          (_ (error (format "Unusable terminal `%s'" dm-guard-terminal)))))))
 
 (defun --dm-guard-rspec-test-command ()
   "Generate the test command for rspec."

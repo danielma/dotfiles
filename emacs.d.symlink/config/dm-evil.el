@@ -32,7 +32,8 @@
   :config
   (evil-collection-init (seq-difference evil-collection-mode-list '(rg (custom cus-edit))))
   (evil-set-initial-state 'rg-mode 'emacs)
-  (evil-set-initial-state 'Custom-mode 'emacs))
+  (evil-set-initial-state 'Custom-mode 'emacs)
+  (evil-set-initial-state 'eat-mode 'insert))
 
 ;; (use-package evil-textobj-tree-sitter
 ;;   :after evil

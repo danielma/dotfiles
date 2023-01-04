@@ -36,7 +36,6 @@
     (add-to-list 'auto-mode-alist '("\\.rb.spec\\'" . ruby-mode))
     (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch))
 
-
   (defvar-local my/prettierrc-location-cache nil)
 
   (defun my/prettierrc-location ()

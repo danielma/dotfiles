@@ -13,11 +13,17 @@
 
 (use-package smartparens
   :delight
+  :init
+  (require 'smartparens-config)
   :config
   (smartparens-global-mode)
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
   )
+
+(use-package typescript-ts-mode
+  :hook
+  (typescript-ts-mode . eglot-ensure))
 
 (if t
     t

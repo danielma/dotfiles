@@ -196,7 +196,7 @@ shift + cmd - l : yabai -m window --warp east
 alt - a : yabai -m space --toggle padding
 
 # toggle window fullscreen
-alt - f : yabai -m window --toggle zoom-fullscreen
+# alt - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window parent zoom
 alt - p : yabai -m window --toggle zoom-parent

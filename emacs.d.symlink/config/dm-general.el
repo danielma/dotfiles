@@ -29,6 +29,11 @@
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   )
 
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+
 (use-package undo-tree
   :after delight
   :delight

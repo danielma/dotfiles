@@ -20,7 +20,7 @@
 
 (use-package swift-mode
   :hook
-  (swift-mode . lsp))
+  (swift-mode . eglot-ensure))
 
 (provide 'dm-langs)
 ;;; dm-langs.el ends here

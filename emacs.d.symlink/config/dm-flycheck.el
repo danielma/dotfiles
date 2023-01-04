@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(use-package flymake-posframe
+  :straight (:type git :host github :repo "Ladicle/flymake-posframe")
+  :hook (flymake-mode . flymake-posframe-mode))
+
 (defun my/use-rubocop-from-bundle ()
   (let ((root (locate-dominating-file
 	             (or (buffer-file-name) default-directory)
@@ -26,7 +30,10 @@
               ("L" . flycheck-list-errors))
   :hook
   (flycheck-mode . my/use-eslint-from-node-modules)
-  (flycheck-mode . my/use-rubocop-from-bundle))
+  (flycheck-mode . my/use-rubocop-from-bundle)
+  :config
+  (flycheck-add-mode 'javascript-eslint 'typescript-ts-mode)
+  (flycheck-add-mode 'javascript-eslint 'tsx-ts-mode))
 
 (use-package flycheck-inline
   :disabled
