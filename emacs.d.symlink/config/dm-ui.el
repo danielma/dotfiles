@@ -11,6 +11,10 @@
   :demand t
   :custom
   (tab-width 2)
+  (display-buffer-alist '(
+                          ((major-mode . magit-status-mode) . (display-buffer-same-window))
+                          ((derived-mode . magit-mode) . nil)
+                          (t . (display-buffer-same-window))))
   (indent-tabs-mode nil)
   :bind (:map global-map
               ("s-=" . global-text-scale-adjust-by-two)

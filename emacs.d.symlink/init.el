@@ -65,6 +65,7 @@
 (require 'dm-mode-line)
 (require 'dm-prog)
 (require 'dm-projects)
+(require 'dm-projectile-rails)
 (require 'dm-ruby)
 (require 'dm-tabs)
 (require 'dm-text)
@@ -98,7 +99,6 @@
 ;; (use-package dm-colors :straight nil)
 ;; (use-package dm-mode-line :straight nil)
 ;; (use-package dm-web-mode :straight nil)
-;; (use-package dm-projectile-rails :straight nil)
 ;; (use-package dm-yasnippet :straight nil)
 ;; (use-package chord-pro-mode :straight nil)
 ;; (use-package dm-org :straight nil)
@@ -128,7 +128,8 @@
  '(eglot-autoreconnect 5)
  '(line-number-mode nil)
  '(safe-local-variable-values
-   '((apheleia--syntax-tree-single-quotes)
+   '((lsp-enabled-clients ruby-syntax-tree-ls)
+     (apheleia--syntax-tree-single-quotes)
      (apheleia--syntax-tree-single-quotes nil)
      (eval when
            (fboundp 'rainbow-mode)

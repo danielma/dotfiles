@@ -3,7 +3,7 @@
   (projectile-rails-find-resource
    "service: "
    '(("app/services/" "\\(.+\\)\\.rb$"))
-  "app/services/${filename}.rb"))
+   "app/services/${filename}.rb"))
 
 (defun my/projectile-rails-find-presenter ()
   (interactive)
@@ -56,16 +56,19 @@
      "app/policies/${filename}_policy.rb")))
 
 (defun my/projectile-rails-fixture-dirs ()
-   (--map (list it "\\(.+?\\)\\(?:_fabricator\\)?\\.\\(?:rb\\|yml\\)$")
-          projectile-rails-fixture-dirs))
+  (--map (list it "fixtures/\\(.+?\\)\\.yml$")
+         '("test/fixtures" "spec/fixtures")))
+
+(gethash "organizations" (project-choices (my/projectile-rails-fixture-dirs)))
 
 (defun my/projectile-rails-select-fixture ()
   (interactive)
-  (let* ((choices (my/projectile-choices (my/projectile-rails-fixture-dirs)))
-	 (type (my/projectile-rails-select-fixture-type))
-	 (filepath (projectile-rails-expand-root (gethash type choices)))
-	 (fixture (my/projectile-rails-select-fixture-in-file filepath))
-	 (cleaned-type (s-replace "/" "_" type)))
+  (let* ((choices (project-choices (my/projectile-rails-fixture-dirs)))
+	       (type (my/projectile-rails-select-fixture-type))
+         (root (project-root (project-current)))
+	       (filepath (file-name-concat root (gethash type choices)))
+	       (fixture (my/projectile-rails-select-fixture-in-file filepath))
+	       (cleaned-type (s-replace "/" "_" type)))
     ;; (string-match "[^a-zA-Z_]" "hello@my_guy")
     (if (string-match "[^A-Za-z_]" fixture)
         (concat cleaned-type "(\"" fixture "\")")
@@ -74,8 +77,8 @@
 (defun my/projectile-rails-select-fixture-type ()
   "Select a fixture type"
   (interactive)
-  (let* ((choices (my/projectile-choices (my/projectile-rails-fixture-dirs)))
-	 (type (projectile-completing-read "type: " (hash-table-keys choices))))
+  (let* ((choices (project-choices (my/projectile-rails-fixture-dirs)))
+         (type (completing-read "type: " (hash-table-keys choices))))
     type))
 
 (defun re-seq (regexp string)
@@ -101,7 +104,7 @@
          ;; (parsed-yaml (yaml-parse-string yaml-source :object-type 'alist))
          ;; (yaml-keys (mapcar 'car parsed-yaml)))
          (yaml-keys (re-seq "^[a-z][^: ]+" yaml-source)))
-    (projectile-completing-read "fixture: " yaml-keys))
+    (completing-read "fixture: " yaml-keys))
   )
 
 (defcustom projectile-rails-component-dirs
@@ -117,39 +120,43 @@
    "components: "
    (--map (list it "\\(.*/?\\)components/\\(.+\\)\\.[^.]+$") projectile-rails-component-dirs)))
 
-;; (evil-leader/set-key
-;;   "jc" 'projectile-rails-find-component
-;;   "jt" 'my/projectile-rails-find-js-test)
+(if t
+    t
 
-(use-package inf-ruby)
-(use-package inflections)
-(use-package rake)
+  ;; (evil-leader/set-key
+  ;;   "jc" 'projectile-rails-find-component
+  ;;   "jt" 'my/projectile-rails-find-js-test)
 
-(use-package projectile-rails
-  :after bind-map
-  :straight (:type git :host github :repo "danielma/projectile-rails" :branch "dma/use-all-matches-for-finding-resource"
-                   :upstream (:host github :repo "asok/projectile-rails"))
-  :init
-  (projectile-rails-global-mode)
-  (setq projectile-rails-component-dir "app/javascript/"
-	projectile-rails-javascript-dirs (add-to-list 'projectile-rails-javascript-dirs "app/javascript/"))
-  :config
-  (bind-map-for-mode-inherit my/projectile-rails-command-map base-leader-map
-    :minor-modes (projectile-rails-mode)
-    :bindings ("r" projectile-rails-command-map))
-  :bind (
-	 :map projectile-rails-command-map
-         ("f" . my/projectile-rails-find-presenter)
-         ("s" . my/projectile-rails-find-service)
-         ("t" . my/projectile-rails-find-test-or-spec)
-         ("a" . projectile-rails-find-stylesheet)
-         ("A" . projectile-rails-find-current-stylesheet)
-         ("R" . my/projectile-rails-find-rake-tasks)
-         ("p" . my/projectile-rails-find-spec-or-policy)
-         ("w" . my/projectile-rails-find-component)
-         ("V" . my/projectile-rails-find-vertex)
-	 :map projectile-rails-mode-goto-map
-         ("G" . my/projectile-rails-goto-gemfile-lock)
-	 ("p" . my/projectile-rails-goto-package-json)))
+  (use-package inf-ruby)
+  (use-package inflections)
+  (use-package rake)
+
+  (use-package projectile-rails
+    :after bind-map
+    :straight (:type git :host github :repo "danielma/projectile-rails" :branch "dma/use-all-matches-for-finding-resource"
+                     :upstream (:host github :repo "asok/projectile-rails"))
+    :init
+    (projectile-rails-global-mode)
+    (setq projectile-rails-component-dir "app/javascript/"
+	        projectile-rails-javascript-dirs (add-to-list 'projectile-rails-javascript-dirs "app/javascript/"))
+    :config
+    (bind-map-for-mode-inherit my/projectile-rails-command-map base-leader-map
+                               :minor-modes (projectile-rails-mode)
+                               :bindings ("r" projectile-rails-command-map))
+    :bind (
+	         :map projectile-rails-command-map
+           ("f" . my/projectile-rails-find-presenter)
+           ("s" . my/projectile-rails-find-service)
+           ("t" . my/projectile-rails-find-test-or-spec)
+           ("a" . projectile-rails-find-stylesheet)
+           ("A" . projectile-rails-find-current-stylesheet)
+           ("R" . my/projectile-rails-find-rake-tasks)
+           ("p" . my/projectile-rails-find-spec-or-policy)
+           ("w" . my/projectile-rails-find-component)
+           ("V" . my/projectile-rails-find-vertex)
+	         :map projectile-rails-mode-goto-map
+           ("G" . my/projectile-rails-goto-gemfile-lock)
+	         ("p" . my/projectile-rails-goto-package-json)))
+  )
 
 (provide 'dm-projectile-rails)

@@ -45,7 +45,7 @@
         '(eslint)))
 
 ;;; Tree Sitter
-(use-package treesit)
+;; (use-package treesit)
 
 (use-package emacs ; treesit
   :custom (treesit-extra-load-path '("~/Code/test/tree-sitter-module/dist")))
