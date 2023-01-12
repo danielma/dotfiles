@@ -12,7 +12,7 @@
   (indent-according-to-mode))
 
 (use-package smartparens
-  :delight
+  :delight ""
   :init
   (require 'smartparens-config)
   :config

@@ -59,16 +59,14 @@
   (--map (list it "fixtures/\\(.+?\\)\\.yml$")
          '("test/fixtures" "spec/fixtures")))
 
-(gethash "organizations" (project-choices (my/projectile-rails-fixture-dirs)))
-
 (defun my/projectile-rails-select-fixture ()
   (interactive)
   (let* ((choices (project-choices (my/projectile-rails-fixture-dirs)))
-	       (type (my/projectile-rails-select-fixture-type))
+	 (type (my/projectile-rails-select-fixture-type))
          (root (project-root (project-current)))
-	       (filepath (file-name-concat root (gethash type choices)))
-	       (fixture (my/projectile-rails-select-fixture-in-file filepath))
-	       (cleaned-type (s-replace "/" "_" type)))
+	 (filepath (file-name-concat root (gethash type choices)))
+	 (fixture (my/projectile-rails-select-fixture-in-file filepath))
+	 (cleaned-type (s-replace "/" "_" type)))
     ;; (string-match "[^a-zA-Z_]" "hello@my_guy")
     (if (string-match "[^A-Za-z_]" fixture)
         (concat cleaned-type "(\"" fixture "\")")
@@ -138,13 +136,13 @@
     :init
     (projectile-rails-global-mode)
     (setq projectile-rails-component-dir "app/javascript/"
-	        projectile-rails-javascript-dirs (add-to-list 'projectile-rails-javascript-dirs "app/javascript/"))
+	  projectile-rails-javascript-dirs (add-to-list 'projectile-rails-javascript-dirs "app/javascript/"))
     :config
     (bind-map-for-mode-inherit my/projectile-rails-command-map base-leader-map
                                :minor-modes (projectile-rails-mode)
                                :bindings ("r" projectile-rails-command-map))
     :bind (
-	         :map projectile-rails-command-map
+	   :map projectile-rails-command-map
            ("f" . my/projectile-rails-find-presenter)
            ("s" . my/projectile-rails-find-service)
            ("t" . my/projectile-rails-find-test-or-spec)
@@ -154,9 +152,9 @@
            ("p" . my/projectile-rails-find-spec-or-policy)
            ("w" . my/projectile-rails-find-component)
            ("V" . my/projectile-rails-find-vertex)
-	         :map projectile-rails-mode-goto-map
+	   :map projectile-rails-mode-goto-map
            ("G" . my/projectile-rails-goto-gemfile-lock)
-	         ("p" . my/projectile-rails-goto-package-json)))
+	   ("p" . my/projectile-rails-goto-package-json)))
   )
 
 (provide 'dm-projectile-rails)

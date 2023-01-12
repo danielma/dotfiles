@@ -5,11 +5,6 @@
   :hook
   (ruby-mode . dm-guard-mode))
 
-(use-package ruby-end
-  :delight
-  :custom
-  (ruby-end-insert-newline nil))
-
 (if t
     t
 
