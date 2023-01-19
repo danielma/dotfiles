@@ -16,8 +16,8 @@ set --export FZF_DEFAULT_OPTS '--cycle --layout=reverse --border --height=90% --
 set --export FZF_DEFAULT_COMMAND 'rg --files'
 
 fzf_configure_bindings --directory=\ct \
-  --git_log= \
-  --git_status=
+    --git_log= \
+    --git_status=
 
 # RG
 
@@ -31,9 +31,10 @@ source ~/.dotfiles/config.symlink/fish/work.fish
 
 source ~/.asdf/asdf.fish
 
-set -q EDITOR; or set --export EDITOR "emacsclient -t"
-
-# set --export EDITOR 'nvim'
+if set -q INSIDE_EMACS
+else
+    set --export EDITOR "emacsclient -t"
+end
 
 # Path
 

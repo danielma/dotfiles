@@ -3,6 +3,12 @@
 
 ;;; Code:
 
+(defun yank-with-clipboard ()
+  "Yank from the system clipboard."
+  (interactive)
+  (let ((select-enable-clipboard t))
+    (yank)))
+
 (use-package emacs
   :bind (
 	       ("C-x C-:" . comment-line)
@@ -13,6 +19,7 @@
          ("C-h C-f" . find-function)
          ("s-}" . tab-bar-switch-to-next-tab)
          ("s-{" . tab-bar-switch-to-prev-tab)
+         ("s-v" . yank-with-clipboard)
 	       )
   :custom (select-enable-clipboard . nil))
 
@@ -22,8 +29,6 @@
     (apply orig-fun args)))
 
 (advice-add 'ns-copy-including-secondary :around #'with-select-clipboard)
-(advice-add 'yank :around #'with-select-clipboard)
-
 
 ;; (if (boundp 'mac-command-modifier)
 ;;     (progn
