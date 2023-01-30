@@ -20,6 +20,10 @@
          ("s-}" . tab-bar-switch-to-next-tab)
          ("s-{" . tab-bar-switch-to-prev-tab)
          ("s-v" . yank-with-clipboard)
+         ("M-j" . evil-window-down)
+         ("M-k" . evil-window-up)
+         ("M-h" . evil-window-left)
+         ("M-l" . evil-window-right)
 	       )
   :custom (select-enable-clipboard . nil))
 

@@ -1,1 +1,1 @@
-eval "$($(dirname $0)/profile_helper)"
+# eval "$($(dirname $0)/profile_helper)"
