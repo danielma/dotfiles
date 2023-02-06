@@ -51,6 +51,7 @@
 (defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
 
 (require 'dm-general)
+(require 'dm-prog)
 
 (require 'dm-bindings)
 (require 'dm-colors)
@@ -63,7 +64,6 @@
 (require 'dm-lsp)
 (require 'dm-magit)
 (require 'dm-mode-line)
-(require 'dm-prog)
 (require 'dm-projects)
 (require 'dm-projectile-rails)
 (require 'dm-ruby)
@@ -123,12 +123,7 @@
      (apheleia--syntax-tree-single-quotes nil)
      (eval when
            (fboundp 'rainbow-mode)
-           (rainbow-mode 1))))
- '(warning-suppress-log-types
-   '(((defvaralias losing-value js-indent-level))
-     ((defvaralias losing-value emmet-indentation))
-     ((defvaralias losing-value js-indent-level))
-     ((defvaralias losing-value emmet-indentation)))))
+           (rainbow-mode 1)))))
 (put 'narrow-to-region 'disabled nil)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

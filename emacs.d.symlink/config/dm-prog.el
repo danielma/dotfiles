@@ -44,11 +44,10 @@
   (setf (alist-get 'js-mode apheleia-mode-alist)
         '(eslint)))
 
-(use-package emacs ; treesit
-  :custom (treesit-extra-load-path '("~/Code/test/tree-sitter-module/dist")))
-
 (use-package treesit-auto
   :config
-  (global-treesit-auto-mode))
+  (global-treesit-auto-mode)
+  :custom
+  (treesit-extra-load-path '("~/Code/test/tree-sitter-module/dist")))
 
 (provide 'dm-prog)
