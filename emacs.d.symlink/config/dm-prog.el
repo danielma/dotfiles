@@ -39,19 +39,16 @@
   (push '(emacs-lisp-mode . lisp-indent) apheleia-mode-alist)
   (push '(swift-mode . swift-format) apheleia-mode-alist)
   (push '(tsx-ts-mode . eslint) apheleia-mode-alist)
-  (setf (alist-get 'ruby-mode apheleia-mode-alist)
+  (setf (alist-get 'ruby-base-mode apheleia-mode-alist)
         '(syntax-tree))
   (setf (alist-get 'js-mode apheleia-mode-alist)
         '(eslint)))
 
-;;; Tree Sitter
-;; (use-package treesit)
-
 (use-package emacs ; treesit
   :custom (treesit-extra-load-path '("~/Code/test/tree-sitter-module/dist")))
 
-;; (use-package tree-sitter)
-;; (use-package tree-sitter-langs
-;;   :after tree-sitter)
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode))
 
 (provide 'dm-prog)

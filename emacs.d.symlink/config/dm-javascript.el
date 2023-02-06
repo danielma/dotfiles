@@ -17,8 +17,8 @@
   (require 'smartparens-config)
   :config
   (smartparens-global-mode)
-  (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
-  (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+  (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-base-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+  (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-base-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
   )
 
 (use-package typescript-ts-mode

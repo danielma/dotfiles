@@ -123,12 +123,16 @@
      (apheleia--syntax-tree-single-quotes nil)
      (eval when
            (fboundp 'rainbow-mode)
-           (rainbow-mode 1)))))
+           (rainbow-mode 1))))
+ '(warning-suppress-log-types
+   '(((defvaralias losing-value js-indent-level))
+     ((defvaralias losing-value emmet-indentation))
+     ((defvaralias losing-value js-indent-level))
+     ((defvaralias losing-value emmet-indentation)))))
 (put 'narrow-to-region 'disabled nil)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 140 :width regular :weight regular :family "JetBrains Mono"))))
  '(tab-bar ((t :inherit default :box (:line-width (0 . 8))))))

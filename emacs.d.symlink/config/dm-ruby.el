@@ -3,7 +3,7 @@
 (use-package ruby-mode
   :delight "\ue21e"
   :hook
-  (ruby-mode . dm-guard-mode))
+  (ruby-base-mode . dm-guard-mode))
 
 (if t
     t

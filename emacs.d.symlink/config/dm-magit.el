@@ -19,12 +19,23 @@
   :after magit)
 
 (use-package browse-at-remote
-  :after magit)
+  :after magit
+  :config
+  (advice-add 'browse-at-remote-kill :around #'with-select-clipboard))
 
 (defun my/magithub-pull-request ()
   "Simple pull request command."
   (interactive)
   (with-editor-async-shell-command "hub pull-request "))
+
+(defun my/main ()
+  "Switch to main and update."
+  (interactive)
+  
+  (if (magit-changed-files "HEAD")
+      (message "Can't switch. You have changes!")
+    (magit-checkout "main")
+    (magit-pull-from-upstream '())))
 
 (if t
     t
@@ -44,15 +55,6 @@
       (magit-checkout "master")
       (magit-pull-from-upstream '()))
     )
-
-  (defun my/main ()
-    "Switch to main and update."
-    (interactive)
-    
-    (if (magit-changed-files "HEAD")
-        (message "Can't switch. You have changes!")
-      (magit-checkout "main")
-      (magit-pull-from-upstream '())))
 
   (defun my/git-rebase-onto-master ()
     "Rebase the current branch onto origin/master."
