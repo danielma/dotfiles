@@ -1,8 +1,8 @@
 ;;; -*- lexical-binding: t -*-
 
 (use-package yasnippet
-  ;; :hook
-  ;; (web-mode . web-mode-add-yas-extra-modes)
+  :hook
+  (yas-minor-mode-mode . add-yas-extra-modes)
   :delight yas-minor-mode
   :config
   (yas-global-mode 1)
@@ -11,13 +11,14 @@
   (yas-triggers-in-field t)
   )
 
+(defun add-yas-extra-modes ()
+  ;; (if (string= "erb" web-mode-engine)
+  ;;     (add-to-list 'yas--extra-modes 'html-erb-mode)
+  ;;   ))
+  )
+
 (if t
     t
-
-  (defun web-mode-add-yas-extra-modes ()
-    (if (string= "erb" web-mode-engine)
-        (add-to-list 'yas--extra-modes 'html-erb-mode)
-      ))
 
   (defun do-yas-expand ()
     (let ((yas-fallback-behavior 'return-nil))

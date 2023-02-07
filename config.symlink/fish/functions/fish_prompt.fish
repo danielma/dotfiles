@@ -1,3 +1,7 @@
+function eat_integration
+    printf '\e]51;e;A;%s;%s\e\\' "$(printf "%s" "$hostname" | base64)" "$(printf "%s" "$PWD" | base64)"
+end
+
 function fish_prompt
     set -l last_status $status
 
@@ -51,6 +55,8 @@ function fish_prompt
             set prompt_host $usercolor$USER$normal@(set_color $fish_color_host)$host$normal":"
         end
     end
+
+    echo -nes (eat_integration)
 
     # Shorten pwd if prompt is too long
     set -l pwd (prompt_pwd)
