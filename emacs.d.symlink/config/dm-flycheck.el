@@ -4,6 +4,9 @@
 
 ;;; Code:
 
+(use-package flymake
+  :delight)
+
 (use-package flymake-posframe
   :straight (:type git :host github :repo "Ladicle/flymake-posframe")
   :hook (flymake-mode . flymake-posframe-mode))
@@ -18,6 +21,7 @@
 		                (append '("bundle" "exec") command))))))
 
 (use-package flycheck
+  :disabled
   :after delight
   :config
   (global-flycheck-mode)

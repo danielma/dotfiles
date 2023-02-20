@@ -42,6 +42,8 @@
   :config
   (global-undo-tree-mode))
 
+(use-package delight)
+
 (use-package dumb-jump
   :init
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))

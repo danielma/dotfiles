@@ -130,7 +130,8 @@
            'already-running
          (setq dm-guard--currently-running-test line-command)
          (let ((buf (--dm-guard-ensure-async-shell-buffer)))
-           (display-buffer-in-side-window buf '((side . right) (window-width . 0.2)))
+           (or (get-buffer-window buf)
+               (display-buffer-in-side-window buf '((side . right) (window-width . 0.2))))
            (with-current-buffer buf
              (if dm-guard-async-shell-process (delete-process dm-guard-async-shell-process))
              (erase-buffer)
@@ -237,7 +238,7 @@
 (define-minor-mode dm-guard-mode
   "Use emamux to test after saving a file."
   :init-value nil
-  :lighter " guard"
+  :lighter " \uf132"
   :map dm-guard-mode-map
   (cond ((bound-and-true-p dm-guard-mode)
          (add-hook 'after-save-hook #'dm-guard-test t t))
