@@ -4,6 +4,29 @@
   :config
   (defvaralias 'js-indent-level 'tab-width))
 
+(use-package add-node-modules-path)
+
+(defvar-local my/flymake-eslint-npx-initialized nil)
+(defun my/flymake-eslint-npx (&optional force)
+  (if (or force (not my/flymake-eslint-npx-initialized))
+      (when (derived-mode-p 'typescript-ts-base-mode 'js-mode)
+        (setq my/flymake-eslint-npx-initialized t)
+        (let* ((root (locate-dominating-file
+                      (or (buffer-file-name) default-directory)
+                      "node_modules"))
+               (eslint (and root
+                            (expand-file-name "node_modules/.bin/eslint"
+                                              root))))
+          (when (and eslint (file-executable-p eslint))
+            (setq-local flymake-eslint-executable-name eslint
+                        flymake-eslint-project-root root)
+            (flymake-eslint-enable))))))
+
+(use-package flymake-eslint)
+
+(with-eval-after-load 'flymake-eslint
+  (add-hook 'flymake-mode-hook 'my/flymake-eslint-npx))
+
 (defun my-create-newline-and-enter-sexp (&rest _ignored)
   "Open a new brace or bracket expression, with relevant newlines and indent. "
   (newline)

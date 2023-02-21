@@ -4,8 +4,15 @@
 
 ;;; Code:
 
+(transient-define-prefix flymake-menu ()
+  [:description "Commands"
+                (3 "l" "List" consult-flymake)
+                (3 "n" "Next" flymake-goto-next-error)
+                (3 "p" "Prev" flymake-goto-prev-error)])
+
 (use-package flymake
-  :delight)
+  :delight
+  :bind (("C-c !" . flymake-menu)))
 
 (use-package flymake-posframe
   :straight (:type git :host github :repo "Ladicle/flymake-posframe")
