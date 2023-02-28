@@ -51,9 +51,6 @@
     (let ((sym (thing-at-point 'symbol)))
       (consult-line sym))))
 
-(use-package consult-flycheck
-  :after consult)
-
 ;;; End consult
 
 (use-package xref

@@ -4,6 +4,9 @@
 
 ;;; Code:
 
+(with-eval-after-load 'prog-mode
+  (add-hook 'prog-mode-hook 'flymake-mode))
+
 ;; Apheleia
 
 (defvar-local apheleia--syntax-tree-stree-location nil)

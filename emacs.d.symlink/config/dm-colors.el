@@ -14,7 +14,8 @@
   :custom
   (line-spacing 0)
   :custom-face
-  (default ((t (:height 140 :width regular :weight regular :family "JetBrains Mono"))))
+  ;; (default ((t (:height 140 :width regular :weight regular :family "Inconsolata Nerd Font Mono"))))
+  (default ((t (:height 140 :width regular :weight regular :family "IBM Plex Mono"))))
   (tab-bar ((t :inherit default :box (:line-width (0 . 8)))))
   )
 

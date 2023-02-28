@@ -8,6 +8,7 @@
 
 (defvar-local my/flymake-eslint-npx-initialized nil)
 (defun my/flymake-eslint-npx (&optional force)
+  "Setup flymake-eslint to use NPX. Optionally FORCE it."
   (if (or force (not my/flymake-eslint-npx-initialized))
       (when (derived-mode-p 'typescript-ts-base-mode 'js-mode)
         (setq my/flymake-eslint-npx-initialized t)

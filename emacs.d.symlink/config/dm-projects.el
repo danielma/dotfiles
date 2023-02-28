@@ -24,6 +24,13 @@
   :config
   (editorconfig-mode 1))
 
+;;; Compile
+
+(defun compile-match-buffer-name-to-command ()
+  ""
+  (interactive)
+  (rename-buffer (concat "*" compile-command "*")))
+
 ;;; Project
 
 (use-package emacs

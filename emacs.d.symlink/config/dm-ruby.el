@@ -1,10 +1,13 @@
 ;;; dm-ruby.el --- -*- lexical-binding: t -*-
 
+;;; Commentary:
+
+;;; Code:
+
 (use-package ruby-mode
   :delight "\ue21e"
   :hook
-  (ruby-base-mode . dm-guard-mode)
-  (ruby-base-mode . flymake-mode))
+  (ruby-base-mode . dm-guard-mode))
 
 (if t
     t
