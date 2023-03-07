@@ -4,7 +4,7 @@
 
 ;;; Code:
 
-(transient-define-prefix flymake-menu ()
+(transient-define-prefix flymake-transient-menu ()
   [:description "Commands"
                 (3 "l" "List" consult-flymake)
                 (3 "n" "Next" flymake-goto-next-error)
@@ -12,7 +12,7 @@
 
 (use-package flymake
   :delight
-  :bind (("C-c !" . flymake-menu)))
+  :bind (("C-c !" . flymake-transient-menu)))
 
 (use-package flymake-posframe
   :straight (:type git :host github :repo "Ladicle/flymake-posframe")

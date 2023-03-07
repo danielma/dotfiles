@@ -4,7 +4,7 @@
   :config
   (defvaralias 'js-indent-level 'tab-width))
 
-(use-package add-node-modules-path)
+;; (use-package add-node-modules-path)
 
 (defvar-local my/flymake-eslint-npx-initialized nil)
 (defun my/flymake-eslint-npx (&optional force)

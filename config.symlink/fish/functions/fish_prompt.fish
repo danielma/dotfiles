@@ -2,6 +2,10 @@ function eat_integration
     printf '\e]51;e;A;%s;%s\e\\' "$(printf "%s" "$hostname" | base64)" "$(printf "%s" "$PWD" | base64)"
 end
 
+function vterm_prompt_end
+    vterm_printf '51;A'(whoami)'@'(hostname)':'(pwd)
+end
+
 function fish_prompt
     set -l last_status $status
 
@@ -62,4 +66,5 @@ function fish_prompt
     set -l pwd (prompt_pwd)
 
     echo -nes $prompt_host $cwd $pwd $normal $prompt_status " :" $vcs "\n" $delim " "
+    vterm_prompt_end
 end
