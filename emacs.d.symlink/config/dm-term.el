@@ -16,6 +16,8 @@
   :config
   (advice-add 'vterm :around 'with-editor-advice-around)
   (customize-set-variable 'vterm-keymap-exceptions (append vterm-keymap-exceptions '("M-h" "M-j" "M-k" "M-l")))
+  :bind (:map vterm-mode-map
+              ("C-c C-c" . vterm-send-C-c))
   )
 
 (declare-function vterm "vterm")

@@ -63,5 +63,4 @@
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-base-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
   )
 
-
 (provide 'dm-prog)

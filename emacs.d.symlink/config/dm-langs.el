@@ -22,5 +22,7 @@
   :hook
   (swift-mode . eglot-ensure))
 
+(use-package fish-mode)
+
 (provide 'dm-langs)
 ;;; dm-langs.el ends here

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 arg=$1
-token=$PERSONAL_GITHUB_API_TOKEN
+token=$(yq '."github.com"[0].oauth_token' ~/.config/hub)
 api_request="curl -s -H 'Authorization: token $token'"
 
 eval $api_request https://api.github.com/$arg
