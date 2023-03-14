@@ -15,8 +15,11 @@
   (line-spacing 0)
   :custom-face
   ;; (default ((t (:height 140 :width regular :weight regular :family "Inconsolata Nerd Font Mono"))))
-  (default ((t (:height 140 :width regular :weight regular :family "IBM Plex Mono"))))
+  (default ((t (:height 140 :width regular :weight regular))))
   (tab-bar ((t :inherit default :box (:line-width (0 . 8)))))
+  :config
+  (set-frame-font "Iosevka Nerd Font")
+  ;; (face-attribute 'default :family)
   )
 
 ;; (load-theme 'modus-operandi)
