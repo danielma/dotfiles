@@ -17,11 +17,19 @@
   (advice-add 'vterm :around 'with-editor-advice-around)
   (customize-set-variable 'vterm-keymap-exceptions (append vterm-keymap-exceptions '("M-h" "M-j" "M-k" "M-l")))
   :bind (:map vterm-mode-map
-              ("C-c C-c" . vterm-send-C-c))
+              ("C-c C-c" . vterm-send-C-c)
+              ("s-v" . vterm-yank-with-clipboard))
   )
 
 (declare-function vterm "vterm")
+(declare-function vterm-yank "vterm")
 (defvar vterm-buffer-name)
+
+(defun vterm-yank-with-clipboard ()
+  "Vterm Yank from the system clipboard."
+  (interactive)
+  (let ((select-enable-clipboard t))
+    (vterm-yank)))
 
 ;; (with-eval-after-load 'vterm
 ;;   (with-eval-after-load 'evil
