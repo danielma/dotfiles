@@ -30,10 +30,11 @@
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-init (seq-difference evil-collection-mode-list '(rg (custom cus-edit))))
+  (evil-collection-init (seq-difference evil-collection-mode-list '(rg (custom cus-edit) vterm)))
   (evil-set-initial-state 'rg-mode 'emacs)
   (evil-set-initial-state 'Custom-mode 'emacs)
-  (evil-set-initial-state 'eat-mode 'emacs))
+  (evil-set-initial-state 'eat-mode 'emacs)
+  (evil-set-initial-state 'vterm-mode 'emacs))
 
 ;; (use-package evil-textobj-tree-sitter
 ;;   :after evil

@@ -7,8 +7,16 @@
 ;;; Buffers
 
 (defadvice save-buffer (before save-buffer-always activate)
-  "always save buffer"
+  "Always save buffer."
   (set-buffer-modified-p t))
+
+;; https://stackoverflow.com/a/3417473
+(defun kill-other-buffers ()
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer
+        (delq (current-buffer)
+              (buffer-list))))
 
 ;;; Windmove
 

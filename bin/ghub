@@ -1,9 +1,14 @@
 #!/bin/bash
 
-arg=$1
+args=$@
 token=$(yq '."github.com"[0].oauth_token' ~/.config/hub)
-api_request="curl -s -H 'Authorization: token $token'"
+api_request() {
+    curl -H Authorization:\ token\ $token $@
+}
 
-eval $api_request https://api.github.com/$arg
-
+if [[ "$args" =~ \ |\' ]]; then
+    api_request $args
+else
+    api_request https://api.github.com/$1
+fi
 

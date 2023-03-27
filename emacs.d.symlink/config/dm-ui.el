@@ -55,7 +55,8 @@
 
 (use-package xref
   :custom
-  (xref-show-definitions-function 'consult-xref))
+  (xref-show-definitions-function 'consult-xref)
+  (xref-show-xrefs-function 'consult-xref))
 
 (use-package marginalia
   :config
@@ -66,8 +67,8 @@
   :config
   (which-key-mode))
 
-(use-package dired-sidebar
-  :bind (("C-s-s" . dired-sidebar-toggle-sidebar)))
+;; (use-package dired-sidebar
+;;   :bind (("C-s-s" . dired-sidebar-toggle-sidebar)))
 
 (use-package origami
   :disabled
