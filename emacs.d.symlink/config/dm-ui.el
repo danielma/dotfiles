@@ -16,6 +16,7 @@
                           ((derived-mode . magit-mode) . nil)
                           (t . (display-buffer-same-window))))
   (indent-tabs-mode nil)
+  (compilation-scroll-output t)
   :bind (:map global-map
               ("s-=" . global-text-scale-adjust-by-two)
               ("s--" . global-text-scale-adjust-by-two)

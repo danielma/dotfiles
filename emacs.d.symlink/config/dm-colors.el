@@ -23,6 +23,7 @@
   )
 
 ;; (load-theme 'modus-operandi)
+;; (use-package ef-themes)
 
 (if t
     t
