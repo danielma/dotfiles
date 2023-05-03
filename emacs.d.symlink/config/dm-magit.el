@@ -37,6 +37,16 @@
     (magit-checkout "main")
     (magit-pull-from-upstream '())))
 
+(defun my/git-rebase-onto-main ()
+  "Rebase the current branch onto origin/main."
+  (interactive)
+  (if (accept-process-output
+       (magit-fetch-branch "origin" "main" nil)
+       10 ;; timeout
+       )
+      (magit-rebase-branch "origin/main" '("-i" "--autosquash"))
+    ))
+
 (if t
     t
 
@@ -64,15 +74,6 @@
      10 ;; timeout
      )
     (magit-rebase-branch "origin/master" '("-i" "--autosquash")))
-
-  (defun my/git-rebase-onto-main ()
-    "Rebase the current branch onto origin/main."
-    (interactive)
-    (accept-process-output
-     (magit-fetch-branch "origin" "main" nil)
-     10 ;; timeout
-     )
-    (magit-rebase-branch "origin/main" '("-i" "--autosquash")))
 
   (use-package magit
     :custom
