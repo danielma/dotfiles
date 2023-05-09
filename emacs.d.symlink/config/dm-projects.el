@@ -1,15 +1,25 @@
 ;;; dm-projects.el --- -*- lexical-binding: t -*-
 
+;;; Commentary:
+
+;;; Code:
+
 (dir-locals-set-class-variables
  'people '((ruby-mode . ((apheleia--syntax-tree-single-quotes . nil)))))
 
 (dir-locals-set-directory-class "~/Code/people" 'people)
+
+(defun my/rg-mode-setup ()
+  (setq-local compilation-scroll-output nil)
+  )
 
 (use-package rg
   :init
   (rg-enable-default-bindings)
   :custom
   (rg-custom-type-aliases '(("yuh" . "*")))
+  :hook
+  (rg-mode . my/rg-mode-setup)
   :config
   (rg-define-search rg-project-simple-literal "Simple Literal"
     :format literal
