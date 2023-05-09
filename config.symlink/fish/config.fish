@@ -31,11 +31,6 @@ source ~/.dotfiles/config.symlink/fish/work.fish
 
 source ~/.asdf/asdf.fish
 
-if set -q INSIDE_EMACS
-else
-    set --export EDITOR "emacsclient -t"
-end
-
 # Path
 
 fish_add_path ~/.dotfiles/bin

@@ -1,5 +1,3 @@
-#!/bin/sh
-#
 # Quick shortcut to an editor.
 #
 # This means that as I travel back and forth between editors, hey, I don't have
@@ -14,8 +12,16 @@
 #   $ e /usr/local
 #   # => opens the specified directory in your editor
 
-if [ "$1" = "" ] ; then
-  eval "$EDITOR ."
-else
-  eval "$EDITOR $1"
-fi
+function e --description 'Edit a file or the current directory'
+    if string match -qe emacsclient "$EDITOR"
+        set editor_cmd "$EDITOR -n"
+    else
+        set editor_cmd "$EDITOR"
+    end
+
+    if set -q argv[1]
+        eval "$editor_cmd $argv[1]"
+    else
+        eval "$editor_cmd ."
+    end
+end
