@@ -26,8 +26,9 @@
       (with-project-default-directory (apply orig-fun args))
     (apply orig-fun args)))
 
+
 (use-package apheleia
-  :delight " \uf789"
+  :delight " \U000f0276"
   :config
   (apheleia-global-mode)
   (advice-add 'apheleia--make-process :around '--with-project-default-directory)
