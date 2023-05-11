@@ -66,15 +66,15 @@
   (interactive)
   (if (derived-mode-p 'eat-mode 'vterm-mode)
       (previous-buffer)
-    (let* ((bufname (if (project-name)
-                        (concat (s-chop-right 1 vterm-buffer-name) "-" (project-name) "*")
+    (let* ((project (project-current nil))
+           (project-name (project-name project))
+           (bufname (if (project-name project)
+                        (concat (s-chop-right 1 vterm-buffer-name) "-" project-name "*")
                       vterm-buffer-name))
            (existing-buffer (get-buffer bufname)))
-      (if existing-buffer (display-buffer existing-buffer) (vterm bufname)))))
-;; (let ((eat-buffer (get-buffer (and (boundp 'eat-buffer-name) eat-buffer-name))))
-;;   (if eat-buffer
-;;       (display-buffer eat-buffer)
-;;     (eat)))))
+      (if existing-buffer (display-buffer existing-buffer)
+        (let ((default-directory (project-root project)))
+          (vterm bufname))))))
 
 (use-package emacs
   :bind (:map global-map

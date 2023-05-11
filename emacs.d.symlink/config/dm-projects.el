@@ -48,12 +48,8 @@
               ("t" . #'project-find-test-or-implementation)
               ("T" . #'project-find-test-or-implementation-other-window)))
 
-(defun project-name (&optional project)
-  "Get the name of PROJECT."
-  (let ((project (or project (project-current nil))))
-    (if project
-        (let ((root (project-root project)))
-          (file-name-nondirectory (directory-file-name root))))))
+(add-to-list 'project-switch-commands '(switch-to-term "VTerm" ?t))
+(add-to-list 'project-switch-commands '(rg-project-simple-literal "RG" ?g))
 
 ;; useful from Projectile
 (defun project-verify-file (file)
