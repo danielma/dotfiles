@@ -18,7 +18,7 @@
   (default ((t (:height 140 :width regular :weight regular))))
   (tab-bar ((t :inherit default :box (:line-width (0 . 8)))))
   :config
-  (set-frame-font "Iosevka Nerd Font")
+  (set-frame-font "Iosevka Nerd Font Mono")
   ;; (face-attribute 'default :family)
   )
 

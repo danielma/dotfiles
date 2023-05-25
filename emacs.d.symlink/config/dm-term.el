@@ -67,13 +67,13 @@
   (if (derived-mode-p 'eat-mode 'vterm-mode)
       (previous-buffer)
     (let* ((project (project-current nil))
-           (project-name (project-name project))
-           (bufname (if (project-name project)
+           (project-name (and project (project-name project)))
+           (bufname (if project-name
                         (concat (s-chop-right 1 vterm-buffer-name) "-" project-name "*")
                       vterm-buffer-name))
            (existing-buffer (get-buffer bufname)))
       (if existing-buffer (display-buffer existing-buffer)
-        (let ((default-directory (project-root project)))
+        (let ((default-directory (if project (project-root project) default-directory)))
           (vterm bufname))))))
 
 (use-package emacs
@@ -81,7 +81,7 @@
               ("s-T" . switch-to-term)))
 
 (use-package ansi-color
-  :hook (compilation-filter . ansi-color-compilation-filter)) 
+  :hook (compilation-filter . ansi-color-compilation-filter))
 
 (provide 'dm-term)
 

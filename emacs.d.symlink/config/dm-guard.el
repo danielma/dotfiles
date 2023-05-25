@@ -130,7 +130,7 @@
            'already-running
          (setq dm-guard--currently-running-test line-command)
          (let ((buf (--dm-guard-ensure-async-shell-buffer)))
-           (or (get-buffer-window buf)
+           (or (get-buffer-window buf 'visible)
                (display-buffer-in-side-window buf '((side . right) (window-width . 0.2))))
            (with-current-buffer buf
              (if dm-guard-async-shell-process (delete-process dm-guard-async-shell-process))
@@ -161,7 +161,8 @@
          (test-cmd (cond
                     ((string-match ".js$" file-name) "yarn run test --colors")
                     ((string-match ".ts$" file-name) "yarn run test --colors")
-                    ((eq project-type 'rails-rspec) (concat "bin/spring " (--dm-guard-rspec-test-command)))
+                    ;; ((eq project-type 'rails-rspec) (concat "bin/spring " (--dm-guard-rspec-test-command)))
+                    ((eq project-type 'rails-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'ruby-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'rubygem) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'rails-test) "bin/rails test")

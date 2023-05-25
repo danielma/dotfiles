@@ -1,5 +1,11 @@
 ;;-*-coding: utf-8;-*-
-(define-abbrev-table 'ruby-mode-abbrev-table
+(define-abbrev-table 'global-abbrev-table
+  '(
+    ("Scoto" "ScopedToOrganization" nil :count 0)
+    ("orgn" "organization" nil :count 1)
+   ))
+
+(define-abbrev-table 'ruby-base-mode-abbrev-table
   '(
     ("AR::" "ActiveRecord::" nil :count 0)
     ("AS::" "ActiveSupport::" nil :count 0)
@@ -8,5 +14,11 @@
     ("ass" "assert" nil :count 0)
     ("dsc" "described_class" nil :count 0)
     ("sbj" "subject" nil :count 0)
+   ))
+
+(define-abbrev-table 'web-mode-abbrev-table
+  '(
+    ("tp" "<%=" nil :count 0)
+    ("tt" "<%" nil :count 0)
    ))
 

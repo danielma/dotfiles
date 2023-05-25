@@ -2,4 +2,4 @@
 # name: tap tap
 # key: taptap
 # --
-tap { |x| ap(__method__ => x${1:.to_sql}) }$0
+tap { |x| pp(__method__ => x${1:.to_sql}) }$0

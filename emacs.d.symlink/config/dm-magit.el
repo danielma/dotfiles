@@ -40,12 +40,8 @@
 (defun my/git-rebase-onto-main ()
   "Rebase the current branch onto origin/main."
   (interactive)
-  (if (accept-process-output
-       (magit-fetch-branch "origin" "main" nil)
-       10 ;; timeout
-       )
-      (magit-rebase-branch "origin/main" '("-i" "--autosquash"))
-    ))
+  (magit-process-git nil "fetch" "origin" "main")
+  (magit-rebase-branch "origin/main" '("-i" "--autosquash")))
 
 (if t
     t

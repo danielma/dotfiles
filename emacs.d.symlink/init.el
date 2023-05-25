@@ -123,7 +123,10 @@
      (apheleia--syntax-tree-single-quotes nil)
      (eval when
            (fboundp 'rainbow-mode)
-           (rainbow-mode 1)))))
+           (rainbow-mode 1))))
+ '(warning-suppress-log-types
+   '(((defvaralias losing-value js-indent-level))
+     ((defvaralias losing-value emmet-indentation)))))
 (put 'narrow-to-region 'disabled nil)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

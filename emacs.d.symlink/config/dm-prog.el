@@ -28,7 +28,7 @@
 
 
 (use-package apheleia
-  :delight " \U000f0276"
+  :delight "\U000f0276"
   :config
   (apheleia-global-mode)
   (advice-add 'apheleia--make-process :around '--with-project-default-directory)
@@ -58,6 +58,8 @@
   :delight
   :init
   (require 'smartparens-config)
+  :custom
+  (sp-ignore-modes-list '(minibuffer-mode minibuffer-inactive-mode web-mode))
   :config
   (smartparens-global-mode)
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-base-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
