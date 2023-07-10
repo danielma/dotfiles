@@ -11,6 +11,7 @@
 (use-package magit
   :custom
   (git-commit-major-mode 'markdown-mode)
+  (magit-list-refs-sortby "-committerdate")
   :bind (("C-c g" . magit-file-dispatch))
   :hook
   (git-commit-setup . my/commit-mode-setup))

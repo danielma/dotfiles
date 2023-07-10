@@ -22,7 +22,7 @@
   ;;   )
   :custom
   (tab-bar-new-tab-choice "*scratch*")
-  (tab-bar-show t)
+  (tab-bar-show 1)
   (tab-bar-new-button-show nil)
   (tab-bar-close-button-show nil)
   (tab-bar-tab-name-function 'dm-tab-bar-name)
@@ -31,11 +31,11 @@
   :config
   (tab-bar-mode)
   )
-  ;; :bind (:map global-map
-  ;; 	 ("s-t" . tab-bar-new-tab)
-  ;; 	 ("s-w" . tab-bar-close-tab)
-  ;; 	 ("s-{" . tab-bar-switch-to-prev-tab)
-  ;; 	 ("s-}" . tab-bar-switch-to-next-tab)))
+;; :bind (:map global-map
+;; 	 ("s-t" . tab-bar-new-tab)
+;; 	 ("s-w" . tab-bar-close-tab)
+;; 	 ("s-{" . tab-bar-switch-to-prev-tab)
+;; 	 ("s-}" . tab-bar-switch-to-next-tab)))
 
 (provide 'dm-tabs)
 

@@ -193,9 +193,10 @@
          ((string-match "^app/views" file-name) nil)
          ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
           (let* ((graph-dir (match-string 1 file-name))
-                 (vertex-name (match-string 2 file-name))
-                 (graph-test-dir (or (and (string-equal graph-dir "app_graph") "") "church_center")))
-            (concat "test/integration/pco/api/" graph-dir "/" (dm-guard--pluralize vertex-name) "_test.rb")))
+                 (vertex-name (match-string 2 file-name)))
+            (if spec-mode
+                (concat "spec/graphs/" graph-dir "/latest/vertices/" vertex-name "_vertex_spec.rb")
+              (concat "test/integration/pco/api/" graph-dir "/" (dm-guard--pluralize vertex-name) "_test.rb"))))
          ((string-match "^app/graphs/\\(.+\\).rb$" file-name)
           (if spec-mode
               (concat "spec/requests/graphs/" (match-string 1 file-name) "_spec.rb")
@@ -239,7 +240,7 @@
 (define-minor-mode dm-guard-mode
   "Use emamux to test after saving a file."
   :init-value nil
-  :lighter " \uf132"
+  :lighter "\uf132"
   :map dm-guard-mode-map
   (cond ((bound-and-true-p dm-guard-mode)
          (add-hook 'after-save-hook #'dm-guard-test t t))

@@ -6,7 +6,7 @@
 
 ;;; Buffers
 
-(defadvice save-buffer (before save-buffer-always activate)
+(defadvice evil-write (before save-buffer-always activate)
   "Always save buffer."
   (set-buffer-modified-p t))
 
@@ -54,7 +54,11 @@
 
 (use-package dumb-jump
   :init
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  :custom
+  ;; I'd love to remove this, but it has to stay for now
+  (dumb-jump-force-searcher 'rg)
+  )
 
 (defun delete-this-file ()
   "Deletes the active buffer file."

@@ -16,8 +16,10 @@
   (prescient-persist-mode +1))
 
 (use-package vertico
-  :config
+  :init
   (vertico-mode))
+
+(add-to-list 'load-path (straight--build-dir "vertico/extensions"))
 
 (use-package orderless
   :ensure t
@@ -27,6 +29,7 @@
   (orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex)))
 
 (use-package vertico-posframe
+  :after vertico
   :config
   (vertico-posframe-mode 1)
   :custom
