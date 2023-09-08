@@ -8,18 +8,21 @@
   ;; Custom doesn't work with evil _for some reason_
   :init
   (setq evil-disable-insert-state-bindings t
+        evil-default-state 'emacs
 	      evil-echo-state nil
 	      evil-symbol-word-search t
 	      evil-undo-system 'undo-tree
 	      evil-want-integration t
 	      evil-want-keybinding nil
 	      evil-mode-line-format '(before . mode-line-plz-put-evil-tag-here)
+        evil-lookup-func 'eldoc-doc-buffer
 
         evil-normal-state-tag "N"
         evil-emacs-state-tag "E"
         evil-insert-state-tag "I")
   :config
   (evil-mode 1)
+  (evil-set-initial-state 'prog-mode 'normal)
   :bind (:map evil-normal-state-map
               ("k" . evil-previous-visual-line)
               ("j" . evil-next-visual-line)
@@ -30,10 +33,12 @@
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-init (seq-difference evil-collection-mode-list '(rg (custom cus-edit) vterm)))
+  (evil-collection-init `(dired (magit magit-repos magit-submodule) magit-section magit-todos)) ; (seq-difference evil-collection-mode-list '(rg (custom cus-edit) vterm embark)))
   (evil-set-initial-state 'rg-mode 'emacs)
   (evil-set-initial-state 'Custom-mode 'emacs)
   (evil-set-initial-state 'eat-mode 'emacs)
+  (evil-set-initial-state 'embark-collect-mode 'emacs)
+  (evil-set-initial-state 'special-mode 'emacs)
   (evil-set-initial-state 'vterm-mode 'emacs))
 
 ;; (use-package evil-textobj-tree-sitter

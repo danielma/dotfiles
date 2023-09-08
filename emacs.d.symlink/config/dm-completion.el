@@ -3,18 +3,6 @@
 
 ;;; Code:
 
-(use-package selectrum
-  :disabled
-  :config
-  (selectrum-mode +1))
-
-(use-package selectrum-prescient
-  :disabled
-  :after selectrum
-  :config
-  (selectrum-prescient-mode +1)
-  (prescient-persist-mode +1))
-
 (use-package vertico
   :init
   (vertico-mode))
@@ -36,6 +24,13 @@
   (vertico-posframe-border-width 1)
   (vertico-posframe-parameters '((left-fringe . 4) (right-fringe . 4)))
   (vertico-posframe-poshandler #'posframe-poshandler-frame-top-center))
+
+(use-package embark
+  :bind (:map minibuffer-mode-map ("C-." . embark-act)))
+
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package mini-frame
   :disabled
@@ -61,6 +56,7 @@ Taken from https://github.com/syl20bnr/spacemacs/pull/179."
             '(:with company-yasnippet))))
 
 (use-package company
+  :disabled
   :after (delight yasnippet)
   :delight
   :custom
@@ -73,6 +69,47 @@ Taken from https://github.com/syl20bnr/spacemacs/pull/179."
   (global-company-mode)
   ;; add yasnippet to all backends
   (setq company-backends (mapcar #'mars/company-backend-with-yas company-backends)))
+
+
+(use-package corfu
+  :init
+  (global-corfu-mode)
+  :custom
+  (corfu-auto t)
+  :bind
+  (:map global-map
+        ("C-'" . completion-at-point)
+        :map corfu-map
+        ("SPC" . corfu-insert-separator)
+        ("C-n" . corfu-next)
+        ("C-p" . corfu-previous)))
+
+;; ;; Part of corfu
+;; (use-package corfu-popupinfo
+;;   :after corfu
+;;   :hook (corfu-mode . corfu-popupinfo-mode)
+;;   :custom
+;;   (corfu-popupinfo-delay '(0.25 . 0.1))
+;;   (corfu-popupinfo-hide nil)
+;;   :config
+;;   (corfu-popupinfo-mode))
+
+;; Make corfu popup come up in terminal overlay
+(use-package corfu-terminal
+  :if (not (display-graphic-p))
+  :ensure t
+  :config
+  (corfu-terminal-mode))
+
+;; Pretty icons for corfu
+(use-package kind-icon
+  :if (display-graphic-p)
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+
 
 (if t
     t

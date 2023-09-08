@@ -89,7 +89,8 @@
   (let* ((test-cmd (--dm-guard-test-command))
          (test-name (--dm-guard-test-name)))
     (if test-name
-        (--dm-guard-clear-and-run test-cmd test-name))))
+        (--dm-guard-clear-and-run test-cmd test-name)
+      (message "No suitable test file found for %s" (current-buffer)))))
 
 (defun dm-guard-test-line ()
   "Use tmux to execute the test on the current line."
@@ -159,8 +160,7 @@
          (file-path (buffer-file-name dm-guard-manual-test-buffer))
          (file-name (file-relative-name file-path (project-root (project-current))))
          (test-cmd (cond
-                    ((string-match ".js$" file-name) "yarn run test --colors")
-                    ((string-match ".ts$" file-name) "yarn run test --colors")
+                    ((--dm-guard-js-file-p file-name) "yarn run test --colors")
                     ;; ((eq project-type 'rails-rspec) (concat "bin/spring " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'rails-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'ruby-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
@@ -175,9 +175,13 @@
   "Is the BUFFER a test or implementation?."
   (let* ((file-path (buffer-file-name buffer)))
     (cond
-     ((string-match "\\(_\\|.\\)test.\\(rb\\|js\\|ts\\)$" file-path) t)
+     ((string-match "\\(_\\|.\\)test.\\(rb\\|\\(j\\|t\\)sx?\\)$" file-path) t)
      ((string-match "_spec.rb$" file-path) t)
      (t nil))))
+
+(defun --dm-guard-js-file-p (file-name)
+  "Check if FILE-NAME is a JS-ish file."
+  (string-match "\\(j\\|t\\)sx?$" file-name))
 
 (defun --dm-guard-test-name ()
   "Generate the test name for a buffer."
@@ -188,8 +192,12 @@
          (file-name (file-relative-name file-path (project-root (project-current)))))
     (cond
      ((eq project-type 'swift-package) "")
+     (is-test-file file-name)
+     ((--dm-guard-js-file-p file-name) (cond
+                                        ((string-match "^app/\\(.+\\).\\(\\(j\\|t\\)sx?\\)$" file-name)
+                                         (concat "spec/" (match-string 1 file-name) ".test." (match-string 2 file-name)))
+                                        (t nil)))
      (t (cond
-         (is-test-file file-name)
          ((string-match "^app/views" file-name) nil)
          ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
           (let* ((graph-dir (match-string 1 file-name))
@@ -247,7 +255,7 @@
         (t
          (remove-hook 'after-save-hook #'dm-guard-test t))))
 
-(use-package emamux)
+;; (use-package emamux)
 
 (provide 'dm-guard)
 ;;; dm-guard.el ends here

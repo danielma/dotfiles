@@ -14,7 +14,7 @@
 	       ("C-x C-:" . comment-line)
 	       :map global-map
          ("M-RET" . tt/expand-at-point)
-	       ("C-:" . execute-extended-command)
+	       ;; ("C-:" . execute-extended-command)
 	       ("C-." . execute-extended-command)
          ("C-h C-f" . find-function)
          ("s-}" . tab-bar-switch-to-next-tab)

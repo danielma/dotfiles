@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
-# name: mocha it
+# name: jest it
 # key: it
 # --
-it("$1", function() {
+it("$1", async () => {
   $0
 })

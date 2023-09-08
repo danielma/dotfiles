@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: destructure
+# key: cds
+# --
+const { $0 } = ${1:var}

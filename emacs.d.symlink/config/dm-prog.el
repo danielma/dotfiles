@@ -54,6 +54,11 @@
   :custom
   (treesit-extra-load-path '("~/Code/test/tree-sitter-module/dist")))
 
+(use-package ts-fold
+  :straight (:host github :repo "AndrewSwerlick/ts-fold" :branch "andrew-sw/treesit-el-support")
+  :config
+  (global-ts-fold-mode))
+
 (use-package smartparens
   :delight
   :init
@@ -65,5 +70,12 @@
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-base-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-base-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
   )
+
+(use-package avy
+  :bind (:map global-map
+              ("C-:" . avy-goto-char-timer)
+              ("M-g w" . avy-goto-word-1)
+              :map isearch-mode-map
+              ("C-'" . avy-isearch)))
 
 (provide 'dm-prog)

@@ -11,6 +11,10 @@
   (yas-triggers-in-field t)
   )
 
+;; (use-package yasnippet-capf
+;;   :config
+;;   (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+
 (defun add-yas-extra-modes ()
   ;; (if (string= "erb" web-mode-engine)
   ;;     (add-to-list 'yas--extra-modes 'html-erb-mode)
