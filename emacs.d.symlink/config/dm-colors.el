@@ -19,6 +19,7 @@
   (tab-bar ((t :inherit default :box (:line-width (0 . 8)))))
   :config
   (set-frame-font "Iosevka Nerd Font Mono")
+  ;; (set-frame-font "JetBrains Mono")
   ;; (face-attribute 'default :family)
   )
 

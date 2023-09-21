@@ -70,7 +70,6 @@ Taken from https://github.com/syl20bnr/spacemacs/pull/179."
   ;; add yasnippet to all backends
   (setq company-backends (mapcar #'mars/company-backend-with-yas company-backends)))
 
-
 (use-package corfu
   :init
   (global-corfu-mode)
@@ -83,6 +82,10 @@ Taken from https://github.com/syl20bnr/spacemacs/pull/179."
         ("SPC" . corfu-insert-separator)
         ("C-n" . corfu-next)
         ("C-p" . corfu-previous)))
+
+(use-package dabbrev
+  :bind (("M-/" . dabbrev-completion)
+         ("C-M-/" . dabbrev-expand)))
 
 ;; ;; Part of corfu
 ;; (use-package corfu-popupinfo

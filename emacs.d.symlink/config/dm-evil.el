@@ -24,6 +24,7 @@
   (evil-mode 1)
   (evil-set-initial-state 'prog-mode 'normal)
   (evil-set-initial-state 'text-mode 'normal)
+  (evil-set-initial-state 'git-commit-mode 'insert)
   :bind (:map evil-normal-state-map
               ("k" . evil-previous-visual-line)
               ("j" . evil-next-visual-line)
