@@ -9,6 +9,39 @@
   (let ((select-enable-clipboard t))
     (yank)))
 
+;;; 
+;;; C-x t C-f				find-file-other-tab
+;;; C-x t RET				tab-switch
+;;; C-x t C-r				find-file-read-only-other-tab
+;;; C-x t 0					tab-close
+;;; C-x t 1					tab-close-other
+;;; C-x t 2					tab-new
+;;; C-x t G					tab-group
+;;; C-x t M					tab-move-to
+;;; C-x t N					tab-new-to
+;;; C-x t O					tab-previous
+;;; C-x t b					switch-to-buffer-other-tab
+;;; C-x t d					dired-other-tab
+;;; C-x t f					find-file-other-tab
+;;; C-x t m					tab-move
+;;; C-x t n					tab-duplicate
+;;; C-x t o					tab-next
+;;; C-x t p					project-other-tab-command
+;;; C-x t r					tab-rename
+;;; C-x t t					other-tab-prefix
+;;; C-x t u					tab-undo
+;;; 
+;;; C-x t ^ f				tab-detach
+
+(transient-define-prefix tab-bar-transient-menu ()
+  [("RET" "Switch" tab-switch)
+   ("N" "New" tab-new)
+   ("n" "Next" tab-next :transient t)
+   ("p" "Previous" tab-previous :transient t)
+   ("q" "Quit" transient-quit-one)
+   ("x" "Close" tab-close)
+   ])
+
 (use-package emacs
   :bind (
 	       ("C-x C-:" . comment-line)
@@ -28,6 +61,7 @@
          ("C-x w <right>" . windmove-right)
          ("C-x w <up>" . windmove-up)
          ("C-x w <down>" . windmove-down)
+         ("C-x t" . tab-bar-transient-menu)
 	       )
   :custom (select-enable-clipboard . nil))
 
