@@ -43,7 +43,15 @@
 
 ;;; Project
 
+(defun project-around-project-remember-project (orig-fun &rest args)
+  "Wrap ORIG-FUN to add ignore logic."
+  (let ((project (car args)))
+    (print (project-root project))
+    (apply orig-fun args)))
+
 (use-package emacs
+  :config
+  (advice-add 'project-remember-project :around 'project-around-project-remember-project)
   :bind (:map project-prefix-map
               ("t" . #'project-find-test-or-implementation)
               ("T" . #'project-find-test-or-implementation-other-window)))

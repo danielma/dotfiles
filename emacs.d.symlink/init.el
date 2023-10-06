@@ -66,6 +66,7 @@
 (require 'dm-mode-line)
 (require 'dm-projects)
 (require 'dm-projectile-rails)
+(require 'dm-remote-repositories)
 (require 'dm-ruby)
 (require 'dm-tabs)
 (require 'dm-text)

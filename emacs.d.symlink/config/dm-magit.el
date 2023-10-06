@@ -21,6 +21,8 @@
 
 (use-package browse-at-remote
   :after magit
+  :custom
+  (browse-at-remote-prefer-symbolic nil)
   :config
   (advice-add 'browse-at-remote-kill :around #'with-select-clipboard))
 
