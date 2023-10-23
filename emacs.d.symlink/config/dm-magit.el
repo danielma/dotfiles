@@ -37,7 +37,7 @@
   
   (if (magit-changed-files "HEAD")
       (message "Can't switch. You have changes!")
-    (magit-checkout "main")
+    (magit-process-git nil "checkout" "main")
     (magit-pull-from-upstream '())))
 
 (defun my/git-rebase-onto-main ()
