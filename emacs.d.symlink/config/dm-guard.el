@@ -215,7 +215,7 @@
             (concat "test/" (match-string 1 file-name) "_test.rb")))
          ((string-match "^lib/\\(.+\\).rb$" file-name)
           (if spec-mode
-              (concat "spec/" (match-string 1 file-name) "_spec.rb")
+              (concat "spec/lib/" (match-string 1 file-name) "_spec.rb")
             (concat "test/" (match-string 1 file-name) "_test.rb")))
          ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
           (concat "test/models/" (dm-guard--singularize (match-string 1 file-name)) "_test.rb"))

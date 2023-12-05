@@ -45,6 +45,8 @@
   (push '(tsx-ts-mode . eslint) apheleia-mode-alist)
   (setf (alist-get 'ruby-base-mode apheleia-mode-alist)
         '(syntax-tree))
+  (setf (alist-get 'ruby-ts-mode apheleia-mode-alist)
+        '(syntax-tree))
   (setf (alist-get 'js-mode apheleia-mode-alist)
         '(eslint)))
 
@@ -55,6 +57,7 @@
   (treesit-extra-load-path '("~/Code/test/tree-sitter-module/dist")))
 
 (use-package ts-fold
+  :delight
   :straight (:host github :repo "AndrewSwerlick/ts-fold" :branch "andrew-sw/treesit-el-support")
   :config
   (global-ts-fold-mode))

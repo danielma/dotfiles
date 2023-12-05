@@ -10,9 +10,23 @@
                 (3 "n" "Next" flymake-goto-next-error)
                 (3 "p" "Prev" flymake-goto-prev-error)])
 
+(defun ruby-flymake-rubocop--with-gemfile-lock (orig-fun &rest args)
+  "Wrap around ORIG-FUN with ARGS to check Gemfile.lock for Rubocop."
+  (let* ((dir (car args))
+         (lock (expand-file-name "Gemfile.lock" dir)))
+    (or
+     (and (file-exists-p lock)
+          (with-temp-buffer
+            (insert-file-contents lock)
+            (re-search-forward "^ *rubocop ([[:digit:]]" nil t)))
+     (apply orig-fun args))))
+
 (use-package flymake
   :delight
-  :bind (("C-c !" . flymake-transient-menu)))
+  :bind (("C-c !" . flymake-transient-menu))
+  :config
+  (advice-add 'ruby-flymake-rubocop--use-bundler-p :around 'ruby-flymake-rubocop--with-gemfile-lock)
+  )
 
 (use-package flymake-posframe
   :straight (:type git :host github :repo "Ladicle/flymake-posframe")
