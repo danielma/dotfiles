@@ -39,7 +39,8 @@
 (defun compile-match-buffer-name-to-command ()
   ""
   (interactive)
-  (rename-buffer (concat "*" compile-command "*")))
+  (let ((prefix (if (project-current) (concat "<" (project-name (project-current)) ">") "")))
+    (rename-buffer (concat prefix "*" compile-command "*"))))
 
 ;;; Project
 

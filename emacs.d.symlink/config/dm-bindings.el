@@ -52,6 +52,8 @@
          ("C-h C-f" . find-function)
          ("s-}" . tab-bar-switch-to-next-tab)
          ("s-{" . tab-bar-switch-to-prev-tab)
+         ("s-[" . previous-buffer)
+         ("s-]" . next-buffer)
          ("s-v" . yank-with-clipboard)
          ("M-j" . windmove-down)
          ("M-k" . windmove-up)
