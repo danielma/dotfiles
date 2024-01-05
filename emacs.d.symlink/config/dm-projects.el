@@ -36,11 +36,15 @@
 
 ;;; Compile
 
-(defun compile-match-buffer-name-to-command ()
+(defun compile-match-buffer-name-to-command (&rest _process)
   ""
   (interactive)
   (let ((prefix (if (project-current) (concat "<" (project-name (project-current)) ">") "")))
     (rename-buffer (concat prefix "*" compile-command "*"))))
+
+(with-eval-after-load 'compile
+  (add-hook 'compilation-start-hook 'compile-match-buffer-name-to-command)
+  )
 
 ;;; Project
 
