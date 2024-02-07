@@ -1,5 +1,7 @@
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 
+;;; Code:
+
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(swift-mode . ("sourcekit-lsp")))
   )

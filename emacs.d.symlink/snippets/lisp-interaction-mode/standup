@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: standup
+# key: 
+# --
+📋 ${1:what your plans are for today}
+🤝 ${2:what's blocked and where could you use pairing or help}
+ℹ️ ${3:anything else you want the team to know}
