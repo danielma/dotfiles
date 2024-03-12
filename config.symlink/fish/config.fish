@@ -1,3 +1,10 @@
+# Path
+
+fish_add_path /opt/homebrew/bin
+fish_add_path ~/.dotfiles/bin
+fish_add_path ~/.cargo/bin
+fish_add_path (go env GOPATH)/bin
+
 # Moving around
 
 zoxide init fish --cmd c | source
@@ -32,8 +39,3 @@ source ~/.dotfiles/config.symlink/fish/work.fish
 # Dev
 
 source ~/.asdf/asdf.fish
-
-# Path
-
-fish_add_path ~/.dotfiles/bin
-fish_add_path ~/.cargo/bin
