@@ -297,7 +297,8 @@ class Spotify {
   }
 
   private func addToLibrary(_ track: Track) -> JSONResponse {
-    return apiRequest("me/tracks?ids=\(track.id)", method: .PUT)
+    let body = try! JSONEncoder().encode(["ids": [track.id]])
+    return apiRequest("me/tracks", method: .PUT, body: body)
   }
 
   func saveToLibrary() -> JSONResponse {
