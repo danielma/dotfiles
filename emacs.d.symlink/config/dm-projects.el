@@ -40,8 +40,9 @@
   ""
   (interactive)
   (if (eq major-mode 'compilation-mode)
-      (let ((prefix (if (project-current) (concat "<" (project-name (project-current)) ">") "")))
-        (rename-buffer (concat prefix "*" compile-command "*")))))
+      (let ((prefix (if (project-current) (concat "<" (project-name (project-current)) ">") ""))
+            (command (if compilation-arguments (car compilation-arguments) compile-command)))
+        (rename-buffer (concat prefix "*" command "*")))))
 
 (with-eval-after-load 'compile
   (add-hook 'compilation-start-hook 'compile-match-buffer-name-to-command)
