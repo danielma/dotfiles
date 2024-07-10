@@ -1,24 +1,17 @@
-(use-package org-alert
-  :disabled
-  :config
-  (setq alert-default-style 'notifier
-        alert-fade-time 0))
+;;; dm-org --- org setup
 
-(use-package org
-  :config
-  (setq org-directory "~/Dropbox/org"
-        org-refile-targets '((org-agenda-files :maxlevel . 2))
-        org-todo-keywords (quote ((sequence "TODO(t)" "DONE(d)")))
-        org-outline-path-complete-in-steps nil
-        org-refile-use-outline-path t
-        org-agenda-timegrid-use-ampm t
-        org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
-              "* TODO %?\n  %i\n  %a")
-          ("j" "Journal" entry (file+olp+datetree "~/Dropbox/org/journal.org")
-           "* %?\nEntered on %U\n  %i\n  %a")))
-  :bind (:map base-leader-map
-              ("oa" . org-agenda)
-  ))
+;;; Commentary:
+
+;;; Code:
+
+(use-package inf-ruby)
+(use-package org)
+(use-package org-babel
+  :after org
+  :custom
+  (org-confirm-babel-evaluate nil)
+  )
 
 (provide 'dm-org)
+
+;;; dm-org.el ends here

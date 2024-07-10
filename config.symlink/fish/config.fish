@@ -20,7 +20,6 @@ set --export XDG_CONFIG_HOME ~/.config
 # FZF
 
 set --export FZF_DEFAULT_OPTS '--cycle --layout=reverse --border --height=90% --preview-window=wrap --color 16,bg+:8,fg+:6,hl+:11,hl:11,border:245'
-set --export FZF_DEFAULT_COMMAND 'rg --files'
 
 fzf_configure_bindings --directory=\ct \
     --git_log= \
