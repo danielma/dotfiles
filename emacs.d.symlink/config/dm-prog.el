@@ -57,6 +57,7 @@
   (treesit-extra-load-path '("~/Code/test/tree-sitter-module/dist")))
 
 (use-package ts-fold
+  :disabled
   :delight
   :straight (:host github :repo "AndrewSwerlick/ts-fold" :branch "andrew-sw/treesit-el-support")
   :config
@@ -80,5 +81,7 @@
               ("M-g w" . avy-goto-word-1)
               :map isearch-mode-map
               ("C-'" . avy-isearch)))
+
+(use-package transient)
 
 (provide 'dm-prog)

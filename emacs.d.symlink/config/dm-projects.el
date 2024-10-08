@@ -169,14 +169,14 @@
   (let* ((project (project-current t))
          (root (expand-file-name (project-root project)))
          (hash (make-hash-table :test 'equal)))
-    (loop for (dir re) in dirs do
-          (let ((abs-dir (file-name-concat root dir)))
-            (if (file-exists-p abs-dir)
-                (loop for file in (project-files project (list (file-name-concat root dir))) do
-                      (message "root: %s file: %s" root file)
-                      (let ((rel-file (string-remove-prefix root file)))
-                        (when (string-match re rel-file)
-                          (puthash (match-string 1 rel-file) rel-file hash)))))))
+    (cl-loop for (dir re) in dirs do
+             (let ((abs-dir (file-name-concat root dir)))
+               (if (file-exists-p abs-dir)
+                   (cl-loop for file in (project-files project (list (file-name-concat root dir))) do
+                            (message "root: %s file: %s" root file)
+                            (let ((rel-file (string-remove-prefix root file)))
+                              (when (string-match re rel-file)
+                                (puthash (match-string 1 rel-file) rel-file hash)))))))
     hash))
 
 ;;; End Project

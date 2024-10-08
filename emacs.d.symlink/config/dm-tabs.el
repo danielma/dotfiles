@@ -29,9 +29,9 @@
   (tab-bar-new-button-show nil)
   (tab-bar-close-button-show nil)
   (tab-bar-tab-name-function 'dm-tab-bar-name)
-  (tab-bar-tab-name-format-function 'eli/tab-bar-tab-name-with-svg)
+  ;; (tab-bar-tab-name-format-function 'eli/tab-bar-tab-name-with-svg)
   :custom-face
-  (tab-bar     ((t :inherit default :box (:line-width (0 . 6)))))
+  (tab-bar     ((t :inherit default :box (:line-width 6))))
   :config
   (tab-bar-mode))
 

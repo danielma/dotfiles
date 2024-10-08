@@ -16,30 +16,30 @@
 
 (require 'color)
 
-     ;; :base005 (my/lighten-hex base00 2)
-     ;; :base000 (my/darken-hex base00 2)
-     ;; :base0000 (my/darken-hex base00 4))))
+;; :base005 (my/lighten-hex base00 2)
+;; :base000 (my/darken-hex base00 2)
+;; :base0000 (my/darken-hex base00 4))))
 (defvar base16-shell-colors
   '(:base00 "black"
-    :base005 "black"
-    :base000 "black"
-    :base0000 "black"
-    :base01 "color-18"
-    :base015 "color-18"
-    :base02 "color-19"
-    :base03 "brightblack"
-    :base04 "color-20"
-    :base05 "white"
-    :base06 "color-21"
-    :base07 "brightwhite"
-    :base08 "brightred"
-    :base09 "color-16"
-    :base0A "brightyellow"
-    :base0B "brightgreen"
-    :base0C "brightcyan"
-    :base0D "brightblue"
-    :base0E "brightmagenta"
-    :base0F "color-17")
+            :base005 "black"
+            :base000 "black"
+            :base0000 "black"
+            :base01 "color-18"
+            :base015 "color-18"
+            :base02 "color-19"
+            :base03 "brightblack"
+            :base04 "color-20"
+            :base05 "white"
+            :base06 "color-21"
+            :base07 "brightwhite"
+            :base08 "brightred"
+            :base09 "color-16"
+            :base0A "brightyellow"
+            :base0B "brightgreen"
+            :base0C "brightcyan"
+            :base0D "brightblue"
+            :base0E "brightmagenta"
+            :base0F "color-17")
   "Base16 colors used when in a terminal.
 
 These mappings are based on the xresources themes.  If you're
@@ -398,7 +398,7 @@ an alternate theme for use in the terminal.")
 
      (link                                         :foreground nil :underline t)
      (widget-button                                :underline t)
-     (widget-field                                 :background base03 :box (:line-width -1 :color base06))
+     (widget-field                                 :background base03 :box (:line-width 0 :color base06))
 
      ;; Compilation (most faces politely inherit from 'success, 'error, 'warning etc.)
      (compilation-column-number                    :foreground base0A)
@@ -710,14 +710,14 @@ an alternate theme for use in the terminal.")
         (base0D (plist-get theme-colors :base01))
         (base0E (plist-get theme-colors :base01))
         (base0F (plist-get theme-colors :base01)))))
-    ;; (custom-theme-set-variables
-    ;;  theme-name
-    ;;  '(ansi-color-names-vector
-    ;;    ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
-    ;;    [base00 base08 base0B base0A base0D base0E base0D base05])
-    ;;  '(ansi-term-color-vector
-    ;;    ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
-    ;;    [unspecified base00 base08 base0B base0A base0D base0E base0D base05]))))
+;; (custom-theme-set-variables
+;;  theme-name
+;;  '(ansi-color-names-vector
+;;    ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
+;;    [base00 base08 base0B base0A base0D base0E base0D base05])
+;;  '(ansi-term-color-vector
+;;    ;; black, base08, base0B, base0A, base0D, magenta, cyan, white
+;;    [unspecified base00 base08 base0B base0A base0D base0E base0D base05]))))
 
 ;;;###autoload
 (and load-file-name

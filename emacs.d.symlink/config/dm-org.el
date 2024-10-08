@@ -4,10 +4,8 @@
 
 ;;; Code:
 
-(use-package inf-ruby)
-(use-package org)
-(use-package org-babel
-  :after org
+;; (use-package inf-ruby)
+(use-package org
   :custom
   (org-confirm-babel-evaluate nil)
   )
