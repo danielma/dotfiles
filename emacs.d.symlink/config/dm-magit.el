@@ -13,7 +13,6 @@
   (git-commit-major-mode 'markdown-mode)
   (magit-list-refs-sortby "-committerdate")
   (magit-define-global-key-bindings 'recommended)
-  :bind (("C-c g" . magit-file-dispatch))
   :hook
   (git-commit-setup . my/commit-mode-setup))
 
@@ -21,9 +20,9 @@
   :after magit
   :custom
   (forge-list-buffer-default-topic-filters
-   #s(forge--topics-spec topic t open inbox nil "" nil nil nil "" "" "" nil newest 200 nil))
-  '(forge-status-buffer-default-topic-filters
-    #s(forge--topics-spec topic t open inbox nil "" nil nil nil "" "" "" nil newest 200 nil)))
+   (forge--topics-spec :type 'topic :active nil :state 'open :status 'inbox :order 'newest))
+  (forge-status-buffer-default-topic-filters
+   (forge--topics-spec :type 'topic :active nil :state 'open :status 'inbox :order 'newest)))
 
 (use-package browse-at-remote
   :after magit

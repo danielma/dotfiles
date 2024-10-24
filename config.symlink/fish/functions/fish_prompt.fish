@@ -60,8 +60,6 @@ function fish_prompt
         end
     end
 
-    echo -nes (eat_integration)
-
     # Shorten pwd if prompt is too long
     set -l pwd (prompt_pwd)
 

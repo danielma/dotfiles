@@ -56,12 +56,11 @@
   :custom
   (treesit-extra-load-path '("~/Code/test/tree-sitter-module/dist")))
 
-(use-package ts-fold
-  :disabled
+(use-package treesit-fold
+  :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold")
   :delight
-  :straight (:host github :repo "AndrewSwerlick/ts-fold" :branch "andrew-sw/treesit-el-support")
   :config
-  (global-ts-fold-mode))
+  (global-treesit-fold-mode))
 
 (use-package smartparens
   :delight

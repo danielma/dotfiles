@@ -9,12 +9,12 @@
   :init
   (setq evil-disable-insert-state-bindings t
         evil-default-state 'emacs
-	evil-echo-state nil
-	evil-symbol-word-search t
-	evil-undo-system 'undo-tree
-	evil-want-integration t
-	evil-want-keybinding nil
-	evil-mode-line-format '(before . mode-line-plz-put-evil-tag-here)
+	      evil-echo-state nil
+	      evil-symbol-word-search t
+	      evil-undo-system 'undo-tree
+	      evil-want-integration t
+	      evil-want-keybinding nil
+	      evil-mode-line-format '(before . mode-line-plz-put-evil-tag-here)
         evil-lookup-func 'eldoc-doc-buffer
 
         evil-normal-state-tag "N"
@@ -22,14 +22,6 @@
         evil-insert-state-tag "I")
   :config
   (evil-mode 1)
-  (evil-set-initial-state 'prog-mode 'normal)
-  (evil-set-initial-state 'text-mode 'normal)
-  (evil-set-initial-state 'git-commit-mode 'insert)
-  (evil-set-initial-state 'rg-mode 'emacs)
-  (evil-set-initial-state 'Custom-mode 'emacs)
-  (evil-set-initial-state 'embark-collect-mode 'emacs)
-  (evil-set-initial-state 'special-mode 'emacs)
-  (evil-set-initial-state 'vterm-mode 'emacs)
   :bind (:map evil-normal-state-map
               ("k" . evil-previous-visual-line)
               ("j" . evil-next-visual-line)
@@ -37,10 +29,18 @@
               :map evil-insert-state-map
               ("C-o" . evil-execute-in-normal-state)))
 
-;; (use-package evil-collection
-;;   :after evil
-;;   :config
-;;   (evil-collection-init `(dired (magit magit-repos magit-submodule) magit-section magit-todos)) ; (seq-difference evil-collection-mode-list '(rg (custom cus-edit) vterm embark)))
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init `((magit magit-repos magit-submodule) magit-section magit-todos)) ; (seq-difference evil-collection-mode-list '(rg (custom cus-edit) vterm embark))
+  (evil-set-initial-state 'prog-mode 'normal)
+  (evil-set-initial-state 'text-mode 'normal)
+  (evil-set-initial-state 'git-commit-mode 'insert)
+  (evil-set-initial-state 'rg-mode 'emacs)
+  (evil-set-initial-state 'Custom-mode 'emacs)
+  (evil-set-initial-state 'embark-collect-mode 'emacs)
+  (evil-set-initial-state 'special-mode 'emacs)
+  (evil-set-initial-state 'vterm-mode 'emacs))
 
 ;; (use-package evil-textobj-tree-sitter
 ;;   :after evil
@@ -108,7 +108,7 @@
     (interactive "N")
     (let ((p (* percent 0.1)))
       (if (my/window-x-sibling-p)
-	  (evil-resize-window (round (* (frame-width) p)) t)
+	        (evil-resize-window (round (* (frame-width) p)) t)
         (evil-resize-window (round (* (frame-height) p))))))
 
   (use-package evil
@@ -121,7 +121,7 @@
     ;; (windmove-wrap-around t)
     :init
     (setq evil-want-integration t
-	  evil-want-keybinding nil)
+	        evil-want-keybinding nil)
     :config
     (evil-mode 1)
     (evil-set-undo-system 'undo-tree)
