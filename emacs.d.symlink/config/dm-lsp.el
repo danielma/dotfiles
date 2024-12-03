@@ -1,10 +1,20 @@
-;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;;; dm-lsp.el --- LSP -*- lexical-binding: t -*-
+;;; Commentary:
 
 ;;; Code:
 
 (with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs '(swift-mode . ("sourcekit-lsp")))
+  (when t ; something needs us to load these compiled versions for eglot to run
+    (load "project.elc")
+    (load "xref.elc"))
+  ;; (add-to-list 'eglot-server-programs '(swift-mode . ("sourcekit-lsp")))
   )
+
+(use-package eglot-booster
+  :disabled
+  :after eglot
+  :straight (:type git :host github :repo "jdtsmith/eglot-booster")
+  :config (eglot-booster-mode))
 
 (use-package lsp-sourcekit
   :disabled
@@ -34,7 +44,7 @@
                :files (:defaults "clients/*.el"))
     :config
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.build\\'")
-    :custom 
+    :custom
     ;; (lsp-disabled-clients '(ts-ls))
     (lsp-headerline-breadcrumb-enable nil)
     (lsp-enable-file-watchers t)
@@ -61,3 +71,4 @@
   )
 
 (provide 'dm-lsp)
+;;; dm-lsp.el ends here

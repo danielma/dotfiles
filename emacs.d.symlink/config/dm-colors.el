@@ -20,6 +20,9 @@
   (set-frame-font "Iosevka Nerd Font Mono")
   ;; (set-frame-font "JetBrains Mono")
   ;; (face-attribute 'default :family)
+  (when (display-graphic-p)
+    ;; (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji") nil 'prepend)
+    (set-fontset-font t nil "SF Pro Display" nil 'append))
   )
 
 ;; (load-theme 'modus-operandi)
@@ -101,9 +104,6 @@
 
   ;; (custom-set-faces
   ;;  '(default ((t (:weight regular :height 140 :width regular :family "Rec Mono Duotone")))))
-
-  (if (display-graphic-p)
-      (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji") nil 'prepend))
 
   (set-frame-parameter (selected-frame) 'alpha 95)
 

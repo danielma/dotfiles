@@ -248,7 +248,7 @@
 (define-minor-mode dm-guard-mode
   "Use emamux to test after saving a file."
   :init-value nil
-  :lighter "\uf132"
+  :lighter "􀙧"
   :map dm-guard-mode-map
   (cond ((bound-and-true-p dm-guard-mode)
          (add-hook 'after-save-hook #'dm-guard-test t t))
