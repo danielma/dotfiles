@@ -28,7 +28,7 @@
 
 
 (use-package apheleia
-  :delight "\U000f0276"
+  :delight "􀋺"
   :config
   (apheleia-global-mode)
   (advice-add 'apheleia--make-process :around '--with-project-default-directory)
