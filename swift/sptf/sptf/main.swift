@@ -423,8 +423,12 @@ class Spotify {
     let requests = apiRequestWithAllPages("me/playlists")
 
     return requests.flatMap { response in
-      (response.json["items"] as! [Any]).map { something in
-        Playlist.from(something as! [String: Any])
+        (response.json["items"] as! [Any]).compactMap { something in
+            if let source =  something as? [String: Any] {
+                return Playlist.from(source)
+            } else {
+                return nil
+            }
       }
     }
   }
