@@ -38,3 +38,4 @@ source ~/.dotfiles/config.symlink/fish/work.fish
 # Dev
 
 source ~/.asdf/asdf.fish
+direnv hook fish | source

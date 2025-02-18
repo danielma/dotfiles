@@ -166,7 +166,7 @@
                     ((eq project-type 'ruby-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'rubygem) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'rails-test) "bin/rails test")
-                    ((eq project-type 'ruby-test) "rake test")
+                    ((eq project-type 'ruby-test) "ruby")
                     ((eq project-type 'swift-package) "swift test")
                     (t "ruby"))))
     test-cmd))

@@ -157,7 +157,8 @@
      (apheleia--syntax-tree-single-quotes nil) (eval when (fboundp 'rainbow-mode) (rainbow-mode 1))))
  '(straight-recipes-gnu-elpa-ignored-packages '(cl-generic cl-lib nadvice seq project))
  '(warning-suppress-log-types
-   '(((defvaralias losing-value js-indent-level)) ((defvaralias losing-value emmet-indentation)))))
+   '((defvaralias losing-value emmet-indentation) ((defvaralias losing-value js-indent-level))
+     ((defvaralias losing-value emmet-indentation)))))
 (put 'narrow-to-region 'disabled nil)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
