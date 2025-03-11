@@ -55,6 +55,11 @@
 (defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
 
 (require 'dm-general)
+
+(use-package direnv
+  :config
+  (direnv-mode))
+
 (require 'dm-prog)
 
 (require 'dm-bindings)
@@ -157,8 +162,8 @@
      (apheleia--syntax-tree-single-quotes nil) (eval when (fboundp 'rainbow-mode) (rainbow-mode 1))))
  '(straight-recipes-gnu-elpa-ignored-packages '(cl-generic cl-lib nadvice seq project))
  '(warning-suppress-log-types
-   '((defvaralias losing-value emmet-indentation) ((defvaralias losing-value js-indent-level))
-     ((defvaralias losing-value emmet-indentation)))))
+   '((native-compiler) (defvaralias losing-value emmet-indentation)
+     ((defvaralias losing-value js-indent-level)) ((defvaralias losing-value emmet-indentation)))))
 (put 'narrow-to-region 'disabled nil)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

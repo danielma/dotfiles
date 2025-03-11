@@ -25,6 +25,7 @@
   :bind (:map evil-normal-state-map
               ("k" . evil-previous-visual-line)
               ("j" . evil-next-visual-line)
+              ("M-y" . nil)
               ("C-." . nil)
               :map evil-insert-state-map
               ("C-o" . evil-execute-in-normal-state)))

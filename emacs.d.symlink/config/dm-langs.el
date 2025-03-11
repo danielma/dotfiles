@@ -20,7 +20,7 @@
 
 (use-package swift-mode
   :hook
-  (swift-mode . eglot-ensure))
+  (swift-mode . eglot))
 
 (use-package fish-mode)
 

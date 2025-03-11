@@ -3,7 +3,7 @@
 
 ;;; Code:
 
-(with-eval-after-load 'eglot
+(with-eval-after-load 'project
   (when t ; something needs us to load these compiled versions for eglot to run
     (load "project.elc")
     (load "xref.elc"))
