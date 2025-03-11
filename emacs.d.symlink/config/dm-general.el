@@ -40,6 +40,7 @@
 (use-package exec-path-from-shell
   :config
   (when (memq window-system '(mac ns x))
+    (add-to-list 'exec-path-from-shell-variables "DEVBOX_USE_VERSION")
     (exec-path-from-shell-initialize)))
 
 (use-package undo-tree
