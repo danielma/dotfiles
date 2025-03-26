@@ -3,51 +3,27 @@
 <plist version="1.0">
 <dict>
 	<key>allowFilters</key>
-	<string>https://refactoring.guru/refactoring/smells/*,https://refactoring.guru/smells/*,</string>
+	<string>https://refactoring.guru/*</string>
 	<key>basicIndexEnabled</key>
 	<false/>
 	<key>cssToInject</key>
-	<string>footer {
-    display: none !important;
-}
-
-aside.sidebar {
-    display: none;
-}
-
-.announcement-block {
-    display: none;
-}
-
-nav.navigation {
-    display: none;
-}
-
-.center-content {
+	<string>.center-content {
     margin-left: 0 !important;
-}
-
-.prom.banner-content {
-    display: none !important;
 }
 
 .body-holder {
     margin:  0 !important;
 }
 
-aside.feature.affix-top {
-    display: none !important;
-}
-
 .page.text {
     padding: 1em !important;
 }</string>
 	<key>denyFilters</key>
-	<string></string>
+	<string>https://refactoring.guru/design-pattern*,https://refactoring.guru/refactoring/course</string>
 	<key>docsetKeyword</key>
-	<string>smells</string>
+	<string>refactoring</string>
 	<key>docsetName</key>
-	<string>Code Smells</string>
+	<string>Refactoring Guru</string>
 	<key>extraInfoPlist</key>
 	<string></string>
 	<key>isFromLocalFolder</key>
@@ -60,7 +36,7 @@ aside.feature.affix-top {
 	<string>const pageTitle = $("title").text();
 dashDoc.addEntry({name: pageTitle, type: "Guide"});
 
-$(".prom.banner-content").remove();
+$("footer, .announcement-block, aside.sidebar, nav.navigation, .prom.banner-content, .feature.affix-top, .feature.affix").remove();
 
 $("h3").each(function() {
     const entryName = $(this).text();
@@ -75,6 +51,6 @@ $("h3").each(function() {
 	<key>localFolderPath</key>
 	<string></string>
 	<key>websiteURL</key>
-	<string>https://refactoring.guru/refactoring/smells</string>
+	<string>https://refactoring.guru/refactoring/catalog</string>
 </dict>
 </plist>
