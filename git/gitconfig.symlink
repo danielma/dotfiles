@@ -6,15 +6,13 @@
 [credential]
         helper = osxkeychain
 [magit]
-	hideCampaign = true
+  hideCampaign = true
 [alias]
         co = checkout
-        promote = !$ZSH/bin/git-promote
-        wtf     = !$ZSH/bin/git-wtf
-        rank-contributors = !$ZSH/bin/git-rank-contributors
         count   = !git shortlog -sn
         please = push --force-with-lease
         pu = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
+        clean-branches = !git branch | fzf -m | xargs git branch -d
         rbm = !git fetch origin master && git rebase -i origin/master
         sha = rev-parse HEAD
 [color]
@@ -27,13 +25,6 @@
   commentChar = ";"
   pager = delta # --features "$(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo dark-mode || echo light-mode)"
 
-# [pager]
-#     diff = delta
-#     log = delta
-#     reflog = delta
-#     show = delta
-#     blame = delta
-
 [interactive]
     diffFilter = delta --color-only --features=interactive
 
@@ -41,12 +32,6 @@
     features = decorations
     navigate = true
     syntax-theme = ansi
-
-[delta "light-mode"]
-  light = true
-
-[delta "dark-mode"]
-  light = false
 
 [delta "interactive"]
     keep-plus-minus-markers = false
@@ -59,6 +44,7 @@
     hunk-header-file-style = red
     hunk-header-line-number-style = "#067a00"
     hunk-header-style = file line-number syntax
+
 [apply]
         whitespace = nowarn
 [mergetool]
@@ -68,26 +54,22 @@
 [help]
         autocorrect = 1
 [push]
-        # See `git help config` (search for push.default)
-        # for more information on different options of the below setting.
-        #
-        # Setting to git 2.0 default to surpress warning message
         default = simple
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /opt/homebrew-cask/Caskroom/sourcetree/2.1/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	required = true
 	process = git-lfs filter-process
+
 [remote "origin"]
 	prune = true
+
 [github]
 	user = danielma
+
 [pull]
 	ff = only
 
+[rerere]
+	enabled = true
