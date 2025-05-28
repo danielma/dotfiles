@@ -5,7 +5,10 @@
 
 (use-package vertico
   :init
-  (vertico-mode))
+  (vertico-mode)
+  :config
+  (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+  :bind (:map global-map ("M-R" . #'vertico-repeat)))
 
 (add-to-list 'load-path (straight--build-dir "vertico/extensions"))
 

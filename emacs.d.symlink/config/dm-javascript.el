@@ -2,7 +2,9 @@
 
 (use-package js
   :config
-  (defvaralias 'js-indent-level 'tab-width))
+  (defvaralias 'js-indent-level 'tab-width)
+  (add-to-list 'auto-mode-alist '("\\.mts\\'" . js-ts-mode))
+  )
 
 ;; (use-package add-node-modules-path)
 

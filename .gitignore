@@ -16,3 +16,4 @@ config.symlink/heroku
 config.symlink/asciinema
 config.symlink/gatsby
 config.symlink/raycast
+config.symlink/secrets

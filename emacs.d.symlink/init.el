@@ -157,6 +157,9 @@
  '(eglot-autoreconnect 5)
  '(line-number-mode nil)
  '(magit-repository-directories '(("~/Code" . 0)))
+ '(markdown-enable-highlighting-syntax t)
+ '(markdown-fontify-code-blocks-natively t)
+ '(markdown-header-scaling t)
  '(safe-local-variable-values
    '((lsp-enabled-clients ruby-syntax-tree-ls) (apheleia--syntax-tree-single-quotes)
      (apheleia--syntax-tree-single-quotes nil) (eval when (fboundp 'rainbow-mode) (rainbow-mode 1))))
