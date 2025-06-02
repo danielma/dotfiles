@@ -13,7 +13,7 @@ export PROJECTS=~/Code
 
 autoload -Uz compinit && compinit
 
-source $HOME/.asdf/asdf.sh
+# source $HOME/.asdf/asdf.sh
 # source $HOME/.asdf/completions/asdf.bash
 
 # all of our zsh files
