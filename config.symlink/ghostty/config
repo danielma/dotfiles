@@ -26,4 +26,5 @@ font-thicken = true
 
 # macos-titlebar-style = tabs
 theme=light:Monokai Pro Light,dark:Monokai Pro Machine
+#theme=light:Monokai Pro Machine,dark:Monokai Pro Machine
 keybind = shift+enter=text:\n

@@ -31,7 +31,8 @@
   (tab-bar-tab-name-function 'dm-tab-bar-name)
   ;; (tab-bar-tab-name-format-function 'eli/tab-bar-tab-name-with-svg)
   :custom-face
-  (tab-bar     ((t :inherit default :box (:line-width 6))))
+  ;; (tab-bar     ((t :inherit default :box (:line-width 6))))
+  (tab-bar ((t (:box (:line-width 4 :style flat-button)))))
   :config
   (tab-bar-mode))
 

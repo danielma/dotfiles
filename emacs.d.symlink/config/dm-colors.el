@@ -25,6 +25,9 @@
     (set-fontset-font t nil "SF Pro Display" nil 'append))
   )
 
+(use-package indent-bars
+  :hook ((prog-mode yaml-mode) . indent-bars-mode))
+
 ;; (load-theme 'modus-operandi)
 ;; (use-package ef-themes)
 

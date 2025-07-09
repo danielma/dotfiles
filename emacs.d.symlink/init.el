@@ -85,6 +85,15 @@
 (require 'dm-web-mode)
 (require 'dm-yasnippet)
 
+(use-package claude-code
+  :straight (:type git :host github :repo "stevemolitor/claude-code.el" :branch "main"
+                   :files ("*.el" (:exclude "demo.gif")))
+  :delight
+  :bind-keymap
+  ("C-c c" . claude-code-command-map)
+  :config
+  (claude-code-mode))
+
 (require 'sf)
 
 ;; (use-package dm-projectile :straight nil)
@@ -124,8 +133,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auth-sources '("~/.netrc" macos-keychain-internet))
+ '(claude-code-program "/Users/danielma/.config/claude/local/claude")
  '(custom-safe-themes
-   '("6a5584ee8de384f2d8b1a1c30ed5b8af1d00adcbdcd70ba1967898c265878acf"
+   '("a9eeab09d61fef94084a95f82557e147d9630fbbb82a837f971f83e66e21e5ad"
+     "2ab8cb6d21d3aa5b821fa638c118892049796d693d1e6cd88cb0d3d7c3ed07fc"
+     "6a5584ee8de384f2d8b1a1c30ed5b8af1d00adcbdcd70ba1967898c265878acf"
      "0f220ea77c6355c411508e71225680ecb3e308b4858ef6c8326089d9ea94b86f"
      "4fdbed4aa8bcb199d7f6a643886bac51178d1705b9b354ef3dd82d4ec48072d2"
      "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2"
@@ -173,4 +185,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(tab-bar ((t (:box (:line-width (2 . 2) :style flat-button))))))

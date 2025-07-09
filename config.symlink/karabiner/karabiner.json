@@ -2005,7 +2005,6 @@
                 }
             ],
             "name": "Default profile",
-            "selected": true,
             "simple_modifications": [
                 {
                     "from": { "key_code": "right_option" },
@@ -4023,6 +4022,7 @@
                 }
             ],
             "name": "Default profile (CMK)",
+            "selected": true,
             "simple_modifications": [
                 {
                     "from": { "key_code": "right_option" },
