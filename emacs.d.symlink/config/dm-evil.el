@@ -77,6 +77,9 @@
                                         ;     ("C-p" . evil-multiedit-prev)
               ))
 
+(defadvice evil-write (before save-buffer-always activate)
+  "Always save buffer."
+  (set-buffer-modified-p t))
 
 (if t
     t

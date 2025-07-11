@@ -6,10 +6,6 @@
 
 ;;; Buffers
 
-(defadvice evil-write (before save-buffer-always activate)
-  "Always save buffer."
-  (set-buffer-modified-p t))
-
 ;; https://stackoverflow.com/a/3417473
 (defun kill-other-buffers ()
   "Kill all other buffers."
