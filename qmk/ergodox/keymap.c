@@ -9,9 +9,9 @@
 #define QWRT 1 // qwerty layer
 #define SYMB 2 // symbols
 #define NUMP 3 // numpad
+#define MOTI 4 // motion
 
 #define OS_HYPR OSM(MOD_HYPR)
-
 
 enum custom_keycodes {
   MCR_0 = SAFE_RANGE,
@@ -45,14 +45,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                               ╰──────┴──────┴──────╯ ╰──────┴────────┴──────╯
  */
 [CLMK] = LAYOUT_ergodox_pretty(
-  KC_GRV,  KC_1,        KC_2,     KC_3,    KC_4,    KC_5,    DF(CLMK),      /**/ TG(NUMP),     KC_6,    KC_7,    KC_8,          KC_9,    KC_UNDS, KC_EQL,
-  KC_TAB,  KC_Q,        KC_W,     KC_F,    KC_P,    KC_B,    LGUI(KC_SPC),  /**/ OS_HYPR,      KC_J,    KC_L,    KC_U,          KC_Y,    CLN_FLP, KC_MINUS,
-  KC_ESC,  KC_A,        KC_R,     KC_S,    KC_T,    KC_G,                   /**/               KC_M,    KC_N,    KC_E,          KC_I,    KC_O,    LT(SYMB,KC_QUOT),
-  KC_LSFT, CTL_T(KC_Z), KC_X,     KC_C,    KC_D,    KC_V,    KC_CAPS,       /**/ MEH_T(KC_NO), KC_K,    KC_H,    KC_COMM,       KC_DOT,  KC_SLSH, KC_LSFT,
-  KC_GRV,  KC_LCTL,     MO(NUMP), KC_LALT, KC_LGUI,                         /**/                        MO(SYMB),GUI_T(KC_LEFT),KC_DOWN, KC_UP,   KC_RIGHT,
-                                                    KC_VOLD, KC_VOLU,       /**/ KC_MPLY,      KC_MNXT,
-                                                             KC_MUTE,       /**/ KC_MPRV,
-                                           KC_BSPC ,KC_DEL,  RESET,         /**/ RESET,        KC_ENT, KC_SPC
+  KC_GRV,  KC_1,        KC_2,          KC_3,          KC_4,    KC_5,    DF(CLMK),      /**/ TG(NUMP),     KC_6,    KC_7,    KC_8,          KC_9,    KC_UNDS, KC_EQL,
+  KC_TAB,  KC_Q,        KC_W,          KC_F,          KC_P,    KC_B,    LGUI(KC_SPC),  /**/ OS_HYPR,      KC_J,    KC_L,    KC_U,          KC_Y,    CLN_FLP, KC_MINUS,
+  KC_ESC,  KC_A,        LT(MOTI,KC_R), LT(SYMB,KC_S), KC_T,    KC_G,                   /**/               KC_M,    KC_N,    LT(SYMB,KC_E), KC_I,    KC_O,    KC_QUOT,
+  KC_LSFT, CTL_T(KC_Z), KC_X,          KC_C,          KC_D,    KC_V,    KC_CAPS,       /**/ MEH_T(KC_NO), KC_K,    KC_H,    KC_COMM,       KC_DOT,  KC_SLSH, KC_LSFT,
+  KC_GRV,  KC_LCTL,     MO(NUMP),      KC_LALT,       KC_LGUI,                         /**/                        MO(SYMB),GUI_T(KC_LEFT),KC_DOWN, KC_UP,   KC_RIGHT,
+                                                               KC_VOLD, KC_VOLU,       /**/ KC_MPLY,      KC_MNXT,
+                                                                        KC_MUTE,       /**/ KC_MPRV,
+                                                      KC_BSPC ,KC_DEL,  RESET,         /**/ RESET,        KC_ENT, KC_SPC
 ),
 /* Keymap 1: Basic layer
  *
@@ -78,8 +78,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [QWRT] = LAYOUT_ergodox_pretty(  // layer 0 : default
   _______, KC_1,        KC_2,     KC_3,    KC_4,    KC_5,    DF(CLMK),    /**/ TG(NUMP),    KC_6,   KC_7,    KC_8,          KC_9,   KC_UNDS,   KC_EQL,
   KC_TAB,  KC_Q,        KC_W,     KC_E,    KC_R,    KC_T,    LGUI(KC_SPC),/**/ OS_HYPR,     KC_Y,   KC_U,    KC_I,          KC_O,   KC_P,      KC_MINUS,
-  KC_ESC,  KC_A,        KC_S,     KC_D,    KC_F,    KC_G,                 /**/              KC_H,   KC_J,    KC_K,          KC_L,   CLN_FLP,   KC_QUOT,
-  KC_LSFT, CTL_T(KC_Z), KC_X,     KC_C,    KC_V,    KC_B,    KC_CAPS,     /**/ MEH_T(KC_NO),KC_N,   KC_M,    KC_COMM,       KC_DOT, KC_SLSH,   KC_LSFT,
+  KC_ESC,  KC_A,        KC_S,     KC_D,    KC_F,    KC_G,                 /**/              KC_H,   KC_J,    KC_K,          KC_L,   CLN_FLP,   _______,
+  KC_LSFT, CTL_T(KC_Z), KC_X,     KC_C,    KC_V,    KC_B,    KC_CAPS,     /**/ MEH_T(KC_NO),KC_N,   KC_M,    KC_COMM,       KC_DOT, _______,   KC_LSFT,
   KC_GRV,  KC_LCTL,     MO(NUMP), KC_LALT, KC_LGUI,                       /**/                      MO(SYMB),GUI_T(KC_LEFT),KC_DOWN,KC_UP,     KC_RIGHT,
                                                     KC_VOLD, KC_VOLU,     /**/ KC_MPLY,     KC_MNXT,
                                                              KC_MUTE,     /**/ KC_MPRV,
@@ -92,9 +92,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |        |   !  |   @  |   {  |   }  |   %  |      |           |      |   ^  |   <  |   >  |   |  |      |    +   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |   ~    |   `  |   #  |   (  |   )  |      |------|           |------|   &  |   [  |   ]  |   ;  |      |    "   |
+ * |   ~    |   `  |   #  |   (  |   )  |      |------|           |------|   &  |      |      |   ;  |      |    "   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |   $  |   [  |   ]  |      |      |           |      |   *  |   <  |   >  |   \  |  ?   |        |
+ * |        |      |   $  |   [  |   ]  |      |      |           |      |   *  |      |      |   \  |  ?   |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |      |      |      |      |      |                                       |      |   0  |   .  |   ,  |      |
  *   `----------------------------------'                                       `----------------------------------'
@@ -108,14 +108,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 // SYMBOLS
 [SYMB] = LAYOUT_ergodox_pretty(
-       KC_TRNS,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,        KC_F6,   /**/ KC_F7,   KC_F8,   KC_F9,        KC_F10,         KC_F11,  KC_F12,  KC_TRNS,
-       KC_TRNS,KC_EXLM,KC_AT,  KC_LCBR,KC_RCBR,KC_PERC,      KC_TRNS, /**/ KC_TRNS, KC_CIRC, LSFT(KC_COMM),LSFT(KC_DOT),   KC_PIPE, KC_TRNS, KC_PLUS,
-       KC_TILD,KC_GRV, KC_HASH,KC_LPRN,KC_RPRN,KC_TRNS,               /**/          KC_AMPR, KC_LBRC,      KC_RBRC,        KC_SCLN, KC_TRNS, LSFT(KC_QUOT),
-       KC_TRNS,KC_TRNS,KC_DLR, KC_LBRC,KC_RBRC,KC_TRNS,      KC_TRNS, /**/ KC_TRNS, KC_ASTR, KC_1,         KC_2,           KC_BSLS, KC_QUES, KC_TRNS,
-       KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,                       /**/                   KC_TRNS,      KC_0,           KC_DOT,  KC_COMM, KC_TRNS,
-                                       KC_TRNS,KC_TRNS,               /**/ KC_TRNS, KC_TRNS,
-                                               KC_TRNS,               /**/ KC_TRNS,
-                               KC_TRNS,KC_TRNS,KC_TRNS,               /**/ KC_TRNS, KC_TRNS, KC_TRNS
+       _______,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,        KC_F6,   /**/ KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______,
+       _______,KC_EXLM,KC_AT,  KC_LCBR,KC_RCBR,KC_PERC,      _______, /**/ _______, KC_CIRC, KC_LABK, KC_RABK, KC_PIPE, _______, KC_PLUS,
+       KC_TILD,KC_GRV, KC_HASH,KC_LPRN,KC_RPRN,_______,               /**/          KC_AMPR, _______, _______, KC_SCLN, _______, LSFT(KC_QUOT),
+       _______,_______,KC_DLR, KC_LBRC,KC_RBRC,_______,      _______, /**/ _______, KC_ASTR, _______, _______, KC_BSLS, KC_QUES, _______,
+       _______,_______,_______,_______,_______,                       /**/                   _______, _______, KC_DOT,  KC_COMM, _______,
+                                       _______,_______,               /**/ _______, _______,
+                                               _______,               /**/ _______,
+                               _______,_______,_______,               /**/ _______, _______, _______
 ),
 /* Numpad
  *
@@ -140,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 // Numpad
 [NUMP] = LAYOUT_ergodox_pretty(
-       _______, KC_SLCK, KC_PAUS, _______, _______, _______, _______, /**/ _______, _______, _______, _______, _______, _______, _______,
+       _______, KC_SLCK, KC_PAUS, _______, _______, _______, _______, /**/ _______, _______, _______, _______, _______, _______, KC_SLEP,
        _______, _______, _______, _______, _______, _______, _______, /**/ _______, _______, KC_7,    KC_8,    KC_9,    _______, _______,
        _______, _______, _______, _______, _______, _______,          /**/          _______, KC_4,    KC_5,    KC_6,    _______, _______,
        _______, _______, _______, _______, _______, _______, _______, /**/ _______, _______, KC_1,    KC_2,    KC_3,    _______, _______,
@@ -148,6 +148,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                     _______, _______, /**/ _______, _______,
                                                              _______, /**/ _______,
                                            _______, _______, _______, /**/ _______, _______, _______
+),
+/* Motion
+ *
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |------|           |------|  ←   |  ↓   |  ↑   |  →   |      |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |      |      |      |      |      |                                       |      |      |      |      |      |
+ *   `----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,-------------.
+ *                                        |      |      |       |      |      |
+ *                                 ,------|------|------|       |------+------+------.
+ *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |------|       |------|      |      |
+ *                                 |      |      |      |       |      |      |      |
+ *                                 `--------------------'       `--------------------'
+ */
+[MOTI] = LAYOUT_ergodox_pretty(
+  _______, _______, _______, _______, _______, _______, _______, /**/ _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, /**/ _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______,          /**/          KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, /**/ _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______,                   /**/                   _______, _______, _______, _______, _______,
+                                               _______, _______, /**/ _______, _______,
+                                                        _______, /**/ _______,
+                                      _______, _______, _______, /**/ _______, _______, _______
 )
 };
 

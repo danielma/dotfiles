@@ -25,7 +25,7 @@
 
 (use-package display-line-numbers
   :custom
-  (display-line-numbers-type 'relative)
+  ;; (display-line-numbers-type 'relative)
   :hook
   (prog-mode . display-line-numbers-mode)
   )
