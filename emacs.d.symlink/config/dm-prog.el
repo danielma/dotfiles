@@ -42,7 +42,7 @@
 
   (push '(emacs-lisp-mode . lisp-indent) apheleia-mode-alist)
   (push '(swift-mode . swift-format) apheleia-mode-alist)
-  (push '(tsx-ts-mode . eslint) apheleia-mode-alist)
+  ;; (push '(tsx-ts-mode . eslint) apheleia-mode-alist)
   (setf (alist-get 'ruby-base-mode apheleia-mode-alist)
         '(syntax-tree))
   (setf (alist-get 'ruby-ts-mode apheleia-mode-alist)
@@ -68,6 +68,7 @@
   (require 'smartparens-config)
   :custom
   (sp-ignore-modes-list '(minibuffer-mode minibuffer-inactive-mode web-mode))
+  ;; (sp-base-key-bindings 'sp)
   :config
   (smartparens-global-mode)
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-base-mode) "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))

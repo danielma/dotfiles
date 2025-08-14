@@ -1,10 +1,10 @@
 # Path
-
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/opt/node@22/bin
 fish_add_path ~/.dotfiles/bin
 fish_add_path ~/.cargo/bin
 fish_add_path (go env GOPATH)/bin
+fish_add_path ~/.config/claude/local
 
 # Moving around
 
@@ -59,5 +59,3 @@ source ~/.dotfiles/config.symlink/secrets
 # Direnv
 
 direnv hook fish | source
-
-alias claude="/Users/danielma/.config/claude/local/claude"

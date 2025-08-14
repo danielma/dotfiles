@@ -9,6 +9,7 @@
   ;; (setq yas-dont-activate-functions (add-to-list 'yas-dont-activate-functions #'my/no-yas))
   :custom
   (yas-triggers-in-field t)
+  (yas-snippet-revival nil)
   )
 
 ;; (use-package yasnippet-capf

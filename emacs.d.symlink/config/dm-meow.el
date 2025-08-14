@@ -8,6 +8,10 @@
 (defun meow-setup ()
   "Meow setup from the docs."
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
+
+  (meow-thing-register 'arrow '(pair ("<") (">")) '(pair ("<") (">")))
+  (add-to-list 'meow-char-thing-table '(?a . arrow))
+  
   (meow-motion-define-key
    ;; Use e to move up, n to move down.
    ;; Since special modes usually use n to move down, we only overwrite e here.

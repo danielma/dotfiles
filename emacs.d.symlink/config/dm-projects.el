@@ -64,8 +64,8 @@
               ("T" . #'project-find-test-or-implementation-other-window)))
 
 (add-to-list 'project-switch-commands '(switch-to-term "VTerm" ?t))
-(add-to-list 'project-switch-commands '(rg-project-simple-literal "RG" ?g))
-(add-to-list 'project-switch-commands '(magit-project-status "Magit" ?m))
+(add-to-list 'project-switch-commands '(rg-project-simple-literal "RG" ?r))
+(add-to-list 'project-switch-commands '(magit-project-status "Magit" ?g))
 
 ;; useful from Projectile
 (defun project-verify-file (file)

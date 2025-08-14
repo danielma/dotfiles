@@ -14,7 +14,7 @@
 
 (use-package vterm
   :custom
-  (vterm-keymap-exceptions '("C-c" "C-x" "C-u" "C-g" "C-h" "C-l" "M-x" "M-o" "C-y" "M-y" "M-h" "M-j" "M-k" "M-l"))
+  (vterm-keymap-exceptions '("C-c" "C-x" "C-u" "C-g" "C-h" "C-l" "M-x" "M-o" "C-y" "M-y" "M-m" "M-n" "M-e" "M-i"))
   :config
   (advice-add 'vterm :around 'with-editor-advice-around)
 

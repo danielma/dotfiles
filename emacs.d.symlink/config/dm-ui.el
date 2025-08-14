@@ -24,10 +24,9 @@
               ("C-k" . kill-whole-line)))
 
 (use-package display-line-numbers
-  :custom
+  ;; :custom
   ;; (display-line-numbers-type 'relative)
-  :hook
-  (prog-mode . display-line-numbers-mode)
+  :hook prog-mode
   )
 
 (use-package whitespace

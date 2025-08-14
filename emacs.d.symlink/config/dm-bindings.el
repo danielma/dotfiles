@@ -9,6 +9,10 @@
   (let ((select-enable-clipboard t))
     (yank)))
 
+(defadvice save-buffer (before save-buffer-always activate)
+  "always save buffer"
+  (set-buffer-modified-p t))
+
 ;;; 
 ;;; C-x t C-f				find-file-other-tab
 ;;; C-x t RET				tab-switch
@@ -55,7 +59,7 @@
          ("s-[" . previous-buffer)
          ("s-]" . next-buffer)
          ("s-v" . yank-with-clipboard)
-         ("M-m" . windmove-down)
+         ("M-n" . windmove-down)
          ("M-e" . windmove-up)
          ("M-m" . windmove-left)
          ("M-i" . windmove-right)

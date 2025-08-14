@@ -86,14 +86,14 @@
 (require 'dm-web-mode)
 (require 'dm-yasnippet)
 
-(use-package claude-code
-  :straight (:type git :host github :repo "stevemolitor/claude-code.el" :branch "main"
-                   :files ("*.el" (:exclude "demo.gif")))
-  :delight
-  :bind-keymap
-  ("C-c c" . claude-code-command-map)
+(use-package claude-code-ide
+  :straight (:type git :host github :repo "manzaltu/claude-code-ide.el")
+  :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
   :config
-  (claude-code-mode))
+  (claude-code-ide-emacs-tools-setup)
+  :custom
+  (claude-code-ide-vterm-anti-flicker t)
+  (claude-code-ide-vterm-render-delay 0.01))
 
 (require 'sf)
 
