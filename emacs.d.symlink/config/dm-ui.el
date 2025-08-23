@@ -26,7 +26,7 @@
 (use-package display-line-numbers
   ;; :custom
   ;; (display-line-numbers-type 'relative)
-  :hook prog-mode
+  :hook text-mode
   )
 
 (use-package whitespace

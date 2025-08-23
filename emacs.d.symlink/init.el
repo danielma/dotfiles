@@ -168,6 +168,7 @@
  '(ediff-make-buffers-readonly-at-startup t)
  '(ediff-merge-split-window-function 'split-window-vertically)
  '(eglot-autoreconnect 5)
+ '(indent-bars-treesit-support t)
  '(line-number-mode nil)
  '(magit-repository-directories '(("~/Code" . 0)))
  '(markdown-enable-highlighting-syntax t)
@@ -176,6 +177,7 @@
  '(safe-local-variable-values
    '((lsp-enabled-clients ruby-syntax-tree-ls) (apheleia--syntax-tree-single-quotes)
      (apheleia--syntax-tree-single-quotes nil) (eval when (fboundp 'rainbow-mode) (rainbow-mode 1))))
+ '(standard-indent 2)
  '(straight-recipes-gnu-elpa-ignored-packages '(cl-generic cl-lib nadvice seq project))
  '(warning-suppress-log-types
    '((native-compiler) (defvaralias losing-value emmet-indentation)
