@@ -1,6 +1,5 @@
-// Netable differences vs. the default firmware for the ErgoDox EZ:
-// 1. The Cmd key is now on the right side, making Cmd+Space easier.
-// 2. The media keys work on OSX (But not on Windows).
+// -*- eval: (progn (whitespace-mode 0) (apheleia-mode 0) (electric-indent-mode 0)) -*-
+
 #include QMK_KEYBOARD_H
 #include "debug.h"
 #include "action_layer.h"

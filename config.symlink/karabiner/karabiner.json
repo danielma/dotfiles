@@ -3969,6 +3969,24 @@
                     },
                     "ignore": true,
                     "manipulate_caps_lock_led": false
+                },
+                {
+                    "identifiers": {
+                        "device_address": "dd-ab-e8-9d-de-d7",
+                        "is_keyboard": true,
+                        "is_pointing_device": true
+                    },
+                    "ignore": false,
+                    "ignore_vendor_events": true
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 12885,
+                        "vendor_id": 6645
+                    },
+                    "ignore": true,
+                    "ignore_vendor_events": true
                 }
             ],
             "fn_function_keys": [
