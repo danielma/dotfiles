@@ -18,6 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
+enum macros {
+  CLN_FLP = SAFE_RANGE,
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* layer 0 Mac
@@ -35,7 +38,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
 [0] = LAYOUT(
   KC_ESC,         KC_1,        KC_2,     KC_3,      KC_4,       KC_5,     KC_6,      KC_7,     KC_8,     KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,
-  KC_TAB,         KC_Q,        KC_W,     KC_F,      KC_P,       KC_B,     KC_J,      KC_L,     KC_U,     KC_Y,    KC_SCLN,  KC_LBRC,  KC_RBRC,  KC_BSLS,
+  KC_TAB,         KC_Q,        KC_W,     KC_F,      KC_P,       KC_B,     KC_J,      KC_L,     KC_U,     KC_Y,    CLN_FLP,  KC_LBRC,  KC_RBRC,  KC_BSLS,
   HYPR_T(KC_ESC), KC_A,        KC_R,     KC_S,      KC_T,       KC_G,     KC_M,      KC_N,     KC_E,     KC_I,    KC_O,     KC_QUOT,            KC_ENT,
   KC_LSFT,        CTL_T(KC_Z), KC_X,     KC_C,      KC_D,       KC_V,     KC_K,      KC_H,     KC_COMM,  KC_DOT,  KC_SLSH,  KC_RSFT,  KC_UP,    KC_DEL,
   KC_LCTL,        KC_LALT,     KC_LGUI,  KC_SPC,                                                         KC_RGUI, MO(1),    KC_LEFT,  KC_DOWN,  KC_RGHT
@@ -78,6 +81,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,  _______,  _______,                    _______,               _______,  _______,     SIDE_MOD,  SIDE_VAD,    SIDE_HUI)
 };
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case CLN_FLP:
+      if (record->event.pressed) {
+        if (get_mods()&MOD_BIT(KC_LSFT)) {
+          unregister_code(KC_LSFT);
+          register_code(KC_SCLN);
+          unregister_code(KC_SCLN);
+          register_code(KC_LSFT);
+        } else {
+          SEND_STRING(":");
+        }
+      }
+      break;
+  }
+
+  return true;
+}
 
 const is31_led PROGMEM g_is31_leds[RGB_MATRIX_LED_COUNT] = {
     {0, A_16,   B_16,   C_16},      // "Esc"
