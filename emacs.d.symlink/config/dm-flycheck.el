@@ -26,6 +26,8 @@
   :bind (("C-c !" . flymake-transient-menu))
   :config
   (advice-add 'ruby-flymake-rubocop--use-bundler-p :around 'ruby-flymake-rubocop--with-gemfile-lock)
+  :custom
+  (flymake-show-diagnostics-at-end-of-line nil)
   )
 
 (use-package flymake-posframe

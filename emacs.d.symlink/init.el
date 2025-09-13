@@ -170,14 +170,14 @@
  '(eglot-autoreconnect 5)
  '(flymake-jsts-executable-name-alist
    '((eslint . "eslint_d") (oxlint . "oxlint") (biome . "biome")))
- '(flymake-show-diagnostics-at-end-of-line 'short)
  '(magit-repository-directories '(("~/Code" . 0)))
  '(markdown-enable-highlighting-syntax t)
  '(markdown-fontify-code-blocks-natively t)
  '(markdown-header-scaling t)
  '(project-switch-use-entire-map t)
  '(safe-local-variable-values
-   '((lsp-enabled-clients ruby-syntax-tree-ls) (apheleia--syntax-tree-single-quotes)
+   '((eval progn (whitespace-mode 0) (apheleia-mode 0) (electric-indent-mode 0))
+     (lsp-enabled-clients ruby-syntax-tree-ls) (apheleia--syntax-tree-single-quotes)
      (apheleia--syntax-tree-single-quotes nil) (eval when (fboundp 'rainbow-mode) (rainbow-mode 1))))
  '(standard-indent 2)
  '(straight-recipes-gnu-elpa-ignored-packages '(cl-generic cl-lib nadvice seq project))
