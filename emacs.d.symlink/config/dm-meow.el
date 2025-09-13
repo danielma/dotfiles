@@ -103,6 +103,7 @@
   (meow-global-mode)
   :custom
   (meow-use-cursor-position-hack t)
+  (meow-keypad-ctrl-meta-prefix 47)     ; /
   (meow-mode-state-list '((conf-mode . normal)
                           (fundamental-mode . normal)
                           (help-mode . motion)

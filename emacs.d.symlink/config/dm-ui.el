@@ -26,8 +26,7 @@
 (use-package display-line-numbers
   ;; :custom
   ;; (display-line-numbers-type 'relative)
-  :hook text-mode
-  )
+  :hook text-mode prog-mode)
 
 (use-package whitespace
   :delight
@@ -43,7 +42,7 @@
 (use-package consult
   :bind (:map global-map
 	            ("M-g i" . consult-imenu)
-	            ("C-x b" . consult-buffer))
+	            ("C-x C-b" . consult-buffer))
   :config
   (defun consult-symbol-at-point ()
     "Search for the matching `symbol-at-point`."

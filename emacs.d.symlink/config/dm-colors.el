@@ -26,7 +26,10 @@
   )
 
 (use-package indent-bars
-  :hook ((prog-mode yaml-mode) . indent-bars-mode))
+  :hook ((prog-mode yaml-mode) . indent-bars-mode)
+  :custom
+  (indent-bars-treesit-support t))
+
 
 ;; (load-theme 'modus-operandi)
 ;; (use-package ef-themes)
