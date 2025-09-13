@@ -67,7 +67,7 @@
          ("C-x w <right>" . windmove-right)
          ("C-x w <up>" . windmove-up)
          ("C-x w <down>" . windmove-down)
-         ("C-x t" . tab-bar-transient-menu)
+         ("C-x C-t" . tab-bar-transient-menu)
 	       )
   :custom (select-enable-clipboard . nil))
 

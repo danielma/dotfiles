@@ -4,6 +4,11 @@
 
 ;;; Code:
 
+(defun consult-line-literal ()
+  "Start `consult-line' assuming we want a literal string."
+  (interactive)
+  (consult-line "="))
+
 ;; https://github.com/meow-edit/meow/blob/master/KEYBINDING_COLEMAK.org
 (defun meow-setup ()
   "Meow setup from the docs."
@@ -18,6 +23,7 @@
    '("e" . meow-prev)
    '("<escape>" . ignore))
   (meow-leader-define-key
+   '("p" . "C-x p")
    '("?" . meow-cheatsheet)
    '("1" . meow-digit-argument)
    '("2" . meow-digit-argument)
@@ -41,17 +47,19 @@
    '("8" . meow-expand-8)
    '("9" . meow-expand-9)
    '("-" . negative-argument)
-   '(":" . meow-reverse)
+   '(":" . execute-extended-command)
+   '(";" . meow-reverse)
    '("," . meow-inner-of-thing)
    '("." . meow-bounds-of-thing)
    '("[" . meow-beginning-of-thing)
    '("]" . meow-end-of-thing)
-   '("/" . consult-line)
+   '("/" . consult-line-literal)
    '("a" . meow-append)
    '("A" . meow-open-below)
    '("b" . meow-back-word)
    '("B" . meow-back-symbol)
    '("c" . meow-change)
+   '("C" . meow-comment)
    '("e" . meow-prev)
    '("E" . meow-prev-expand)
    '("f" . meow-find)
@@ -78,7 +86,7 @@
    '("S" . meow-open-above)
    '("t" . meow-till)
    '("u" . meow-undo)
-   '("U" . meow-undo-in-selection)
+   '("U" . undo-tree-redo)
    '("v" . meow-search)
    '("w" . meow-next-word)
    '("W" . meow-next-symbol)
@@ -94,6 +102,7 @@
   (meow-setup)
   (meow-global-mode)
   :custom
+  (meow-use-cursor-position-hack t)
   (meow-mode-state-list '((conf-mode . normal)
                           (fundamental-mode . normal)
                           (help-mode . motion)
