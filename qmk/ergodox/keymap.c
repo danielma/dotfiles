@@ -29,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ├────────┼──────┼──────┼──────┼──────┼──────┼──────┤ ├──────┼──────┼──────┼──────┼──────┼──────┼────────┤
  * │ Tab    │   Q  │   W  │   F  │   P  │   B  │ cmd  │ │ Hyper│   J  │   L  │   U  │   Y  │   :  │   -    │
  * ├────────┼──────┼──────┼──────┼──────┼──────┤ spc  │ │ (OS) ├──────┼──────┼──────┼──────┼──────┼────────┤
- * │ Esc    │   A  │   R  │   S  │   T  │   G  ├──────┤ ├──────┤   M  │   N  │   E  │   I  │   O  │ '/SYMB │
+ * │ Esc    │   A  │   R  │ S/MO │   T  │   G  ├──────┤ ├──────┤   M  │   N  │   E  │   I  │   O  │   '    │
  * ├────────┼──────┼──────┼──────┼──────┼──────┤ CAPS │ │ Meh  ├──────┼──────┼──────┼──────┼──────┼────────┤
  * │ SHIFT  │Z/Ctrl│   X  │   C  │   D  │   V  │      │ │      │   K  │   H  │   ,  │   .  │/SYMB │ SHIFT  │
  * ╰─┬──────┼──────┼──────┼──────┼──────┼──────┴──────╯ ╰──────┴──────┼──────┼──────┼──────┼──────┼──────┬─╯
@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,  KC_LCTL,     MO(NUMP),      KC_LALT, KC_LGUI,                         /**/                        MO(SYMB),GUI_T(KC_LEFT),KC_DOWN, KC_UP,   KC_RIGHT,
                                                                KC_VOLD, KC_VOLU,       /**/ KC_MPLY,      KC_MNXT,
                                                                         KC_MUTE,       /**/ KC_MPRV,
-                                                      KC_BSPC ,KC_DEL,  RESET,         /**/ RESET,        KC_ENT, KC_SPC
+                                               LSFT_T(KC_BSPC),KC_DEL,  _______,       /**/ _______,      KC_ENT, KC_SPC
 ),
 /* Keymap 1: Basic layer
  *
@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                               ╭──────┼──────┼──────┤ ├──────┼────────┼──────╮
  *                               │      │      │ Mute │ │ Prev │        │      │
  *                               │BSPC  │ Del  ├──────┤ ├──────┤ Enter  │Space │
- *                               │      │      │ Flash│ │ Flash│        │      │
+ *                               │ /SFT │      │      │ │      │        │      │
  *                               ╰──────┴──────┴──────╯ ╰──────┴────────┴──────╯
  */
 [QWRT] = LAYOUT_ergodox_pretty(  // layer 0 : default
@@ -87,11 +87,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 2: Symbol Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |           |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |        |
+ * | FLASH  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |           |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |   !  |   @  |   {  |   }  |   %  |      |           |      |   ^  |   <  |   >  |   |  |      |    +   |
+ * |        |   !  |   @  |   {  |   }  |   %  |      |           |      |   ^  |      |      |   |  |      |    +   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |   ~    |   `  |   #  |   (  |   )  |      |------|           |------|   &  |      |      |   ;  |      |    "   |
+ * |   ~    |   `  |   #  |   (  |   )  |      |------|           |------|   &  |   <  |   >  |   ;  |      |    "   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |      |   $  |   [  |   ]  |      |      |           |      |   *  |      |      |   \  |  ?   |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -107,9 +107,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 // SYMBOLS
 [SYMB] = LAYOUT_ergodox_pretty(
-       _______,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,        KC_F6,   /**/ KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______,
-       _______,KC_EXLM,KC_AT,  KC_LCBR,KC_RCBR,KC_PERC,      _______, /**/ _______, KC_CIRC, KC_LABK, KC_RABK, KC_PIPE, _______, KC_PLUS,
-       KC_TILD,KC_GRV, KC_HASH,KC_LPRN,KC_RPRN,_______,               /**/          KC_AMPR, _______, _______, KC_SCLN, _______, LSFT(KC_QUOT),
+       RESET,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,        KC_F6,   /**/ KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______,
+       _______,KC_EXLM,KC_AT,  KC_LCBR,KC_RCBR,KC_PERC,      _______, /**/ _______, KC_CIRC, _______, _______, KC_PIPE, _______, KC_PLUS,
+       KC_TILD,KC_GRV, KC_HASH,KC_LPRN,KC_RPRN,_______,               /**/          KC_AMPR, KC_LABK, KC_RABK, KC_SCLN, _______, LSFT(KC_QUOT),
        _______,_______,KC_DLR, KC_LBRC,KC_RBRC,_______,      _______, /**/ _______, KC_ASTR, _______, _______, KC_BSLS, KC_QUES, _______,
        _______,_______,_______,_______,_______,                       /**/                   _______, _______, KC_DOT,  KC_COMM, _______,
                                        _______,_______,               /**/ _______, _______,
