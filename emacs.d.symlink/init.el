@@ -42,8 +42,8 @@
 
   (inhibit-startup-message t)
   (make-backup-files nil)
-  (backup-directory-alist `((".*" . ,temporary-file-directory)))
-  (auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+  (backup-directory-alist `((".*" . "~/.emacs-saves")))
+  (auto-save-file-name-transforms `((".*" "~/.emacs-saves/" t)))
   (ring-bell-function 'ignore)
   (frame-resize-pixelwise t))
 
@@ -174,7 +174,6 @@
  '(markdown-enable-highlighting-syntax t)
  '(markdown-fontify-code-blocks-natively t)
  '(markdown-header-scaling t)
- '(project-switch-use-entire-map t)
  '(safe-local-variable-values
    '((eval progn (whitespace-mode 0) (apheleia-mode 0) (electric-indent-mode 0))
      (lsp-enabled-clients ruby-syntax-tree-ls) (apheleia--syntax-tree-single-quotes)

@@ -59,13 +59,14 @@
 (use-package emacs
   :config
   (advice-add 'project-remember-project :around 'project-around-project-remember-project)
+  :custom
+  (project-switch-use-entire-map t)
   :bind (:map project-prefix-map
+              ("s" . #'switch-to-term)
+              ("g" . #'magit-project-status)
+              ("r" . #'rg-project-simple-literal)
               ("t" . #'project-find-test-or-implementation)
               ("T" . #'project-find-test-or-implementation-other-window)))
-
-(add-to-list 'project-switch-commands '(switch-to-term "VTerm" ?t))
-(add-to-list 'project-switch-commands '(rg-project-simple-literal "RG" ?r))
-(add-to-list 'project-switch-commands '(magit-project-status "Magit" ?g))
 
 ;; useful from Projectile
 (defun project-verify-file (file)

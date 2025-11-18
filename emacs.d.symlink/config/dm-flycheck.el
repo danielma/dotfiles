@@ -23,7 +23,7 @@
 
 (use-package flymake
   :delight
-  :bind (("C-c !" . flymake-transient-menu))
+  :bind (("C-c ." . flymake-transient-menu))
   :config
   (advice-add 'ruby-flymake-rubocop--use-bundler-p :around 'ruby-flymake-rubocop--with-gemfile-lock)
   :custom

@@ -160,7 +160,7 @@
          (file-path (buffer-file-name dm-guard-manual-test-buffer))
          (file-name (file-relative-name file-path (project-root (project-current))))
          (test-cmd (cond
-                    ((--dm-guard-js-file-p file-name) "yarn run test")
+                    ((--dm-guard-js-file-p file-name) "npm run test -- ")
                     ;; ((eq project-type 'rails-rspec) (concat "bin/spring " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'rails-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
                     ((eq project-type 'ruby-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))

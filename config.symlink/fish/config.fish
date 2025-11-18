@@ -59,3 +59,8 @@ source ~/.dotfiles/config.symlink/secrets
 # Direnv
 
 direnv hook fish | source
+
+# uv
+fish_add_path "/Users/danielma/.local/bin"
+
+alias claude="/Users/danielma/.claude/local/claude"

@@ -1,4 +1,4 @@
-if [[ -n $SSH_CONNECTION ]]; then
+if [[ -v SSH_CONNECTION ]]; then
   export PS1='%m:%3~ $(git_dirty) %# '
 else
   export PS1='%3~ $(git_dirty) %# '

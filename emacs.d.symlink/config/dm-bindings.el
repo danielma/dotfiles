@@ -39,7 +39,7 @@
 
 (transient-define-prefix tab-bar-transient-menu ()
   [("RET" "Switch" tab-switch)
-   ("N" "New" tab-new)
+   ("t" "New" tab-new)
    ("n" "Next" tab-next :transient t)
    ("p" "Previous" tab-previous :transient t)
    ("q" "Quit" transient-quit-one)
@@ -63,11 +63,13 @@
          ("M-e" . windmove-up)
          ("M-m" . windmove-left)
          ("M-i" . windmove-right)
-         ("C-x w <left>" . windmove-left)
-         ("C-x w <right>" . windmove-right)
-         ("C-x w <up>" . windmove-up)
-         ("C-x w <down>" . windmove-down)
          ("C-x C-t" . tab-bar-transient-menu)
+         :map window-prefix-map
+         ("=" . balance-windows)
+         ("n" . windmove-down)
+         ("m" . windmove-left)
+         ("e" . windmove-up)
+         ("i" . windmove-right)
 	       )
   :custom (select-enable-clipboard . nil))
 

@@ -24,6 +24,7 @@
    '("<escape>" . ignore))
   (meow-leader-define-key
    '("p" . "C-x p")
+   '("w" . "C-x w")
    '("?" . meow-cheatsheet)
    '("1" . meow-digit-argument)
    '("2" . meow-digit-argument)
@@ -47,6 +48,7 @@
    '("8" . meow-expand-8)
    '("9" . meow-expand-9)
    '("-" . negative-argument)
+   '("=" . meow-indent)
    '(":" . execute-extended-command)
    '(";" . meow-reverse)
    '("," . meow-inner-of-thing)
