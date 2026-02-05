@@ -24,5 +24,8 @@
 
 (use-package fish-mode)
 
+(use-package nix-ts-mode
+  :mode "\\.nix\\'")
+
 (provide 'dm-langs)
 ;;; dm-langs.el ends here

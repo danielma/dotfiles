@@ -4,8 +4,8 @@
 #include "debug.h"
 #include "action_layer.h"
 
-#define CLMK 0 // colemak layer
-#define QWRT 1 // qwerty layer
+#define CLMK 1 // colemak layer
+#define QWRT 0 // qwerty layer
 #define SYMB 2 // symbols
 #define NUMP 3 // numpad
 #define MOTI 4 // motion
@@ -40,11 +40,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                               ╭──────┼──────┼──────┤ ├──────┼────────┼──────╮
  *                               │      │      │ Mute │ │ Prev │        │      │
  *                               │BSPC  │ Del  ├──────┤ ├──────┤ Enter  │Space │
- *                               │      │      │ Flash│ │ Flash│        │      │
+ *                               │ /SFT │      │ Flash│ │ Flash│        │      │
  *                               ╰──────┴──────┴──────╯ ╰──────┴────────┴──────╯
  */
 [CLMK] = LAYOUT_ergodox_pretty(
-  KC_GRV,  KC_1,        KC_2,          KC_3,    KC_4,    KC_5,    DF(CLMK),      /**/ TG(NUMP),     KC_6,    KC_7,    KC_8,          KC_9,    KC_UNDS, KC_EQL,
+  KC_GRV,  KC_1,        KC_2,          KC_3,    KC_4,    KC_5,    DF(QWRT),      /**/ TG(NUMP),     KC_6,    KC_7,    KC_8,          KC_9,    KC_UNDS, KC_EQL,
   KC_TAB,  KC_Q,        KC_W,          KC_F,    KC_P,    KC_B,    LGUI(KC_SPC),  /**/ OS_HYPR,      KC_J,    KC_L,    KC_U,          KC_Y,    CLN_FLP, KC_MINUS,
   KC_ESC,  KC_A,        LT(MOTI,KC_R), KC_S,    KC_T,    KC_G,                   /**/               KC_M,    KC_N,    KC_E,          KC_I,    KC_O,    KC_QUOT,
   KC_LSFT, CTL_T(KC_Z), KC_X,          KC_C,    KC_D,    KC_V,    KC_CAPS,       /**/ MEH_T(KC_NO), KC_K,    KC_H,    KC_COMM,       KC_DOT,  LT(SYMB,KC_SLSH), KC_LSFT,
@@ -60,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ├────────┼──────┼──────┼──────┼──────┼──────┼──────┤ ├──────┼──────┼──────┼──────┼──────┼──────┼────────┤
  * │Tab     │   Q  │   W  │   E  │   R  │   T  │ cmd  │ │ Hyper│   Y  │   U  │   I  │   O  │   P  │   -    │
  * ├────────┼──────┼──────┼──────┼──────┼──────┤ spc  │ │ (OS) ├──────┼──────┼──────┼──────┼──────┼────────┤
- * │ Esc    │   A  │   S  │   D  │   F  │   G  ├──────┤ ├──────┤   H  │   J  │   K  │   L  │   :  │ '/SYMB │
+ * │ Esc    │   A  │   S  │   D  │   F  │   G  ├──────┤ ├──────┤   H  │   J  │   K  │   L  │:/SYMB│   '    │
  * ├────────┼──────┼──────┼──────┼──────┼──────┤ CAPS │ │ Meh  ├──────┼──────┼──────┼──────┼──────┼────────┤
  * │ SHIFT  │Z/Ctrl│   X  │   C  │   V  │   B  │      │ │      │   N  │   M  │   ,  │   .  │/LGUI │ SHIFT  │
  * ╰─┬──────┼──────┼──────┼──────┼──────┼──────┴──────╯ ╰──────┴──────┼──────┼──────┼──────┼──────┼──────┬─╯
@@ -75,14 +75,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                               ╰──────┴──────┴──────╯ ╰──────┴────────┴──────╯
  */
 [QWRT] = LAYOUT_ergodox_pretty(  // layer 0 : default
-  _______, KC_1,        KC_2,     KC_3,    KC_4,    KC_5,    DF(CLMK),    /**/ TG(NUMP),    KC_6,   KC_7,    KC_8,          KC_9,   KC_UNDS,   KC_EQL,
+  KC_GRV,  KC_1,        KC_2,     KC_3,    KC_4,    KC_5,    DF(CLMK),    /**/ TG(NUMP),    KC_6,   KC_7,    KC_8,          KC_9,   KC_UNDS,   KC_EQL,
   KC_TAB,  KC_Q,        KC_W,     KC_E,    KC_R,    KC_T,    LGUI(KC_SPC),/**/ OS_HYPR,     KC_Y,   KC_U,    KC_I,          KC_O,   KC_P,      KC_MINUS,
-  KC_ESC,  KC_A,        KC_S,     KC_D,    KC_F,    KC_G,                 /**/              KC_H,   KC_J,    KC_K,          KC_L,   CLN_FLP,   _______,
-  KC_LSFT, CTL_T(KC_Z), KC_X,     KC_C,    KC_V,    KC_B,    KC_CAPS,     /**/ MEH_T(KC_NO),KC_N,   KC_M,    KC_COMM,       KC_DOT, _______,   KC_LSFT,
+  KC_ESC,  KC_A,        KC_S,     KC_D,    KC_F,    KC_G,                 /**/              KC_H,   KC_J,    KC_K,          KC_L,   MCR_0,     KC_QUOT,
+  KC_LSFT, CTL_T(KC_Z), KC_X,     KC_C,    KC_V,    KC_B,    KC_CAPS,     /**/ MEH_T(KC_NO),KC_N,   KC_M,    KC_COMM,       KC_DOT, LT(SYMB,KC_SLSH), KC_LSFT,
   KC_GRV,  KC_LCTL,     MO(NUMP), KC_LALT, KC_LGUI,                       /**/                      MO(SYMB),GUI_T(KC_LEFT),KC_DOWN,KC_UP,     KC_RIGHT,
                                                     KC_VOLD, KC_VOLU,     /**/ KC_MPLY,     KC_MNXT,
                                                              KC_MUTE,     /**/ KC_MPRV,
-                                  KC_BSPC,  LT(SYMB, KC_DEL),RESET,       /**/ RESET,       KC_ENT, KC_SPC
+                                  KC_BSPC,  LT(SYMB, KC_DEL),_______,     /**/ _______,     KC_ENT, KC_SPC
   ),
 /* Keymap 2: Symbol Layer
  *

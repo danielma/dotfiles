@@ -75,12 +75,17 @@
   (sp-local-pair '(js-mode js-jsx-mode typescript-mode rjsx-mode ruby-base-mode) "(" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
   )
 
-(use-package avy
-  :bind (:map global-map
-              ("C-:" . avy-goto-char-timer)
-              ("M-g w" . avy-goto-word-1)
-              :map isearch-mode-map
-              ("C-'" . avy-isearch)))
+(defun sp-wrap-interactive (pair)
+  "Inreactive function to wrap with PAIR."
+  (interactive "cPair:")
+  (sp-wrap-with-pair (char-to-string pair)))
+
+(use-package iedit
+  :config
+  (defun iedit-start-on-this-occurrence ()
+    (interactive)
+    (let ((occurrence (iedit-default-occurrence)))
+      )))
 
 (use-package transient)
 

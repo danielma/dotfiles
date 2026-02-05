@@ -134,6 +134,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auth-sources '("~/.netrc" macos-keychain-internet))
+ '(claude-code-ide-window-side 'right)
+ '(claude-code-ide-window-width 90)
  '(claude-code-program "/Users/danielma/.config/claude/local/claude")
  '(custom-safe-themes
    '("a9eeab09d61fef94084a95f82557e147d9630fbbb82a837f971f83e66e21e5ad"
