@@ -12,9 +12,12 @@
     ;; (print process-environment)
     (apply orig-fun args)))
 
-(use-package vterm
+(use-package
+  vterm
   :custom
   (vterm-keymap-exceptions '("C-c" "C-x" "C-u" "C-g" "C-h" "C-l" "M-x" "M-o" "C-y" "M-y" "M-m" "M-n" "M-e" "M-i"))
+  :hook
+  (vterm-mode . (lambda () (meow-mode -1)))
   :config
   (advice-add 'vterm :around 'with-editor-advice-around)
 

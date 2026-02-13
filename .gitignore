@@ -9,11 +9,3 @@ atom.symlink/blob-store
 
 git/gitconfig.symlink
 *.log
-
-config.symlink/yarn
-config.symlink/configstore
-config.symlink/heroku
-config.symlink/asciinema
-config.symlink/gatsby
-config.symlink/raycast
-config.symlink/secrets

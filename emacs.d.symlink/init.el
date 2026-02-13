@@ -87,7 +87,7 @@
 (require 'dm-yasnippet)
 
 (use-package claude-code-ide
-  :straight (:type git :host github :repo "manzaltu/claude-code-ide.el")
+  :straight (:local-repo "/Users/danielma/Code/test/claude-code-ide.el")
   :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
   :config
   (claude-code-ide-emacs-tools-setup)
@@ -134,6 +134,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auth-sources '("~/.netrc" macos-keychain-internet))
+ '(claude-code-ide-use-side-window nil)
  '(claude-code-ide-window-side 'right)
  '(claude-code-ide-window-width 90)
  '(claude-code-program "/Users/danielma/.config/claude/local/claude")
