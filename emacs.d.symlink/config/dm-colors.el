@@ -14,12 +14,8 @@
   :custom
   (line-spacing 0)
   :custom-face
-  ;; (default ((t (:height 140 :width regular :weight regular :family "Inconsolata Nerd Font Mono"))))
-  (default ((t (:height 140 :width regular :weight regular))))
+  (default ((t (:height 140 :width regular :weight regular :family "Iosevka Nerd Font Mono"))))
   :config
-  (set-frame-font "Iosevka Nerd Font Mono")
-  ;; (set-frame-font "JetBrains Mono")
-  ;; (face-attribute 'default :family)
   (when (display-graphic-p)
     ;; (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji") nil 'prepend)
     (set-fontset-font t nil "SF Pro Display" nil 'append))
