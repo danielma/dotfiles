@@ -9,6 +9,7 @@
   (setq-local fill-column 70))
 
 (use-package magit
+  :defer t
   :custom
   (git-commit-major-mode 'markdown-mode)
   (magit-list-refs-sortby "-committerdate")

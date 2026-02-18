@@ -15,3 +15,5 @@ newdiff.patch
 .prettier_d
 
 .log/
+
+.claude/settings.local.json

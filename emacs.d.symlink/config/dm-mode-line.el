@@ -23,15 +23,15 @@
   "Highlight SOURCE with powerline separators WHERE (right, left, or default both)."
   (let ((where (or where 'both)))
     (cl-case where
-      ('both
+      (both
        (list
 	      (propertize (concat mode-line-powerline-separator-right " " source " ") 'face '(:inverse-video t))
 	      mode-line-powerline-separator-right))
-      ('right
+      (right
        (list
 	      (propertize (concat " " source " ") 'face '(:inverse-video t))
 	      mode-line-powerline-separator-right))
-      ('left
+      (left
        (list
 	      (propertize (concat mode-line-powerline-separator-right " " source " ") 'face '(:inverse-video t))))
       (t (error "WHERE must be right left or both")))))
@@ -222,12 +222,8 @@
 
   (add-hook 'window-configuration-change-hook #'my/mode-line--set-selected-window)
   (add-hook 'focus-in-hook #'my/mode-line--set-selected-window)
-  (defadvice select-window (after mode-line-select-window activate)
-    "Set mode-line's selected window value for use in determining the active mode-line."
-    (my/mode-line--set-selected-window))
-  (defadvice select-frame (after mode-line-select-frame activate)
-    "Set mode-line's selected window value for use in determining the active mode-line."
-    (my/mode-line--set-selected-window))
+  (advice-add 'select-window :after (lambda (&rest _) (my/mode-line--set-selected-window)))
+  (advice-add 'select-frame :after (lambda (&rest _) (my/mode-line--set-selected-window)))
 
   (defun my/mode-line-selected-window-active ()
     "Return whether the current window is active."

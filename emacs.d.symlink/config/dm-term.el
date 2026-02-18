@@ -21,13 +21,15 @@
   :config
   (advice-add 'vterm :around 'with-editor-advice-around)
 
-  (defadvice process-kill-buffer-query-function (before vterm-set-process-query-on-exit-flag-before-query activate)
+  (defun vterm--set-process-query-on-exit-flag (&rest _)
     "Set `process-query-on-exit-flag' correctly for vterm buffers."
     (let ((process (get-buffer-process (current-buffer))))
       (and process
            (vterm-check-proc)
            (set-process-query-on-exit-flag process (process-running-child-p process)))
       t))
+
+  (advice-add 'process-kill-buffer-query-function :before #'vterm--set-process-query-on-exit-flag)
   :bind (:map vterm-mode-map
               ("s-v" . vterm-yank-with-clipboard))
   )

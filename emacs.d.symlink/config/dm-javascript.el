@@ -2,6 +2,7 @@
 
 (use-package js
   :config
+  (makunbound 'js-indent-level)
   (defvaralias 'js-indent-level 'tab-width)
   (add-to-list 'auto-mode-alist '("\\.mts\\'" . js-ts-mode))
   )

@@ -23,8 +23,7 @@
 
 (straight-use-package 'use-package)
 (setq straight-enable-use-package-integration t
-      straight-use-package-by-default t
-      use-package-always-demand t)
+      straight-use-package-by-default t)
 
 (if (display-graphic-p)
     (progn
@@ -95,7 +94,9 @@
   (claude-code-ide-vterm-anti-flicker t)
   (claude-code-ide-vterm-render-delay 0.01))
 
-(require 'sf)
+;; Defer sf.el - only load when sf-symbol-* commands are used
+(autoload 'sf-symbol-insert "sf" "Insert an SF Symbol" t)
+(autoload 'sf-symbol-insert-name "sf" "Insert an SF Symbol name" t)
 
 ;; (use-package dm-projectile :straight nil)
 
@@ -123,8 +124,14 @@
 ;; (epa-file-enable)
 ;; (setq epa-pinentry-mode 'loopback)
 
-;; only for testing
-(find-file "~/.emacs.d/init.el")
+;; Startup time benchmark
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
 
 ;;; init.el ends here
 
@@ -177,6 +184,8 @@
  '(markdown-enable-highlighting-syntax t)
  '(markdown-fontify-code-blocks-natively t)
  '(markdown-header-scaling t)
+ '(safe-local-variable-directories
+   '("/Users/danielma/.dotfiles/emacs.d.symlink/straight/repos/magit/"))
  '(safe-local-variable-values
    '((eval progn (whitespace-mode 0) (apheleia-mode 0) (electric-indent-mode 0))
      (lsp-enabled-clients ruby-syntax-tree-ls) (apheleia--syntax-tree-single-quotes)
@@ -185,7 +194,7 @@
  '(straight-recipes-gnu-elpa-ignored-packages '(cl-generic cl-lib nadvice seq project))
  '(warning-suppress-log-types
    '((native-compiler) (defvaralias losing-value emmet-indentation)
-     ((defvaralias losing-value js-indent-level)) ((defvaralias losing-value emmet-indentation)))))
+     (((defvaralias losing-value emmet-indentation))))))
 (put 'narrow-to-region 'disabled nil)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
