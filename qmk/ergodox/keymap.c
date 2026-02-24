@@ -27,9 +27,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ╭────────┬──────┬──────┬──────┬──────┬──────┬──────╮ ╭──────┬──────┬──────┬──────┬──────┬──────┬────────╮
  * │ `      │   1  │   2  │   3  │   4  │   5  │ QWRT │ │ NUMP │   6  │   7  │   8  │   9  │   _  │   =    │
  * ├────────┼──────┼──────┼──────┼──────┼──────┼──────┤ ├──────┼──────┼──────┼──────┼──────┼──────┼────────┤
- * │ Tab    │   Q  │   W  │   F  │   R  │   B  │ cmd  │ │ Hyper│   J  │   L  │   U  │   O  │   P  │   -    │
+ * │ Tab    │   Q  │   W  │   F  │   R  │   B  │ cmd  │ │ Hyper│   J  │   U  │   I  │   O  │   P  │   -    │
  * ├────────┼──────┼──────┼──────┼──────┼──────┤ spc  │ │ (OS) ├──────┼──────┼──────┼──────┼──────┼────────┤
- * │ Esc    │   A  │  S/MO│   D  │   T  │   G  ├──────┤ ├──────┤   M  │   N  │   E  │   I  │   :  │   '    │
+ * │ Esc    │   A  │  S/MO│   D  │   T  │   G  ├──────┤ ├──────┤   M  │   N  │   E  │   L  │   :  │   '    │
  * ├────────┼──────┼──────┼──────┼──────┼──────┤ CAPS │ │ Meh  ├──────┼──────┼──────┼──────┼──────┼────────┤
  * │ SHIFT  │Z/Ctrl│   X  │   C  │   Y  │   V  │      │ │      │   K  │   H  │   ,  │   .  │/SYMB │ SHIFT  │
  * ╰─┬──────┼──────┼──────┼──────┼──────┼──────┴──────╯ ╰──────┴──────┼──────┼──────┼──────┼──────┼──────┬─╯
@@ -45,8 +45,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [CLMK] = LAYOUT_ergodox_pretty(
   KC_GRV,  KC_1,        KC_2,          KC_3,    KC_4,    KC_5,    DF(QWRT),      /**/ TG(NUMP),     KC_6,    KC_7,    KC_8,          KC_9,    KC_UNDS, KC_EQL,
-  KC_TAB,  KC_Q,        KC_W,          KC_F,    KC_R,    KC_B,    LGUI(KC_SPC),  /**/ OS_HYPR,      KC_J,    KC_L,    KC_U,          KC_O,    KC_P,    KC_MINUS,
-  KC_ESC,  KC_A,        LT(MOTI,KC_S), KC_D,    KC_T,    KC_G,                   /**/               KC_M,    KC_N,    KC_E,          KC_I,    CLN_FLP, KC_QUOT,
+  KC_TAB,  KC_Q,        KC_W,          KC_F,    KC_R,    KC_B,    LGUI(KC_SPC),  /**/ OS_HYPR,      KC_J,    KC_U,    KC_I,          KC_O,    KC_P,    KC_MINUS,
+  KC_ESC,  KC_A,        LT(MOTI,KC_S), KC_D,    KC_T,    KC_G,                   /**/               KC_M,    KC_N,    KC_E,          KC_L,    CLN_FLP, KC_QUOT,
   KC_LSFT, CTL_T(KC_Z), KC_X,          KC_C,    KC_Y,    KC_V,    KC_CAPS,       /**/ MEH_T(KC_NO), KC_K,    KC_H,    KC_COMM,       KC_DOT,  LT(SYMB,KC_SLSH), KC_LSFT,
   KC_GRV,  KC_LCTL,     MO(NUMP),      KC_LALT, KC_LGUI,                         /**/                        MO(SYMB),GUI_T(KC_LEFT),KC_DOWN, KC_UP,   KC_RIGHT,
                                                                KC_VOLD, KC_VOLU,       /**/ KC_MPLY,      KC_MNXT,
