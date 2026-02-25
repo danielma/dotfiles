@@ -69,6 +69,7 @@
 (defun switch-to-term ()
   "Switch to a term buffer for the current project."
   (interactive)
+  (require 'vterm)
   (if (derived-mode-p 'eat-mode 'vterm-mode)
       (previous-buffer)
     (let* ((project (project-current nil))

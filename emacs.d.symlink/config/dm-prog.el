@@ -51,24 +51,24 @@
         '(eslint)))
 
 ;; Cache treesit-language-available-p results to avoid repeated slow disk lookups
-(defvar my/treesit-available-cache (make-hash-table)
-  "Cache for `treesit-language-available-p' results.")
+(defvar my/treesit-available-cache (make-hash-table :test 'equal)
+  "Cache for `treesit-language-available-p' results.
+Keys are (lang . detail-normalized) cons cells.")
 
 (advice-add 'treesit-language-available-p :around
             (lambda (orig-fn lang &optional detail)
-              (if detail
-                  ;; When detail is requested, bypass cache since return value differs
-                  (lambda ()
-                    (message (format "called with detail: %S" detail))
-                    (funcall orig-fn lang detail))
-                (let ((cached (gethash lang my/treesit-available-cache 'miss)))
-                  (if (eq cached 'miss)
-                      (puthash lang (funcall orig-fn lang) my/treesit-available-cache)
-                    cached)))))
+              (let* ((key (cons lang (and detail t)))
+                     (cached (gethash key my/treesit-available-cache 'miss)))
+                (if (eq cached 'miss)
+                    (progn
+                      (message "treesit cache miss: %S" key)
+                      (puthash key (funcall orig-fn lang detail) my/treesit-available-cache))
+                  cached))))
 
 (use-package treesit-auto
   :config
   (global-treesit-auto-mode)
+  (treesit-auto-add-to-auto-mode-alist)
   :custom
   (treesit-extra-load-path '("~/Code/test/tree-sitter-module/dist")))
 

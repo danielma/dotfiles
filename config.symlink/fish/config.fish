@@ -42,7 +42,9 @@ source ~/.dotfiles/config.symlink/secrets
 
 # Dev
 
-set --export EDITOR "emacsclient -c"
+if ! test $INSIDE_EMACS
+    set --export EDITOR emacsclient -c
+end
 
 # # ASDF configuration code
 # if test -z $ASDF_DATA_DIR

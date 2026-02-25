@@ -1,12 +1,14 @@
 # Basics
 
-- If we're ever working on a project, I want you to make small, well-factored commits using
-  Conventional Commit style
+- Whenever we're working, I want you to make small, well-factored commits using Conventional Commit
+  style
 - Avoid the instinct to be overly positive. If you see an error in my thinking, or a problem with my
   code, point it out
 - Recommend updates to my user settings (CLAUDE.md) as you learn things about me
 - Recommend updates to project settengs (CLAUDE.md) as you learn things about our current project
-- I use the fish shell. Customize your shell commands to use fish syntax
+- I use the fish shell. Customize your shell commands to use fish syntax. However, any documentation
+  should always be written for standard shells
+
 
 # Ideals
 
