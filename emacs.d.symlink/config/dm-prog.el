@@ -26,6 +26,19 @@
       (with-project-default-directory (apply orig-fun args))
     (apply orig-fun args)))
 
+(use-package rustic
+  :custom
+  (rustic-lsp-client 'eglot))
+
+(defvar my/eglot-format-modes '(rust-mode rust-ts-mode)
+  "Modes where eglot should handle formatting instead of apheleia.")
+
+(add-hook 'eglot-managed-mode-hook
+          (lambda ()
+            (when (and (eglot-managed-p)
+                       (apply #'derived-mode-p my/eglot-format-modes))
+              (apheleia-mode -1)
+              (add-hook 'before-save-hook #'eglot-format-buffer -10 t))))
 
 (use-package apheleia
   :delight "􀋺"

@@ -15,7 +15,9 @@
   (magit-list-refs-sortby "-committerdate")
   (magit-define-global-key-bindings 'recommended)
   :hook
-  (git-commit-setup . my/commit-mode-setup))
+  (magit-status-mode . (lambda () (meow-mode -1)))
+  (git-commit-setup . my/commit-mode-setup)
+  :bind (:map magit-status-mode-map ("SPC" . meow-keypad)))
 
 (use-package forge
   :after magit

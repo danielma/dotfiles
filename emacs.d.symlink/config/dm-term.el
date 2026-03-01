@@ -15,7 +15,7 @@
 (use-package
   vterm
   :custom
-  (vterm-keymap-exceptions '("C-c" "C-x" "C-u" "C-g" "C-h" "C-l" "M-x" "M-o" "C-y" "M-y" "M-m" "M-n" "M-e" "M-i"))
+  (vterm-keymap-exceptions '("C-c" "C-x" "C-u" "C-g" "C-h" "C-l" "M-x" "M-o" "C-y" "M-y" "M-h" "M-j" "M-k" "M-l"))
   :hook
   (vterm-mode . (lambda () (meow-mode -1)))
   :config
@@ -31,7 +31,8 @@
 
   (advice-add 'process-kill-buffer-query-function :before #'vterm--set-process-query-on-exit-flag)
   :bind (:map vterm-mode-map
-              ("s-v" . vterm-yank-with-clipboard))
+              ("s-v" . vterm-yank-with-clipboard)
+              ("C-c C-c" . vterm-send-C-c))
   )
 
 (declare-function vterm "vterm")

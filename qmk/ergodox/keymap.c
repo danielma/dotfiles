@@ -4,8 +4,8 @@
 #include "debug.h"
 #include "action_layer.h"
 
-#define CLMK 0 // colemak layer (customized)
-#define QWRT 1 // qwerty layer
+#define QWRT 0 // colemak layer (customized)
+#define CLMK 1 // qwerty layer
 #define SYMB 2 // symbols
 #define NUMP 3 // numpad
 #define MOTI 4 // motion

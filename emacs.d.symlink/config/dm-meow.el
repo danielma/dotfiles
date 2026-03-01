@@ -115,8 +115,7 @@
                           (help-mode . motion)
                           (prog-mode . normal)
                           (text-mode . normal)
-                          (git-commit-mode . insert)
-                          (vterm-mode . insert))))
+                          (git-commit-mode . insert))))
 
 (provide 'dm-meow)
 

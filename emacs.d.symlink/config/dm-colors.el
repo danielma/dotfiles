@@ -4,11 +4,27 @@
 
 ;;; Code:
 
-(defun my/doom-theme-setup ()
-  (load-theme 'doom-opera-light))
+(defvar my/light-theme 'doom-flatwhite)
+(defvar my/dark-theme 'doom-gruvbox)
+
+(defun my/apply-theme (appearance)
+  "Apply theme based on APPEARANCE ('light or 'dark)."
+  (mapc #'disable-theme custom-enabled-themes)
+  (pcase appearance
+    ('light (load-theme my/light-theme t))
+    ('dark (load-theme my/dark-theme t))))
+
+(defun my/system-appearance-changed (appearance)
+  "Hook for ns-system-appearance-change-functions."
+  (my/apply-theme appearance))
 
 (use-package doom-themes
-  :hook (after-init . my/doom-theme-setup))
+  :config
+  (if (boundp 'ns-system-appearance)
+      (progn
+        (my/apply-theme ns-system-appearance)
+        (add-hook 'ns-system-appearance-change-functions #'my/system-appearance-changed))
+    (my/apply-theme 'light)))
 
 (use-package emacs
   :custom
