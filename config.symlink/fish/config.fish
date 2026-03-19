@@ -36,10 +36,6 @@ set --export RIPGREP_CONFIG_PATH ~/.dotfiles/ripgrep/config
 
 source ~/.dotfiles/config.symlink/fish/work.fish
 
-# Secrets
-
-source ~/.dotfiles/config.symlink/secrets
-
 # Dev
 
 if ! test $INSIDE_EMACS
