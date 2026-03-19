@@ -16,7 +16,6 @@ set -g fish_prompt_pwd_dir_length 0
 
 # Other
 
-set --export fisher_path ~/.config/fish/fisher
 set --export XDG_CONFIG_HOME ~/.config
 
 # FZF
