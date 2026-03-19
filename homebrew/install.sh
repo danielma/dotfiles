@@ -9,11 +9,11 @@ if test "$(uname)" = "Darwin"
 then
     if test ! $(which brew)
     then
-	echo "  Installing Homebrew for you."
-	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-	# Install homebrew packages
-	brew install grc coreutils spark
-  fi
+        echo "  Installing Homebrew for you."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        # Install homebrew packages
+        brew install grc coreutils spark
+    fi
 fi
 
 
