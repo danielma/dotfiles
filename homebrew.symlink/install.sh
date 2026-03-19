@@ -11,10 +11,10 @@ then
     then
         echo "  Installing Homebrew for you."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        # Install homebrew packages
-        brew install grc coreutils spark
     fi
-fi
 
+    echo "  Installing Homebrew packages from Brewfile."
+    brew bundle install --global
+fi
 
 exit 0
