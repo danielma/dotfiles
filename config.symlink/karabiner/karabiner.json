@@ -1,4 +1,5 @@
 {
+    "global": { "show_in_menu_bar": false },
     "profiles": [
         {
             "complex_modifications": {
@@ -2024,6 +2025,7 @@
                 "rules": [
                     {
                         "description": "Colemak Mod-DHm (matrix / ortho keyboards)",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -2147,14 +2149,6 @@
                             },
                             {
                                 "from": {
-                                    "key_code": "r",
-                                    "modifiers": { "optional": ["caps_lock", "left_command", "left_control", "left_alt", "right_command", "right_control", "right_alt"] }
-                                },
-                                "to": [{ "key_code": "p" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
                                     "key_code": "t",
                                     "modifiers": { "optional": ["caps_lock", "left_command", "left_control", "left_alt", "right_command", "right_control", "right_alt"] }
                                 },
@@ -2231,22 +2225,6 @@
                                     "modifiers": { "optional": ["caps_lock", "left_command", "left_control", "left_alt", "right_command", "right_control", "right_alt"] }
                                 },
                                 "to": [{ "key_code": "a" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "s",
-                                    "modifiers": { "optional": ["caps_lock", "left_command", "left_control", "left_alt", "right_command", "right_control", "right_alt"] }
-                                },
-                                "to": [{ "key_code": "r" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "d",
-                                    "modifiers": { "optional": ["caps_lock", "left_command", "left_control", "left_alt", "right_command", "right_control", "right_alt"] }
-                                },
-                                "to": [{ "key_code": "s" }],
                                 "type": "basic"
                             },
                             {
@@ -2342,7 +2320,7 @@
                                     "key_code": "v",
                                     "modifiers": { "optional": ["caps_lock", "left_command", "left_control", "left_alt", "right_command", "right_control", "right_alt"] }
                                 },
-                                "to": [{ "key_code": "d" }],
+                                "to": [{ "key_code": "p" }],
                                 "type": "basic"
                             },
                             {
@@ -2628,22 +2606,6 @@
                                 "to": [
                                     {
                                         "key_code": "f",
-                                        "modifiers": ["left_shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "r",
-                                    "modifiers": {
-                                        "mandatory": ["left_shift"],
-                                        "optional": ["caps_lock", "left_command", "left_control", "left_alt", "right_command", "right_control", "right_alt"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "p",
                                         "modifiers": ["left_shift"]
                                     }
                                 ],
@@ -3027,7 +2989,7 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "d",
+                                        "key_code": "p",
                                         "modifiers": ["left_shift"]
                                     }
                                 ],
@@ -3371,22 +3333,6 @@
                             },
                             {
                                 "from": {
-                                    "key_code": "r",
-                                    "modifiers": {
-                                        "mandatory": ["right_shift"],
-                                        "optional": ["caps_lock", "left_command", "left_control", "left_alt", "right_command", "right_control", "right_alt"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "p",
-                                        "modifiers": ["right_shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
                                     "key_code": "t",
                                     "modifiers": {
                                         "mandatory": ["right_shift"],
@@ -3540,38 +3486,6 @@
                                 "to": [
                                     {
                                         "key_code": "a",
-                                        "modifiers": ["right_shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "s",
-                                    "modifiers": {
-                                        "mandatory": ["right_shift"],
-                                        "optional": ["caps_lock", "left_command", "left_control", "left_alt", "right_command", "right_control", "right_alt"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "r",
-                                        "modifiers": ["right_shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "d",
-                                    "modifiers": {
-                                        "mandatory": ["right_shift"],
-                                        "optional": ["caps_lock", "left_command", "left_control", "left_alt", "right_command", "right_control", "right_alt"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "s",
                                         "modifiers": ["right_shift"]
                                     }
                                 ],
@@ -3763,7 +3677,7 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "d",
+                                        "key_code": "p",
                                         "modifiers": ["right_shift"]
                                     }
                                 ],

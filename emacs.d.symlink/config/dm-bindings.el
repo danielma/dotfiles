@@ -64,6 +64,7 @@
          ("M-h" . windmove-left)
          ("M-l" . windmove-right)
          ("C-x C-t" . tab-bar-transient-menu)
+         ("C-x C-o" . browse-url)
          :map window-prefix-map
          ("=" . balance-windows)
          ("j" . windmove-down)

@@ -17,3 +17,4 @@ newdiff.patch
 .log/
 
 .claude/settings.local.json
+.superset/
