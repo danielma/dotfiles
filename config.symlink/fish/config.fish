@@ -3,8 +3,8 @@ fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/opt/node@22/bin
 fish_add_path ~/.dotfiles/bin
 fish_add_path ~/.cargo/bin
-fish_add_path (go env GOPATH)/bin
-fish_add_path ~/.config/claude/local
+# fish_add_path (go env GOPATH)/bin
+# fish_add_path ~/.config/claude/local # 
 
 # Moving around
 
@@ -16,6 +16,7 @@ set -g fish_prompt_pwd_dir_length 0
 
 # Other
 
+set --export fisher_path ~/.config/fish/fisher
 set --export XDG_CONFIG_HOME ~/.config
 
 # FZF

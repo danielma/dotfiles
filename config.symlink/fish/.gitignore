@@ -1,5 +1,4 @@
 fish_variables
 work.fish
 
-functions/base16*
-functions/_fzf*
+fisher
