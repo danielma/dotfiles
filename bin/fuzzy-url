@@ -1,7 +1,0 @@
-#!/bin/zsh
-
-tmux capture-pane -p -S 0 |
-    grep -o "https\?://[^ ]\+" |
-    tail -r |
-    fzf --bind 'ctrl-o:execute(open -g {})' |
-    xargs open

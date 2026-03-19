@@ -1,7 +1,0 @@
-;; -*- mode: emacs-lisp -*-
-
-(progn
-  (if (string= "<%= bgcolor %>" "ok")
-      (setq mode-line-guard-status 'ok)
-    (setq mode-line-guard-status 'error))
-  (force-mode-line-update))
