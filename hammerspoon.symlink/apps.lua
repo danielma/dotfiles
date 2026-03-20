@@ -1,9 +1,13 @@
 local hyper = {"ctrl", "alt", "cmd", "shift"}
 
 local appHotkeys = {
-  C = "Arc",
-  G = "cmux",
-  S = "Slack",
+   ["1"] = "1Password",
+   C = "Arc",
+   E = "Emacs",
+   G = "cmux",
+   M = "Messages",
+   S = "Slack",
+   W = "Obsidian",
 }
 
 for key, appName in pairs(appHotkeys) do

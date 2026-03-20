@@ -86,6 +86,7 @@
 (require 'dm-yasnippet)
 
 (use-package claude-code-ide
+  :disabled
   :straight (:local-repo "/Users/danielma/Code/test/claude-code-ide.el")
   :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
   :config
