@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+CACHE_TTL_SECONDS="${GITHUB_REPO_CHOOSER_CACHE_TTL_SECONDS:-300}"
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/hammerspoon"
+CACHE_FILE="$CACHE_DIR/github-repo-choices.json"
+TMP_FILE="$CACHE_FILE.tmp.$$"
+
+log() {
+  printf '%s\n' "$*" >&2
+}
+
+status() {
+  log "STATUS: $*"
+}
+
+cache_is_fresh() {
+  [ -f "$CACHE_FILE" ] || return 1
+
+  now="$(date +%s)"
+  modified_at="$(stat -f %m "$CACHE_FILE" 2>/dev/null)" || return 1
+
+  [ $((now - modified_at)) -lt "$CACHE_TTL_SECONDS" ]
+}
+
+write_cache() {
+  mkdir -p "$CACHE_DIR"
+  printf '%s\n' "$1" > "$TMP_FILE"
+  mv "$TMP_FILE" "$CACHE_FILE"
+}
+
+print_cache() {
+  cat "$CACHE_FILE"
+}
+
+build_choices() {
+  status "Fetching GitHub owners"
+
+  owners_json="$({
+    gh api user --jq .login | jq -R .
+    gh api user/orgs --paginate --jq '.[].login' | jq -R .
+  } | jq -s 'map(select(length > 0)) | unique')"
+
+  if [ "$(printf '%s' "$owners_json" | jq 'length')" -eq 0 ]; then
+    log "ERROR: No GitHub owners found"
+    return 1
+  fi
+
+  printf '%s' "$owners_json" | jq -r '.[]' | while IFS= read -r owner; do
+    status "Loading repos for $owner"
+    gh repo list "$owner" --limit 1000 --json nameWithOwner,url,description,pushedAt
+  done | jq -s '
+    add
+    | unique_by(.nameWithOwner)
+    | map({
+        text: .nameWithOwner,
+        subText: (.description // .url),
+        url: .url,
+        pushedAt: (.pushedAt // "")
+      })
+    | sort_by(.nameWithOwner)
+    | sort_by(.pushedAt)
+    | reverse
+  '
+}
+
+cleanup() {
+  rm -f "$TMP_FILE"
+}
+
+trap cleanup EXIT
+
+if cache_is_fresh; then
+  status "Using cached GitHub repos"
+  print_cache
+  exit 0
+fi
+
+status "Refreshing GitHub repos"
+
+if fresh_json="$(build_choices)"; then
+  write_cache "$fresh_json"
+  printf '%s\n' "$fresh_json"
+  exit 0
+fi
+
+if [ -f "$CACHE_FILE" ]; then
+  status "Using stale GitHub repo cache"
+  print_cache
+  exit 0
+fi
+
+log "ERROR: Could not build GitHub repo choices"
+exit 1
