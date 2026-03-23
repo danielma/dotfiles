@@ -12,6 +12,8 @@
   :config
   (add-hook 'yaml-mode-hook (lambda () (modify-syntax-entry ?_ "w"))))
 
+(use-package lua-mode)
+
 (use-package rustic
   :disabled
   :config

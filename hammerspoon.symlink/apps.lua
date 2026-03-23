@@ -5,13 +5,22 @@ local appHotkeys = {
    C = "Arc",
    E = "Emacs",
    G = "cmux",
+   I = "Music",
+   L = "Notion Calendar",
    M = "Messages",
+   N = "Notion",
    S = "Slack",
    W = "Obsidian",
 }
 
 for key, appName in pairs(appHotkeys) do
   hs.hotkey.bind(hyper, key, function()
-    hs.application.launchOrFocus(appName)
+    local frontmostApp = hs.application.frontmostApplication()
+
+    if frontmostApp and frontmostApp:name() == appName then
+       frontmostApp:hide()
+    else
+       hs.application.launchOrFocus(appName)
+    end
   end)
 end
