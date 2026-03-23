@@ -6,6 +6,9 @@ CACHE_TTL_SECONDS="${GITHUB_REPO_CHOOSER_CACHE_TTL_SECONDS:-300}"
 CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/hammerspoon"
 CACHE_FILE="$CACHE_DIR/github-repo-choices.json"
 TMP_FILE="$CACHE_FILE.tmp.$$"
+REFRESH_LOCK_DIR="$CACHE_FILE.lock"
+SCRIPT_PATH="$0"
+HAS_REFRESH_LOCK=0
 
 log() {
   printf '%s\n' "$*" >&2
@@ -32,6 +35,93 @@ write_cache() {
 
 print_cache() {
   cat "$CACHE_FILE"
+}
+
+acquire_refresh_lock() {
+  mkdir -p "$CACHE_DIR"
+
+  if mkdir "$REFRESH_LOCK_DIR" 2>/dev/null; then
+    HAS_REFRESH_LOCK=1
+    return 0
+  fi
+
+  return 1
+}
+
+wait_for_cache() {
+  attempts=30
+
+  while [ "$attempts" -gt 0 ]; do
+    if [ -f "$CACHE_FILE" ]; then
+      return 0
+    fi
+
+    sleep 1
+    attempts=$((attempts - 1))
+  done
+
+  return 1
+}
+
+refresh_cache() {
+  status "Refreshing GitHub repos"
+
+  if fresh_json="$(build_choices)"; then
+    write_cache "$fresh_json"
+    return 0
+  fi
+
+  log "ERROR: Could not build GitHub repo choices"
+  return 1
+}
+
+refresh_cache_with_lock() {
+  if ! acquire_refresh_lock; then
+    status "GitHub repo refresh already in progress"
+    return 1
+  fi
+
+  refresh_cache
+}
+
+start_background_refresh() {
+  if cache_is_fresh || [ -d "$REFRESH_LOCK_DIR" ]; then
+    return 0
+  fi
+
+  status "Refreshing GitHub repos in background"
+  "$SCRIPT_PATH" --refresh-only >/dev/null 2>&1 &
+}
+
+format_choices() {
+  format="$1"
+
+  case "$format" in
+    default)
+      cat
+      ;;
+    alfred)
+      jq '{
+        items: map({
+          uid: .text,
+          title: .text,
+          subtitle: (.subText // ""),
+          arg: .url,
+          match: (.text + " " + (.subText // "")),
+          quicklookurl: .url,
+          valid: true,
+          variables: {
+            repo: .text,
+            url: .url
+          }
+        })
+      }'
+      ;;
+    *)
+      log "ERROR: Unsupported format '$format'"
+      return 1
+      ;;
+  esac
 }
 
 build_choices() {
@@ -65,29 +155,91 @@ build_choices() {
   '
 }
 
+load_choices_json() {
+  if [ -f "$CACHE_FILE" ]; then
+    if cache_is_fresh; then
+      status "Using cached GitHub repos"
+    else
+      status "Using stale GitHub repo cache"
+      start_background_refresh
+    fi
+
+    print_cache
+    return 0
+  fi
+
+  if refresh_cache_with_lock; then
+    print_cache
+    return 0
+  fi
+
+  if wait_for_cache; then
+    status "Using GitHub repo cache after waiting for refresh"
+    print_cache
+    return 0
+  fi
+
+  log "ERROR: Could not build GitHub repo choices"
+  return 1
+}
+
 cleanup() {
   rm -f "$TMP_FILE"
+
+  if [ "$HAS_REFRESH_LOCK" -eq 1 ]; then
+    rmdir "$REFRESH_LOCK_DIR" 2>/dev/null || true
+  fi
 }
 
 trap cleanup EXIT
 
-if cache_is_fresh; then
-  status "Using cached GitHub repos"
-  print_cache
-  exit 0
+output_format="default"
+refresh_only=0
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    list)
+      shift
+      ;;
+    --format=*)
+      output_format="${1#--format=}"
+      shift
+      ;;
+    --refresh-only)
+      refresh_only=1
+      shift
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+if [ "$refresh_only" -eq 1 ]; then
+  if cache_is_fresh; then
+    status "GitHub repo cache already fresh"
+    exit 0
+  fi
+
+  if refresh_cache_with_lock; then
+    exit 0
+  fi
+
+  if cache_is_fresh; then
+    exit 0
+  fi
+
+  log "ERROR: Could not refresh GitHub repo choices"
+  exit 1
 fi
 
-status "Refreshing GitHub repos"
-
-if fresh_json="$(build_choices)"; then
-  write_cache "$fresh_json"
-  printf '%s\n' "$fresh_json"
-  exit 0
+if [ "$#" -gt 0 ]; then
+  log "ERROR: Unsupported arguments: $*"
+  exit 1
 fi
 
-if [ -f "$CACHE_FILE" ]; then
-  status "Using stale GitHub repo cache"
-  print_cache
+if choices_json="$(load_choices_json)"; then
+  printf '%s\n' "$choices_json" | format_choices "$output_format"
   exit 0
 fi
 
