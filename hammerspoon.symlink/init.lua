@@ -4,7 +4,6 @@ local modules = {
   "reload",
   "window",
   "apps",
-  "github",
 }
 
 for _, module in ipairs(modules) do

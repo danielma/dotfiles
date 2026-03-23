@@ -28,7 +28,7 @@ local function cycleHorizontal(direction)
     local relativeX = (frame.x - screenFrame.x) / screenFrame.w
     local relativeW = frame.w / screenFrame.w
 
-    local sizes = {0.5, 1 / 3, 2 / 3}
+    local sizes = {0.5, 2 / 3, 1 / 3}
     local currentIndex = 0
 
     for index, size in ipairs(sizes) do
