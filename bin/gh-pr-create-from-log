@@ -1,0 +1,6 @@
+#!/bin/sh
+
+f=$(mktemp)
+git log main..HEAD --format="%s%n%n%b" > "$f"
+${EDITOR:-vi} "$f"
+gh pr create --title "$(head -1 "$f")" --body "$(tail -n +2 "$f")"

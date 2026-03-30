@@ -34,10 +34,10 @@
   :config
   (advice-add 'browse-at-remote-kill :around #'with-select-clipboard))
 
-(defun my/magithub-pull-request ()
+(defun my/pr ()
   "Simple pull request command."
   (interactive)
-  (with-editor-async-shell-command "hub pull-request "))
+  (with-editor-async-shell-command "gh-pr-from-log"))
 
 (defun my/main ()
   "Switch to main and update."

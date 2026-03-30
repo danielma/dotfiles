@@ -84,15 +84,6 @@ refresh_cache_with_lock() {
   refresh_cache
 }
 
-start_background_refresh() {
-  if cache_is_fresh || [ -d "$REFRESH_LOCK_DIR" ]; then
-    return 0
-  fi
-
-  status "Refreshing GitHub repos in background"
-  "$SCRIPT_PATH" --refresh-only >/dev/null 2>&1 &
-}
-
 format_choices() {
   format="$1"
 
@@ -102,6 +93,7 @@ format_choices() {
       ;;
     alfred)
       jq '{
+        cache: { seconds: 300, loosereload: true },
         items: map({
           uid: .text,
           title: .text,
@@ -156,16 +148,10 @@ build_choices() {
 }
 
 load_choices_json() {
-  if [ -f "$CACHE_FILE" ]; then
-    if cache_is_fresh; then
+  if [ -f "$CACHE_FILE" ] && cache_is_fresh; then
       status "Using cached GitHub repos"
-    else
-      status "Using stale GitHub repo cache"
-      start_background_refresh
-    fi
-
-    print_cache
-    return 0
+      print_cache
+      return 0
   fi
 
   if refresh_cache_with_lock; then

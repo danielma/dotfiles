@@ -2,6 +2,7 @@ local hyper = {"ctrl", "alt", "cmd", "shift"}
 
 local appHotkeys = {
    ["1"] = "1Password",
+   A = "Asana",
    C = "Arc",
    E = "Emacs",
    G = "cmux",

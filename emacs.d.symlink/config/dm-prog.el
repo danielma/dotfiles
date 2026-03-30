@@ -81,9 +81,7 @@ Keys are (lang . detail-normalized) cons cells.")
 (use-package treesit-auto
   :config
   (global-treesit-auto-mode)
-  (treesit-auto-add-to-auto-mode-alist)
-  :custom
-  (treesit-extra-load-path '("~/Code/test/tree-sitter-module/dist")))
+  (treesit-auto-add-to-auto-mode-alist))
 
 (use-package treesit-fold
   :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold")
