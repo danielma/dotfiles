@@ -4,6 +4,7 @@ local appHotkeys = {
    ["1"] = "1Password",
    A = "Asana",
    C = "Arc",
+   D = "Dash",
    E = "Emacs",
    G = "cmux",
    I = "Music",
