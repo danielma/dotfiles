@@ -18,3 +18,4 @@ newdiff.patch
 
 .claude/settings.local.json
 .superset/
+hammerspoon.symlink/Spoons/URLDispatcher.spoon/
