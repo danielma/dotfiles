@@ -120,7 +120,7 @@
   "Use TEST-CMD to test TEST-NAME, and optionally only the CURRENT-LINE."
   (let* ((file-command (concat test-cmd " " test-name))
          (line-command (if current-line (concat file-command ":" current-line) file-command))
-         (full-command (concat "cd " (project-root (project-current)) " && " line-command)))
+         (full-command (concat "cd " (project-root (project-current)) " && eval \"$(direnv export $(basename $SHELL))\" && " line-command)))
     (pcase dm-guard-terminal
       ('emamux
        (emamux:send-keys "^c")
@@ -138,12 +138,13 @@
              (erase-buffer)
              (insert line-command "\n\n")
              (setq dm-guard-async-shell-process
-                   (make-process
-                    :name "Guard tests"
-                    :buffer buf
-                    :command (list shell-file-name shell-command-switch full-command)
-                    :filter 'comint-output-filter
-                    :sentinel #'--dm-guard-async-shell-process-sentinel))))))
+                   (let ((default-directory (project-root (project-current))))
+                     (make-process
+                      :name "Guard tests"
+                      :buffer buf
+                      :command (list shell-file-name shell-command-switch line-command)
+                      :filter 'comint-output-filter
+                      :sentinel #'--dm-guard-async-shell-process-sentinel)))))))
       (_ (error (format "Unusable terminal `%s'" dm-guard-terminal))))))
 
 (defun --dm-guard-rspec-test-command ()
