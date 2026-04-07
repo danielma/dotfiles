@@ -7,6 +7,13 @@
   (interactive)
   (global-text-scale-adjust 2))
 
+(defun dm-enable-xterm-mouse-mode (&optional frame)
+  "Enable `xterm-mouse-mode' for terminal FRAMEs."
+  (when-let ((frame (or frame (selected-frame))))
+    (unless (display-graphic-p frame)
+      (with-selected-frame frame
+        (xterm-mouse-mode 1)))))
+
 (use-package emacs
   :demand t
   :custom
@@ -36,6 +43,11 @@
   (whitespace-style '(face lines-tail tabs tab-mark))
   :hook
   (prog-mode . whitespace-mode))
+
+(use-package xt-mouse
+  :config
+  (dm-enable-xterm-mouse-mode)
+  (add-hook 'after-make-frame-functions #'dm-enable-xterm-mouse-mode))
 
 ;;; Consult
 

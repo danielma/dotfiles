@@ -37,7 +37,7 @@
 (defun my/pr ()
   "Simple pull request command."
   (interactive)
-  (with-editor-async-shell-command "gh-pr-from-log"))
+  (with-editor-async-shell-command "gh-pr-create-from-log"))
 
 (defun my/main ()
   "Switch to main and update."

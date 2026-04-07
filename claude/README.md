@@ -7,7 +7,7 @@
 - Recommend updates to my user settings (CLAUDE.md) as you learn things about me
 - Recommend updates to project settengs (CLAUDE.md) as you learn things about our current project
 - I use the fish shell. Customize your shell commands to use fish syntax. However, any documentation
-  should always be written for standard shells
+  or actual script files should always be written for standard shells
 
 
 # Ideals
@@ -49,3 +49,4 @@ developers and code I want to encourage. Act according to these ideals
 # Nits
 
 - I generally don't like early returns. I almost always prefer `if {} else {}` blocks for readability
+- I don't like trailing conditionals (`expr if condition`). Use `condition && expr` for simple nil guards, or full `if/else` blocks
