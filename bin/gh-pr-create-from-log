@@ -1,6 +1,30 @@
-#!/bin/sh
+#!/usr/bin/env ruby
 
-f=$(mktemp)
-git log main..HEAD --format="%s%n%n%b" > "$f"
-${EDITOR:-vi} "$f"
-gh pr create --title "$(head -1 "$f")" --body "$(tail -n +2 "$f")"
+require "shellwords"
+require "tempfile"
+
+Tempfile.create("gh-pr-create-from-log") do |file|
+  log = `git log main..HEAD --format=%s%n%n%b`
+  if !$?.success?
+    abort("git log failed")
+  end
+
+  file.write(log)
+  file.flush
+
+  editor = ENV.fetch("EDITOR", "vi")
+  if !system(*Shellwords.split(editor), file.path)
+    abort("editor failed")
+  end
+
+  title, body = File.read(file.path).split(/\n/, 2)
+  title = title.to_s
+  if title.strip.empty?
+    abort("PR title cannot be empty")
+  end
+
+  body = body.to_s.sub(/\A\s+/, "")
+  if !system("gh", "pr", "create", "--title", title, "--body", body)
+    abort("gh pr create failed")
+  end
+end
