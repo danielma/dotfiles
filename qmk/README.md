@@ -1,0 +1,4 @@
+- qmk setup https://docs.qmk.fm/newbs_getting_started
+- cd $(qmk env).QMK_HOME
+- ln -s ~/.dotfiles/qmk/ergodox keyboards/ergodox_ez/keymaps/dma
+- qmk compile -kb ergodox_ez -km dma
