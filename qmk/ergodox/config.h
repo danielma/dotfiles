@@ -9,7 +9,9 @@
 /* #undef MOUSEKEY_MAX_SPEED */
 /* #define MOUSEKEY_MAX_SPEED 4 */
 
-#undef TAPPING_TERM
-#undef IGNORE_MOD_TAP_INTERRUPT
+/* #undef TAPPING_TERM */
+/* #undef IGNORE_MOD_TAP_INTERRUPT */
+
+#define HOLD_ON_OTHER_KEY_PRESS
 
 /* #define PREVENT_STUCK_MODIFIERS */
