@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+#
+# Vendors a gem from GitHub into vendor/gems/ for local bundling.
+# Useful when deploy containers can't install directly from GitHub.
+#
+# Usage:
+#   vendor-gem <github-repo> <branch> [--name <gem-name>]
+#   vendor-gem --restore <gem-name>
+#
+# Arguments:
+#   github-repo - GitHub repo (e.g. danielma/my-cool-gem)
+#   branch      - Git branch to vendor
+#   --name      - Override the gem name (default: inferred from repo name)
+#
+# Examples:
+#   vendor-gem  danielma/my-cool-gem dma/console-ready
+#   vendor-gem org/my-repo main --name actual-gem-name
+#   vendor-gem --restore my-cool-gem
+
+set -euo pipefail
+
+if [ ! -f Gemfile ]; then
+  echo "error: no Gemfile found in current directory" >&2
+  exit 1
+fi
+
+if [ "${1:-}" = "--restore" ]; then
+  gem_name="${2:?Usage: vendor-gem --restore <gem-name>}"
+
+  if [ -d "vendor/gems/$gem_name" ]; then
+    rm -rf "vendor/gems/$gem_name"
+    echo "removed vendor/gems/$gem_name"
+  fi
+
+  sed -i '' "s|  gem \"$gem_name\".*|  gem \"$gem_name\"|" Gemfile
+  echo "restored Gemfile entry for $gem_name"
+  bundle update "$gem_name"
+  exit 0
+fi
+
+repo="${1:?Usage: vendor-gem <github-repo> <branch> [--name <gem-name>]}"
+branch="${2:?Usage: vendor-gem <github-repo> <branch> [--name <gem-name>]}"
+shift 2
+
+gem_name="${repo##*/}"
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --name)
+      gem_name="${2:?--name requires a value}"
+      shift 2
+      ;;
+    *)
+      echo "error: unknown option $1" >&2
+      exit 1
+      ;;
+  esac
+done
+
+dest="vendor/gems/$gem_name"
+
+if [ -d "$dest" ]; then
+  echo "removing existing $dest"
+  rm -rf "$dest"
+fi
+
+mkdir -p vendor/gems
+
+echo "cloning $repo@$branch into $dest"
+git clone --branch "$branch" --depth 1 "https://github.com/$repo.git" "$dest"
+rm -rf "$dest/.git"
+
+sed -i '' "s|  gem \"$gem_name\".*|  gem \"$gem_name\", path: \"$dest\"|" Gemfile
+echo "updated Gemfile to use path: \"$dest\""
+
+bundle update "$gem_name"
+echo "done — $gem_name vendored from $repo@$branch"
