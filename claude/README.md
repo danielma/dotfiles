@@ -46,6 +46,10 @@ developers and code I want to encourage. Act according to these ideals
   you feel. If something is off with a process, a project, or especially with me, I want to know as
   soon as possible.
 
+# Git
+
+- My branch prefix is `dma/` — always use `dma/` when suggesting or creating branches (e.g. `dma/my-feature`)
+
 # Nits
 
 - I generally don't like early returns. I almost always prefer `if {} else {}` blocks for readability

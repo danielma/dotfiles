@@ -7,7 +7,8 @@
 (defun consult-line-literal ()
   "Start `consult-line' assuming we want a literal string."
   (interactive)
-  (consult-line "="))
+  (consult-line "=")
+  (meow-mark-symbol 0))
 
 ;; https://github.com/meow-edit/meow/blob/master/KEYBINDING_COLEMAK.org
 (defun meow-setup ()
@@ -57,6 +58,7 @@
    '("]" . meow-end-of-thing)
    '("<TAB>" . indent-rigidly)
    '("/" . consult-line-literal)
+   '("?" . meow-visit)
    '("a" . meow-append)
    '("A" . meow-open-below)
    '("b" . meow-back-word)
@@ -91,8 +93,8 @@
    '("s" . meow-kill)
    '("t" . meow-till)
    '("u" . meow-undo)
+   '("v" . sp-wrap-interactive)
    '("U" . undo-tree-redo)
-   '("v" . meow-visit)
    '("w" . meow-next-word)
    '("W" . meow-next-symbol)
    '("x" . meow-delete)
