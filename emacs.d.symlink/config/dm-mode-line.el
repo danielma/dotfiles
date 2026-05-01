@@ -128,6 +128,7 @@
 
 (use-package doom-modeline
   :ensure t
+  :if (display-graphic-p)
   :custom
   (doom-modeline-buffer-encoding 'nondefault)
   (doom-modeline-hud t)

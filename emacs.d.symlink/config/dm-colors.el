@@ -38,6 +38,7 @@
   )
 
 (use-package indent-bars
+  :if (display-graphic-p)
   :hook ((prog-mode yaml-mode) . indent-bars-mode)
   :custom
   (indent-bars-treesit-support t))
