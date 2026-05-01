@@ -79,8 +79,9 @@ Keys are (lang . detail-normalized) cons cells.")
                   cached))))
 
 (use-package treesit-auto
+  :hook
+  (prog-mode . global-treesit-auto-mode)
   :config
-  (global-treesit-auto-mode)
   (treesit-auto-add-to-auto-mode-alist))
 
 (use-package treesit-fold
