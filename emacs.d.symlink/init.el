@@ -70,6 +70,7 @@
 (require 'dm-guard)
 (require 'dm-javascript)
 (require 'dm-langs)
+(require 'dm-lsp)
 (require 'dm-magit)
 (require 'dm-mode-line)
 (require 'dm-org)

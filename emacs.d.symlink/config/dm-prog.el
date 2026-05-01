@@ -74,7 +74,6 @@ Keys are (lang . detail-normalized) cons cells.")
                      (cached (gethash key my/treesit-available-cache 'miss)))
                 (if (eq cached 'miss)
                     (progn
-                      (message "treesit cache miss: %S" key)
                       (puthash key (funcall orig-fn lang detail) my/treesit-available-cache))
                   cached))))
 
