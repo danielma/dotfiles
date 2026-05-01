@@ -20,6 +20,7 @@
   (orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex)))
 
 (use-package vertico-posframe
+  :if (display-graphic-p)
   :after vertico
   :config
   (vertico-posframe-mode 1)
@@ -46,7 +47,8 @@
      (width . 0.7)
      (left . 0.5))))
 
-(use-package posframe)
+(use-package posframe
+  :if (display-graphic-p))
 
 (defun mars/company-backend-with-yas (backends)
   "Add :with company-yasnippet to company BACKENDS.
