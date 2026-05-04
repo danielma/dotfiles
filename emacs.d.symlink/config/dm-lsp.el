@@ -10,6 +10,16 @@
   ;; (add-to-list 'eglot-server-programs '(swift-mode . ("sourcekit-lsp")))
   )
 
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               (cons '(js-ts-mode
+                       typescript-ts-mode
+                       tsx-ts-mode
+                       typescript-ts-base-mode)
+                     (eglot-alternatives
+                      '(("typescript-language-server" "--stdio")
+                        ("npx" "--no-install" "typescript-language-server" "--stdio"))))))
+
 (use-package eglot-booster
   :disabled
   :after eglot
