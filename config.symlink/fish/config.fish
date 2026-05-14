@@ -27,15 +27,15 @@ fzf_configure_bindings --directory=\ct \
     --git_log= \
     --git_status=
 
-eval (gdircolors -c)
-
 # RG
 
 set --export RIPGREP_CONFIG_PATH ~/.dotfiles/ripgrep/config
 
 # Work
 
-source ~/.dotfiles/config.symlink/fish/work.fish
+if test -f ~/.dotfiles/config.symlink/fish/work.fish
+    source ~/.dotfiles/config.symlink/fish/work.fish
+end
 
 # Dev
 
