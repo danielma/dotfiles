@@ -33,6 +33,11 @@
 
 (menu-bar-mode 0)
 
+;; GUI Emacs can later host terminal clients from Ghostty via `emacsclient -t`.
+;; Teach terminal initialization to treat Ghostty as xterm-compatible.
+(add-to-list 'term-file-aliases '("xterm-ghostty" . "xterm"))
+(add-to-list 'term-file-aliases '("ghostty" . "xterm"))
+
 (use-package emacs
   :custom
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/#adjust-gc-cons-threshold
@@ -179,8 +184,6 @@
  '(ediff-make-buffers-readonly-at-startup t)
  '(ediff-merge-split-window-function 'split-window-vertically)
  '(eglot-autoreconnect 5)
- '(flymake-jsts-executable-name-alist
-   '((eslint . "eslint_d") (oxlint . "oxlint") (biome . "biome")))
  '(magit-repository-directories '(("~/Code" . 0)))
  '(markdown-enable-highlighting-syntax t)
  '(markdown-fontify-code-blocks-natively t)

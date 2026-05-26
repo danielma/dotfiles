@@ -8,6 +8,11 @@
   "Set commit mode."
   (setq-local fill-column 70))
 
+(defun my/with-editor-commit-mode-setup ()
+  "Use `git-commit-mode' for with-editor commit buffers."
+  (when with-editor-mode
+    (git-commit-mode)))
+
 (use-package magit
   :defer t
   :custom
@@ -16,6 +21,7 @@
   (magit-define-global-key-bindings 'recommended)
   :hook
   (magit-status-mode . (lambda () (meow-mode -1)))
+  (with-editor-mode . my/with-editor-commit-mode-setup)
   (git-commit-setup . my/commit-mode-setup)
   :bind (:map magit-status-mode-map ("SPC" . meow-keypad)))
 

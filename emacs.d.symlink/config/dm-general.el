@@ -37,7 +37,24 @@
   :config
   (when (memq window-system '(mac ns x))
     (add-to-list 'exec-path-from-shell-variables "DEVBOX_USE_VERSION")
+    (add-to-list 'exec-path-from-shell-variables "TERMINFO")
     (exec-path-from-shell-initialize)))
+
+(defun dm-add-ghostty-terminfo ()
+  "Teach GUI Emacs where Ghostty terminfo lives."
+  (let* ((ghostty-terminfo "/Applications/Ghostty.app/Contents/Resources/terminfo")
+         (current (getenv "TERMINFO_DIRS"))
+         (default-paths '("/usr/share/terminfo" "/lib/terminfo" "/usr/lib/terminfo"))
+         (paths (append (if current (parse-colon-path current) nil)
+                        default-paths)))
+    (when (and (file-directory-p ghostty-terminfo)
+               (not (member ghostty-terminfo paths)))
+      (setenv "TERMINFO_DIRS"
+              (mapconcat #'identity
+                         (append (list ghostty-terminfo) paths)
+                         path-separator)))))
+
+(dm-add-ghostty-terminfo)
 
 (use-package undo-tree
   :after delight

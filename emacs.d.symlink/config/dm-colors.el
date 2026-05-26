@@ -4,7 +4,7 @@
 
 ;;; Code:
 
-(defvar my/light-theme 'doom-flatwhite)
+(defvar my/light-theme 'doom-opera-light)
 (defvar my/dark-theme 'doom-gruvbox)
 
 (defun my/apply-theme (appearance)

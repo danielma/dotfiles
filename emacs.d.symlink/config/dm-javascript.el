@@ -12,10 +12,26 @@
 (use-package flymake-jsts
   :straight '(flymake-jsts :type git :host github :repo "orzechowskid/flymake-jsts" :branch "main"))
 
+(defun dm-flymake-jsts-use-local-oxlint ()
+  "Prefer a project's local `node_modules/.bin/oxlint` binary."
+  (let* ((root (locate-dominating-file default-directory "node_modules"))
+         (oxlint (and root
+                      (expand-file-name "node_modules/.bin/oxlint" root))))
+    (if (and oxlint (file-executable-p oxlint))
+        (setq-local flymake-jsts-executable-name-alist
+                    `((eslint . "eslint_d")
+                      (oxlint . ,oxlint)
+                      (biome . "biome")))
+      (setq-local flymake-jsts-executable-name-alist
+                  '((eslint . "eslint_d")
+                    (biome . "biome"))))))
+
 (add-hook 'eglot-managed-mode-hook
           (lambda ()
+            (dm-flymake-jsts-use-local-oxlint)
+            (flymake-jsts-oxlint-enable)
             (flymake-jsts-eslint-enable))
-          nil t)
+          nil)
 
 ;; (defvar-local my/flymake-eslint-npx-initialized nil)
 ;; (defun my/flymake-eslint-npx (&optional force)
