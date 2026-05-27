@@ -43,4 +43,47 @@ if [ -n "$model" ]; then
     model_info=" ${DIM}${model}${RESET}"
 fi
 
-printf "${BOLD_BLUE}%s${RESET}%s%s%s" "$cwd_display" "$git_info" "$ctx_info" "$model_info"
+# Daily cost from today's transcript files, priced per model:
+#   opus-4-*:   in=$15  out=$75  cache_create=$18.75 cache_read=$1.50
+#   haiku-4-*:  in=$0.8 out=$4   cache_create=$1.00  cache_read=$0.08
+#   sonnet-4-*: in=$3   out=$15  cache_create=$3.75  cache_read=$0.30
+cost_info=""
+projects_dir="$HOME/.claude/projects"
+if [ -d "$projects_dir" ]; then
+    today=$(date +%Y-%m-%d)
+    sentinel="/tmp/.claude-cost-sentinel-${today}"
+
+    # Ensure sentinel file exists and is timestamped at midnight today
+    if [ ! -f "$sentinel" ]; then
+        touch -t "$(date +%Y%m%d)0000" "$sentinel" 2>/dev/null
+    fi
+
+    daily_cost=$(find "$projects_dir" -name "*.jsonl" -newer "$sentinel" 2>/dev/null \
+        -exec cat {} \; 2>/dev/null | \
+        jq -r --arg today "$today" '
+            select(
+              .type == "assistant"
+              and .message.usage != null
+              and (.timestamp // "" | startswith($today))
+            ) |
+            .message.model as $m |
+            .message.usage |
+            (if   $m | startswith("claude-opus")  then {i:15,  o:75, cc:18.75, cr:1.50}
+             elif $m | startswith("claude-haiku") then {i:0.8, o:4,  cc:1.00,  cr:0.08}
+             else                                      {i:3,   o:15, cc:3.75,  cr:0.30}
+             end) as $p |
+            ((.input_tokens // 0) * $p.i +
+             (.output_tokens // 0) * $p.o +
+             ((.cache_creation_input_tokens // 0) +
+              (.cache_creation.ephemeral_5m_input_tokens // 0) +
+              (.cache_creation.ephemeral_1h_input_tokens // 0)) * $p.cc +
+             (.cache_read_input_tokens // 0) * $p.cr) / 1000000
+        ' 2>/dev/null | \
+        awk '{s+=$1} END{if(s>0) printf "%.2f", s}')
+
+    if [ -n "$daily_cost" ]; then
+        cost_info=$(printf " ${DIM}[\$%s today]${RESET}" "$daily_cost")
+    fi
+fi
+
+printf "${BOLD_BLUE}%s${RESET}%s%s%s%s" "$cwd_display" "$git_info" "$ctx_info" "$model_info" "$cost_info"
