@@ -14,6 +14,38 @@
       (with-selected-frame frame
         (xterm-mouse-mode 1)))))
 
+(defvar dm-default-interprogram-cut-function interprogram-cut-function
+  "Clipboard backend to use when terminal clipboard integration is not needed.")
+
+(defvar dm-default-interprogram-paste-function interprogram-paste-function
+  "Paste backend to use when terminal clipboard integration is not needed.")
+
+(defun dm-terminal-clipboard-supported-p (&optional frame)
+  "Return non-nil when FRAME should use the macOS terminal clipboard backend."
+  (and (eq system-type 'darwin)
+       (not (display-graphic-p frame))
+       (executable-find "pbcopy")
+       (executable-find "pbpaste")))
+
+(defun dm-interprogram-cut-function (text &optional push)
+  "Copy TEXT to the appropriate clipboard backend.
+PUSH is forwarded to the default backend when terminal integration is inactive."
+  (if (dm-terminal-clipboard-supported-p)
+      (with-temp-buffer
+        (insert text)
+        (call-process-region (point-min) (point-max) "pbcopy"))
+    (when dm-default-interprogram-cut-function
+      (funcall dm-default-interprogram-cut-function text push))))
+
+(defun dm-interprogram-paste-function ()
+  "Read text from the appropriate clipboard backend."
+  (if (dm-terminal-clipboard-supported-p)
+      (with-temp-buffer
+        (call-process "pbpaste" nil t nil)
+        (buffer-string))
+    (when dm-default-interprogram-paste-function
+      (funcall dm-default-interprogram-paste-function))))
+
 (use-package emacs
   :demand t
   :custom
@@ -24,6 +56,8 @@
                           (t . (display-buffer-same-window))))
   (indent-tabs-mode nil)
   (compilation-scroll-output t)
+  (interprogram-cut-function #'dm-interprogram-cut-function)
+  (interprogram-paste-function #'dm-interprogram-paste-function)
   :bind (:map global-map
               ("s-=" . global-text-scale-adjust-by-two)
               ("s--" . global-text-scale-adjust-by-two)
