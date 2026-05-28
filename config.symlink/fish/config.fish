@@ -40,7 +40,7 @@ end
 # Dev
 
 if ! test $INSIDE_EMACS
-    set --export EDITOR emacsclient -c
+    set --export EDITOR emacsclient -nw
 end
 
 # # ASDF configuration code
@@ -63,3 +63,10 @@ direnv hook fish | source
 
 # uv
 fish_add_path "/Users/danielma/.local/bin"
+
+# pnpm
+set -gx PNPM_HOME /Users/danielma/Library/pnpm
+if not string match -q -- "$PNPM_HOME/bin" $PATH
+    set -gx PATH "$PNPM_HOME/bin" $PATH
+end
+# pnpm end

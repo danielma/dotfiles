@@ -33,11 +33,6 @@
 
 (menu-bar-mode 0)
 
-;; GUI Emacs can later host terminal clients from Ghostty via `emacsclient -t`.
-;; Teach terminal initialization to treat Ghostty as xterm-compatible.
-(add-to-list 'term-file-aliases '("xterm-ghostty" . "xterm"))
-(add-to-list 'term-file-aliases '("ghostty" . "xterm"))
-
 (use-package emacs
   :custom
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/#adjust-gc-cons-threshold
