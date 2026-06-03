@@ -35,7 +35,10 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
         (insert text)
         (call-process-region (point-min) (point-max) "pbcopy"))
     (when dm-default-interprogram-cut-function
-      (funcall dm-default-interprogram-cut-function text push))))
+      (condition-case nil
+          (funcall dm-default-interprogram-cut-function text push)
+        (wrong-number-of-arguments
+         (funcall dm-default-interprogram-cut-function text))))))
 
 (defun dm-interprogram-paste-function ()
   "Read text from the appropriate clipboard backend."
