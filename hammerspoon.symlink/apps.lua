@@ -12,6 +12,7 @@ local appHotkeys = {
    M = "Messages",
    N = "Notion",
    S = "Slack",
+   T = "Linear",
    W = "Obsidian",
 }
 
