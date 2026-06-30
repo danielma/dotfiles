@@ -1,0 +1,402 @@
+#!/usr/bin/env ruby
+
+require "json"
+require "net/http"
+require "open3"
+require "optparse"
+require "securerandom"
+require "tmpdir"
+require "uri"
+
+class LinearWork
+  ISSUE_PATTERN = /\A[A-Z][A-Z0-9]+-\d+\z/.freeze
+  UUID_PATTERN = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/.freeze
+  API_URL = ENV.fetch("LINEAR_API_URL", "https://api.linear.app/graphql")
+
+  ISSUE_QUERY = <<~GRAPHQL
+    query LinearWorkIssue($issue: String!) {
+      issue(id: $issue) {
+        id
+        identifier
+        title
+        branchName
+        url
+        description
+        priorityLabel
+        estimate
+        assignee {
+          name
+        }
+        state {
+          name
+        }
+        team {
+          key
+          name
+        }
+        project {
+          name
+        }
+        labels {
+          nodes {
+            name
+          }
+        }
+        comments(first: 20) {
+          nodes {
+            body
+            createdAt
+            user {
+              name
+            }
+          }
+        }
+      }
+    }
+  GRAPHQL
+
+  def self.run(argv)
+    new(argv).run
+  end
+
+  def initialize(argv)
+    @argv = argv
+    @options = {
+      worktree: false,
+      dry_run: false,
+      base: nil,
+      repo: nil,
+      location: nil,
+      name: nil
+    }
+  end
+
+  def run
+    issue_key = parse_issue
+    issue = fetch_issue(issue_key)
+    branch = branch_name(issue)
+    prompt = prompt_for_issue(issue)
+    name = @options[:name] || slugify(branch)
+
+    if @options[:dry_run]
+      puts "Branch: #{branch}"
+      puts
+      puts prompt
+    elsif @options[:worktree]
+      start_supacode_worktree(branch, prompt, name)
+    else
+      start_current_worktree(branch, prompt)
+    end
+  end
+
+  private
+
+  def parse_issue
+    parser = OptionParser.new do |opts|
+      opts.banner = <<~USAGE
+        Usage:
+          linear-work [options] ISSUE
+
+        Examples:
+          linear-work CCA-123
+          linear-work --worktree CCA-123
+          linear-work --worktree --base origin/main --repo <supacode-repo-id> CCA-123
+
+        Options:
+      USAGE
+
+      opts.on("-w", "--worktree", "Create a Supacode worktree before starting Claude.") do
+        @options[:worktree] = true
+      end
+
+      opts.on("--base REF", "Base ref passed to Supacode when creating a worktree.") do |value|
+        @options[:base] = value
+      end
+
+      opts.on("--repo ID", "Supacode repository ID. Defaults to $SUPACODE_REPO_ID.") do |value|
+        @options[:repo] = value
+      end
+
+      opts.on("--location PATH", "Parent directory for the Supacode worktree.") do |value|
+        @options[:location] = value
+      end
+
+      opts.on("--name NAME", "Supacode worktree folder name.") do |value|
+        @options[:name] = value
+      end
+
+      opts.on("--dry-run", "Print the branch and prompt without changing anything.") do
+        @options[:dry_run] = true
+      end
+
+      opts.on("-h", "--help", "Show this help.") do
+        puts opts
+        puts
+        puts "Environment:"
+        puts "  LINEAR_API_KEY        Linear personal API key."
+        exit 0
+      end
+    end
+
+    remaining = parser.parse(@argv)
+
+    if remaining.empty?
+      warn parser
+      exit 1
+    elsif remaining.length > 1
+      die "only one issue can be provided"
+    end
+
+    issue_key = remaining.first.upcase
+    die "issue must look like CCA-123" unless issue_key.match?(ISSUE_PATTERN)
+
+    issue_key
+  rescue OptionParser::ParseError => error
+    die error.message
+  end
+
+  def fetch_issue(issue_key)
+    response = linear_graphql(ISSUE_QUERY, issue_key)
+    errors = graphql_errors(response)
+    die "Linear API error: #{errors.join("; ")}" if errors.any?
+
+    issue = response.dig("data", "issue")
+    die "Linear issue not found: #{issue_key}" if issue.nil?
+
+    issue
+  end
+
+  def linear_graphql(query, issue_key)
+    api_key = ENV["LINEAR_API_KEY"]
+    die "set LINEAR_API_KEY before running this command" if api_key.nil? || api_key.empty?
+
+    uri = URI(API_URL)
+    request = Net::HTTP::Post.new(uri)
+    request["Content-Type"] = "application/json"
+    request["Authorization"] = api_key
+    request.body = JSON.generate({ query: query, variables: { issue: issue_key } })
+
+    response = http_client(uri).request(request)
+    die "Linear API request failed: HTTP #{response.code}" unless response.is_a?(Net::HTTPSuccess)
+
+    JSON.parse(response.body)
+  rescue JSON::ParserError
+    die "Linear API returned invalid JSON"
+  rescue StandardError => error
+    die "Linear API request failed: #{error.message}"
+  end
+
+  def http_client(uri)
+    Net::HTTP.new(uri.host, uri.port).tap do |http|
+      http.use_ssl = uri.scheme == "https"
+      http.open_timeout = 10
+      http.read_timeout = 30
+    end
+  end
+
+  def graphql_errors(response)
+    Array(response["errors"]).map { |error| error["message"] }.compact
+  end
+
+  def branch_name(issue)
+    branch = issue["branchName"].to_s
+
+    die "Linear issue did not include branchName" if branch.empty?
+
+    branch
+  end
+
+  def prompt_for_issue(issue)
+    lines = [
+      "Work on this Linear issue.",
+      "",
+      "# #{issue["identifier"]}: #{issue["title"]}",
+      ""
+    ]
+
+    metadata = [
+      field("URL", issue["url"]),
+      field("Status", dig(issue, "state", "name")),
+      field("Team", team_name(issue)),
+      field("Project", dig(issue, "project", "name")),
+      field("Assignee", dig(issue, "assignee", "name")),
+      field("Priority", issue["priorityLabel"]),
+      field("Estimate", issue["estimate"]),
+      field("Labels", labels(issue))
+    ].compact
+
+    lines.concat(metadata)
+    lines.concat([
+      "",
+      "## Description",
+      issue["description"].to_s.empty? ? "_No description provided._" : issue["description"],
+      "",
+      "## Working expectations",
+      "Make small, well-factored commits. Add or run relevant tests, and report any testing gaps."
+    ])
+
+    comments = Array(dig(issue, "comments", "nodes"))
+    if comments.any?
+      lines << ""
+      lines << "## Comments"
+
+      comments.each do |comment|
+        lines << "### #{dig(comment, "user", "name") || "Unknown"} at #{comment["createdAt"]}"
+        lines << comment["body"].to_s
+      end
+    end
+
+    lines.join("\n")
+  end
+
+  def field(label, value)
+    return nil if value.nil? || value.to_s.empty?
+
+    "#{label}: #{value}"
+  end
+
+  def team_name(issue)
+    key = dig(issue, "team", "key").to_s
+    name = dig(issue, "team", "name").to_s
+
+    if key.empty?
+      name
+    elsif name.empty?
+      key
+    else
+      "#{key} - #{name}"
+    end
+  end
+
+  def labels(issue)
+    Array(dig(issue, "labels", "nodes")).map { |label| label["name"] }.compact.join(", ")
+  end
+
+  def dig(hash, *keys)
+    keys.reduce(hash) do |value, key|
+      value.is_a?(Hash) ? value[key] : nil
+    end
+  end
+
+  def start_current_worktree(branch, prompt)
+    require_command "git"
+    require_command "claude"
+
+    if system("git", "show-ref", "--verify", "--quiet", "refs/heads/#{branch}")
+      die "branch already exists: #{branch}"
+    end
+
+    die "could not create branch: #{branch}" unless system("git", "co", "-b", branch)
+    exit system("claude", prompt)
+  end
+
+  def start_supacode_worktree(branch, prompt, name)
+    require_command "supacode"
+    require_command "claude"
+
+    prompt_file = write_prompt_file(prompt)
+    runner_file = write_supacode_runner(branch, prompt_file)
+    args = ["supacode", "repo", "worktree-new", "--name", name]
+
+    args.concat(["--base", @options[:base]]) if @options[:base]
+    args.concat(["--repo", @options[:repo]]) if @options[:repo]
+    args.concat(["--location", @options[:location]]) if @options[:location]
+
+    output, status = capture_command(args)
+    unless status.success?
+      cleanup_files(prompt_file, runner_file)
+      warn output unless output.empty?
+      die "Supacode worktree creation failed"
+    end
+
+    puts output unless output.empty?
+
+    worktree_id = output[UUID_PATTERN] || name
+    tab_output, tab_status = capture_command([
+      "supacode", "tab", "new",
+      "--worktree", worktree_id,
+      "--input", runner_file
+    ])
+
+    unless tab_status.success?
+      cleanup_files(prompt_file, runner_file)
+      warn tab_output unless tab_output.empty?
+      die "Supacode worktree was created, but starting Claude failed for worktree target: #{worktree_id}"
+    end
+
+    puts tab_output unless tab_output.empty?
+  end
+
+  def capture_command(args)
+    stdout, stderr, status = Open3.capture3(*args)
+    output = [stdout, stderr].reject(&:empty?).join
+
+    [output, status]
+  end
+
+  def write_prompt_file(prompt)
+    path = File.join(Dir.tmpdir, "linear-work-prompt-#{SecureRandom.hex(8)}")
+    File.write(path, prompt)
+    path
+  end
+
+  def write_supacode_runner(branch, prompt_file)
+    path = File.join(Dir.tmpdir, "linear-work-runner-#{SecureRandom.hex(8)}.rb")
+    File.write(path, <<~RUBY)
+      #!/usr/bin/env ruby
+
+      require "fileutils"
+
+      branch = #{branch.dump}
+      prompt_file = #{prompt_file.dump}
+      runner_file = #{path.dump}
+      status = 0
+
+      if system("git", "co", "-b", branch)
+        prompt = File.read(prompt_file)
+        status = system("claude", prompt) ? 0 : ($?.exitstatus || 1)
+      else
+        status = $?.exitstatus || 1
+      end
+
+      FileUtils.rm_f([prompt_file, runner_file])
+      exit status
+    RUBY
+    File.chmod(0o755, path)
+    path
+  end
+
+  def cleanup_files(*paths)
+    paths.each do |path|
+      File.delete(path) if path && File.exist?(path)
+    end
+  end
+
+  def require_command(command)
+    return if command_path(command)
+
+    die "missing required command: #{command}"
+  end
+
+  def command_path(command)
+    ENV.fetch("PATH", "").split(File::PATH_SEPARATOR).find do |directory|
+      path = File.join(directory, command)
+      File.file?(path) && File.executable?(path)
+    end
+  end
+
+  def slugify(value)
+    value
+      .downcase
+      .gsub(/[^a-z0-9._-]/, "-")
+      .gsub(/-{2,}/, "-")
+      .gsub(/\A-|-+\z/, "")
+  end
+
+  def die(message)
+    warn "linear-work: #{message}"
+    exit 1
+  end
+end
+
+LinearWork.run(ARGV) if $PROGRAM_NAME == __FILE__
