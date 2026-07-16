@@ -7,6 +7,7 @@ require "optparse"
 require "securerandom"
 require "tmpdir"
 require "uri"
+require "openssl"
 
 class LinearWork
   ISSUE_PATTERN = /\A[A-Z][A-Z0-9]+-\d+\z/.freeze
@@ -300,7 +301,7 @@ class LinearWork
 
     prompt_file = write_prompt_file(prompt)
     runner_file = write_supacode_runner(branch, prompt_file)
-    args = ["supacode", "repo", "worktree-new", "--name", name]
+    args = ["supacode", "repo", "worktree-new", "--branch", name]
 
     args.concat(["--base", @options[:base]]) if @options[:base]
     args.concat(["--repo", @options[:repo]]) if @options[:repo]
