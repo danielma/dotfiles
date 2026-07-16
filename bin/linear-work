@@ -13,6 +13,9 @@ class LinearWork
   UUID_PATTERN = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/.freeze
   API_URL = ENV.fetch("LINEAR_API_URL", "https://api.linear.app/graphql")
   CLAUDE_ARGS = ["--permission-mode", "plan", "--model", "opus"].freeze
+  SUPACODE_WORKTREE_READY_TIMEOUT = 5.0
+  SUPACODE_WORKTREE_READY_INTERVAL = 0.5
+  SUPACODE_WORKTREE_FALLBACK_WAIT = 0.5
 
   ISSUE_QUERY = <<~GRAPHQL
     query LinearWorkIssue($issue: String!) {
@@ -313,6 +316,8 @@ class LinearWork
     puts output unless output.empty?
 
     worktree_id = output[UUID_PATTERN] || name
+    wait_for_supacode_worktree(worktree_id)
+
     tab_output, tab_status = capture_command([
       "supacode", "tab", "new",
       "--worktree", worktree_id,
@@ -328,6 +333,33 @@ class LinearWork
     puts tab_output unless tab_output.empty?
   end
 
+  def wait_for_supacode_worktree(worktree_id)
+    deadline = monotonic_time + SUPACODE_WORKTREE_READY_TIMEOUT
+
+    loop do
+      return if supacode_worktree_ready?(worktree_id)
+      break if monotonic_time >= deadline
+
+      sleep SUPACODE_WORKTREE_READY_INTERVAL
+    end
+
+    sleep SUPACODE_WORKTREE_FALLBACK_WAIT
+  end
+
+  def supacode_worktree_ready?(worktree_id)
+    output, status = capture_command(["supacode", "worktree", "list", "--timeout", "1"])
+
+    status.success? && worktree_list_includes?(output, worktree_id)
+  end
+
+  def worktree_list_includes?(output, worktree_id)
+    candidates = [worktree_id, URI.encode_www_form_component(worktree_id)].uniq
+
+    output.lines.map(&:strip).any? do |line|
+      candidates.any? { |candidate| !candidate.empty? && line.include?(candidate) }
+    end
+  end
+
   def capture_command(args)
     stdout, stderr, status = Open3.capture3(*args)
     output = [stdout, stderr].reject(&:empty?).join
@@ -337,6 +369,10 @@ class LinearWork
 
   def claude_command(prompt)
     ["claude", *CLAUDE_ARGS, prompt]
+  end
+
+  def monotonic_time
+    Process.clock_gettime(Process::CLOCK_MONOTONIC)
   end
 
   def write_prompt_file(prompt)
