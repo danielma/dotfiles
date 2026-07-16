@@ -12,6 +12,7 @@ class LinearWork
   ISSUE_PATTERN = /\A[A-Z][A-Z0-9]+-\d+\z/.freeze
   UUID_PATTERN = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/.freeze
   API_URL = ENV.fetch("LINEAR_API_URL", "https://api.linear.app/graphql")
+  CLAUDE_ARGS = ["--permission-mode", "plan", "--model", "opus"].freeze
 
   ISSUE_QUERY = <<~GRAPHQL
     query LinearWorkIssue($issue: String!) {
@@ -287,7 +288,7 @@ class LinearWork
     end
 
     die "could not create branch: #{branch}" unless system("git", "co", "-b", branch)
-    exit system("claude", prompt)
+    exit system(*claude_command(prompt))
   end
 
   def start_supacode_worktree(branch, prompt, name)
@@ -334,6 +335,10 @@ class LinearWork
     [output, status]
   end
 
+  def claude_command(prompt)
+    ["claude", *CLAUDE_ARGS, prompt]
+  end
+
   def write_prompt_file(prompt)
     path = File.join(Dir.tmpdir, "linear-work-prompt-#{SecureRandom.hex(8)}")
     File.write(path, prompt)
@@ -354,7 +359,7 @@ class LinearWork
 
       if system("git", "co", "-b", branch)
         prompt = File.read(prompt_file)
-        status = system("claude", prompt) ? 0 : ($?.exitstatus || 1)
+        status = system("claude", *#{CLAUDE_ARGS.dump}, prompt) ? 0 : ($?.exitstatus || 1)
       else
         status = $?.exitstatus || 1
       end
