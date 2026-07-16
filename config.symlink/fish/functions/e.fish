@@ -13,7 +13,7 @@
 #   # => opens the specified directory in your editor
 
 function e --description 'Edit a file or the current directory'
-    if $INSIDE_EMACS && string match -qe emacsclient "$EDITOR"
+    if set -q INSIDE_EMACS; and string match -qe emacsclient "$EDITOR"
         set editor_cmd "$EDITOR -n"
     else
         set editor_cmd "$EDITOR"
