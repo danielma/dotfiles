@@ -396,7 +396,7 @@ class LinearWork
 
       if system("git", "co", "-b", branch)
         prompt = File.read(prompt_file)
-        status = system("claude", *#{CLAUDE_ARGS.dump}, prompt) ? 0 : ($?.exitstatus || 1)
+        status = system("claude", *#{CLAUDE_ARGS.inspect}, prompt) ? 0 : ($?.exitstatus || 1)
       else
         status = $?.exitstatus || 1
       end
