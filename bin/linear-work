@@ -81,14 +81,15 @@ class LinearWork
     issue = fetch_issue(issue_key)
     branch = branch_name(issue)
     prompt = prompt_for_issue(issue)
-    name = @options[:name] || slugify(branch)
+    supacode_branch = slugify(branch)
+    supacode_title = issue["identifier"].to_s.empty? ? issue_key : issue["identifier"]
 
     if @options[:dry_run]
       puts "Branch: #{branch}"
       puts
       puts prompt
     elsif @options[:worktree]
-      start_supacode_worktree(branch, prompt, name)
+      start_supacode_worktree(branch, prompt, supacode_branch, supacode_title)
     else
       start_current_worktree(branch, prompt)
     end
@@ -295,17 +296,21 @@ class LinearWork
     exit system(*claude_command(prompt))
   end
 
-  def start_supacode_worktree(branch, prompt, name)
+  def start_supacode_worktree(branch, prompt, supacode_branch, supacode_title)
     require_command "supacode"
     require_command "claude"
 
     prompt_file = write_prompt_file(prompt)
     runner_file = write_supacode_runner(branch, prompt_file)
-    args = ["supacode", "repo", "worktree-new", "--branch", name]
+    args = [
+      "supacode", "repo", "worktree-new",
+      "--branch", supacode_branch
+    ]
 
     args.concat(["--base", @options[:base]]) if @options[:base]
     args.concat(["--repo", @options[:repo]]) if @options[:repo]
     args.concat(["--location", @options[:location]]) if @options[:location]
+    args.concat(["--name", @options[:name]]) if @options[:name]
 
     output, status = capture_command(args)
     unless status.success?
@@ -316,8 +321,9 @@ class LinearWork
 
     puts output unless output.empty?
 
-    worktree_id = output[UUID_PATTERN] || name
+    worktree_id = output[UUID_PATTERN] || @options[:name] || supacode_branch
     wait_for_supacode_worktree(worktree_id)
+    set_supacode_worktree_title(worktree_id, supacode_title, prompt_file, runner_file)
 
     tab_output, tab_status = capture_command([
       "supacode", "tab", "new",
@@ -332,6 +338,20 @@ class LinearWork
     end
 
     puts tab_output unless tab_output.empty?
+  end
+
+  def set_supacode_worktree_title(worktree_id, title, prompt_file, runner_file)
+    output, status = capture_command([
+      "supacode", "worktree", "appearance",
+      "--worktree", worktree_id,
+      "--title", title
+    ])
+
+    return if status.success?
+
+    cleanup_files(prompt_file, runner_file)
+    warn output unless output.empty?
+    die "Supacode worktree was created, but setting its title failed for worktree target: #{worktree_id}"
   end
 
   def wait_for_supacode_worktree(worktree_id)
