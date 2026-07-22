@@ -310,7 +310,6 @@ class LinearWork
     args.concat(["--base", @options[:base]]) if @options[:base]
     args.concat(["--repo", @options[:repo]]) if @options[:repo]
     args.concat(["--location", @options[:location]]) if @options[:location]
-    args.concat(["--name", @options[:name]]) if @options[:name]
 
     output, status = capture_command(args)
     unless status.success?
@@ -357,10 +356,7 @@ class LinearWork
   def wait_for_supacode_worktree(worktree_id)
     deadline = monotonic_time + SUPACODE_WORKTREE_READY_TIMEOUT
 
-    loop do
-      return if supacode_worktree_ready?(worktree_id)
-      break if monotonic_time >= deadline
-
+    until supacode_worktree_ready?(worktree_id) || monotonic_time >= deadline
       sleep SUPACODE_WORKTREE_READY_INTERVAL
     end
 

@@ -13,6 +13,13 @@
     (apply orig-fun args)))
 
 (use-package
+  ghostel
+  :hook
+  (ghostel-mode . (lambda () (meow-mode -1)))
+  :config
+  (advice-add 'ghostel :around 'with-editor-advice-around))
+
+(use-package
   vterm
   :custom
   (vterm-keymap-exceptions '("C-c" "C-x" "C-u" "C-g" "C-h" "C-l" "M-x" "M-o" "C-y" "M-y" "M-h" "M-j" "M-k" "M-l"))
@@ -37,7 +44,7 @@
 
 (declare-function vterm "vterm")
 (declare-function vterm-yank "vterm")
-(defvar vterm-buffer-name)
+(defvar ghostel-buffer-name)
 
 (defun vterm-yank-with-clipboard ()
   "Vterm Yank from the system clipboard."
@@ -70,18 +77,19 @@
 (defun switch-to-term ()
   "Switch to a term buffer for the current project."
   (interactive)
-  (require 'vterm)
-  (if (derived-mode-p 'eat-mode 'vterm-mode)
+  (require 'ghostel)
+  (if (derived-mode-p 'eat-mode 'vterm-mode 'ghostel-mode)
       (previous-buffer)
-    (let* ((project (project-current nil))
-           (project-name (and project (project-name project)))
-           (bufname (if project-name
-                        (concat (s-chop-right 1 vterm-buffer-name) "-" project-name "*")
-                      vterm-buffer-name))
-           (existing-buffer (get-buffer bufname)))
-      (if existing-buffer (display-buffer existing-buffer)
-        (let ((default-directory (if project (project-root project) default-directory)))
-          (vterm bufname))))))
+    (ghostel-project)))
+;; (let* ((project (project-current nil))
+;;        (project-name (and project (project-name project)))
+;;        (bufname (if project-name
+;;                     (concat (s-chop-right 1 ghostel-buffer-name) "-" project-name "*")
+;;                   ghostel-buffer-name))
+;;        (existing-buffer (get-buffer bufname)))
+;;   (if existing-buffer (display-buffer existing-buffer)
+;;     (let ((default-directory (if project (project-root project) default-directory)))
+;;       (ghostel bufname))))))
 
 (use-package emacs
   :bind (:map global-map
