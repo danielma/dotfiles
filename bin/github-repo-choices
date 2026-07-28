@@ -19,7 +19,7 @@ format_choices() {
       ;;
     alfred)
       jq '{
-        cache: { seconds: 300, loosereload: true },
+        cache: { seconds: 900, loosereload: true },
         items: map({
           uid: .text,
           title: .text,
