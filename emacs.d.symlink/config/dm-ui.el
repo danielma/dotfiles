@@ -89,9 +89,20 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
 ;;; Consult
 
 (use-package consult
-  :bind (:map global-map
-	            ("M-g i" . consult-imenu)
-	            ("C-x C-b" . consult-buffer))
+  :bind (("C-x b" . consult-buffer)
+         ("C-x 4 b" . consult-buffer-other-window)
+         ("C-x 5 b" . consult-buffer-other-frame)
+         ("C-x p b" . consult-project-buffer)
+         ("C-x r b" . consult-bookmark)
+         ("M-y" . consult-yank-pop)
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake)
+         ("M-g g" . consult-goto-line)
+         ("M-g i" . consult-imenu)
+         ("M-g o" . consult-outline)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi))
   :config
   (defun consult-symbol-at-point ()
     "Search for the matching `symbol-at-point`."
