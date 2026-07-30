@@ -118,9 +118,11 @@
 
 (defun --dm-guard-clear-and-run (test-cmd test-name &optional current-line)
   "Use TEST-CMD to test TEST-NAME, and optionally only the CURRENT-LINE."
-  (let* ((file-command (concat test-cmd " " test-name))
+  (let* ((project (project-current t))
+         (working-directory (file-name-as-directory (project-root project)))
+         (file-command (concat test-cmd " " test-name))
          (line-command (if current-line (concat file-command ":" current-line) file-command))
-         (full-command (concat "cd " (project-root (project-current)) " && eval \"$(direnv export $(basename $SHELL))\" && " line-command)))
+         (full-command (concat "cd " working-directory " && eval \"$(direnv export $(basename $SHELL))\" && " line-command)))
     (pcase dm-guard-terminal
       ('emamux
        (emamux:send-keys "^c")
@@ -137,8 +139,9 @@
              (if dm-guard-async-shell-process (delete-process dm-guard-async-shell-process))
              (erase-buffer)
              (insert line-command "\n\n")
+             (setq-local default-directory working-directory)
              (setq dm-guard-async-shell-process
-                   (let ((default-directory (project-root (project-current))))
+                   (let ((default-directory working-directory))
                      (make-process
                       :name "Guard tests"
                       :buffer buf
