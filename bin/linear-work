@@ -11,13 +11,11 @@ require "openssl"
 
 class LinearWork
   ISSUE_PATTERN = /\A[A-Z][A-Z0-9]+-\d+\z/.freeze
-  UUID_PATTERN = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/.freeze
   API_URL = ENV.fetch("LINEAR_API_URL", "https://api.linear.app/graphql")
   API_KEY_REFERENCE = "op://Employee/Linear PAT/credential".freeze
   CLAUDE_ARGS = ["--permission-mode", "plan", "--model", "opus"].freeze
   SUPACODE_WORKTREE_READY_TIMEOUT = 5.0
   SUPACODE_WORKTREE_READY_INTERVAL = 0.5
-  SUPACODE_WORKTREE_FALLBACK_WAIT = 0.5
 
   ISSUE_QUERY = <<~GRAPHQL
     query LinearWorkIssue($issue: String!) {
@@ -328,17 +326,26 @@ class LinearWork
     args.concat(["--repo", @options[:repo]]) if @options[:repo]
     args.concat(["--location", @options[:location]]) if @options[:location]
 
-    output, status = capture_command(args)
+    worktree_id, output, status = capture_worktree_creation(args)
     unless status.success?
       cleanup_files(prompt_file, runner_file)
       warn output unless output.empty?
       die "Supacode worktree creation failed"
     end
 
+    if worktree_id.nil?
+      cleanup_files(prompt_file, runner_file)
+      warn output unless output.empty?
+      die "Supacode worktree creation did not return a worktree ID"
+    end
+
     puts output unless output.empty?
 
-    worktree_id = output[UUID_PATTERN] || @options[:name] || supacode_branch
-    wait_for_supacode_worktree(worktree_id)
+    unless wait_for_supacode_worktree(worktree_id)
+      cleanup_files(prompt_file, runner_file)
+      die "Supacode worktree was created, but did not become ready: #{worktree_id}"
+    end
+
     set_supacode_worktree_title(worktree_id, supacode_title, prompt_file, runner_file)
 
     tab_output, tab_status = capture_command([
@@ -373,11 +380,12 @@ class LinearWork
   def wait_for_supacode_worktree(worktree_id)
     deadline = monotonic_time + SUPACODE_WORKTREE_READY_TIMEOUT
 
-    until supacode_worktree_ready?(worktree_id) || monotonic_time >= deadline
+    loop do
+      return true if supacode_worktree_ready?(worktree_id)
+      return false if monotonic_time >= deadline
+
       sleep SUPACODE_WORKTREE_READY_INTERVAL
     end
-
-    sleep SUPACODE_WORKTREE_FALLBACK_WAIT
   end
 
   def supacode_worktree_ready?(worktree_id)
@@ -389,9 +397,22 @@ class LinearWork
   def worktree_list_includes?(output, worktree_id)
     candidates = [worktree_id, URI.encode_www_form_component(worktree_id)].uniq
 
-    output.lines.map(&:strip).any? do |line|
-      candidates.any? { |candidate| !candidate.empty? && line.include?(candidate) }
-    end
+    worktree_ids = output.lines.map { |line| line.split("\t", 2).first.strip }
+
+    candidates.any? { |candidate| !candidate.empty? && worktree_ids.include?(candidate) }
+  end
+
+  def capture_worktree_creation(args)
+    stdout, stderr, status = Open3.capture3(*args)
+    output = [stdout, stderr].reject(&:empty?).join
+
+    [worktree_id_from_output(stdout), output, status]
+  end
+
+  def worktree_id_from_output(output)
+    lines = output.lines.map(&:strip).reject(&:empty?)
+
+    lines.one? ? lines.first : nil
   end
 
   def capture_command(args)
