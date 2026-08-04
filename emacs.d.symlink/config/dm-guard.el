@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(declare-function ghostel-compile "ghostel-compile")
+(defvar compilation-always-kill)
+(defvar ghostel-compile-buffer-name)
+
 (defun dm-guard--singularize (word)
   "Singularize WORD very stupidly."
   (save-match-data
@@ -43,17 +47,9 @@
   nil
   "Global variable to run only the current test.")
 
-(defvar dm-guard-terminal
-  'async-shell
-  "Which terminal to use for running tests.")
-
-(defvar dm-guard-async-shell-buffer
-  nil
-  "Side buffer for running tests.")
-
-(defvar dm-guard-async-shell-process
-  nil
-  "Process for running tests.")
+(defvar dm-guard-buffer-name
+  "*Guard Process*"
+  "Name of the Ghostel buffer used to render test output.")
 
 (defvar dm-guard--currently-running-test
   nil
@@ -78,13 +74,13 @@
   (message (if dm-guard-only-failures "Enabled" "Disabled")))
 
 (defun dm-guard-test ()
-  "Use tmux to execute a rails test."
+  "Run the test associated with the current buffer."
   (interactive)
   (if (and dm-guard-enabled (project-current))
       (if (and dm-guard-line-mode (--dm-guard-is-test-file-p)) (dm-guard-test-line) (dm-guard-test-file))))
 
 (defun dm-guard-test-file ()
-  "Use tmux to execute a test for the current file."
+  "Run the test file associated with the current buffer."
   (interactive)
   (let* ((test-cmd (--dm-guard-test-command))
          (test-name (--dm-guard-test-name)))
@@ -93,7 +89,7 @@
       (message "No suitable test file found for %s" (current-buffer)))))
 
 (defun dm-guard-test-line ()
-  "Use tmux to execute the test on the current line."
+  "Run the test at point in the current test file."
   (interactive)
   (let* ((test-cmd (--dm-guard-test-command))
          (test-name (--dm-guard-test-name))
@@ -101,54 +97,26 @@
     (if test-name
         (--dm-guard-clear-and-run test-cmd test-name current-line))))
 
-(defun --dm-guard-ensure-async-shell-buffer ()
-  "Make sure the test buffer exists."
-  (or (and (buffer-live-p dm-guard-async-shell-buffer) dm-guard-async-shell-buffer)
-      (let ((buffer (generate-new-buffer "*Guard Process*")))
-        (setq dm-guard-async-shell-buffer buffer)
-        (with-current-buffer buffer
-          (shell-mode)
-          (setq-local process-environment (append (comint-term-environment) process-environment)))
-        (--dm-guard-ensure-async-shell-buffer))))
-
-(defun --dm-guard-async-shell-process-sentinel (proc msg)
-  "Sentinel for async shell process. Takes PROC and MSG and responds."
-  (if (memq (process-status proc) '(exit signal))
-      (setq dm-guard--currently-running-test nil)))
-
 (defun --dm-guard-clear-and-run (test-cmd test-name &optional current-line)
   "Use TEST-CMD to test TEST-NAME, and optionally only the CURRENT-LINE."
   (let* ((project (project-current t))
          (working-directory (file-name-as-directory (project-root project)))
          (file-command (concat test-cmd " " test-name))
          (line-command (if current-line (concat file-command ":" current-line) file-command))
-         (full-command (concat "cd " working-directory " && eval \"$(direnv export $(basename $SHELL))\" && " line-command)))
-    (pcase dm-guard-terminal
-      ('emamux
-       (emamux:send-keys "^c")
-       (emamux:send-command (concat " clear; echo -e '" command "'; " full-command)))
-      ;; this should probably just be compile mode
-      ('async-shell
-       (if (string-equal dm-guard--currently-running-test line-command)
-           'already-running
-         (setq dm-guard--currently-running-test line-command)
-         (let ((buf (--dm-guard-ensure-async-shell-buffer)))
-           (or (get-buffer-window buf 'visible)
-               (display-buffer-in-side-window buf '((side . right) (window-width . 0.2))))
-           (with-current-buffer buf
-             (if dm-guard-async-shell-process (delete-process dm-guard-async-shell-process))
-             (erase-buffer)
-             (insert line-command "\n\n")
-             (setq-local default-directory working-directory)
-             (setq dm-guard-async-shell-process
-                   (let ((default-directory working-directory))
-                     (make-process
-                      :name "Guard tests"
-                      :buffer buf
-                      :command (list shell-file-name shell-command-switch line-command)
-                      :filter 'comint-output-filter
-                      :sentinel #'--dm-guard-async-shell-process-sentinel)))))))
-      (_ (error (format "Unusable terminal `%s'" dm-guard-terminal))))))
+         (buffer (get-buffer dm-guard-buffer-name)))
+    (if (and (string-equal dm-guard--currently-running-test line-command)
+             (process-live-p (and buffer (get-buffer-process buffer))))
+        'already-running
+      (require 'ghostel-compile)
+      (setq dm-guard--currently-running-test line-command)
+      (let ((compilation-always-kill t)
+            (default-directory working-directory)
+            (display-buffer-overriding-action
+             '((display-buffer-in-side-window)
+               (side . right)
+               (window-width . 0.2)))
+            (ghostel-compile-buffer-name dm-guard-buffer-name))
+        (ghostel-compile line-command)))))
 
 (defun --dm-guard-rspec-test-command ()
   "Generate the test command for rspec."
@@ -250,7 +218,7 @@
   "Keymap of dm-guard.")
 
 (define-minor-mode dm-guard-mode
-  "Use emamux to test after saving a file."
+  "Run the associated test after saving a file."
   :init-value nil
   :lighter "􀙧"
   :map dm-guard-mode-map
