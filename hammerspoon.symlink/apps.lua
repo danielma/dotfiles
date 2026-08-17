@@ -7,6 +7,7 @@ local appHotkeys = {
    D = "Dash",
    E = "Emacs",
    G = "supacode",
+   H = "2Do",
    I = "Music",
    L = "Notion Calendar",
    M = "Messages",
