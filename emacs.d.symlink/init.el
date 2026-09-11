@@ -307,6 +307,8 @@ If the new path's directories does not exist, create them."
 
 (add-to-list 'load-path "~/.emacs.d/config")
 
+(require 'dm-environment)
+
 (require 'dm-bindings)
 
 (require 'dm-ui)
