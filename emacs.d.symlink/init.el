@@ -236,9 +236,6 @@ If the new path's directories does not exist, create them."
 ;; want to set this to `nil':
                                         ;(setopt pixel-scroll-precision-interpolate-mice nil)
 
-;; Use common keystrokes by default
-(cua-mode)
-
 ;; Makes it easier to repeat commands; `C-x o C-x o' becomes `C-x o o'
 ;; See https://karthinks.com/software/it-bears-repeating/
 (repeat-mode)
