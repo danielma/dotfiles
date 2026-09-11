@@ -35,8 +35,10 @@
 (setq frame-resize-pixelwise t)
                                         ; (setq window-resize-pixelwise t)
 
-(if (display-graphic-p)
-    (tool-bar-mode -1)
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+
+(unless (display-graphic-p)
   (menu-bar-mode -1))
 
 ;; These settings apply to *all* frames.
