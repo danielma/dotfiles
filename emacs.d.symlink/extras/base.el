@@ -45,10 +45,7 @@
          ;; Searching
          ("M-s r" . consult-ripgrep)
          ("M-s l" . consult-line)
-         ("M-s L" . consult-line-multi))
-  :config
-  ;; Narrowing lets you restrict results to certain groups of candidates
-  (setq consult-narrow-key "<"))
+         ("M-s L" . consult-line-multi)))
 
 (use-package embark-consult)
 

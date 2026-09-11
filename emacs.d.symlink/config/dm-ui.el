@@ -114,6 +114,8 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
          ("M-s e" . consult-isearch-history)
          ("M-s l" . consult-line)
          ("M-s L" . consult-line-multi))
+  :custom
+  (consult-narrow-key "<")
   :config
   (defun consult-symbol-at-point ()
     "Search for the matching `symbol-at-point`."
