@@ -3,6 +3,10 @@
 
 ;;; Code:
 
+;; Defer loading the symbol catalog until one of its commands is used.
+(autoload 'sf-symbol-insert "sf" "Insert an SF Symbol." t)
+(autoload 'sf-symbol-insert-name "sf" "Insert an SF Symbol name." t)
+
 (defun global-text-scale-adjust-by-two ()
   (interactive)
   (global-text-scale-adjust 2))
