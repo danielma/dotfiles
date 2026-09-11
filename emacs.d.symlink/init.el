@@ -251,10 +251,6 @@ If the new path's directories does not exist, create them."
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Keep the tab bar visible, even when only one tab exists.
-(setopt tab-bar-show t)
-(tab-bar-mode)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Theme
@@ -323,3 +319,4 @@ If the new path's directories does not exist, create them."
 (add-to-list 'load-path "~/.emacs.d/config")
 
 (require 'dm-meow)
+(require 'dm-tabs)
