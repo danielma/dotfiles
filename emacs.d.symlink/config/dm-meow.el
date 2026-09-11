@@ -129,16 +129,16 @@
 (use-package meow
   :config
   (dm-meow-setup)
+  (setopt meow-replace-state-name-list '((normal . "N")
+                                          (motion . "M")
+                                          (keypad . "K")
+                                          (insert . "I")
+                                          (beacon . "B")))
   (meow-setup-indicator)
   (meow-global-mode)
   :custom
   (meow-use-cursor-position-hack t)
   (meow-keypad-ctrl-meta-prefix ?/)
-  (meow-replace-state-name-list '((normal . "N")
-                                  (motion . "M")
-                                  (keypad . "K")
-                                  (insert . "I")
-                                  (beacon . "B")))
   (meow-mode-state-list '((conf-mode . normal)
                           (fundamental-mode . normal)
                           (help-mode . motion)
