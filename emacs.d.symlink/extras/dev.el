@@ -64,7 +64,6 @@
   ; (((python-mode ruby-mode elixir-mode) . eglot-ensure))
 
   :custom
-  (eglot-send-changes-idle-time 0.1)
   (eglot-extend-to-xref t)              ; activate Eglot in referenced non-project files
 
   :config
