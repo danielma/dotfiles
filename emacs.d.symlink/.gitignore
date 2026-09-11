@@ -12,7 +12,9 @@ elpa
 emojis
 eshell
 ido.last
+history
 magithub/cache
+org-persist
 projectile-bookmarks.eld
 projects
 recentf
@@ -20,6 +22,7 @@ smex-items
 straight
 !straight/versions
 tramp
+tree-sitter
 transient
 url
 var/prescient-save.el

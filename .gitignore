@@ -9,3 +9,7 @@ atom.symlink/blob-store
 
 git/gitconfig.symlink
 *.log
+
+1Password/
+colima/
+opencode
