@@ -51,7 +51,8 @@
       ("h" "move left" tab-bar-move-tab-backward :transient t)
       ("l" "move right" tab-bar-move-tab :transient t)]]
     [["Management"
-      ("r" "rename tab" tab-rename)]]
+      ("r" "rename tab" tab-rename)
+      ("x" "close tab" tab-close)]]
     [[""
       ("RET" "Done" transient-quit-one)]])
   ;; TODO: Reconcile this transient with the built-in `C-x t' prefix.
