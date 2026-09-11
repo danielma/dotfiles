@@ -45,12 +45,7 @@
          ;; Searching
          ("M-s r" . consult-ripgrep)
          ("M-s l" . consult-line)
-         ("M-s L" . consult-line-multi)
-         ;; Isearch integration
-         :map isearch-mode-map
-         ("M-s l" . consult-line)            ; needed by consult-line to detect isearch
-         ("M-s L" . consult-line-multi)      ; needed by consult-line to detect isearch
-         )
+         ("M-s L" . consult-line-multi))
   :config
   ;; Narrowing lets you restrict results to certain groups of candidates
   (setq consult-narrow-key "<"))
