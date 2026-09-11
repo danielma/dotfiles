@@ -17,7 +17,9 @@
 
 (defvar-keymap dm-snippet-command-map
   :doc "Keymap for snippet commands under the Meow leader key."
-  "i" #'yas-insert-snippet)
+  "i" #'yas-insert-snippet
+  "n" #'yas-new-snippet
+  "v" #'yas-visit-snippet-file)
 
 ;; https://github.com/meow-edit/meow/blob/master/KEYBINDING_COLEMAK.org
 (defun meow-setup ()
