@@ -41,6 +41,58 @@
   :config
   (advice-add 'browse-at-remote-kill :around #'dm-with-select-clipboard))
 
+(defvar dm-magit-remote-repositories nil
+  "Remote repositories cloned for exploration during this Emacs session.")
+
+(defun dm-magit--remote-url (repository)
+  "Return a clone URL for REPOSITORY.
+
+REPOSITORY may be a URL or a GitHub OWNER/NAME reference."
+  (if (string-match-p "\\`\\(?:https?://\\|ssh://\\|git@\\)" repository)
+      repository
+    (format "git@github.com:%s.git"
+            (replace-regexp-in-string "\\.git\\'" "" repository))))
+
+(defun dm-magit--temporary-repository-directory (repository)
+  "Create a temporary directory named after REPOSITORY."
+  (let* ((escaped (replace-regexp-in-string "[^[:alnum:]]+" "_" repository))
+         (short-name (substring escaped 0 (min 40 (length escaped)))))
+    (make-temp-file (format "dm-magit-%s-" short-name) t)))
+
+(defun dm-magit-explore-remote (repository)
+  "Clone and visit a remote REPOSITORY for temporary exploration.
+
+Reuse a successful clone when REPOSITORY was already explored during this
+Emacs session.  Input without a URL scheme is treated as a GitHub OWNER/NAME
+reference."
+  (interactive
+   (list (completing-read "Repository URL or GitHub reference: "
+                          dm-magit-remote-repositories)))
+  (require 'magit)
+  (let* ((repository-url (dm-magit--remote-url repository))
+         (existing (assoc-string repository-url dm-magit-remote-repositories)))
+    (if (and existing
+             (file-directory-p (expand-file-name ".git" (cdr existing))))
+        (magit-status (cdr existing))
+      (when existing
+        (setq dm-magit-remote-repositories
+              (delete existing dm-magit-remote-repositories)))
+      (unless (magit-git-success "ls-remote" "--exit-code" repository-url)
+        (user-error "Could not find repository at %s" repository-url))
+      (let ((directory (dm-magit--temporary-repository-directory repository-url))
+            (magit-clone-set-remote.pushDefault t))
+        (condition-case error-data
+            (progn
+              (push (cons repository-url directory) dm-magit-remote-repositories)
+              (magit-clone-regular repository-url directory nil))
+          (error
+           (setq dm-magit-remote-repositories
+                 (assoc-delete-all repository-url dm-magit-remote-repositories))
+           (delete-directory directory t)
+           (signal (car error-data) (cdr error-data))))))))
+
+(defalias 'remote-repository-explore #'dm-magit-explore-remote)
+
 (defun my/pr ()
   "Simple pull request command."
   (interactive)
