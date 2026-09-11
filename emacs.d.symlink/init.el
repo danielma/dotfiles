@@ -213,9 +213,13 @@ If the new path's directories does not exist, create them."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Mode line information
-(setopt line-number-mode t)                        ; Show current line in modeline
-(setopt column-number-mode t)                      ; Show column as well
-(setopt mode-line-collapse-minor-modes t)          ; Hide minor modes behind a compact indicator
+(setopt line-number-mode t                                  ; Show current line in mode line
+        column-number-mode t                                ; Show column as well
+        mode-line-collapse-minor-modes '(not flymake-mode)  ; Keep diagnostics visible
+        mode-line-collapse-minor-modes-to " +"              ; Collapse low-value minor modes
+        mode-line-compact 'long                             ; Compact only when space is tight
+        mode-line-percent-position '(-3 "%p")               ; Show a compact buffer percentage
+        project-mode-line 'non-remote)                      ; Avoid project lookup over TRAMP
 
 (setopt x-underline-at-descent-line nil)           ; Prettier underlines
 (setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
