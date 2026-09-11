@@ -68,7 +68,8 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
               ("C-k" . kill-whole-line)))
 
 (use-package display-line-numbers
-  ;; :custom
+  :custom
+  (display-line-numbers-width 3)
   ;; (display-line-numbers-type 'relative)
   :hook text-mode prog-mode)
 

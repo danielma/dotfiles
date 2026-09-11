@@ -240,10 +240,6 @@ If the new path's directories does not exist, create them."
 ;; See https://karthinks.com/software/it-bears-repeating/
 (repeat-mode)
 
-;; Display line numbers in programming mode
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
-(setopt display-line-numbers-width 3)           ; Set a minimum width
-
 ;; Nice line wrapping when working with text
 (add-hook 'text-mode-hook 'visual-line-mode)
 
