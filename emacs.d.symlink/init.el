@@ -49,7 +49,6 @@
                                         ;(setopt inhibit-splash-screen t)
 
 (setopt initial-major-mode 'fundamental-mode)  ; default mode for the *scratch* buffer
-(setopt display-time-default-load-average nil) ; this information is useless for most
 
 ;; Automatically reread from disk if the underlying file changes by
 ;; using the OS file change notification interface rather than
@@ -255,13 +254,6 @@ If the new path's directories does not exist, create them."
 ;; Keep the tab bar visible, even when only one tab exists.
 (setopt tab-bar-show t)
 (tab-bar-mode)
-
-;; Add the time to the tab-bar, if visible
-(add-to-list 'tab-bar-format 'tab-bar-format-align-right 'append)
-(add-to-list 'tab-bar-format 'tab-bar-format-global 'append)
-(setopt display-time-format "%a %F %T")
-(setopt display-time-interval 1)
-(display-time-mode)
 
 ;; A transient menu to make working with the tab-bar easier
 ;; The `transient' library is built-in and makes defining little menus
