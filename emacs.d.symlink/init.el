@@ -178,8 +178,7 @@ If the new path's directories does not exist, create them."
 (setopt completion-eager-update t)                     ; Update display as-you-type
 
 ;; Uncomment to get automatic inline completion previews
-                                        ;(completion-preview-mode)
-
+(completion-preview-mode)
 
 (keymap-set minibuffer-mode-map "TAB" 'minibuffer-complete) ; TAB acts more like how it does in the shell
 
