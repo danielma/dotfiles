@@ -95,6 +95,4 @@
 (use-package iedit
   :commands iedit-mode)
 
-(use-package transient)
-
 (provide 'dm-prog)
