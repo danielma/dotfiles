@@ -12,6 +12,7 @@
 
 (defvar dm-buffer-command-map
   (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "k") #'kill-current-buffer)
     (define-key map (kbd "s") #'consult-buffer)
     map)
   "Keymap for buffer commands under the Meow leader key.")
