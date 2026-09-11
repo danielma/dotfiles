@@ -297,8 +297,8 @@ If the new path's directories does not exist, create them."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(apheleia browse-at-remote citar-typst fish-mode forge iedit magit meow nix-ts-mode smartparens
-              swift-mode treesit-fold which-key)))
+   '(apheleia browse-at-remote citar-typst fish-mode forge iedit magit markdown-mode meow nix-ts-mode
+              smartparens swift-mode treesit-fold which-key)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -320,6 +320,7 @@ If the new path's directories does not exist, create them."
 (require 'dm-prog)
 (require 'dm-lsp)
 (require 'dm-langs)
+(require 'dm-prose)
 (require 'dm-magit)
 
 (require 'dm-tabs)
