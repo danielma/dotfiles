@@ -57,52 +57,6 @@
 ;;   (embark-auto-prefix-help-mode -1)
 ;;   (which-key-mode))
 
-;;; 
-;;; C-x t C-f				find-file-other-tab
-;;; C-x t RET				tab-switch
-;;; C-x t C-r				find-file-read-only-other-tab
-;;; C-x t 0					tab-close
-;;; C-x t 1					tab-close-other
-;;; C-x t 2					tab-new
-;;; C-x t G					tab-group
-;;; C-x t M					tab-move-to
-;;; C-x t N					tab-new-to
-;;; C-x t O					tab-previous
-;;; C-x t b					switch-to-buffer-other-tab
-;;; C-x t d					dired-other-tab
-;;; C-x t f					find-file-other-tab
-;;; C-x t m					tab-move
-;;; C-x t n					tab-duplicate
-;;; C-x t o					tab-next
-;;; C-x t p					project-other-tab-command
-;;; C-x t r					tab-rename
-;;; C-x t t					other-tab-prefix
-;;; C-x t u					tab-undo
-;;; 
-;;; C-x t ^ f				tab-detach
-
-(use-package transient
-  :ensure nil
-  :config
-  (transient-define-prefix tab-bar-transient ()
-    "Tab-bar menu"
-    [["Creation"
-      ("t" "new tab" tab-bar-new-tab)]
-     ["Movement"
-      ("RET" "switch tab" tab-switch)
-      ("n" "next tab" tab-next :transient t)
-      ("p" "previous tab" tab-previous :transient t)
-      ("h" "move left" tab-bar-move-tab-backward :transient t)
-      ("l" "move right" tab-bar-move-tab :transient t)]]
-    [["Management"
-      ("r" "rename tab" tab-rename)
-      ("x" "close tab" tab-close)]]
-    [[""
-      ("q" "Quit" transient-quit-one)]])
-  ;; TODO: Reconcile this transient with the built-in `C-x t' prefix.
-  :bind (:map global-map
-              ("C-c C-t" . tab-bar-transient)))
-
 (use-package emacs
   :bind (
 	       ("C-x C-:" . comment-line)
