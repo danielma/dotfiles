@@ -47,16 +47,6 @@
   (tt/-break-object)
   )
 
-(defun tt/expand-at-point ()
-  "Insert a newline and put the cursor at the indented location above."
-  (interactive)
-  (newline-and-indent)
-  (indent-according-to-mode)
-  (newline-and-indent)
-  (indent-according-to-mode)
-  (forward-line -1)
-  (indent-according-to-mode))
-
 (defvar
   dm-text-map
   (let ((map (make-sparse-keymap)))

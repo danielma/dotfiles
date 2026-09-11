@@ -9,6 +9,16 @@
   (let ((select-enable-clipboard t))
     (yank)))
 
+(defun tt/expand-at-point ()
+  "Insert two indented newlines and leave point between them."
+  (interactive)
+  (newline-and-indent)
+  (indent-according-to-mode)
+  (newline-and-indent)
+  (indent-according-to-mode)
+  (forward-line -1)
+  (indent-according-to-mode))
+
 (defadvice save-buffer (before save-buffer-always activate)
   "always save buffer"
   (set-buffer-modified-p t))
