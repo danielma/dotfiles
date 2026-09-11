@@ -1,8 +1,6 @@
 ;;; -*- lexical-binding: t -*-
 
 (use-package yasnippet
-  :hook
-  (yas-minor-mode-mode . add-yas-extra-modes)
   :delight yas-minor-mode
   :config
   (yas-global-mode 1)
@@ -15,12 +13,6 @@
 ;; (use-package yasnippet-capf
 ;;   :config
 ;;   (add-to-list 'completion-at-point-functions #'yasnippet-capf))
-
-(defun add-yas-extra-modes ()
-  ;; (if (string= "erb" web-mode-engine)
-  ;;     (add-to-list 'yas--extra-modes 'html-erb-mode)
-  ;;   ))
-  )
 
 (if t
     t
