@@ -35,17 +35,9 @@
 (setq frame-resize-pixelwise t)
                                         ; (setq window-resize-pixelwise t)
 
-(when (fboundp 'tool-bar-mode) ; When in a GUI, disable tool bar;
-  (tool-bar-mode -1))          ; all these tools are in the menu-bar anyway
-
-(defun dm-disable-terminal-menu-bar (&optional frame)
-  "Disable the menu bar in terminal FRAMEs."
-  (when-let* ((frame (or frame (selected-frame))))
-    (unless (display-graphic-p frame)
-      (set-frame-parameter frame 'menu-bar-lines 0))))
-
-(dm-disable-terminal-menu-bar)
-(add-hook 'after-make-frame-functions #'dm-disable-terminal-menu-bar)
+(if (display-graphic-p)
+    (tool-bar-mode -1)
+  (menu-bar-mode -1))
 
 ;; These settings apply to *all* frames.
 (setq default-frame-alist '(
