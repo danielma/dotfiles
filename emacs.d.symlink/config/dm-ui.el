@@ -161,6 +161,7 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
          ("M-s L" . consult-line-multi))
   :custom
   (consult-narrow-key "<")
+  (consult-line-start-from-top t)
   :config
   (defun consult-symbol-at-point ()
     "Search for the matching `symbol-at-point`."
