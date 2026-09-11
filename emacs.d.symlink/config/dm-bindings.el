@@ -45,7 +45,7 @@
     [["Creation"
       ("t" "new tab" tab-bar-new-tab)]
      ["Movement"
-      ("j" "jump to tab" tab-switch)
+      ("RET" "switch tab" tab-switch)
       ("n" "next tab" tab-next :transient t)
       ("p" "previous tab" tab-previous :transient t)
       ("h" "move left" tab-bar-move-tab-backward :transient t)
@@ -54,7 +54,6 @@
       ("r" "rename tab" tab-rename)
       ("x" "close tab" tab-close)]]
     [[""
-      ("RET" "Done" transient-quit-one)
       ("q" "Quit" transient-quit-one)]])
   ;; TODO: Reconcile this transient with the built-in `C-x t' prefix.
   :bind (:map global-map
