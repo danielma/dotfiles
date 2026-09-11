@@ -69,7 +69,8 @@
 ;; Save existing clipboard content to the kill ring---useful if you've
 ;; copied something from an external program and then kill some text
 ;; in Emacs shortly after. Also, deduplicate kill ring contents.
-(setopt save-interprogram-paste-before-kill t)
+;; Clipboard integration is customized in `dm-bindings.el' and `dm-ui.el'.
+;; (setopt save-interprogram-paste-before-kill t)
 (setopt kill-do-not-save-duplicates t)
 
 ;; Don't ping url-looking things when running find-file
