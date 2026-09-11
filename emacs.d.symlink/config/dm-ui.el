@@ -132,11 +132,6 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
   :config
   (marginalia-mode 1))
 
-(use-package which-key
-  :delight
-  :config
-  (which-key-mode))
-
 ;; (use-package dired-sidebar
 ;;   :bind (("C-s-s" . dired-sidebar-toggle-sidebar)))
 
