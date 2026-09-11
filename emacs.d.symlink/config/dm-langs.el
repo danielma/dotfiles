@@ -13,9 +13,6 @@
   :hook
   (yaml-ts-mode . my/yaml-mode-setup))
 
-(use-package lua-mode
-  :defer t)
-
 (use-package swift-mode
   :hook
   (swift-mode . eglot-ensure))
