@@ -17,7 +17,7 @@
 
 (use-package swift-mode
   :hook
-  (swift-mode . eglot))
+  (swift-mode . eglot-ensure))
 
 (use-package fish-mode
   :defer t)
