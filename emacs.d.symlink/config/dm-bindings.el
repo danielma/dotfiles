@@ -51,6 +51,12 @@
     (which-key-mode -1))
   (embark-auto-prefix-help-mode))
 
+;; To restore Which Key as the prefix helper, uncomment this block.
+;; (use-package which-key
+;;   :config
+;;   (embark-auto-prefix-help-mode -1)
+;;   (which-key-mode))
+
 ;;; 
 ;;; C-x t C-f				find-file-other-tab
 ;;; C-x t RET				tab-switch
