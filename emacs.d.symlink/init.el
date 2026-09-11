@@ -318,6 +318,7 @@ If the new path's directories does not exist, create them."
 (require 'dm-meow)
 (require 'dm-yasnippet)
 (require 'dm-prog)
+(require 'dm-flymake)
 (require 'dm-lsp)
 (require 'dm-langs)
 (require 'dm-prose)
