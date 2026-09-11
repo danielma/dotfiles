@@ -42,11 +42,6 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Marginalia: annotations for minibuffer
-(use-package marginalia
-  :config
-  (marginalia-mode))
-
 ;; Corfu: Popup completion-at-point
 (use-package corfu
   :init
