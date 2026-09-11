@@ -4,26 +4,26 @@
 
 ;;; Code:
 
-(defvar my/light-theme 'doom-opera-light)
-(defvar my/dark-theme 'doom-gruvbox)
+(defvar dm-light-theme 'doom-opera-light)
+(defvar dm-dark-theme 'doom-gruvbox)
 
-(defun my/apply-theme (appearance)
+(defun dm-apply-theme (appearance)
   "Apply theme based on APPEARANCE ('light or 'dark)."
   (mapc #'disable-theme custom-enabled-themes)
   (pcase appearance
-    ('light (load-theme my/light-theme t))
-    ('dark (load-theme my/dark-theme t))))
+    ('light (load-theme dm-light-theme t))
+    ('dark (load-theme dm-dark-theme t))))
 
-(defun my/system-appearance-changed (appearance)
+(defun dm-system-appearance-changed (appearance)
   "Hook for ns-system-appearance-change-functions."
-  (my/apply-theme appearance))
+  (dm-apply-theme appearance))
 
-(defvar my/terminal-background-appearance nil
+(defvar dm-terminal-background-appearance nil
   "Cached terminal background appearance detected via OSC 11.")
 
-(defun my/osc-11-response-appearance (response)
+(defun dm-osc-11-response-appearance (response)
   "Return light/dark appearance parsed from an OSC 11 RESPONSE string."
-  (when (string-match "]11;rgb:\\([[:xdigit:]]+\\)/\\([[:xdigit:]]+\\)/\\([[:xdigit:]]+\\)" response)
+  (when (string-match "\e]11;rgb:\\([[:xdigit:]]+\\)/\\([[:xdigit:]]+\\)/\\([[:xdigit:]]+\\)" response)
     (let* ((r-hex (match-string 1 response))
            (g-hex (match-string 2 response))
            (b-hex (match-string 3 response))
@@ -33,7 +33,7 @@
            (luminance (+ (* 0.2126 r) (* 0.7152 g) (* 0.0722 b))))
       (if (> luminance 0.5) 'light 'dark))))
 
-(defun my/read-terminal-osc-response (&optional timeout)
+(defun dm-read-terminal-osc-response (&optional timeout)
   "Read a terminal OSC response, waiting up to TIMEOUT seconds."
   (let ((end (+ (float-time) (or timeout 0.2)))
         (response "")
@@ -51,32 +51,32 @@
          (t
           (push event unread-command-events)
           (throw 'done response)))
-        (when (or (string-match-p "\\\\" response)
-                  (string-match-p "" response))
+        (when (or (string-match-p "\e\\\\" response)
+                  (string-match-p "\a" response))
           (throw 'done response)))
       response)))
 
-(defun my/terminal-osc-11-appearance ()
+(defun dm-terminal-osc-11-appearance ()
   "Query the terminal background color with OSC 11 and infer light/dark."
-  (or my/terminal-background-appearance
+  (or dm-terminal-background-appearance
       (when (and (not noninteractive) (not (display-graphic-p)))
         (send-string-to-terminal "\e]11;?\e\\")
-        (setq my/terminal-background-appearance
-              (my/osc-11-response-appearance
-               (my/read-terminal-osc-response 0.2))))))
+        (setq dm-terminal-background-appearance
+              (dm-osc-11-response-appearance
+               (dm-read-terminal-osc-response 0.2))))))
 
-(defun my/current-appearance ()
+(defun dm-current-appearance ()
   "Return current light/dark appearance."
   (or (and (memq (bound-and-true-p ns-system-appearance) '(light dark))
            ns-system-appearance)
-      (my/terminal-osc-11-appearance)
+      (dm-terminal-osc-11-appearance)
       'light))
 
 (use-package doom-themes
   :config
-  (my/apply-theme (my/current-appearance))
+  (dm-apply-theme (dm-current-appearance))
   (when (boundp 'ns-system-appearance-change-functions)
-    (add-hook 'ns-system-appearance-change-functions #'my/system-appearance-changed)))
+    (add-hook 'ns-system-appearance-change-functions #'dm-system-appearance-changed)))
 
 (use-package emacs
   :custom
