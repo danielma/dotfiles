@@ -661,12 +661,6 @@ an alternate theme for use in the terminal.")
      (tab-bar-tab-inactive                         :foreground base04 :box (:line-width 7 :color base01))
      (tab-bar-tab                                  :foreground base07 :background base03 :box (:line-width 7 :color base03))
 
-     ;; Meow mode line state
-     (meow-normal-indicator                   :foreground base06 :background base03 :weight bold :box nil)
-     (meow-motion-indicator                   :foreground base06 :background base0E :weight bold :box nil)
-     (meow-keypad-indicator                   :foreground base06 :background base0C :weight bold :box nil)
-     (meow-insert-indicator                   :foreground base06 :background base0D :weight bold :box nil)
-     (meow-beacon-indicator                   :foreground base06 :background base09 :weight bold :box nil)
      (mode-line-accent-active                 :inherit mode-line
                                               :background base01
                                               :box nil) ;; (:line-width -1 :color base01))
