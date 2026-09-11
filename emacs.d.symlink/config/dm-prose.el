@@ -1,10 +1,4 @@
-(defun my/markdown-mode-setup ()
-  (whitespace-mode 0)
-  (setq-local word-wrap t))
-
-(use-package markdown-mode
-  :config
-  (add-hook 'markdown-mode-hook 'my/markdown-mode-setup))
+(use-package markdown-mode)
 
 (defun my/writeroom-mode-setup ()
   )
