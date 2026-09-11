@@ -2,15 +2,15 @@
 
 ## Goal
 
-Integrate Emacs Bedrock's `extras/base.el` first, then `extras/dev.el`, while
-preserving the useful parts of the existing configuration and removing true
-duplicates. Treat understanding and implementation as separate steps.
+Integrate Emacs Bedrock's extras while preserving the useful parts of the
+existing configuration and removing true duplicates. Treat understanding and
+implementation as separate steps.
 
-Review only one extra per context:
+`extras/base.el` is complete. Review only `extras/dev.el` in the next context.
 
-1. Finish and activate `extras/base.el`.
-2. Clear context if desired.
-3. Finish and activate `extras/dev.el`.
+Before starting dev, confirm the base behavior interactively: Vertico and
+Orderless minibuffer completion, Corfu completion-at-point, isearch-to-Consult
+handoff, Meow, Embark prefix help, and Ghostel.
 
 The Bedrock source currently lives at:
 
@@ -18,7 +18,9 @@ The Bedrock source currently lives at:
 /var/folders/29/7zc9hh416bz9zc77n3l5d5mc0000gn/T/__codeberg_org_ashton314_emacs_bedrockY2ERtE/
 ```
 
-Neither extra has been copied into this repository yet.
+`extras/dev.el` has not been copied into this repository yet. The base extra
+was committed as an inactive upstream baseline, reviewed completely, and then
+deleted after all retained behavior moved into its owning modules.
 
 ## How to work with Daniel
 
@@ -43,11 +45,13 @@ interactively.
 ## Current decisions and ownership
 
 - Use built-in `package.el`, not `straight.el`, for the Bedrock migration.
-- Keep `which-key-mode`.
-- Try Emacs's built-in minibuffer completion before restoring Vertico and
-  Orderless.
-- Try `completion-preview-mode` before restoring Corfu.
+- Try Embark's automatic prefix help instead of Which Key. A commented Which
+  Key fallback lives beside the Embark configuration in `dm-bindings.el`.
+- Use Vertico and Orderless for minibuffer completion.
+- Use Corfu, Popupinfo, Cape, and Kind Icon for completion-at-point; keep
+  `completion-preview-mode` disabled.
 - Keep Meow; do not enable CUA or Evil.
+- Keep Ghostel and omit Bedrock's Eshell and Eat configuration.
 - UI defaults belong in `config/dm-ui.el`.
 - General keybindings and transients belong in `config/dm-bindings.el`.
 - Tab presentation belongs in `config/dm-tabs.el`.
@@ -70,80 +74,59 @@ Useful history begins with the baseline commit:
 Use `git log --oneline 8b5e458^..HEAD` for the full decision log. Do not assume
 the hash named `HEAD` in this document remains current.
 
-## Phase 1: `extras/base.el`
+## Phase 1: `extras/base.el` — complete
 
-Copy only `extras/base.el` into the repository and commit that inactive source
-as a baseline. Do not load it from `init.el` yet. Then review these active
-sections in file order.
+Do not recreate or load `extras/base.el`. Git history contains the upstream
+baseline and each decision commit. The notes below record the outcomes.
 
 ### Avy
 
-- New capability relative to the currently loaded configuration.
-- Review `C-c j` and `s-j`, including the `s-j` isearch binding, against Meow
-  and existing global bindings.
-- Review the later Avy-to-Embark action as part of the same feature.
+- Retained as a new capability in `dm-bindings.el`.
+- `C-c j` runs `avy-goto-char-timer` globally and `avy-isearch` during isearch.
+- Pressing `.` during Avy selection invokes Embark at the chosen target.
 
 ### Consult
 
-- `config/dm-ui.el` already has a larger Consult binding set and Consult-based
-  Xref display.
-- Compare every Bedrock binding rather than loading both declarations.
-- Preserve accepted bindings in `dm-ui.el`; remove duplicates from the extra.
-- Pay particular attention to `M-s s`, isearch integration, narrowing with
-  `<`, and any command whose current binding differs.
+- The larger binding set and Consult-based Xref display remain in `dm-ui.el`.
+- `<` narrows Consult results. Isearch can hand off to Consult with `M-s l` or
+  `M-s L`, and `M-s e` opens Consult's isearch history.
+- `M-e` still edits the isearch string, `M-s o` still runs built-in Occur, and
+  the redundant `M-s s` alias was omitted.
 
 ### Embark
 
-- `config/dm-completion.el` previously bound `embark-act` to `C-.` in the
-  minibuffer; Bedrock proposes global `C-c a` plus Avy integration.
-- Bedrock disables `which-key` and replaces prefix help with Embark. That
-  conflicts with an explicit decision to keep `which-key`.
-- Review Embark actions independently from the prefix-help replacement. Do not
-  disable `which-key` without a new explicit decision.
+- `C-c a` invokes `embark-act` globally; the dormant minibuffer-only `C-.`
+  binding was not restored.
+- Embark automatic prefix help is enabled with a one-second delay.
+- Which Key is disabled, with a commented fallback beside the Embark setup.
+- `embark-consult` is retained with previews in Embark collect buffers.
 
 ### Vertico and Orderless
 
-- The existing `dm-completion.el` contains Vertico, Vertico Posframe, and a
-  more detailed Orderless setup.
-- Daniel explicitly chose to try Emacs's built-in minibuffer completion first.
-- Start with a recommendation to omit Vertico and Orderless. Restore a focused
-  piece only if Daniel identifies a missing capability.
+- Bedrock's plain Vertico, Vertico Directory, and Orderless behavior is active
+  in `dm-ui.el`.
+- The richer dormant Posframe and Orderless customizations were not restored.
 
 ### Marginalia
 
-- Already configured in `dm-ui.el`.
-- Decide whether its annotations are worth retaining with built-in completion.
-- Keep one declaration in the owning module.
+- Retained in `dm-ui.el` as the single declaration.
 
 ### Corfu, Popupinfo, Cape, and Kind Icon
 
-- These compete with the current trial of built-in
-  `completion-preview-mode`.
-- The old `dm-completion.el` also contains Corfu, terminal support, and Kind
-  Icon configuration.
-- Review the in-buffer completion strategy as a whole before enabling any of
-  these packages. Avoid running Corfu and completion previews together by
-  accident.
+- The complete Bedrock stack is active in `dm-ui.el`.
+- Built-in `completion-preview-mode` is explicitly disabled so the two
+  completion frontends do not compete.
 
 ### Eshell and Eat
 
-- `config/dm-term.el` already configures Eat and other terminal tooling.
-- Move accepted Eat behavior there and compare its terminal name and Eshell
-  integration line by line.
-- The Consult history binding for Eshell depends on the earlier Consult
-  decision.
+- Omitted entirely. Ghostel remains the chosen terminal workflow.
 
-### Activating base
+### Activating base — complete
 
-After every active form is resolved:
-
-- Prefer loading reviewed behavior through the relevant `dm-*` modules rather
-  than loading a mostly empty duplicate extra.
-- If useful cohesive behavior remains in `extras/base.el`, load that file only
-  after a clean batch syntax/load check.
-- Confirm interactively that minibuffer completion, completion-at-point,
-  isearch, Meow, Consult, and terminal behavior still work.
-- Commit activation separately from the individual configuration decisions.
+- Reviewed behavior lives in `dm-ui.el` and `dm-bindings.el`.
+- `dm-ui.el` is loaded from `init.el`; `extras/base.el` is not needed.
+- Batch load and behavior assertions pass. Interactive smoke testing is the
+  remaining gate before dev begins.
 
 ## Phase 2: `extras/dev.el`
 
@@ -207,18 +190,9 @@ After every active form is resolved, run syntax/load checks and manually test
 at least one representative project for formatting, tree-sitter, Eglot,
 completion, Magit, and snippets. Commit activation separately.
 
-## Suggested fresh-context prompts
-
-For the first session:
-
-> Read `BEDROCK-EXTRAS-HANDOFF.md` and follow it. Work only on
-> `extras/base.el`. Walk me through one active change at a time, give a short
-> recommendation, and make a small Conventional Commit whenever I accept a
-> change.
-
-For the second session:
+## Suggested fresh-context prompt
 
 > Read `BEDROCK-EXTRAS-HANDOFF.md` and the decision commits made during the
-> base migration. Work only on `extras/dev.el` in the same one-question-at-a-
-> time style. Do not revisit completed base decisions unless dev exposes a real
-> conflict.
+> base migration. First confirm the base smoke test is complete, then work only
+> on `extras/dev.el` in the same one-question-at-a-time style. Do not revisit
+> completed base decisions unless dev exposes a real conflict.
