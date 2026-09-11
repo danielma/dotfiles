@@ -214,7 +214,7 @@ If the new path's directories does not exist, create them."
 ;; Mode line information
 (setopt line-number-mode t)                        ; Show current line in modeline
 (setopt column-number-mode t)                      ; Show column as well
-(setopt mode-line-collapse-minor-modes nil)        ; nil default; set to `t' to hide minor modes
+(setopt mode-line-collapse-minor-modes t)          ; Hide minor modes behind a compact indicator
 
 (setopt x-underline-at-descent-line nil)           ; Prettier underlines
 (setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
