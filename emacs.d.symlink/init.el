@@ -240,13 +240,6 @@ If the new path's directories does not exist, create them."
 ;; See https://karthinks.com/software/it-bears-repeating/
 (repeat-mode)
 
-(setopt global-hl-line-sticky-flag 'window) ; Every window gets own hl-line instance
-(global-hl-line-mode)
-
-;; Use this to enable the line highlight in only certain modes:
-                                        ;(let ((hl-line-hooks '(text-mode-hook prog-mode-hook)))
-                                        ;  (mapc (lambda (hook) (add-hook hook 'hl-line-mode)) hl-line-hooks))
-
 ;; Show matching delimiters
 (setopt show-paren-delay 0)
 (setopt show-paren-mode t)

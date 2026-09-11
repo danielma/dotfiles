@@ -59,10 +59,13 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
                           (t . (display-buffer-same-window))))
   (indent-tabs-mode nil)
   (compilation-scroll-output t)
+  (global-hl-line-sticky-flag 'window)
   (interprogram-cut-function #'dm-interprogram-cut-function)
   (interprogram-paste-function #'dm-interprogram-paste-function)
   :hook
   (text-mode . visual-line-mode)
+  :config
+  (global-hl-line-mode)
   :bind (:map global-map
               ("s-=" . global-text-scale-adjust-by-two)
               ("s--" . global-text-scale-adjust-by-two)
