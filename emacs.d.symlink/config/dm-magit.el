@@ -13,18 +13,56 @@
   (when with-editor-mode
     (git-commit-mode)))
 
+(defvar-local dm-magit-mode-line-branch nil
+  "Current Git branch displayed in this buffer's mode line.")
+
+(defun dm-magit-update-mode-line-branch ()
+  "Update the current buffer's cached Git branch."
+  (setq dm-magit-mode-line-branch
+        (unless (file-remote-p default-directory)
+          (magit-get-current-branch))))
+
+(defun dm-magit-refresh-mode-line-branches ()
+  "Refresh cached branches for buffers in the current repository."
+  (when-let* ((root (magit-toplevel)))
+    (let ((branch (magit-get-current-branch)))
+      (dolist (buffer (buffer-list))
+        (with-current-buffer buffer
+          (when (and buffer-file-name
+                     (file-in-directory-p buffer-file-name root))
+            (setq dm-magit-mode-line-branch branch))))))
+  (force-mode-line-update t))
+
+(defun dm-magit-mode-line-branch ()
+  "Return the current Git branch as a mode-line construct."
+  (when dm-magit-mode-line-branch
+    (propertize (concat " " dm-magit-mode-line-branch)
+                'face 'doom-modeline-info
+                'help-echo "Current Git branch")))
+
+(setq-default mode-line-format
+              (mapcar (lambda (construct)
+                        (if (equal construct '(vc-mode vc-mode))
+                            '(:eval (dm-magit-mode-line-branch))
+                          construct))
+                      mode-line-format))
+
 (use-package magit
   :defer t
+  :commands (magit-get-current-branch magit-toplevel)
   :custom
   (git-commit-major-mode 'markdown-mode)
   (magit-list-refs-sortby "-committerdate")
   (magit-define-global-key-bindings 'recommended)
   (magit-repository-directories '(("~/Code" . 0)))
   :hook
+  (find-file . dm-magit-update-mode-line-branch)
   (magit-status-mode . (lambda () (meow-mode -1)))
   (with-editor-mode . my/with-editor-commit-mode-setup)
   (git-commit-setup . my/commit-mode-setup)
-  :bind (:map magit-status-mode-map ("SPC" . meow-keypad)))
+  :bind (:map magit-status-mode-map ("SPC" . meow-keypad))
+  :config
+  (add-hook 'magit-post-refresh-hook #'dm-magit-refresh-mode-line-branches))
 
 (use-package forge
   :after magit
