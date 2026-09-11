@@ -661,20 +661,12 @@ an alternate theme for use in the terminal.")
      (tab-bar-tab-inactive                         :foreground base04 :box (:line-width 7 :color base01))
      (tab-bar-tab                                  :foreground base07 :background base03 :box (:line-width 7 :color base03))
 
-     ;; mode line evil
-     (mode-line-evil                          :foreground base06 :weight bold)
-     (mode-line-evil-normal                   :inherit mode-line-evil
-                                              :background base03
-                                              :box nil) ;; (:line-width -1 :color base03))
-     (mode-line-evil-emacs                    :inherit mode-line-evil
-                                              :background base0E
-                                              :box nil) ;; (:line-width -1 :color base0E))
-     (mode-line-evil-insert                   :inherit mode-line-evil
-                                              :background base0D
-                                              :box nil) ;; (:line-width -1 :color base0D))
-     (mode-line-evil-visual                   :inherit mode-line-evil
-                                              :background base09
-                                              :box nil) ;; (:line-width -1 :color base09))
+     ;; Meow mode line state
+     (meow-normal-indicator                   :foreground base06 :background base03 :weight bold :box nil)
+     (meow-motion-indicator                   :foreground base06 :background base0E :weight bold :box nil)
+     (meow-keypad-indicator                   :foreground base06 :background base0C :weight bold :box nil)
+     (meow-insert-indicator                   :foreground base06 :background base0D :weight bold :box nil)
+     (meow-beacon-indicator                   :foreground base06 :background base09 :weight bold :box nil)
      (mode-line-accent-active                 :inherit mode-line
                                               :background base01
                                               :box nil) ;; (:line-width -1 :color base01))
