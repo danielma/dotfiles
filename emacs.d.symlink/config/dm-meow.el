@@ -17,6 +17,12 @@
     map)
   "Keymap for buffer commands under the Meow leader key.")
 
+(defvar dm-snippet-command-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "i") #'yas-insert-snippet)
+    map)
+  "Keymap for snippet commands under the Meow leader key.")
+
 ;; https://github.com/meow-edit/meow/blob/master/KEYBINDING_COLEMAK.org
 (defun meow-setup ()
   "Meow setup from the docs."
@@ -31,6 +37,7 @@
    '("<escape>" . ignore))
   (meow-leader-define-key
    (cons "b" dm-buffer-command-map)
+   (cons "s" dm-snippet-command-map)
    '("p" . "C-x p")
    '("w" . "C-x w")
    ;; Use SPC (0-9) for digit arguments.
