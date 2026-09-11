@@ -10,12 +10,10 @@
   (consult-line "=")
   (meow-mark-symbol 0))
 
-(defvar dm-buffer-command-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "k") #'kill-current-buffer)
-    (define-key map (kbd "s") #'consult-buffer)
-    map)
-  "Keymap for buffer commands under the Meow leader key.")
+(defvar-keymap dm-buffer-command-map
+  :doc "Keymap for buffer commands under the Meow leader key."
+  "k" #'kill-current-buffer
+  "s" #'consult-buffer)
 
 (defvar dm-snippet-command-map
   (let ((map (make-sparse-keymap)))
