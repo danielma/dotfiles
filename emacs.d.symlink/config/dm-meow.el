@@ -15,11 +15,9 @@
   "k" #'kill-current-buffer
   "s" #'consult-buffer)
 
-(defvar dm-snippet-command-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "i") #'yas-insert-snippet)
-    map)
-  "Keymap for snippet commands under the Meow leader key.")
+(defvar-keymap dm-snippet-command-map
+  :doc "Keymap for snippet commands under the Meow leader key."
+  "i" #'yas-insert-snippet)
 
 ;; https://github.com/meow-edit/meow/blob/master/KEYBINDING_COLEMAK.org
 (defun meow-setup ()
