@@ -39,7 +39,7 @@
   :custom
   (browse-at-remote-prefer-symbolic nil)
   :config
-  (advice-add 'browse-at-remote-kill :around #'with-select-clipboard))
+  (advice-add 'browse-at-remote-kill :around #'dm-with-select-clipboard))
 
 (defun my/pr ()
   "Simple pull request command."

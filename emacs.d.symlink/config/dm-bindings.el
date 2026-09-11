@@ -3,7 +3,7 @@
 
 ;;; Code:
 
-(defun yank-with-clipboard ()
+(defun dm-yank-with-clipboard ()
   "Yank from the system clipboard."
   (interactive)
   (let ((select-enable-clipboard t))
@@ -115,7 +115,7 @@
          ("s-{" . tab-bar-switch-to-prev-tab)
          ("s-[" . previous-buffer)
          ("s-]" . next-buffer)
-         ("s-v" . yank-with-clipboard)
+         ("s-v" . dm-yank-with-clipboard)
          ("C-c o" . browse-url)
          :map window-prefix-map
          ("=" . balance-windows)
@@ -126,12 +126,12 @@
 	       )
   :custom (select-enable-clipboard . nil))
 
-(defun with-select-clipboard (orig-fun &rest args)
+(defun dm-with-select-clipboard (orig-fun &rest args)
   "Execute the ORIG-FUN with ARGS with `select-enable-clipboard' enabled."
   (let ((select-enable-clipboard t))
     (apply orig-fun args)))
 
-(advice-add 'ns-copy-including-secondary :around #'with-select-clipboard)
+(advice-add 'ns-copy-including-secondary :around #'dm-with-select-clipboard)
 
 (provide 'dm-bindings)
 ;;; dm-bindings.el ends here
