@@ -91,11 +91,7 @@
   (sp-wrap-with-pair (char-to-string pair)))
 
 (use-package iedit
-  :config
-  (defun iedit-start-on-this-occurrence ()
-    (interactive)
-    (let ((occurrence (iedit-default-occurrence)))
-      )))
+  :commands iedit-mode)
 
 (use-package transient)
 
