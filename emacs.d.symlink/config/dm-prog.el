@@ -63,25 +63,8 @@
   (setf (alist-get 'js-mode apheleia-mode-alist)
         '(eslint)))
 
-;; Cache treesit-language-available-p results to avoid repeated slow disk lookups
-(defvar my/treesit-available-cache (make-hash-table :test 'equal)
-  "Cache for `treesit-language-available-p' results.
-Keys are (lang . detail-normalized) cons cells.")
-
-(advice-add 'treesit-language-available-p :around
-            (lambda (orig-fn lang &optional detail)
-              (let* ((key (cons lang (and detail t)))
-                     (cached (gethash key my/treesit-available-cache 'miss)))
-                (if (eq cached 'miss)
-                    (progn
-                      (puthash key (funcall orig-fn lang detail) my/treesit-available-cache))
-                  cached))))
-
-(use-package treesit-auto
-  :hook
-  (prog-mode . global-treesit-auto-mode)
-  :config
-  (treesit-auto-add-to-auto-mode-alist))
+(setopt treesit-enabled-modes t
+        treesit-auto-install-grammar 'ask)
 
 (use-package treesit-fold
   :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold")

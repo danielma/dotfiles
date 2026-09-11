@@ -36,19 +36,6 @@
   ;(setopt hs-show-indicators t)         ; Show collapse indicators in margin
   ;(setopt hs-display-lines-hidden t)    ; Show number of collapsed lines
 
-
-  ;; Treesitter config
-
-  ;; Enable tree-sitter in all available modes
-  (setopt treesit-enabled-modes t)
-
-  ;; Amount to highlight: integer between 1-4; 4 is max highlighting
-  (setopt treesit-font-lock-level 3)
-
-  ;; What to do if language grammar not installed: default is `ask';
-  ;; other options are `always', and `ask-dir'.
-  (setopt treesit-auto-install-grammar 'ask)
-
   :hook
   ;; Auto parenthesis matching
   ((prog-mode . electric-pair-mode)))
