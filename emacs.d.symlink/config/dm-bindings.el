@@ -37,14 +37,24 @@
 ;;; 
 ;;; C-x t ^ f				tab-detach
 
-(transient-define-prefix tab-bar-transient-menu ()
-  [("RET" "Switch" tab-switch)
-   ("t" "New" tab-new)
-   ("n" "Next" tab-next :transient t)
-   ("p" "Previous" tab-previous :transient t)
-   ("q" "Quit" transient-quit-one)
-   ("x" "Close" tab-close)
-   ])
+(use-package transient
+  :ensure nil
+  :config
+  (transient-define-prefix tab-bar-transient ()
+    "Tab-bar menu"
+    [["Creation"
+      ("t" "new tab" tab-bar-new-tab)
+      ("n" "next command in new tab" other-tab-prefix)]
+     ["Movement"
+      ("j" "jump to tab" tab-switch)
+      ("h" "move left" tab-bar-move-tab-backward :transient t)
+      ("l" "move right" tab-bar-move-tab :transient t)]]
+    [["Management"
+      ("r" "rename tab" tab-rename)]]
+    [[""
+      ("RET" "Done" transient-quit-one)]])
+  :bind (:map global-map
+              ("C-c C-t" . tab-bar-transient)))
 
 (use-package emacs
   :bind (
@@ -63,7 +73,6 @@
          ("M-k" . windmove-up)
          ("M-h" . windmove-left)
          ("M-l" . windmove-right)
-         ("C-x C-t" . tab-bar-transient-menu)
          ("C-x C-o" . browse-url)
          :map window-prefix-map
          ("=" . balance-windows)
