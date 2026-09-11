@@ -22,6 +22,8 @@ defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 
 # Free Control-arrow keys for application bindings such as Emacs windmove.
 # 32/33 are Mission Control/Application windows; 79/81 switch Spaces.
+# TODO: Find a reliable way to write Boolean values here. On macOS 26,
+# `defaults` stored "0" as a string and Control-Up remained bound.
 for key in 32 33 79 81; do
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys \
     -dict-add "$key" '{ enabled = 0; }'
