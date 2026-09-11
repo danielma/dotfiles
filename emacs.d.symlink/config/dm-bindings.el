@@ -82,10 +82,6 @@
          ("s-[" . previous-buffer)
          ("s-]" . next-buffer)
          ("s-v" . yank-with-clipboard)
-         ("M-j" . windmove-down)
-         ("M-k" . windmove-up)
-         ("M-h" . windmove-left)
-         ("M-l" . windmove-right)
          ("C-x C-o" . browse-url)
          :map window-prefix-map
          ("=" . balance-windows)
