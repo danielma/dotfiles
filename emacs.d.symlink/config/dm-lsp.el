@@ -16,12 +16,6 @@
                       '(("typescript-language-server" "--stdio")
                         ("npx" "--no-install" "typescript-language-server" "--stdio"))))))
 
-(use-package eglot-booster
-  :disabled
-  :after eglot
-  :straight (:type git :host github :repo "jdtsmith/eglot-booster")
-  :config (eglot-booster-mode))
-
 (use-package lsp-sourcekit
   :disabled
   :config
