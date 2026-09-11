@@ -312,3 +312,4 @@ If the new path's directories does not exist, create them."
 (require 'dm-meow)
 (require 'dm-tabs)
 (require 'dm-colors)
+(require 'dm-bindings)
