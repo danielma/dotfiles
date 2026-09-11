@@ -116,6 +116,19 @@ If the new path's directories does not exist, create them."
     backupFilePath))
 (setopt make-backup-file-name-function 'bedrock--backup-file-name)
 
+;; Keep crash-recovery files out of project directories.
+(defvar dm-auto-save-directory
+  (expand-file-name
+   "emacs/auto-save/"
+   (expand-file-name (or (getenv "XDG_CACHE_HOME") "~/.cache/")))
+  "Directory for auto-save data.")
+
+(make-directory dm-auto-save-directory t)
+(setopt auto-save-file-name-transforms
+        `((".*" ,dm-auto-save-directory sha256))
+        auto-save-list-file-prefix
+        (expand-file-name ".saves-" dm-auto-save-directory))
+
 ;; The above creates nested directories in the backup folder. If
 ;; instead you would like all backup files in a flat structure, albeit
 ;; with their full paths concatenated into a filename, then you can
