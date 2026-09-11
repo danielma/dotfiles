@@ -10,6 +10,12 @@
   (consult-line "=")
   (meow-mark-symbol 0))
 
+(defvar dm-buffer-command-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "s") #'consult-buffer)
+    map)
+  "Keymap for buffer commands under the Meow leader key.")
+
 ;; https://github.com/meow-edit/meow/blob/master/KEYBINDING_COLEMAK.org
 (defun meow-setup ()
   "Meow setup from the docs."
@@ -23,6 +29,7 @@
    '("k" . meow-prev)
    '("<escape>" . ignore))
   (meow-leader-define-key
+   (cons "b" dm-buffer-command-map)
    '("p" . "C-x p")
    '("w" . "C-x w")
    ;; Use SPC (0-9) for digit arguments.
