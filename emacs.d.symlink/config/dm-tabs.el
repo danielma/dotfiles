@@ -11,7 +11,7 @@
 (use-package tab-bar
   :custom
   (tab-bar-new-tab-choice "*scratch*")
-  (tab-bar-show t)
+  (tab-bar-show 1)
   (tab-bar-new-button-show nil)
   (tab-bar-close-button-show nil)
   (tab-bar-tab-name-function 'dm-tab-bar-name)
