@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+;; Treat Ghostty as xterm-compatible before terminal clients initialize.
+(add-to-list 'term-file-aliases '("xterm-ghostty" . "xterm"))
+(add-to-list 'term-file-aliases '("ghostty" . "xterm"))
+
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
   :init

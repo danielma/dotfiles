@@ -63,8 +63,3 @@
                             (background-color . "#000000")
                             (foreground-color . "#ffffff")))
 
-;; Start DMA
-
-;; Treat Ghostty as xterm-compatible before terminal clients initialize.
-(add-to-list 'term-file-aliases '("xterm-ghostty" . "xterm"))
-(add-to-list 'term-file-aliases '("ghostty" . "xterm"))
