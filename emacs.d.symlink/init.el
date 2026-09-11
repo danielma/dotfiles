@@ -229,11 +229,6 @@ If the new path's directories does not exist, create them."
 ;; when using Evil (Vim emulation) change the cursor to a bar.
 (setopt xterm-update-cursor t)
 
-;; These are too personal to prescribe a default; uncomment and
-;; configure according to your tastes
-                                        ;(setopt indent-tabs-mode nil) ; Only use spaces to perform indentation
-                                        ;(setopt tab-width 4)
-
 ;; Misc. UI tweaks
 (blink-cursor-mode -1)                                ; Steady cursor
 (pixel-scroll-precision-mode)                         ; Smooth scrolling
