@@ -15,7 +15,7 @@
 
 (use-package rg
   :init
-  (rg-enable-default-bindings)
+  (rg-enable-default-bindings (kbd "C-c r"))
   :custom
   (rg-custom-type-aliases '(("yuh" . "*")))
   :hook
