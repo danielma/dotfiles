@@ -1,4 +1,4 @@
-;;; dm-bindings.el --- Global bindings
+;;; dm-bindings.el --- Global bindings -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;;; Code:
