@@ -323,6 +323,7 @@ If the new path's directories does not exist, create them."
 (require 'dm-langs)
 (require 'dm-projects)
 (require 'dm-guard)
+(require 'dm-ruby)
 (require 'dm-javascript)
 (require 'dm-prose)
 (require 'dm-magit)
