@@ -20,6 +20,13 @@ chflags nohidden ~/Library
 defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 
+# Free Control-arrow keys for application bindings such as Emacs windmove.
+# 32/33 are Mission Control/Application windows; 79/81 switch Spaces.
+for key in 32 33 79 81; do
+  defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys \
+    -dict-add "$key" '{ enabled = 0; }'
+done
+
 # Trackpad
 defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
@@ -31,3 +38,4 @@ defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
 killall cfprefsd
+killall Dock
