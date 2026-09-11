@@ -43,21 +43,6 @@
 (use-package embark
   :demand t
   :after (avy embark-consult)
-  :init
-  ;; Add the option to run embark when using avy
-  (defun bedrock/avy-action-embark (pt)
-    (unwind-protect
-        (save-excursion
-          (goto-char pt)
-          (embark-act))
-      (select-window
-       (cdr (ring-ref avy-ring 0))))
-    t)
-
-  ;; After invoking avy-goto-char-timer, hit "." to run embark at the next
-  ;; candidate you select
-  (setf (alist-get ?. avy-dispatch-alist) 'bedrock/avy-action-embark)
-
   :config
   ;; Replace which-key-mode with a completing-read menu that does
   ;; approximately the same thing

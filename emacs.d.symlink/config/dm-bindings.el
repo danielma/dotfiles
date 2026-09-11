@@ -28,7 +28,18 @@
 (use-package avy
   :bind (("C-c j" . avy-goto-char-timer)
          :map isearch-mode-map
-         ("C-c j" . avy-isearch)))
+         ("C-c j" . avy-isearch))
+  :config
+  (defun dm-avy-action-embark (point)
+    "Run `embark-act' at the Avy candidate at POINT."
+    (unwind-protect
+        (save-excursion
+          (goto-char point)
+          (embark-act))
+      (select-window (cdr (ring-ref avy-ring 0))))
+    t)
+
+  (setf (alist-get ?. avy-dispatch-alist) #'dm-avy-action-embark))
 
 (use-package embark
   :bind ("C-c a" . embark-act))
