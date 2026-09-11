@@ -30,6 +30,9 @@
          :map isearch-mode-map
          ("C-c j" . avy-isearch)))
 
+(use-package embark
+  :bind ("C-c a" . embark-act))
+
 ;;; 
 ;;; C-x t C-f				find-file-other-tab
 ;;; C-x t RET				tab-switch

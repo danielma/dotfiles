@@ -43,7 +43,6 @@
 (use-package embark
   :demand t
   :after (avy embark-consult)
-  :bind (("C-c a" . embark-act))        ; bind this to an easy key to hit
   :init
   ;; Add the option to run embark when using avy
   (defun bedrock/avy-action-embark (pt)
