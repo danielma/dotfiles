@@ -105,7 +105,9 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
 
 (use-package orderless
   :custom
-  (completion-styles '(orderless basic)))
+  (completion-styles '(orderless basic))
+  (completion-category-overrides
+   '((embark-keybinding (styles basic)))))
 
 (use-package corfu
   :init
