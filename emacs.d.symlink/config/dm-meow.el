@@ -133,7 +133,12 @@
                                           (motion . "M")
                                           (keypad . "K")
                                           (insert . "I")
-                                          (beacon . "B")))
+                                          (beacon . "B"))
+          meow-indicator-face-alist '((normal . doom-modeline-info)
+                                      (motion . doom-modeline-project-dir)
+                                      (keypad . doom-modeline-panel)
+                                      (insert . doom-modeline-buffer-major-mode)
+                                      (beacon . doom-modeline-buffer-modified)))
   (meow-setup-indicator)
   (meow-global-mode)
   :custom
