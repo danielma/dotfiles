@@ -54,7 +54,8 @@
       ("r" "rename tab" tab-rename)
       ("x" "close tab" tab-close)]]
     [[""
-      ("RET" "Done" transient-quit-one)]])
+      ("RET" "Done" transient-quit-one)
+      ("q" "Quit" transient-quit-one)]])
   ;; TODO: Reconcile this transient with the built-in `C-x t' prefix.
   :bind (:map global-map
               ("C-c C-t" . tab-bar-transient)))
