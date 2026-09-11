@@ -252,8 +252,9 @@ If the new path's directories does not exist, create them."
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Show the tab-bar as soon as tab-bar functions are invoked
-(setopt tab-bar-show 1)
+;; Keep the tab bar visible, even when only one tab exists.
+(setopt tab-bar-show t)
+(tab-bar-mode)
 
 ;; Add the time to the tab-bar, if visible
 (add-to-list 'tab-bar-format 'tab-bar-format-align-right 'append)
