@@ -144,7 +144,7 @@
 (defun project-test-or-implementation (&optional filename)
   "Find alternate for a given FILENAME."
   (or
-   (when-let ((filename (or filename (buffer-file-name (current-buffer))))
+   (when-let* ((filename (or filename (buffer-file-name (current-buffer))))
               (basename (file-name-base filename))
               (project (project-current t))
               (project-type (project-type project))

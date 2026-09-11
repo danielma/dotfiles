@@ -9,7 +9,7 @@
 
 (defun dm-enable-xterm-mouse-mode (&optional frame)
   "Enable `xterm-mouse-mode' for terminal FRAMEs."
-  (when-let ((frame (or frame (selected-frame))))
+  (when-let* ((frame (or frame (selected-frame))))
     (unless (display-graphic-p frame)
       (with-selected-frame frame
         (xterm-mouse-mode 1)))))
