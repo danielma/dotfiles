@@ -1,204 +1,375 @@
-;;; init.el --- Main config -*- lexical-binding: t -*-
+;;; -*- lexical-binding: t -*-
+;;;  ________                                                _______                 __                            __
+;;; /        |                                              /       \               /  |                          /  |
+;;; $$$$$$$$/ _____  ____   ______   _______  _______       $$$$$$$  | ______   ____$$ | ______   ______   _______$$ |   __
+;;; $$ |__   /     \/    \ /      \ /       |/       |      $$ |__$$ |/      \ /    $$ |/      \ /      \ /       $$ |  /  |
+;;; $$    |  $$$$$$ $$$$  |$$$$$$  /$$$$$$$//$$$$$$$/       $$    $$</$$$$$$  /$$$$$$$ /$$$$$$  /$$$$$$  /$$$$$$$/$$ |_/$$/
+;;; $$$$$/   $$ | $$ | $$ |/    $$ $$ |     $$      \       $$$$$$$  $$    $$ $$ |  $$ $$ |  $$/$$ |  $$ $$ |     $$   $$<
+;;; $$ |_____$$ | $$ | $$ /$$$$$$$ $$ \_____ $$$$$$  |      $$ |__$$ $$$$$$$$/$$ \__$$ $$ |     $$ \__$$ $$ \_____$$$$$$  \
+;;; $$       $$ | $$ | $$ $$    $$ $$       /     $$/       $$    $$/$$       $$    $$ $$ |     $$    $$/$$       $$ | $$  |
+;;; $$$$$$$$/$$/  $$/  $$/ $$$$$$$/ $$$$$$$/$$$$$$$/        $$$$$$$/  $$$$$$$/ $$$$$$$/$$/       $$$$$$/  $$$$$$$/$$/   $$/
 
-;;; Commentary:
+;;; Minimal init.el
 
-;;; Code:
+;;; Contents:
+;;;
+;;;  - Basic settings
+;;;  - Discovery aids
+;;;  - Minibuffer/completion/searching settings
+;;;  - Interface enhancements/defaults
+;;;  - Tab-bar configuration
+;;;  - Theme
+;;;  - Optional extras
+;;;  - Built-in customization framework
 
-(defvar bootstrap-version)
+;;; Guardrail
 
-(let ((bootstrap-file
-       (expand-file-name
-        "straight/repos/straight.el/bootstrap.el"
-        (or (bound-and-true-p straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+(when (< emacs-major-version 31)
+  (error "Emacs Bedrock only works with Emacs 31 and newer; you have version %s" emacs-major-version))
 
-(straight-use-package 'use-package)
-(setq straight-enable-use-package-integration t
-      straight-use-package-by-default t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Basic settings
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(if (display-graphic-p)
-    (progn
-      ;; (set-frame-parameter (selected-frame) 'undecorated nil)
-      (tool-bar-mode 0)
-      (scroll-bar-mode 0)))
+;; Package initialization
+;;
+;; Emacs ships with a bunch of Emacs Lisp package archives ("ELPAs")
+;; pre-configured. The MELPA archive is the biggest package archive
+;; out there. Most of the packages Bedrock uses in the extras/ folder
+;; come from the built-in ELPAs, but a few (notably Citar in
+;; extras/researcher.el) are on MELPA.
+;;
+;; These lines add MELPA to the list of ELPAs that Emacs will read.
+(with-eval-after-load 'package
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
 
-(menu-bar-mode 0)
+;; If you want to turn off the welcome screen, uncomment this
+                                        ;(setopt inhibit-splash-screen t)
+
+(setopt initial-major-mode 'fundamental-mode)  ; default mode for the *scratch* buffer
+(setopt display-time-default-load-average nil) ; this information is useless for most
+
+;; Automatically reread from disk if the underlying file changes by
+;; using the OS file change notification interface rather than
+;; repeatedly polling to see if there are changes.
+;;
+;; Some systems don't do file notifications well; see
+;; https://todo.sr.ht/~ashton314/emacs-bedrock/11
+;; Set this to `nil' if Emacs is having trouble picking up changes.
+(setopt auto-revert-avoid-polling t)
+(setopt auto-revert-interval 5)
+(setopt auto-revert-check-vc-info t)
+(global-auto-revert-mode)
+
+;; Save history of minibuffer: future invocations will have
+;; recently-used selections sorted first
+(savehist-mode)
+
+;; Save existing clipboard content to the kill ring---useful if you've
+;; copied something from an external program and then kill some text
+;; in Emacs shortly after. Also, deduplicate kill ring contents.
+(setopt save-interprogram-paste-before-kill t)
+(setopt kill-do-not-save-duplicates t)
+
+;; Don't ping url-looking things when running find-file
+(setopt ffap-machine-p-known 'reject)
+
+;; Move through windows with Ctrl-<arrow keys>
+(windmove-default-keybindings 'control) ; You can use other modifiers here
+
+;; Rebalance windows automatically when splitting
+(setopt window-combination-resize t)
+
+;; On macOS, make the first click raise the window but don't
+;; reposition the cursor to where the click happened.
+(setopt ns-click-through nil)
+
+;; Prefer horizontal split on landscape monitors: `longest' is
+;; default; can be `vertical' or `horizontal'.
+;; See also the variable `split-width-threshold'.
+(setopt split-window-preferred-direction 'longest)
+
+;; Fix archaic defaults; justification: https://practicaltypography.com/one-space-between-sentences.html
+(setopt sentence-end-double-space nil)
+
+;; Make all confirmation prompts use `y' or `n'. Default is for some
+;; prompts to ask for a full `yes' or `no' when the operation is
+;; potentially dangerous. Commented out to keep the safer behavior.
+                                        ; (setopt use-short-answers t)
+
+;; Make right-click do something sensible and shift-drag behave better
+(when (display-graphic-p)
+  (mouse-shift-adjust-mode)
+  (context-menu-mode))
+
+;; Don't litter file system with *~ backup files; put them all inside
+;; ~/.emacs.d/backup or wherever
+(defun bedrock--backup-file-name (fpath)
+  "Return a new file path of a given file path.
+If the new path's directories does not exist, create them."
+  (let* ((backupRootDir (concat user-emacs-directory "emacs-backup/"))
+         (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path
+         (backupFilePath (replace-regexp-in-string "//" "/" (concat backupRootDir filePath "~") )))
+    (make-directory (file-name-directory backupFilePath) (file-name-directory backupFilePath))
+    backupFilePath))
+(setopt make-backup-file-name-function 'bedrock--backup-file-name)
+
+;; The above creates nested directories in the backup folder. If
+;; instead you would like all backup files in a flat structure, albeit
+;; with their full paths concatenated into a filename, then you can
+;; use the following configuration:
+;; (Run `'M-x describe-variable RET backup-directory-alist RET' for more help)
+;;
+;; (let ((backup-dir (expand-file-name "emacs-backup/" user-emacs-directory)))
+;;   (setopt backup-directory-alist `(("." . ,backup-dir))))
+
+;; Basic speedups
+;;
+;; Emacs works really hard to be incredibly compatible out-of-the-box
+;; with a wide variety of languages. That comes at the cost of a
+;; little performance. These tell Emacs to assume left-to-right text
+;; in all buffers.
+;; Remove/comment if you read right-to-left languages (Arabic, Hebrew, etc.)
+(setq-default bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Discovery aids
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Show the help buffer after startup---makes it a little bit like nano
+(add-hook 'after-init-hook 'help-quick)
+(setopt view-lossage-auto-refresh t)
+
+;; which-key: shows a popup of available keybindings when typing a long key
+;; sequence (e.g. C-x ...)
+(use-package which-key
+  :config
+  (which-key-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Minibuffer/completion/searching settings
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; For help, see: https://www.masteringemacs.org/article/understanding-minibuffer-completion
+
+(setopt enable-recursive-minibuffers t)                ; Use the minibuffer whilst in the minibuffer
+(setopt completion-cycle-threshold 1)                  ; TAB cycles candidates
+(setopt completions-detailed t)                        ; Show annotations
+(setopt tab-always-indent 'complete)                   ; When I hit TAB, try to complete, otherwise, indent
+(setopt completion-styles '(basic initials substring)) ; Different styles to match input to candidates
+
+(setopt minibuffer-visible-completions t)              ; Use ↑↓ to select candidates
+(setopt completion-auto-help 'always)                  ; Open completion always; `lazy' another option
+(setopt completions-max-height 20)                     ; This is an arbitrary value
+(setopt completions-format 'one-column)                ; Makes it easier to scroll
+(setopt completions-group t)
+
+;; Eager completion setup: show *Completions* buffer immediately
+(setopt completion-auto-select 'second-tab)            ; Much more eager
+(setopt completion-eager-display t)                    ; Show the completions buffer immediately
+(setopt completion-eager-update t)                     ; Update display as-you-type
+
+;; Uncomment to get automatic inline completion previews
+                                        ;(completion-preview-mode)
+
+
+(keymap-set minibuffer-mode-map "TAB" 'minibuffer-complete) ; TAB acts more like how it does in the shell
+
+;; For a fancier built-in completion option, try ido-mode,
+;; icomplete-vertical, or fido-mode. See also the file extras/base.el
+
+                                        ;(icomplete-vertical-mode)
+                                        ;(fido-vertical-mode)
+                                        ;(setopt icomplete-delay-completions-threshold 4000)
+
+
+;; isearch is Emacs's built-in searching system
+(use-package isearch
+  :ensure nil                           ; already installed
+  :bind
+  (:map isearch-mode-map
+        ("C-." . isearch-forward-thing-at-point)) ; Search for thing under cursor
+  :custom
+  (lazy-count-prefix-format "(%s/%s) ")
+  (isearch-lazy-count t)                 ; show match count
+  (isearch-allow-motion t)
+  (isearch-allow-scroll t)               ; lets you scroll without breaking search
+  (isearch-repeat-on-direction-change t) ; C-r immediately goes to previous match
+  (isearch-wrap-pause 'no-ding)          ; Automatically wrap search to top
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Interface enhancements/defaults
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Mode line information
+(setopt line-number-mode t)                        ; Show current line in modeline
+(setopt column-number-mode t)                      ; Show column as well
+(setopt mode-line-collapse-minor-modes nil)        ; nil default; set to `t' to hide minor modes
+
+(setopt x-underline-at-descent-line nil)           ; Prettier underlines
+(setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
+
+(setopt show-trailing-whitespace nil)      ; By default, don't underline trailing spaces
+(setopt indicate-buffer-boundaries 'left)  ; Show buffer top and bottom in the margin
+
+;; Enable horizontal scrolling
+(setopt mouse-wheel-tilt-scroll t)
+(setopt mouse-wheel-flip-direction t)
+
+;; Update the cursor shape inside a terminal; e.g. when in insert mode
+;; when using Evil (Vim emulation) change the cursor to a bar.
+(setopt xterm-update-cursor t)
+
+;; These are too personal to prescribe a default; uncomment and
+;; configure according to your tastes
+                                        ;(setopt indent-tabs-mode nil) ; Only use spaces to perform indentation
+                                        ;(setopt tab-width 4)
+
+;; Misc. UI tweaks
+(blink-cursor-mode -1)                                ; Steady cursor
+(pixel-scroll-precision-mode)                         ; Smooth scrolling
+;; If you use a mouse and scrolling seems a little jittery, you might
+;; want to set this to `nil':
+                                        ;(setopt pixel-scroll-precision-interpolate-mice nil)
+
+;; Use common keystrokes by default
+(cua-mode)
+
+;; Makes it easier to repeat commands; `C-x o C-x o' becomes `C-x o o'
+;; See https://karthinks.com/software/it-bears-repeating/
+(repeat-mode)
+
+;; Display line numbers in programming mode
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(setopt display-line-numbers-width 3)           ; Set a minimum width
+
+;; Nice line wrapping when working with text
+(add-hook 'text-mode-hook 'visual-line-mode)
+
+(setopt global-hl-line-sticky-flag 'window) ; Every window gets own hl-line instance
+(global-hl-line-mode)
+
+;; Use this to enable the line highlight in only certain modes:
+                                        ;(let ((hl-line-hooks '(text-mode-hook prog-mode-hook)))
+                                        ;  (mapc (lambda (hook) (add-hook hook 'hl-line-mode)) hl-line-hooks))
+
+;; Show matching delimiters
+(setopt show-paren-delay 0)
+(setopt show-paren-mode t)
+(setopt show-paren-style 'expression)   ; default is 'parenthesis and just does delimiters
+(setopt show-paren-context-when-offscreen 'overlay)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Tab-bar configuration
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Show the tab-bar as soon as tab-bar functions are invoked
+(setopt tab-bar-show 1)
+
+;; Add the time to the tab-bar, if visible
+(add-to-list 'tab-bar-format 'tab-bar-format-align-right 'append)
+(add-to-list 'tab-bar-format 'tab-bar-format-global 'append)
+(setopt display-time-format "%a %F %T")
+(setopt display-time-interval 1)
+(display-time-mode)
+
+;; A transient menu to make working with the tab-bar easier
+;; The `transient' library is built-in and makes defining little menus
+;; easy to work with. Activate this menu with `C-c C-t'.
+(use-package transient
+  :ensure nil                           ; built-in
+  :config
+  ;; You can define as many of these as you like
+  (transient-define-prefix tab-bar-transient ()
+    "Tab-bar menu"
+    [["Creation"
+      ("t" "new tab" tab-bar-new-tab)
+      ("n" "next command in new tab" other-tab-prefix)]
+     ["Movement"
+      ("j" "jump to tab" tab-switch)
+      ("h" "move left" tab-bar-move-tab-backward :transient t)
+      ("l" "move right" tab-bar-move-tab :transient t)]]
+    [["Management"
+      ("r" "rename tab" tab-rename)]]
+    [[""
+      ("RET" "Done" transient-quit-one)]])
+  :bind (:map global-map
+              ("C-c C-t" . tab-bar-transient)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Theme
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package emacs
-  :custom
-  ;; https://emacs-lsp.github.io/lsp-mode/page/performance/#adjust-gc-cons-threshold
-  (gc-cons-threshold 100000000)
-  (read-process-output-max (* 1024 1024)) ;; 1mb
-
-  (inhibit-startup-message t)
-  (make-backup-files nil)
-  (backup-directory-alist `((".*" . "~/.emacs-saves")))
-  (auto-save-file-name-transforms `((".*" "~/.emacs-saves/" t)))
-  (ring-bell-function 'ignore)
-  (frame-resize-pixelwise t))
-
-(add-hook 'after-init-hook (lambda () (if window-system (server-start))))
-
-(add-to-list 'load-path "~/.emacs.d/config/")
-;; (add-to-list 'load-path "~/.emacs.d/lisp/")
-
-(defvar base-leader-map (make-sparse-keymap) "The main LEADER map.")
-
-(require 'dm-general)
-
-(use-package direnv
   :config
-  (direnv-mode))
+  (load-theme 'modus-vivendi))          ; for light theme, use modus-operandi
 
-(require 'dm-prog)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Optional extras
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'dm-bindings)
-(require 'dm-colors)
-(require 'dm-completion)
-;; (require 'dm-evil)
-(require 'dm-meow)
-(require 'dm-flycheck)
-(require 'dm-guard)
-(require 'dm-javascript)
-(require 'dm-langs)
-(require 'dm-lsp)
-(require 'dm-magit)
-(require 'dm-mode-line)
-(require 'dm-org)
-(require 'dm-projects)
-(require 'dm-projectile-rails)
-(require 'dm-remote-repositories)
-(require 'dm-ruby)
-(require 'dm-tabs)
-(require 'dm-text)
-(require 'dm-term)
-(require 'dm-ui)
-(require 'dm-web-mode)
-(require 'dm-yasnippet)
+;; Uncomment the (load-file …) lines or copy code from the extras/ elisp files
+;; as desired
 
-(use-package claude-code-ide
-  :disabled
-  :straight (:local-repo "/Users/danielma/Code/test/claude-code-ide.el")
-  :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
-  :config
-  (claude-code-ide-emacs-tools-setup)
-  :custom
-  (claude-code-ide-vterm-anti-flicker t)
-  (claude-code-ide-vterm-render-delay 0.01))
+;; UI/UX enhancements mostly focused on minibuffer and autocompletion interfaces
+;; These ones are *strongly* recommended!
+                                        ;(load-file (expand-file-name "extras/base.el" user-emacs-directory))
 
-;; Defer sf.el - only load when sf-symbol-* commands are used
-(autoload 'sf-symbol-insert "sf" "Insert an SF Symbol" t)
-(autoload 'sf-symbol-insert-name "sf" "Insert an SF Symbol name" t)
+;; Packages for software development
+                                        ;(load-file (expand-file-name "extras/dev.el" user-emacs-directory))
 
-;; (use-package dm-projectile :straight nil)
+;; Vim-bindings in Emacs (evil-mode configuration)
+                                        ;(load-file (expand-file-name "extras/vim-like.el" user-emacs-directory))
 
-;; (use-package dm-box-drawing :straight nil)
+;; Org-mode configuration
+;; WARNING: need to customize things inside the elisp file before use! See
+;; the file extras/org-intro.txt for help.
+                                        ;(load-file (expand-file-name "extras/org.el" user-emacs-directory))
 
-;; (require 'dm-langs)
+;; Email configuration in Emacs
+;; WARNING: needs the `mu' program installed; see the elisp file for more
+;; details.
+                                        ;(load-file (expand-file-name "extras/email.el" user-emacs-directory))
 
-;; (use-package dm-magit :straight nil)
-;; (use-package dm-todo :straight nil)
-;; (use-package dm-minibuffer :straight nil)
-;; (use-package dm-guard :straight nil)
-;; (use-package dm-ruby :straight nil)
-;; (use-package dm-flycheck :straight nil)
-;; (use-package dm-javascript :straight nil)
-;; (use-package dm-colors :straight nil)
-;; (use-package dm-mode-line :straight nil)
-;; (use-package dm-web-mode :straight nil)
-;; (use-package dm-yasnippet :straight nil)
-;; (use-package chord-pro-mode :straight nil)
-;; (use-package dm-org :straight nil)
-;; (use-package dm-prose :straight nil)
-;; (use-package dm-lsp :straight nil)
+;; Tools for academic researchers
+                                        ;(load-file (expand-file-name "extras/researcher.el" user-emacs-directory))
 
-;; (require 'epa-file)
-;; (epa-file-enable)
-;; (setq epa-pinentry-mode 'loopback)
-
-;; Startup time benchmark
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (message "Emacs loaded in %s with %d garbage collections."
-                     (format "%.2f seconds"
-                             (float-time
-                              (time-subtract after-init-time before-init-time)))
-                     gcs-done)))
-
-;;; init.el ends here
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Built-in customization framework
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(auth-sources '("~/.netrc" macos-keychain-internet))
- '(claude-code-ide-use-side-window nil)
- '(claude-code-ide-window-side 'right)
- '(claude-code-ide-window-width 90)
- '(claude-code-program "/Users/danielma/.config/claude/local/claude")
- '(custom-safe-themes
-   '("a9eeab09d61fef94084a95f82557e147d9630fbbb82a837f971f83e66e21e5ad"
-     "2ab8cb6d21d3aa5b821fa638c118892049796d693d1e6cd88cb0d3d7c3ed07fc"
-     "6a5584ee8de384f2d8b1a1c30ed5b8af1d00adcbdcd70ba1967898c265878acf"
-     "0f220ea77c6355c411508e71225680ecb3e308b4858ef6c8326089d9ea94b86f"
-     "4fdbed4aa8bcb199d7f6a643886bac51178d1705b9b354ef3dd82d4ec48072d2"
-     "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2"
-     "02f57ef0a20b7f61adce51445b68b2a7e832648ce2e7efb19d217b6454c1b644"
-     "70b596389eac21ab7f6f7eb1cf60f8e60ad7c34ead1f0244a577b1810e87e58c"
-     "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223"
-     "8a379e7ac3a57e64de672dd744d4730b3bdb88ae328e8106f95cd81cbd44e0b6"
-     "2035a16494e06636134de6d572ec47c30e26c3447eafeb6d3a9e8aee73732396"
-     "ba72dfc6bb260a9d8609136b9166e04ad0292b9760a3e2431cf0cd0679f83c3a"
-     "41098e2f8fa67dc51bbe89cce4fb7109f53a164e3a92356964c72f76d068587e"
-     "05626f77b0c8c197c7e4a31d9783c4ec6e351d9624aa28bc15e7f6d6a6ebd926"
-     "48972c5f4632da4af89aae7033d96b9dfb146772a85982d728b1c94b73aefca7"
-     "5a89135eeeb295b29a8933ed72dc59e865ef6947ed077c81398755bbcac2d13e"
-     "58dd91a167c57302f8d82abe292d8f78f0d5ba37bdf2f87caec3b49a1a661f06"
-     "344aa68121312e4bbbf8860e029398635c8b72441a90e1135965f85296eeaef8"
-     "dc55ef4d2198c3b01693ffa5e49f65a7738958fb22078de08615722a686eb4d9"
-     "2ea9afebc23cca3cd0cd39943b8297ce059e31cb62302568b8fa5c25a22db5bc"
-     "cdc2a7ba4ecf0910f13ba207cce7080b58d9ed2234032113b8846a4e44597e41"
-     "5e769f0dc4c262f216c2a30ca8bf55ff2ebc164f779bd2f32ce989290dc13485"
-     "e624f013e266f41148aa2e445a4b8681b0afb346a9126993e345309c9a829535"
-     "32398e365c1603f22062cb92b085fa11e6a280cdb67f591ec656c3f9899445ae"
-     "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476"
-     "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088"
-     "e9d47d6d41e42a8313c81995a60b2af6588e9f01a1cf19ca42669a7ffd5c2fde"
-     "cb4da6642968d84d530ba84113b4e716b71b77496db01afb799280eccc8a81e1"
-     "95b0bc7b8687101335ebbf770828b641f2befdcf6d3c192243a251ce72ab1692" default))
- '(ediff-make-buffers-readonly-at-startup t)
- '(ediff-merge-split-window-function 'split-window-vertically)
- '(eglot-autoreconnect 5)
- '(magit-repository-directories '(("~/Code" . 0)))
- '(markdown-enable-highlighting-syntax t)
- '(markdown-fontify-code-blocks-natively t)
- '(markdown-header-scaling t)
- '(safe-local-variable-directories
-   '("/Users/danielma/.dotfiles/emacs.d.symlink/straight/repos/magit/"))
- '(safe-local-variable-values
-   '((eval progn (whitespace-mode 0) (apheleia-mode 0) (electric-indent-mode 0))
-     (lsp-enabled-clients ruby-syntax-tree-ls) (apheleia--syntax-tree-single-quotes)
-     (apheleia--syntax-tree-single-quotes nil) (eval when (fboundp 'rainbow-mode) (rainbow-mode 1))))
- '(standard-indent 2)
- '(straight-recipes-gnu-elpa-ignored-packages '(cl-generic cl-lib nadvice seq project))
- '(warning-suppress-log-types
-   '((native-compiler) (defvaralias losing-value emmet-indentation)
-     (((defvaralias losing-value emmet-indentation))))))
-(put 'narrow-to-region 'disabled nil)
+ '(package-selected-packages '(citar-typst magit which-key)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(meow-cheatsheet-command ((t (:inherit fixed-pitch))))
- '(tab-bar ((t (:box (:line-width (2 . 2) :style flat-button))))))
+ )
+
+(setq gc-cons-threshold (or bedrock--initial-gc-threshold 800000))
+
+(use-package magit)
