@@ -5,7 +5,7 @@
 ;;; Code:
 
 (dir-locals-set-class-variables
- 'people '((ruby-mode . ((apheleia--syntax-tree-single-quotes . nil)))))
+ 'people '((ruby-mode . ((dm-apheleia-syntax-tree-single-quotes . nil)))))
 
 (dir-locals-set-directory-class "~/Code/people" 'people)
 

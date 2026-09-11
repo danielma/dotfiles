@@ -15,19 +15,22 @@
 
 ;; Apheleia
 
-(defvar-local apheleia--syntax-tree-stree-location nil)
-(defvar-local apheleia--syntax-tree-single-quotes nil)
+(defvar-local dm-apheleia-syntax-tree-stree-location nil
+  "Cached directory containing the current buffer's .streerc file.")
+(defvar-local dm-apheleia-syntax-tree-single-quotes nil
+  "Whether Syntax Tree should format the current buffer with single quotes.")
 
-(defun apheleia--syntax-tree-stree-location ()
+(defun dm-apheleia-syntax-tree-stree-location ()
   "Location of a valid .stree file."
-  (if (eq apheleia--syntax-tree-stree-location 'nope)
+  (if (eq dm-apheleia-syntax-tree-stree-location 'nope)
       nil
-    (or apheleia--syntax-tree-stree-location
+    (or dm-apheleia-syntax-tree-stree-location
         (let ((root (locate-dominating-file (or (buffer-file-name) default-directory) ".streerc")))
-          (setq apheleia--syntax-tree-stree-location (or root 'nope))
-          (apheleia--syntax-tree-stree-location)))))
+          (setq dm-apheleia-syntax-tree-stree-location (or root 'nope))
+          (dm-apheleia-syntax-tree-stree-location)))))
 
-(defun --with-project-default-directory (orig-fun &rest args)
+(defun dm-apheleia-with-project-default-directory (orig-fun &rest args)
+  "Run Apheleia ORIG-FUN with ARGS from the current project root."
   (if (project-current)
       (with-project-default-directory (apply orig-fun args))
     (apply orig-fun args)))
@@ -48,11 +51,11 @@
   :init
   (apheleia-global-mode)
   :config
-  (advice-add 'apheleia--make-process :around '--with-project-default-directory)
-  (push '(syntax-tree . ((when (apheleia--syntax-tree-stree-location) (list "bundle" "exec"))
+  (advice-add 'apheleia--make-process :around #'dm-apheleia-with-project-default-directory)
+  (push '(syntax-tree . ((when (dm-apheleia-syntax-tree-stree-location) (list "bundle" "exec"))
                          "stree" "format"))
         apheleia-formatters)
-  ;; (push '(syntax-tree . ("stree" "format" "--print-width=100" (when apheleia--syntax-tree-single-quotes "--plugins=plugin/single_quotes"))) apheleia-formatters)
+  ;; (push '(syntax-tree . ("stree" "format" "--print-width=100" (when dm-apheleia-syntax-tree-single-quotes "--plugins=plugin/single_quotes"))) apheleia-formatters)
   (push '(rubyfmt . ("rubyfmt" "--")) apheleia-formatters)
   (push '(eslint . (npx "eslint" "--fix-dry-run" "--stdin" "--stdin-filename" filepath "-f" "/Users/danielma/.dotfiles/javascript/eslint-output-formatter.js" "--max-warnings" "10000")) apheleia-formatters)
   (push '(swift-format . ("swift-format")) apheleia-formatters)
