@@ -297,7 +297,8 @@ If the new path's directories does not exist, create them."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(apheleia citar-typst iedit magit meow rustic smartparens treesit-fold which-key)))
+   '(apheleia browse-at-remote citar-typst forge iedit magit meow rustic smartparens treesit-fold
+              which-key)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -306,8 +307,6 @@ If the new path's directories does not exist, create them."
  )
 
 (setq gc-cons-threshold (or bedrock--initial-gc-threshold 800000))
-
-(use-package magit)
 
 (add-to-list 'load-path "~/.emacs.d/config")
 
@@ -320,6 +319,7 @@ If the new path's directories does not exist, create them."
 (require 'dm-yasnippet)
 (require 'dm-prog)
 (require 'dm-lsp)
+(require 'dm-magit)
 
 (require 'dm-tabs)
 (require 'dm-term)
