@@ -61,6 +61,8 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
   (compilation-scroll-output t)
   (interprogram-cut-function #'dm-interprogram-cut-function)
   (interprogram-paste-function #'dm-interprogram-paste-function)
+  :hook
+  (text-mode . visual-line-mode)
   :bind (:map global-map
               ("s-=" . global-text-scale-adjust-by-two)
               ("s--" . global-text-scale-adjust-by-two)

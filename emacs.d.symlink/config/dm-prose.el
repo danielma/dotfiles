@@ -1,5 +1,4 @@
 (defun my/markdown-mode-setup ()
-  (visual-line-mode nil)
   (whitespace-mode 0)
   (setq-local word-wrap t))
 
