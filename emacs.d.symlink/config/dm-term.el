@@ -4,8 +4,6 @@
 
 ;;; Code:
 
-(require 'dm-projects)
-
 (defun with-editor-advice-around (orig-fun &rest args)
   "Wrap ORIG-FUN with-editor and pass ARGS."
   (with-editor

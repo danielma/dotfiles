@@ -4,6 +4,8 @@
 
 ;;; Code:
 
+(require 'dm-projects)
+
 (declare-function ghostel-compile "ghostel-compile")
 (defvar compilation-always-kill)
 (defvar ghostel-compile-buffer-name)
@@ -15,7 +17,7 @@
      ((equal "people" word) "person")
      ((string-match "\\(.+\\)ies$" word) (concat (match-string 1 word) "y"))
      ((string-match "\\(.+\\)s$" word) (match-string 1 word))
-     (t (error (concat "Can't singularize " word))))))
+     (t (error "Can't singularize %s" word)))))
 
 (defun dm-guard--pluralize (word)
   "Pluralize WORD very stupidly."
@@ -26,208 +28,206 @@
      ((string-match "\\(.+\\)tch$" word) (concat (match-string 1 word) "tches"))
      (t (concat word "s")))))
 
-(defvar dm-guard-manual-test-buffer
-  nil
-  "Manually set the test buffer if guard patterns are insufficient.")
-(make-local-variable 'dm-guard-manual-test-buffer)
+(defvar-local dm-guard-manual-test-buffer nil
+  "Buffer to test when the automatic test mapping is insufficient.")
 
-(defvar dm-guard-known-project-types
-  '(rails-rspec ruby-rspec rails-test ruby-test)
-  "Known project types for dm-guard.")
+(defvar dm-guard-enabled t
+  "Whether Guard test runners may run.")
 
-(defvar dm-guard-enabled
-  t
-  "Global variable that can disable dm-guard.")
+(defvar dm-guard-line-mode-enabled nil
+  "Whether saving a test buffer runs only the test at point.")
 
-(defvar dm-guard-only-failures
-  nil
-  "Global variable to run only failres.")
+(defvar dm-guard-only-failures nil
+  "Whether RSpec should run only previously failing examples.")
 
-(defvar dm-guard-line-mode
-  nil
-  "Global variable to run only the current test.")
-
-(defvar dm-guard-buffer-name
-  "*Guard Process*"
+(defvar dm-guard-buffer-name "*Guard Process*"
   "Name of the Ghostel buffer used to render test output.")
 
-(defvar dm-guard--currently-running-test
-  nil
-  "Currently running test.")
+(defvar dm-guard--currently-running-test nil
+  "Command for the currently running test.")
 
 (defun dm-guard-global-toggle ()
-  "Globally toggle dm-guard runners."
+  "Toggle all Guard test runners."
   (interactive)
   (setq dm-guard-enabled (not dm-guard-enabled))
-  (message (if dm-guard-enabled "Enabled" "Disabled")))
+  (message "%s Guard test runners" (if dm-guard-enabled "Enabled" "Disabled")))
 
-(defun dm-guard-line-mode ()
-  "Globally toggle line mode for runner."
+(defun dm-guard-toggle-line-mode ()
+  "Toggle running only the test at point when saving test buffers."
   (interactive)
-  (setq dm-guard-line-mode (not dm-guard-line-mode))
-  (message (if dm-guard-line-mode "Enabled" "Disabled")))
+  (setq dm-guard-line-mode-enabled (not dm-guard-line-mode-enabled))
+  (message "%s Guard line mode" (if dm-guard-line-mode-enabled "Enabled" "Disabled")))
 
 (defun dm-guard-toggle-only-failures ()
-  "Globally toggle line mode for runner."
+  "Toggle running only previously failing RSpec examples."
   (interactive)
   (setq dm-guard-only-failures (not dm-guard-only-failures))
-  (message (if dm-guard-only-failures "Enabled" "Disabled")))
+  (message "%s RSpec failures-only mode" (if dm-guard-only-failures "Enabled" "Disabled")))
+
+(defun dm-guard--selected-buffer ()
+  "Return the manually selected test buffer or the current buffer."
+  (if (buffer-live-p dm-guard-manual-test-buffer)
+      dm-guard-manual-test-buffer
+    (current-buffer)))
+
+(defun dm-guard--relative-file-name ()
+  "Return the selected buffer's file name relative to its project."
+  (let ((file-name (buffer-file-name (dm-guard--selected-buffer))))
+    (unless file-name
+      (user-error "The selected test buffer is not visiting a file"))
+    (file-relative-name file-name (project-root (project-current t)))))
 
 (defun dm-guard-test ()
   "Run the test associated with the current buffer."
   (interactive)
-  (if (and dm-guard-enabled (project-current))
-      (if (and dm-guard-line-mode (--dm-guard-is-test-file-p)) (dm-guard-test-line) (dm-guard-test-file))))
+  (cond
+   ((not dm-guard-enabled)
+    (when (called-interactively-p 'interactive)
+      (user-error "Guard test runners are disabled")))
+   ((not (project-current))
+    (when (called-interactively-p 'interactive)
+      (user-error "The current buffer does not belong to a project")))
+   ((and dm-guard-line-mode-enabled (dm-guard--test-file-p))
+    (dm-guard-test-line))
+   (t
+    (dm-guard-test-file))))
 
 (defun dm-guard-test-file ()
   "Run the test file associated with the current buffer."
   (interactive)
-  (let* ((test-cmd (--dm-guard-test-command))
-         (test-name (--dm-guard-test-name)))
+  (let ((test-command (dm-guard--test-command))
+        (test-name (dm-guard--test-name)))
     (if test-name
-        (--dm-guard-clear-and-run test-cmd test-name)
-      (message "No suitable test file found for %s" (current-buffer)))))
+        (dm-guard--run test-command test-name)
+      (message "No suitable test file found for %s" (buffer-name)))))
 
 (defun dm-guard-test-line ()
   "Run the test at point in the current test file."
   (interactive)
-  (let* ((test-cmd (--dm-guard-test-command))
-         (test-name (--dm-guard-test-name))
-         (current-line (format-mode-line "%l")))
+  (let ((test-command (dm-guard--test-command))
+        (test-name (dm-guard--test-name))
+        (line (line-number-at-pos)))
     (if test-name
-        (--dm-guard-clear-and-run test-cmd test-name current-line))))
+        (dm-guard--run test-command test-name line)
+      (message "No suitable test file found for %s" (buffer-name)))))
 
-(defun --dm-guard-clear-and-run (test-cmd test-name &optional current-line)
-  "Use TEST-CMD to test TEST-NAME, and optionally only the CURRENT-LINE."
+(defun dm-guard--run (test-command test-name &optional line)
+  "Run TEST-COMMAND against TEST-NAME, optionally restricted to LINE."
   (let* ((project (project-current t))
-         (working-directory (file-name-as-directory (project-root project)))
-         (file-command (concat test-cmd " " test-name))
-         (line-command (if current-line (concat file-command ":" current-line) file-command))
+         (default-directory (file-name-as-directory (project-root project)))
+         (target (unless (equal test-name "")
+                   (if line (format "%s:%s" test-name line) test-name)))
+         (command (if target
+                      (concat test-command " " (shell-quote-argument target))
+                    test-command))
          (buffer (get-buffer dm-guard-buffer-name)))
-    (if (and (string-equal dm-guard--currently-running-test line-command)
+    (if (and (string-equal dm-guard--currently-running-test command)
              (process-live-p (and buffer (get-buffer-process buffer))))
         'already-running
       (require 'ghostel-compile)
-      (setq dm-guard--currently-running-test line-command)
+      (setq dm-guard--currently-running-test command)
       (let ((compilation-always-kill t)
-            (default-directory working-directory)
             (display-buffer-overriding-action
              '((display-buffer-in-side-window)
                (side . right)
                (window-width . 0.2)))
             (ghostel-compile-buffer-name dm-guard-buffer-name))
-        (ghostel-compile line-command)))))
+        (ghostel-compile command)))))
 
-(defun --dm-guard-rspec-test-command ()
-  "Generate the test command for rspec."
-  (let ((base "rspec --format=documentation --color"))
-    (if dm-guard-only-failures
-        (concat base " --only-failures")
-      base)))
+(defun dm-guard--rspec-test-command ()
+  "Return the command used to run RSpec."
+  (concat "bundle exec rspec --format=documentation --color"
+          (if dm-guard-only-failures " --only-failures" "")))
 
-
-(defun --dm-guard-test-command ()
-  "Generate the test command for a buffer."
-  (let* ((project-type (project-type))
-         (file-path (buffer-file-name dm-guard-manual-test-buffer))
-         (file-name (file-relative-name file-path (project-root (project-current))))
-         (test-cmd (cond
-                    ((--dm-guard-js-file-p file-name) "yarn test ")
-                    ;; ((eq project-type 'rails-rspec) (concat "bin/spring " (--dm-guard-rspec-test-command)))
-                    ((eq project-type 'rails-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
-                    ((eq project-type 'ruby-rspec) (concat "bundle exec " (--dm-guard-rspec-test-command)))
-                    ((eq project-type 'rubygem) (concat "bundle exec " (--dm-guard-rspec-test-command)))
-                    ((eq project-type 'rails-test) "bin/rails test")
-                    ((eq project-type 'ruby-test) "ruby")
-                    ((eq project-type 'swift-package) "swift test")
-                    (t "ruby"))))
-    test-cmd))
-
-(defun --dm-guard-is-test-file-p (&optional buffer)
-  "Is the BUFFER a test or implementation?."
-  (let* ((file-path (buffer-file-name buffer)))
+(defun dm-guard--test-command ()
+  "Return the test command appropriate for the selected buffer."
+  (let ((project-type (project-type))
+        (file-name (dm-guard--relative-file-name)))
     (cond
-     ((string-match "\\(_\\|.\\)test.\\(rb\\|\\(j\\|t\\)sx?\\)$" file-path) t)
-     ((string-match "_spec.rb$" file-path) t)
-     (t nil))))
+     ((dm-guard--javascript-file-p file-name) "yarn test")
+     ((memq project-type '(rails-rspec ruby-rspec rubygem))
+      (dm-guard--rspec-test-command))
+     ((eq project-type 'rails-test) "bin/rails test")
+     ((eq project-type 'ruby-test) "ruby")
+     ((eq project-type 'swift-package) "swift test")
+     (t "ruby"))))
 
-(defun --dm-guard-js-file-p (file-name)
-  "Check if FILE-NAME is a JS-ish file."
-  (string-match "\\(j\\|t\\)sx?$" file-name))
+(defun dm-guard--test-file-p (&optional buffer)
+  "Return non-nil when BUFFER visits a recognized test file."
+  (when-let* ((file-name (buffer-file-name buffer)))
+    (or (string-match-p "\\(?:_\\|\\.\\)test\\.\\(?:rb\\|[jt]sx?\\)\\'" file-name)
+        (string-match-p "_spec\\.rb\\'" file-name))))
 
-(defun --dm-guard-test-name ()
-  "Generate the test name for a buffer."
+(defun dm-guard--javascript-file-p (file-name)
+  "Return non-nil when FILE-NAME names a JavaScript-family file."
+  (string-match-p "[jt]sx?\\'" file-name))
+
+(defun dm-guard--test-name ()
+  "Return the test target associated with the selected buffer."
   (let* ((project-type (project-type))
          (spec-mode (project-verify-file "spec"))
-         (is-test-file (--dm-guard-is-test-file-p dm-guard-manual-test-buffer))
-         (file-path (buffer-file-name dm-guard-manual-test-buffer))
-         (file-name (file-relative-name file-path (project-root (project-current)))))
+         (test-buffer (dm-guard--selected-buffer))
+         (test-file-p (dm-guard--test-file-p test-buffer))
+         (file-name (dm-guard--relative-file-name)))
     (cond
      ((eq project-type 'swift-package) "")
-     (is-test-file file-name)
-     ((--dm-guard-js-file-p file-name) (cond
-                                        ((string-match "^app/\\(.+\\).\\(\\(j\\|t\\)sx?\\)$" file-name)
-                                         (concat "spec/" (match-string 1 file-name) ".test." (match-string 2 file-name)))
-                                        (t nil)))
-     (t (cond
-         ((string-match "^app/views" file-name) nil)
-         ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex.rb$" file-name)
-          (let* ((graph-dir (match-string 1 file-name))
-                 (vertex-name (match-string 2 file-name)))
-            (if spec-mode
-                (concat "spec/graphs/" graph-dir "/latest/vertices/" vertex-name "_vertex_spec.rb")
-              (concat "test/integration/pco/api/" graph-dir "/" (dm-guard--pluralize vertex-name) "_test.rb"))))
-         ((string-match "^app/graphs/\\(.+\\).rb$" file-name)
-          (if spec-mode
-              (concat "spec/requests/graphs/" (match-string 1 file-name) "_spec.rb")
-            (concat "test/integration" (match-string 1 file-name) "_test.rb")))
-         ((string-match "^app/\\(.+\\).rb$" file-name)
-          (if spec-mode
-              (concat "spec/" (match-string 1 file-name) "_spec.rb")
-            (concat "test/" (match-string 1 file-name) "_test.rb")))
-         ((string-match "^lib/\\(.+\\).rb$" file-name)
-          (if spec-mode
-              (concat "spec/lib/" (match-string 1 file-name) "_spec.rb")
-            (concat "test/" (match-string 1 file-name) "_test.rb")))
-         ((string-match "^test/fixtures/\\(.+\\).yml$" file-name)
-          (concat "test/models/" (dm-guard--singularize (match-string 1 file-name)) "_test.rb"))
-         (t nil))))))
+     (test-file-p file-name)
+     ((dm-guard--javascript-file-p file-name)
+      (when (string-match "^app/\\(.+\\)\\.\\([jt]sx?\\)$" file-name)
+        (concat "spec/" (match-string 1 file-name) ".test." (match-string 2 file-name))))
+     ((string-match-p "^app/views" file-name) nil)
+     ((string-match "^app/graphs/\\(.+\\)/vertices/\\(.+\\)_vertex\\.rb$" file-name)
+      (let ((graph-directory (match-string 1 file-name))
+            (vertex-name (match-string 2 file-name)))
+        (if spec-mode
+            (concat "spec/graphs/" graph-directory "/latest/vertices/"
+                    vertex-name "_vertex_spec.rb")
+          (concat "test/integration/pco/api/" graph-directory "/"
+                  (dm-guard--pluralize vertex-name) "_test.rb"))))
+     ((string-match "^app/graphs/\\(.+\\)\\.rb$" file-name)
+      (if spec-mode
+          (concat "spec/requests/graphs/" (match-string 1 file-name) "_spec.rb")
+        (concat "test/integration" (match-string 1 file-name) "_test.rb")))
+     ((string-match "^app/\\(.+\\)\\.rb$" file-name)
+      (if spec-mode
+          (concat "spec/" (match-string 1 file-name) "_spec.rb")
+        (concat "test/" (match-string 1 file-name) "_test.rb")))
+     ((string-match "^lib/\\(.+\\)\\.rb$" file-name)
+      (if spec-mode
+          (concat "spec/lib/" (match-string 1 file-name) "_spec.rb")
+        (concat "test/" (match-string 1 file-name) "_test.rb")))
+     ((string-match "^test/fixtures/\\(.+\\)\\.yml$" file-name)
+      (concat "test/models/"
+              (dm-guard--singularize (match-string 1 file-name))
+              "_test.rb")))))
 
 (defun dm-guard-select-test-buffer (buffer)
-  "Select a BUFFER to use as the test file."
-  (interactive "b")
+  "Use BUFFER as the test target for the current buffer."
+  (interactive "bTest buffer: ")
   (setq-local dm-guard-manual-test-buffer (get-buffer buffer)))
 
 (defun dm-guard-clear-test-buffer ()
-  "Remove custom buffer for testing."
+  "Clear the manually selected test target for the current buffer."
   (interactive)
   (setq-local dm-guard-manual-test-buffer nil))
 
-(defvar dm-guard-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map "l" 'dm-guard-test-line)
-    (define-key map "t" 'dm-guard-test)
-    (define-key map "b" 'dm-guard-select-test-buffer)
-    map)
-  "The global map for dm-guard.")
+(defvar-keymap dm-guard-command-map
+  :doc "Commands for running related tests."
+  "l" #'dm-guard-test-line
+  "t" #'dm-guard-test
+  "b" #'dm-guard-select-test-buffer)
 
-(defvar dm-guard-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map "\C-ck" dm-guard-map)
-    map)
-  "Keymap of dm-guard.")
+(defvar-keymap dm-guard-mode-map
+  "C-c k" dm-guard-command-map)
 
 (define-minor-mode dm-guard-mode
-  "Run the associated test after saving a file."
+  "Run the test associated with the current buffer after saving."
   :init-value nil
   :lighter "􀙧"
-  :map dm-guard-mode-map
-  (cond ((bound-and-true-p dm-guard-mode)
-         (add-hook 'after-save-hook #'dm-guard-test t t))
-        (t
-         (remove-hook 'after-save-hook #'dm-guard-test t))))
-
-;; (use-package emamux)
+  :keymap dm-guard-mode-map
+  (if dm-guard-mode
+      (add-hook 'after-save-hook #'dm-guard-test nil t)
+    (remove-hook 'after-save-hook #'dm-guard-test t)))
 
 (provide 'dm-guard)
 ;;; dm-guard.el ends here

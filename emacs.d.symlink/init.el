@@ -321,6 +321,8 @@ If the new path's directories does not exist, create them."
 (require 'dm-flymake)
 (require 'dm-lsp)
 (require 'dm-langs)
+(require 'dm-projects)
+(require 'dm-guard)
 (require 'dm-prose)
 (require 'dm-magit)
 
