@@ -42,8 +42,6 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package yaml-mode)
-
 (use-package json-mode)
 
 ;; Emacs ships with a lot of popular programming language modes. If it's not
