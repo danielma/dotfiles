@@ -56,14 +56,6 @@
 
 (dm-add-ghostty-terminfo)
 
-(use-package undo-tree
-  :after delight
-  :delight
-  :custom
-  (undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
-  :config
-  (global-undo-tree-mode))
-
 (use-package delight)
 
 (use-package dumb-jump

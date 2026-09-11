@@ -4,6 +4,14 @@
 
 ;;; Code:
 
+(use-package undo-tree
+  :demand t
+  :delight
+  :custom
+  (undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+  :config
+  (global-undo-tree-mode))
+
 (defun consult-line-literal ()
   "Start `consult-line' assuming we want a literal string."
   (interactive)
