@@ -41,8 +41,3 @@
 ;;;   Minibuffer and completion
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Orderless: powerful completion style
-(use-package orderless
-  :config
-  (setq completion-styles '(orderless basic)))

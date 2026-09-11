@@ -102,6 +102,10 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
   :bind (:map vertico-map
               ("M-DEL" . vertico-directory-delete-word)))
 
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic)))
+
 (use-package corfu
   :init
   (completion-preview-mode -1)

@@ -158,7 +158,6 @@ If the new path's directories does not exist, create them."
 (setopt completion-cycle-threshold 1)                  ; TAB cycles candidates
 (setopt completions-detailed t)                        ; Show annotations
 (setopt tab-always-indent 'complete)                   ; When I hit TAB, try to complete, otherwise, indent
-(setopt completion-styles '(basic initials substring)) ; Different styles to match input to candidates
 
 (setopt minibuffer-visible-completions t)              ; Use ↑↓ to select candidates
 (setopt completion-auto-help 'always)                  ; Open completion always; `lazy' another option
