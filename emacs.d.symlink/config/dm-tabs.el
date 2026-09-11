@@ -1,4 +1,4 @@
-;;; dm-tabs --- My tabs configuration
+;;; dm-tabs --- My tabs configuration  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
