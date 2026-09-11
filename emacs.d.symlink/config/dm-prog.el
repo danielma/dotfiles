@@ -67,7 +67,6 @@
         treesit-auto-install-grammar 'ask)
 
 (use-package treesit-fold
-  :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold")
   :delight
   :config
   (global-treesit-fold-mode))
