@@ -4,12 +4,11 @@
 
 ;;; Code:
 (defun dm-tab-bar-name ()
-  "Consistent width tab names for `tab-bar-mode`."
+  "Return the current buffer name padded or truncated to 20 columns."
   (let ((tab-name (buffer-name (window-buffer (minibuffer-selected-window)))))
-    (concat " " (s-truncate 20 (s-pad-right 20 " " tab-name)) " ")))
+    (concat " " (truncate-string-to-width tab-name 20 0 ?\s "…") " ")))
 
 (use-package tab-bar
-  :after s
   ;; :init
   ;; (defhydra hydra-tab-bar (base-leader-map "t")
   ;;   "tabs"
