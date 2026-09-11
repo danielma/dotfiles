@@ -4,13 +4,14 @@
 ;;; Code:
 
 (defun my/yaml-mode-setup ()
-  (add-to-list 'whitespace-style 'spaces))
+  (require 'whitespace)
+  (add-to-list 'whitespace-style 'spaces)
+  (modify-syntax-entry ?_ "w"))
 
-(use-package yaml-mode
+(use-package yaml-ts-mode
+  :ensure nil
   :hook
-  (yaml-mode . my/yaml-mode-setup)
-  :config
-  (add-hook 'yaml-mode-hook (lambda () (modify-syntax-entry ?_ "w"))))
+  (yaml-ts-mode . my/yaml-mode-setup))
 
 (use-package lua-mode
   :defer t)
