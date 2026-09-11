@@ -19,9 +19,11 @@
   (forward-line -1)
   (indent-according-to-mode))
 
-(defadvice save-buffer (before save-buffer-always activate)
-  "always save buffer"
+(defun dm-save-buffer-always (&rest _args)
+  "Mark the current buffer modified so `save-buffer' always writes it."
   (set-buffer-modified-p t))
+
+(advice-add 'save-buffer :before #'dm-save-buffer-always)
 
 ;;; 
 ;;; C-x t C-f				find-file-other-tab
