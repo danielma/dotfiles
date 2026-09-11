@@ -63,9 +63,6 @@
   ; :hook
   ; (((python-mode ruby-mode elixir-mode) . eglot-ensure))
 
-  :custom
-  (eglot-extend-to-xref t)              ; activate Eglot in referenced non-project files
-
   :config
   ;; Avoid changing line heights if your font is wonky. See
   ;; https://github.com/joaotavora/eglot/discussions/1492

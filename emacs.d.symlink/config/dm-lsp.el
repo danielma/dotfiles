@@ -11,6 +11,7 @@
   )
 
 (with-eval-after-load 'eglot
+  (setopt eglot-extend-to-xref t)
   (add-to-list 'eglot-server-programs
                (cons '(js-ts-mode
                        typescript-ts-mode
