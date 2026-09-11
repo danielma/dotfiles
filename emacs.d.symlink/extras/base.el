@@ -46,7 +46,6 @@
          ("M-s r" . consult-ripgrep)
          ("M-s l" . consult-line)
          ("M-s L" . consult-line-multi)
-         ("M-s o" . consult-outline)
          ;; Isearch integration
          :map isearch-mode-map
          ("M-e" . consult-isearch-history)   ; orig. isearch-edit-string
