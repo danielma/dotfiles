@@ -223,8 +223,8 @@ If the new path's directories does not exist, create them."
 (setopt show-trailing-whitespace nil)      ; By default, don't underline trailing spaces
 
 ;; Enable horizontal scrolling
-(setopt mouse-wheel-tilt-scroll t)
-(setopt mouse-wheel-flip-direction t)
+;; (setopt mouse-wheel-tilt-scroll t)
+;; (setopt mouse-wheel-flip-direction t)
 
 ;; Update the cursor shape inside a terminal; e.g. when in insert mode
 ;; when using Evil (Vim emulation) change the cursor to a bar.
