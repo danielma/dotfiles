@@ -43,16 +43,18 @@
   (transient-define-prefix tab-bar-transient ()
     "Tab-bar menu"
     [["Creation"
-      ("t" "new tab" tab-bar-new-tab)
-      ("n" "next command in new tab" other-tab-prefix)]
+      ("t" "new tab" tab-bar-new-tab)]
      ["Movement"
       ("j" "jump to tab" tab-switch)
+      ("n" "next tab" tab-next :transient t)
+      ("p" "previous tab" tab-previous :transient t)
       ("h" "move left" tab-bar-move-tab-backward :transient t)
       ("l" "move right" tab-bar-move-tab :transient t)]]
     [["Management"
       ("r" "rename tab" tab-rename)]]
     [[""
       ("RET" "Done" transient-quit-one)]])
+  ;; TODO: Reconcile this transient with the built-in `C-x t' prefix.
   :bind (:map global-map
               ("C-c C-t" . tab-bar-transient)))
 
