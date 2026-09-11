@@ -19,6 +19,7 @@
   (git-commit-major-mode 'markdown-mode)
   (magit-list-refs-sortby "-committerdate")
   (magit-define-global-key-bindings 'recommended)
+  (magit-repository-directories '(("~/Code" . 0)))
   :hook
   (magit-status-mode . (lambda () (meow-mode -1)))
   (with-editor-mode . my/with-editor-commit-mode-setup)
