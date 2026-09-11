@@ -12,7 +12,7 @@
   :config
   (global-undo-tree-mode))
 
-(defun consult-line-literal ()
+(defun dm-consult-line-literal ()
   "Start `consult-line' assuming we want a literal string."
   (interactive)
   (consult-line "=")
@@ -30,7 +30,7 @@
   "v" #'yas-visit-snippet-file)
 
 ;; https://github.com/meow-edit/meow/blob/master/KEYBINDING_COLEMAK.org
-(defun meow-setup ()
+(defun dm-meow-setup ()
   "Meow setup from the docs."
   (meow-thing-register 'arrow '(pair ("<") (">")) '(pair ("<") (">")))
   (add-to-list 'meow-char-thing-table '(?a . arrow))
@@ -78,7 +78,7 @@
    '("[" . meow-beginning-of-thing)
    '("]" . meow-end-of-thing)
    '("<TAB>" . indent-rigidly)
-   '("/" . consult-line-literal)
+   '("/" . dm-consult-line-literal)
    '("?" . meow-visit)
    '("a" . meow-append)
    '("A" . meow-open-below)
@@ -128,11 +128,11 @@
 
 (use-package meow
   :config
-  (meow-setup)
+  (dm-meow-setup)
   (meow-global-mode)
   :custom
   (meow-use-cursor-position-hack t)
-  (meow-keypad-ctrl-meta-prefix 47)     ; /
+  (meow-keypad-ctrl-meta-prefix ?/)
   (meow-mode-state-list '((conf-mode . normal)
                           (fundamental-mode . normal)
                           (help-mode . motion)
