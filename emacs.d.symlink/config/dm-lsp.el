@@ -16,10 +16,5 @@
                       '(("typescript-language-server" "--stdio")
                         ("npx" "--no-install" "typescript-language-server" "--stdio"))))))
 
-(use-package lsp-sourcekit
-  :disabled
-  :config
-  (setq lsp-sourcekit-executable "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp"))
-
 (provide 'dm-lsp)
 ;;; dm-lsp.el ends here
