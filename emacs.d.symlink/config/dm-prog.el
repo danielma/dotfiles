@@ -26,11 +26,6 @@
       (with-project-default-directory (apply orig-fun args))
     (apply orig-fun args)))
 
-(use-package rustic
-  :defer t
-  :custom
-  (rustic-lsp-client 'eglot))
-
 (defvar my/eglot-format-modes '(rust-mode rust-ts-mode)
   "Modes where eglot should handle formatting instead of apheleia.")
 

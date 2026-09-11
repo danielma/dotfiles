@@ -14,12 +14,6 @@
 
 (use-package lua-mode)
 
-(use-package rustic
-  :disabled
-  :config
-  (setq rustic-format-on-save t
-        rustic-format-display-method 'display-buffer))
-
 (use-package swift-mode
   :hook
   (swift-mode . eglot))
