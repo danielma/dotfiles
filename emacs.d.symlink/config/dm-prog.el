@@ -42,9 +42,11 @@
               (add-hook 'before-save-hook #'eglot-format-buffer -10 t))))
 
 (use-package apheleia
+  :commands apheleia-global-mode
   :delight "􀋺"
-  :config
+  :init
   (apheleia-global-mode)
+  :config
   (advice-add 'apheleia--make-process :around '--with-project-default-directory)
   (push '(syntax-tree . ((when (apheleia--syntax-tree-stree-location) (list "bundle" "exec"))
                          "stree" "format"))
