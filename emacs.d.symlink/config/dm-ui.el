@@ -60,6 +60,7 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
   (indent-tabs-mode nil)
   (compilation-scroll-output t)
   (global-hl-line-sticky-flag 'window)
+  (ring-bell-function #'ignore)
   (interprogram-cut-function #'dm-interprogram-cut-function)
   (interprogram-paste-function #'dm-interprogram-paste-function)
   :hook
