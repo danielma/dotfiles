@@ -1,28 +1,34 @@
-(defun my-web-mode-setup ()
+;;; dm-web-mode.el --- Rails web templates -*- lexical-binding: t; -*-
+
+;;; Commentary:
+
+;;; Code:
+
+(defun dm-web-mode-setup ()
+  "Configure indentation for the current Web Mode buffer."
   (setq-local electric-indent-chars
-              (append "{};" electric-indent-chars))
-  ;; (if (member web-mode-engine '("php" "erb"))
-  ;; (modify-syntax-entry ?_ "w"))
-  )
+              (delete-dups (append '(?{ ?} ?\;) electric-indent-chars)))
+  (setq-local emmet-indentation tab-width
+              web-mode-attr-indent-offset tab-width
+              web-mode-code-indent-offset tab-width
+              web-mode-css-indent-offset tab-width
+              web-mode-markup-indent-offset tab-width
+              web-mode-sql-indent-offset tab-width))
 
 (use-package web-mode
-  :init
-  (add-to-list 'auto-mode-alist '("\\.html\\(\+modal\\)?\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.js.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+  :ensure t
+  :mode (("\\.html\\(?:+modal\\)?\\.erb\\'" . web-mode)
+         ("\\.js\\.erb\\'" . web-mode))
   :hook
-  (web-mode . my-web-mode-setup)
+  (web-mode . dm-web-mode-setup)
   :config
-  (define-abbrev-table 'web-mode-abbrev-table '(
-						                                    ("tt" "<%")
-						                                    ("tp" "<%=")))
-  (dolist (width '(web-mode-attr-indent-offset web-mode-code-indent-offset web-mode-css-indent-offset web-mode-markup-indent-offset web-mode-sql-indent-offset))
-    (set width tab-width)))
+  (define-abbrev web-mode-abbrev-table "tt" "<%")
+  (define-abbrev web-mode-abbrev-table "tp" "<%="))
 
 (use-package emmet-mode
+  :ensure t
   :hook
-  (web-mode . emmet-mode)
-  :config
-  (defvaralias 'emmet-indentation 'tab-width))
+  (web-mode . emmet-mode))
 
 (provide 'dm-web-mode)
+;;; dm-web-mode.el ends here

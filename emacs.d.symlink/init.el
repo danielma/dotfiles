@@ -326,6 +326,7 @@ If the new path's directories does not exist, create them."
 (require 'dm-guard)
 (require 'dm-ruby)
 (require 'dm-javascript)
+(require 'dm-web-mode)
 (require 'dm-prose)
 (require 'dm-magit)
 
