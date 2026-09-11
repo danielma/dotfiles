@@ -319,6 +319,7 @@ If the new path's directories does not exist, create them."
 (require 'dm-meow)
 (require 'dm-yasnippet)
 (require 'dm-prog)
+(require 'dm-lsp)
 
 (require 'dm-tabs)
 (require 'dm-term)
