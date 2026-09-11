@@ -141,11 +141,5 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
   :config
   (global-origami-mode))
 
-(use-package rainbow-delimiters
-  :disabled
-  :init
-  (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
-  )
-
 (provide 'dm-ui)
 ;;; dm-ui.el ends here
