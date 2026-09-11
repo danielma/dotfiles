@@ -64,10 +64,6 @@
   ; (((python-mode ruby-mode elixir-mode) . eglot-ensure))
 
   :config
-  ;; Avoid changing line heights if your font is wonky. See
-  ;; https://github.com/joaotavora/eglot/discussions/1492
-  (setopt eglot-code-action-indicator "h")
-
   (fset #'jsonrpc--log-event #'ignore)  ; massive perf boost---don't log every event
   ;; Sometimes you need to tell Eglot where to find the language server
   ; (add-to-list 'eglot-server-programs
