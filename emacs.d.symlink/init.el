@@ -296,7 +296,8 @@ If the new path's directories does not exist, create them."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(citar-typst magit meow which-key)))
+ '(package-selected-packages
+   '(apheleia citar-typst iedit magit meow rustic smartparens treesit-fold which-key)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -317,6 +318,7 @@ If the new path's directories does not exist, create them."
 
 (require 'dm-meow)
 (require 'dm-yasnippet)
+(require 'dm-prog)
 
 (require 'dm-tabs)
 (require 'dm-term)
