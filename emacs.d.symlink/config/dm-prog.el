@@ -7,6 +7,12 @@
 (with-eval-after-load 'prog-mode
   (add-hook 'prog-mode-hook 'flymake-mode))
 
+(use-package dumb-jump
+  :init
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  :custom
+  (dumb-jump-force-searcher 'rg))
+
 ;; Apheleia
 
 (defvar-local apheleia--syntax-tree-stree-location nil)

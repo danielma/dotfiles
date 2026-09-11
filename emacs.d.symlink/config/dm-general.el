@@ -58,14 +58,6 @@
 
 (use-package delight)
 
-(use-package dumb-jump
-  :init
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  :custom
-  ;; I'd love to remove this, but it has to stay for now
-  (dumb-jump-force-searcher 'rg)
-  )
-
 (defun delete-this-file ()
   "Deletes the active buffer file."
   (interactive)
