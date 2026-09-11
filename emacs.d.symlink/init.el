@@ -266,9 +266,6 @@ If the new path's directories does not exist, create them."
 ;; These ones are *strongly* recommended!
                                         ;(load-file (expand-file-name "extras/base.el" user-emacs-directory))
 
-;; Packages for software development
-                                        ;(load-file (expand-file-name "extras/dev.el" user-emacs-directory))
-
 ;; Vim-bindings in Emacs (evil-mode configuration)
                                         ;(load-file (expand-file-name "extras/vim-like.el" user-emacs-directory))
 
