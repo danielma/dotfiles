@@ -42,18 +42,6 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Vertico: better vertical completion for minibuffer commands
-(use-package vertico
-  :init
-  ;; You'll want to make sure that e.g. fido-mode isn't enabled
-  (vertico-mode))
-
-(use-package vertico-directory
-  :ensure nil
-  :after vertico
-  :bind (:map vertico-map
-              ("M-DEL" . vertico-directory-delete-word)))
-
 ;; Marginalia: annotations for minibuffer
 (use-package marginalia
   :config

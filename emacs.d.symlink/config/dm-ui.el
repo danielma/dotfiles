@@ -92,6 +92,16 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
   (dm-enable-xterm-mouse-mode)
   (add-hook 'after-make-frame-functions #'dm-enable-xterm-mouse-mode))
 
+(use-package vertico
+  :init
+  (vertico-mode))
+
+(use-package vertico-directory
+  :ensure nil
+  :after vertico
+  :bind (:map vertico-map
+              ("M-DEL" . vertico-directory-delete-word)))
+
 ;;; Consult
 
 (use-package consult
