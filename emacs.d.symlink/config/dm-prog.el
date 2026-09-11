@@ -27,6 +27,7 @@
     (apply orig-fun args)))
 
 (use-package rustic
+  :defer t
   :custom
   (rustic-lsp-client 'eglot))
 
