@@ -221,6 +221,18 @@ If the new path's directories does not exist, create them."
         mode-line-percent-position '(-3 "%p")               ; Show a compact buffer percentage
         project-mode-line 'non-remote)                      ; Avoid project lookup over TRAMP
 
+(setq-default mode-line-format
+              (mapcan
+               (lambda (construct)
+                 (if (eq construct 'mode-line-buffer-identification)
+                     (list '(project-mode-line project-mode-line-format)
+                           " "
+                           construct)
+                   (unless (equal construct
+                                  '(project-mode-line project-mode-line-format))
+                     (list construct))))
+               mode-line-format))
+
 (setopt x-underline-at-descent-line nil)           ; Prettier underlines
 (setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
 
