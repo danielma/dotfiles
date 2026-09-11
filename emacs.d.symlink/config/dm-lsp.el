@@ -3,13 +3,6 @@
 
 ;;; Code:
 
-(with-eval-after-load 'project
-  (when t ; something needs us to load these compiled versions for eglot to run
-    (load "project.elc")
-    (load "xref.elc"))
-  ;; (add-to-list 'eglot-server-programs '(swift-mode . ("sourcekit-lsp")))
-  )
-
 (with-eval-after-load 'eglot
   (setopt eglot-extend-to-xref t)
   (add-to-list 'eglot-server-programs
