@@ -5,6 +5,8 @@
 
 (with-eval-after-load 'eglot
   (setopt eglot-extend-to-xref t)
+  ;; Deliberately trade JSON-RPC diagnostics for lower per-event overhead.
+  (fset #'jsonrpc--log-event #'ignore)
   (add-to-list 'eglot-server-programs
                (cons '(js-ts-mode
                        typescript-ts-mode
