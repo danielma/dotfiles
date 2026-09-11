@@ -83,13 +83,6 @@
 ;; (with-eval-after-load 'flymake-eslint
 ;;   (add-hook 'eglot-managed-mode-hook 'my/flymake-eslint-npx))
 
-(defun my-create-newline-and-enter-sexp (&rest _ignored)
-  "Open a new brace or bracket expression, with relevant newlines and indent. "
-  (newline)
-  (indent-according-to-mode)
-  (forward-line -1)
-  (indent-according-to-mode))
-
 (use-package typescript-ts-mode
   :hook
   (typescript-ts-base-mode . eglot-ensure)
