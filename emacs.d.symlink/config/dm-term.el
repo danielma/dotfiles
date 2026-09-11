@@ -1,4 +1,4 @@
-;;; dm-term.el --- Terminal config
+;;; dm-term.el --- Terminal config  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

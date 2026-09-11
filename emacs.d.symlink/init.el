@@ -155,8 +155,6 @@ If the new path's directories does not exist, create them."
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Show the help buffer after startup---makes it a little bit like nano
-(add-hook 'after-init-hook 'help-quick)
 (setopt view-lossage-auto-refresh t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -312,8 +310,12 @@ If the new path's directories does not exist, create them."
 
 (add-to-list 'load-path "~/.emacs.d/config")
 
-(require 'dm-meow)
-(require 'dm-tabs)
+(require 'dm-bindings)
+
 (require 'dm-ui)
 (require 'dm-colors)
-(require 'dm-bindings)
+
+(require 'dm-meow)
+
+(require 'dm-tabs)
+(require 'dm-term)
