@@ -34,6 +34,10 @@
   :config
   (editorconfig-mode 1))
 
+(use-package direnv
+  :config
+  (direnv-mode))
+
 ;;; Compile
 
 (defun compile-match-buffer-name-to-command (&rest _process)
