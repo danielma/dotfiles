@@ -105,6 +105,8 @@ baseline and each decision commit. The notes below record the outcomes.
 
 - Bedrock's plain Vertico, Vertico Directory, and Orderless behavior is active
   in `dm-ui.el`.
+- The `embark-keybinding` completion category uses `basic` matching so typing a
+  key prefix filters by the displayed key instead of matching command names.
 - The richer dormant Posframe and Orderless customizations were not restored.
 
 ### Marginalia
