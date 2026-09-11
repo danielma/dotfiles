@@ -12,13 +12,15 @@
   :config
   (add-hook 'yaml-mode-hook (lambda () (modify-syntax-entry ?_ "w"))))
 
-(use-package lua-mode)
+(use-package lua-mode
+  :defer t)
 
 (use-package swift-mode
   :hook
   (swift-mode . eglot))
 
-(use-package fish-mode)
+(use-package fish-mode
+  :defer t)
 
 (use-package nix-ts-mode
   :mode "\\.nix\\'")
