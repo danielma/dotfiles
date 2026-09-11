@@ -129,17 +129,6 @@
 (use-package meow
   :config
   (dm-meow-setup)
-  (setopt meow-replace-state-name-list '((normal . "N")
-                                          (motion . "M")
-                                          (keypad . "K")
-                                          (insert . "I")
-                                          (beacon . "B"))
-          meow-indicator-face-alist '((normal . doom-modeline-info)
-                                      (motion . doom-modeline-project-dir)
-                                      (keypad . doom-modeline-panel)
-                                      (insert . doom-modeline-buffer-major-mode)
-                                      (beacon . doom-modeline-buffer-modified)))
-  (meow-setup-indicator)
   (meow-global-mode)
   :custom
   (meow-use-cursor-position-hack t)

@@ -212,27 +212,6 @@ If the new path's directories does not exist, create them."
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Mode line information
-(setopt line-number-mode t                                  ; Show current line in mode line
-        column-number-mode t                                ; Show column as well
-        mode-line-collapse-minor-modes '(not flymake-mode)  ; Keep diagnostics visible
-        mode-line-collapse-minor-modes-to " +"              ; Collapse low-value minor modes
-        mode-line-compact 'long                             ; Compact only when space is tight
-        mode-line-percent-position '(-3 "%p")               ; Show a compact buffer percentage
-        project-mode-line 'non-remote)                      ; Avoid project lookup over TRAMP
-
-(setq-default mode-line-format
-              (mapcan
-               (lambda (construct)
-                 (if (eq construct 'mode-line-buffer-identification)
-                     (list '(project-mode-line project-mode-line-format)
-                           " "
-                           construct)
-                   (unless (equal construct
-                                  '(project-mode-line project-mode-line-format))
-                     (list construct))))
-               mode-line-format))
-
 (setopt x-underline-at-descent-line nil)           ; Prettier underlines
 (setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
 
@@ -330,6 +309,7 @@ If the new path's directories does not exist, create them."
 (require 'dm-text)
 
 (require 'dm-ui)
+(require 'dm-modeline)
 (require 'dm-colors)
 
 (require 'dm-meow)

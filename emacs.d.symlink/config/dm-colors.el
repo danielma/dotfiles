@@ -4,53 +4,10 @@
 
 ;;; Code:
 
+(require 'dm-modeline)
+
 (defvar dm-light-theme 'doom-opera-light)
 (defvar dm-dark-theme 'doom-gruvbox)
-
-(defface doom-modeline-project-dir
-  '((t (:inherit mode-line-emphasis)))
-  "Project directory face supplied by Doom themes.")
-
-(defface doom-modeline-buffer-path
-  '((t (:inherit mode-line-emphasis)))
-  "Buffer path face supplied by Doom themes.")
-
-(defface doom-modeline-buffer-file
-  '((t (:inherit mode-line-emphasis)))
-  "Buffer file face supplied by Doom themes.")
-
-(defface doom-modeline-buffer-modified
-  '((t (:inherit warning)))
-  "Modified buffer face supplied by Doom themes.")
-
-(defface doom-modeline-error
-  '((t (:inherit error)))
-  "Error face supplied by Doom themes.")
-
-(defface doom-modeline-buffer-major-mode
-  '((t (:inherit mode-line-emphasis)))
-  "Major mode face supplied by Doom themes.")
-
-(defface doom-modeline-info
-  '((t (:inherit success)))
-  "Informational face supplied by Doom themes.")
-
-(defface doom-modeline-bar
-  '((t (:inherit mode-line)))
-  "Accent bar face supplied by Doom themes.")
-
-(defface doom-modeline-panel
-  '((t (:inherit mode-line-highlight)))
-  "Highlighted panel face supplied by Doom themes.")
-
-(setopt project-mode-line-face 'doom-modeline-project-dir)
-
-(defun dm-apply-mode-line-faces ()
-  "Apply Doom modeline faces to native mode-line components."
-  (set-face-attribute 'mode-line-buffer-id nil
-                      :inherit 'doom-modeline-buffer-file
-                      :foreground 'unspecified
-                      :weight 'unspecified))
 
 (defun dm-apply-theme (appearance)
   "Apply theme based on APPEARANCE ('light or 'dark)."
@@ -58,7 +15,7 @@
   (pcase appearance
     ('light (load-theme dm-light-theme t))
     ('dark (load-theme dm-dark-theme t)))
-  (dm-apply-mode-line-faces))
+  (dm-modeline-apply-faces))
 
 (defun dm-system-appearance-changed (appearance)
   "Hook for ns-system-appearance-change-functions."
