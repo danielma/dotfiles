@@ -311,6 +311,7 @@ If the new path's directories does not exist, create them."
 (require 'dm-general)
 
 (require 'dm-bindings)
+(require 'dm-text)
 
 (require 'dm-ui)
 (require 'dm-colors)
