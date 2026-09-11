@@ -30,14 +30,6 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package avy
-  :demand t
-  :bind (("C-c j" . avy-goto-line)
-         ("s-j"   . avy-goto-char-timer)
-	 :map isearch-mode-map
-	 ("s-j" . avy-isearch)		; Jump to highlighted isearch candidate
-	 ))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Power-ups: Embark and Consult

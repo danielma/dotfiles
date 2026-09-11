@@ -25,6 +25,11 @@
 
 (advice-add 'save-buffer :before #'dm-save-buffer-always)
 
+(use-package avy
+  :bind (("s-j" . avy-goto-char-timer)
+         :map isearch-mode-map
+         ("s-j" . avy-isearch)))
+
 ;;; 
 ;;; C-x t C-f				find-file-other-tab
 ;;; C-x t RET				tab-switch
