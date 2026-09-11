@@ -123,6 +123,10 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
     (let ((sym (thing-at-point 'symbol)))
       (consult-line sym))))
 
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
 ;;; End consult
 
 (use-package xref
