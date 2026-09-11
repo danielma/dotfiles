@@ -99,7 +99,11 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
 
 (use-package vertico
   :init
-  (vertico-mode))
+  (vertico-mode)
+  :config
+  (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+  :bind (:map global-map
+              ("M-R" . vertico-repeat)))
 
 (use-package vertico-directory
   :ensure nil
@@ -111,17 +115,29 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides
-   '((embark-keybinding (styles basic)))))
+   '((embark-keybinding (styles basic))
+     (file (styles basic partial-completion)))))
 
 (use-package corfu
   :init
   (completion-preview-mode -1)
   (global-corfu-mode)
   :bind
-  (:map corfu-map
+  (:map global-map
+        ("C-'" . completion-at-point)
+        :map corfu-map
         ("SPC" . corfu-insert-separator)
         ("C-n" . corfu-next)
         ("C-p" . corfu-previous)))
+
+(use-package corfu-terminal
+  :if (not (display-graphic-p))
+  :config
+  (corfu-terminal-mode))
+
+(use-package dabbrev
+  :bind (("M-/" . dabbrev-completion)
+         ("C-M-/" . dabbrev-expand)))
 
 (use-package corfu-popupinfo
   :ensure nil
