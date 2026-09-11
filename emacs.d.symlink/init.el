@@ -220,7 +220,6 @@ If the new path's directories does not exist, create them."
 (setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
 
 (setopt show-trailing-whitespace nil)      ; By default, don't underline trailing spaces
-(setopt indicate-buffer-boundaries 'left)  ; Show buffer top and bottom in the margin
 
 ;; Enable horizontal scrolling
 (setopt mouse-wheel-tilt-scroll t)
