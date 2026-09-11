@@ -21,7 +21,6 @@
 ;;;  - Built-in config for developers
 ;;;  - Version Control
 ;;;  - Common file types
-;;;  - Eglot, the built-in LSP client for Emacs
 ;;;  - Templating
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -45,36 +44,6 @@
 ;; Emacs ships with a lot of popular programming language modes. If it's not
 ;; built in, you're almost certain to find a mode for the language you're
 ;; looking for with a quick Internet search.
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;
-;;;   Eglot, the built-in LSP client for Emacs
-;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Helpful resources:
-;;
-;;  - https://www.masteringemacs.org/article/seamlessly-merge-multiple-documentation-sources-eldoc
-
-(use-package eglot
-  ;; no :ensure t here because it's built-in
-
-  ;; Configure hooks to automatically turn-on eglot for selected modes
-  ; :hook
-  ; (((python-mode ruby-mode elixir-mode) . eglot-ensure))
-
-  :config
-  ;; Sometimes you need to tell Eglot where to find the language server
-  ; (add-to-list 'eglot-server-programs
-  ;              '(haskell-mode . ("haskell-language-server-wrapper" "--lsp")))
-
-  ;; You can set various options for each language server. For
-  ;; example, you can raise the number of completions surfaced by a
-  ;; given langauge server to Emacs:
-  (setopt eglot-workspace-configuration
-	  '((haskell (maxCompletions . 100))
-	    (elixir  (maxCompletions . 100))))
-  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
