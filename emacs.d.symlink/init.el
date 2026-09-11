@@ -146,12 +146,6 @@ If the new path's directories does not exist, create them."
 (add-hook 'after-init-hook 'help-quick)
 (setopt view-lossage-auto-refresh t)
 
-;; which-key: shows a popup of available keybindings when typing a long key
-;; sequence (e.g. C-x ...)
-(use-package which-key
-  :config
-  (which-key-mode))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Minibuffer/completion/searching settings

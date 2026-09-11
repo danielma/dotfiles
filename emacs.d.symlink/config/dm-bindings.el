@@ -42,7 +42,14 @@
   (setf (alist-get ?. avy-dispatch-alist) #'dm-avy-action-embark))
 
 (use-package embark
-  :bind ("C-c a" . embark-act))
+  :demand t
+  :bind ("C-c a" . embark-act)
+  :custom
+  (embark-auto-prefix-help-delay 1.0)
+  :config
+  (when (bound-and-true-p which-key-mode)
+    (which-key-mode -1))
+  (embark-auto-prefix-help-mode))
 
 ;;; 
 ;;; C-x t C-f				find-file-other-tab

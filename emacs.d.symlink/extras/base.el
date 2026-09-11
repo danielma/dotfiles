@@ -38,18 +38,6 @@
 
 (use-package embark-consult)
 
-;; Embark: supercharged context-dependent menu; kinda like a
-;; super-charged right-click.
-(use-package embark
-  :demand t
-  :after (avy embark-consult)
-  :config
-  ;; Replace which-key-mode with a completing-read menu that does
-  ;; approximately the same thing
-  (which-key-mode -1)
-  (setopt embark-auto-prefix-help-delay 1.0)
-  (embark-auto-prefix-help-mode))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Minibuffer and completion
