@@ -289,8 +289,11 @@ If the new path's directories does not exist, create them."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(apheleia browse-at-remote citar-typst fish-mode forge iedit magit markdown-mode meow nix-ts-mode
-              smartparens swift-mode treesit-fold which-key)))
+   '(apheleia avy browse-at-remote citar-typst consult eglot embark emmet-mode fish-mode flymake-jsts
+              flymake-popon forge ghostel iedit indent-bars kkp magit marginalia markdown-mode meow
+              nix-ts-mode rg smartparens swift-mode treesit-fold vterm web-mode which-key yasnippet))
+ '(package-vc-selected-packages
+   '((flymake-jsts :url "https://github.com/orzechowskid/flymake-jsts.git" :branch "main"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
