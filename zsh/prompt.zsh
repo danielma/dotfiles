@@ -31,6 +31,6 @@ _dotfiles_prompt_precmd() {
 
 add-zsh-hook precmd _dotfiles_prompt_precmd
 
-# ❯ for normal users, # for root; green after success, red after failure
+# ❯ for normal users, # for root
 PROMPT='${_prompt_host}%F{blue}%~%f${_prompt_git}${_prompt_status}
-%(?.%F{green}.%F{red})%(!.#.❯)%f '
+%(!.#.❯) '
