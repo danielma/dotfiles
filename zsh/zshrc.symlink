@@ -1,131 +1,41 @@
-PROFILE_STARTUP=false
-if [[ "$PROFILE_STARTUP" == true ]]; then
-    # http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
-    PS4=$'%D{%M%S%.} %N:%i> '
-    exec 3>&2 2>$HOME/tmp/startlog.$$
-    setopt xtrace prompt_subst
+[[ -o interactive ]] || return
+
+typeset -g DOTFILES_ZSH_DIR="$HOME/.dotfiles/zsh"
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt append_history
+setopt extended_history
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt interactive_comments
+setopt share_history
+
+bindkey -e
+bindkey '^R' history-incremental-search-backward
+
+source "$DOTFILES_ZSH_DIR/completion.zsh"
+source "$DOTFILES_ZSH_DIR/prompt.zsh"
+
+export FZF_DEFAULT_OPTS='--cycle --layout=reverse --border --height=90% --preview-window=wrap --color 16,bg+:8,fg+:6,hl+:11,hl:11,border:245'
+
+if command -v brew >/dev/null 2>&1; then
+  typeset -g HOMEBREW_PREFIX=$(brew --prefix)
+
+  [[ -r "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh" ]] &&
+    source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
+  [[ -r "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh" ]] &&
+    source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 fi
-# shortcut to this dotfiles path is $ZSH
-export ZSH=$HOME/.dotfiles
 
-# your project folder that we can `c [tab]` to
-export PROJECTS=~/Code
+command -v zoxide >/dev/null 2>&1 && source <(zoxide init zsh --cmd c)
+command -v direnv >/dev/null 2>&1 && source <(direnv hook zsh)
 
-autoload -Uz compinit && compinit
-
-# source $HOME/.asdf/asdf.sh
-# source $HOME/.asdf/completions/asdf.bash
-
-# all of our zsh files
-typeset -U config_files
-config_files=($ZSH/*/*.zsh)
-
-# load the path files
-for file in ${(M)config_files:#*/path.zsh}
-do
-  source $file
-done
-
-# load everything but the path and completion files
-for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
-do
-  source $file
-done
-
-# initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
-
-# load every completion after autocomplete loads
-for file in ${(M)config_files:#*/completion.zsh}
-do
-  source $file
-done
-
-# my things
-
-makeandgo() {
-	mkdir -p $1
-	cd $1
-}
-
-dm() {
-    if [[ $(dark-mode status) == 'off' ]]; then
-        dark-mode on
-
-        b16 $(cat ~/.base16_theme-name-dark)
-    else
-        dark-mode off
-        b16 $(cat ~/.base16_theme-name-light)
-    fi
-}
-
-b16() {
-    eval base16_$1
-    emacsclient -e "(my/base16-set-theme \"$1\")"
-    # open ~/.dotfiles/ubersicht/refresh-theme.app 2>/dev/null
-
-    echo $1 > ~/.base16_theme-name
-
-    if [[ $(echo $1 | grep "\-dark" --count) > 0 ]]; then
-        echo -n $1 > ~/.base16_theme-name-dark
-    else
-        echo -n $1 > ~/.base16_theme-name-light
-    fi
-}
-
-# compctl -K _b16 b16
-
-# _b16() {
-#     local completions
-
-#     completions=(~/Code/test/base16-builder/templates/shell/build/base16-*)
-#     # completions="hello\ngoodbye"
-
-#     reply=("${(ps:\n:)completions}")
-# }
-
-alias md=makeandgo
-
-alias up="cd .."
-
-unset config_files
-
-# export GUARD_NOTIFY=false
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-eval "$(zoxide init zsh --cmd j)"
-
-# fg Text
-# bg Background
-# hl Highlighted substrings
-# fg+ Text (current line)
-# bg+ Background (current line)
-# hl+ Highlighted substrings (current line)
-# info Info
-# prompt Prompt
-# pointer Pointer to the current line
-# marker Multi-select marker
-# spinner Streaming input indicator
-export FZF_DEFAULT_OPTS='
-  --color 16,bg+:18,fg+:7,hl+:2,hl:2,pointer:6,prompt:6,info:5
-'
-export FZF_DEFAULT_COMMAND='rg --files'
-
-
-export HOMEBREW_NO_AUTO_UPDATE=1
-export XDG_CONFIG_HOME=~/.config
-
-
-if [[ "$PROFILE_STARTUP" == true ]]; then
-    unsetopt xtrace
-    exec 2>&3 3>&-
+if [[ -z ${INSIDE_EMACS:-} ]] && command -v emacsclient >/dev/null 2>&1; then
+  export EDITOR='emacsclient -nw'
+else
+  export EDITOR=${EDITOR:-vi}
 fi
-export RBENV_ROOT=$HOME/.rbenv
-eval "$(rbenv init -)"
-
-PATH=./bin:./node_modules/.bin:$HOME/bin:$HOME/.cargo/bin:$HOME/pco-box/bin:$PATH
-export MYSQL_PORT_3306_TCP_ADDR=127.0.0.1
-export MYSQL_READER_PORT_3306_TCP_ADDR=127.0.0.1
-export MYSQL_READER_PORT_3306_TCP_PORT=3307

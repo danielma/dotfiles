@@ -1,5 +1,9 @@
-# matches case insensitive for lowercase
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+autoload -Uz compinit
+compinit
 
-# pasting with tabs doesn't perform completion
+setopt complete_in_word
+setopt complete_aliases
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' menu select
 zstyle ':completion:*' insert-tab pending

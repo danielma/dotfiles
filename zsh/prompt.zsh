@@ -1,101 +1,32 @@
-autoload colors && colors
-# cheers, @ehrenmurdick
-# http://github.com/ehrenmurdick/config/blob/master/zsh/prompt.zsh
+autoload -Uz add-zsh-hook vcs_info
 
-if (( $+commands[git] ))
-then
-  git="$commands[git]"
-else
-  git="/usr/bin/git"
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats ' %F{green}%b%f'
+zstyle ':vcs_info:git:*' actionformats ' %F{yellow}%b|%a%f'
+
+typeset -g _prompt_host=''
+typeset -g _prompt_status=''
+typeset -g _prompt_dirty=''
+
+if [[ -n ${SSH_CONNECTION:-}${SSH_TTY:-} ]]; then
+  _prompt_host='%F{magenta}%m%f:'
 fi
 
-git_branch() {
-  echo $($git symbolic-ref HEAD 2>/dev/null | awk -F/ {'print $NF'})
-}
+_dotfiles_prompt_precmd() {
+  local previous_status=$?
 
-wip_status() {
-    if [[ $(git log -n 1 --format="%s") == "WIP" ]]
-    then
-        echo " %{$fg_bold[green]%}\u2691%{$reset_color%}"
-    fi
-}
+  _prompt_status=''
+  (( previous_status != 0 )) && _prompt_status=" %F{red}[$previous_status]%f"
 
-git_dirty() {
-  if $(! $git status -s &> /dev/null)
-  then
-    echo ""
-  else
-    if [[ $($git status --porcelain) == "" ]]
-    then
-      # echo "%{$bg[red]%} %{$reset_color%}%{$fg[red]%}\u25b3%{$reset_color%} %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
-      echo "%{$fg_bold[black]%}: %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}$(wip_status)"
-    else
-      echo "%{$fg_bold[black]%}: %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}$(wip_status)"
-    fi
+  vcs_info
+  _prompt_dirty=''
+  if [[ -n $vcs_info_msg_0_ ]] &&
+      command git status --porcelain --untracked-files=normal 2>/dev/null | command grep -q .; then
+    _prompt_dirty=' %F{red}*%f'
   fi
 }
 
-git_prompt_info () {
- ref=$($git symbolic-ref HEAD 2>/dev/null) || return
-# echo "(%{\e[0;33m%}${ref#refs/heads/}%{\e[0m%})"
-  echo "${ref#refs/heads/}"
-}
+add-zsh-hook precmd _dotfiles_prompt_precmd
 
-unpushed () {
-  $git cherry -v @{upstream} 2>/dev/null
-}
-
-need_push () {
-  if [[ $(unpushed) == "" ]]
-  then
-    echo " "
-  else
-    echo " %{$fg_bold[magenta]%}⇧%{$reset_color%} "
-  fi
-}
-
-project() {
-  git remote -v 2>/dev/null | head -n1 | awk '{print $2}' | sed 's/.*\///' | sed 's/\.git//' || ""
-}
-
-git_project() {
-  if ! [[ -z "$(project)" ]]
-  then
-    echo "%{$fg_bold[yellow]%}$(project)%{$reset_color%}"
-  else
-    echo ""
-  fi
-}
-
-directory_name() {
-  echo "%{$fg_bold[cyan]%}%~%{$reset_color%}"
-}
-
-prompt_time() {
-  echo "%{$fg[magenta]%}%D{%r}%{$reset_color%}"
-}
-
-prompt_vi_status() {
-    echo ${${KEYMAP/vicmd/ NORMAL}/(main|viins)/INSERT}
-}
-    
-
-function zle-line-init zle-keymap-select {
-    # VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
-    # RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(git_custom_status) $EPS1"
-    if [[ -v TMUX ]]; then
-        tmux setenv -g KEYMAP $(prompt_vi_status)
-        tmux refresh-client -S
-    fi
-    # zle reset-prompt
-}
-
-zle -N zle-line-init
-zle -N zle-keymap-select
-export KEYTIMEOUT=1
-
-export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push)\n%F{20}\u276F%{$reset_color%} '
-# export RPROMPT="$(prompt_time)"
-
-precmd() {
-}
+PROMPT='${_prompt_host}%F{blue}%~%f${vcs_info_msg_0_}${_prompt_dirty}${_prompt_status}
+%# '

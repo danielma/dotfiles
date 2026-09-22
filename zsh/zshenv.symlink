@@ -1,4 +1,30 @@
-# Stash your environment variables in ~/.localrc. This means they'll stay out
-# of your main dotfiles repository (which may be public, like this one), but
-# you'll have access to them in your scripts.
-source ~/.localrc
+# Environment shared by interactive shells and scripts.
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export RIPGREP_CONFIG_PATH="${RIPGREP_CONFIG_PATH:-$HOME/.dotfiles/ripgrep/config}"
+export PNPM_HOME="${PNPM_HOME:-$HOME/Library/pnpm}"
+
+# Find Homebrew before relying on it to locate versioned formulae. The fallback
+# locations cover its standard Apple Silicon and Intel installations.
+if (( $+commands[brew] )); then
+  typeset -g HOMEBREW_PREFIX=${commands[brew]:h:h}
+elif [[ -x /opt/homebrew/bin/brew ]]; then
+  typeset -g HOMEBREW_PREFIX=/opt/homebrew
+elif [[ -x /usr/local/bin/brew ]]; then
+  typeset -g HOMEBREW_PREFIX=/usr/local
+fi
+
+typeset -U path PATH
+path=(
+  "$HOME/.dotfiles/bin"
+  "$HOME/.cargo/bin"
+  "$HOME/.local/bin"
+  "$PNPM_HOME"
+  ${HOMEBREW_PREFIX:+"$HOMEBREW_PREFIX/opt/node@22/bin"}
+  ${HOMEBREW_PREFIX:+"$HOMEBREW_PREFIX/bin"}
+  ${HOMEBREW_PREFIX:+"$HOMEBREW_PREFIX/sbin"}
+  $path
+)
+export PATH
+
+# Keep machine-specific secrets and environment out of the repository.
+[[ -r "$HOME/.localrc" ]] && source "$HOME/.localrc"
