@@ -27,7 +27,7 @@ bindkey '^[v' edit-command-line
 source "$DOTFILES_ZSH_DIR/completion.zsh"
 source "$DOTFILES_ZSH_DIR/prompt.zsh"
 
-export FZF_DEFAULT_OPTS='--cycle --layout=reverse --border --height=90% --preview-window=wrap --color 16,bg+:8,fg+:6,hl+:11,hl:11,border:245'
+export FZF_DEFAULT_OPTS='--cycle --layout=reverse --border --height=90% --preview-window=wrap --color 16,bg+:-1,fg+:-1:reverse,hl:-1:bold:underline,hl+:-1:reverse:bold:underline,border:8'
 
 if command -v brew >/dev/null 2>&1; then
   typeset -g HOMEBREW_PREFIX=$(brew --prefix)
