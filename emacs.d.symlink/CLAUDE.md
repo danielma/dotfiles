@@ -1,5 +1,9 @@
 # Emacs Directory Notes
 
+## Shell
+
+- Daniel uses zsh. Write interactive shell commands using zsh syntax, while keeping documentation portable to standard POSIX shells.
+
 ## Config ownership
 
 - Put UI defaults in `config/dm-ui.el`, even when they only apply in terminal Emacs.
