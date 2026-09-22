@@ -18,7 +18,7 @@ path=(
   "$HOME/.dotfiles/bin"
   "$HOME/.cargo/bin"
   "$HOME/.local/bin"
-  "$PNPM_HOME"
+  "$PNPM_HOME/bin"
   ${HOMEBREW_PREFIX:+"$HOMEBREW_PREFIX/opt/node@22/bin"}
   ${HOMEBREW_PREFIX:+"$HOMEBREW_PREFIX/bin"}
   ${HOMEBREW_PREFIX:+"$HOMEBREW_PREFIX/sbin"}
