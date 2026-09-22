@@ -6,9 +6,7 @@
   code, point it out
 - Recommend updates to my user settings (CLAUDE.md) as you learn things about me
 - Recommend updates to project settengs (CLAUDE.md) as you learn things about our current project
-- I use the fish shell. Customize your shell commands to use fish syntax. However, any documentation
-  or actual script files should always be written for standard shells
-
+- I use the zsh shell
 
 # Ideals
 
