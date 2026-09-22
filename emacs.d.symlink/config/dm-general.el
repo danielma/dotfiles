@@ -18,7 +18,7 @@
   "Delete the file visited by the current buffer."
   (interactive)
   (delete-file buffer-file-name)
-  (kill-this-buffer))
+  (kill-buffer))
 
 (provide 'dm-general)
 ;;; dm-general.el ends here
