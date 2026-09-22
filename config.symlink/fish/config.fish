@@ -9,7 +9,6 @@ fish_add_path ~/.local/bin
 
 # Moving around
 
-set --export _ZO_RESOLVE_SYMLINKS 1
 zoxide init fish --cmd c | source
 
 # Prompt

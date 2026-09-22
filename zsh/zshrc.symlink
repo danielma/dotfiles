@@ -43,6 +43,7 @@ if command -v brew >/dev/null 2>&1; then
     source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 fi
 
+export _ZO_RESOLVE_SYMLINKS=1
 command -v zoxide >/dev/null 2>&1 && source <(zoxide init zsh --cmd c)
 command -v direnv >/dev/null 2>&1 && source <(direnv hook zsh)
 
