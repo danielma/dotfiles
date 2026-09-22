@@ -54,15 +54,22 @@
 
 ;;; Project
 
-(defun project-around-project-remember-project (orig-fun &rest args)
-  "Wrap ORIG-FUN to add ignore logic."
-  (let ((project (car args)))
-    ;; (print (project-root project))
-    (apply orig-fun args)))
+(defun dm-project-canonical-root (root)
+  "Return the physical path for local project ROOT."
+  (if (file-remote-p root)
+      root
+    (let ((default-directory (file-name-as-directory
+                              (expand-file-name root))))
+      (file-name-as-directory (car (process-lines "/bin/pwd" "-P"))))))
+
+(defun dm-project-canonicalize-remembered-root (args)
+  "Canonicalize the project root in `project--remember-dir' ARGS."
+  (cons (dm-project-canonical-root (car args)) (cdr args)))
 
 (use-package emacs
   :config
-  (advice-add 'project-remember-project :around 'project-around-project-remember-project)
+  (advice-add 'project--remember-dir
+              :filter-args #'dm-project-canonicalize-remembered-root)
   :custom
   (project-switch-use-entire-map t)
   :bind (:map project-prefix-map
