@@ -2,6 +2,8 @@
 
 typeset -g DOTFILES_ZSH_DIR="$HOME/.dotfiles/zsh"
 
+source "$DOTFILES_ZSH_DIR/work.zsh"
+
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000
