@@ -70,7 +70,7 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
   :hook
   (text-mode . visual-line-mode)
   :config
-  (global-hl-line-mode)
+  ;; (global-hl-line-mode)
   :bind (:map global-map
               ("s-=" . global-text-scale-adjust-by-two)
               ("s--" . global-text-scale-adjust-by-two)
@@ -122,6 +122,8 @@ PUSH is forwarded to the default backend when terminal integration is inactive."
   :init
   (completion-preview-mode -1)
   (global-corfu-mode)
+  :custom
+  (corfu-auto t)
   :bind
   (:map global-map
         ("C-'" . completion-at-point)

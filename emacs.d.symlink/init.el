@@ -293,7 +293,12 @@ If the new path's directories does not exist, create them."
               flymake-popon forge ghostel iedit indent-bars kkp magit marginalia markdown-mode meow
               nix-ts-mode rg smartparens swift-mode treesit-fold vterm web-mode which-key yasnippet))
  '(package-vc-selected-packages
-   '((flymake-jsts :url "https://github.com/orzechowskid/flymake-jsts.git" :branch "main"))))
+   '((flymake-jsts :url "https://github.com/orzechowskid/flymake-jsts.git" :branch "main")))
+ '(safe-local-variable-values
+   '((web-mode-indent-style . 2) (web-mode-block-padding . 2) (web-mode-script-padding . 2)
+     (web-mode-style-padding . 2) (dm-apheleia-syntax-tree-single-quotes)
+     (eval progn (whitespace-mode 0) (apheleia-mode 0) (electric-indent-mode 0))))
+ '(warning-suppress-log-types '((treesit) (comp) (bytecomp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
