@@ -1,0 +1,6 @@
+if (( $# != 1 )); then
+  print -u2 'usage: md directory'
+  return 2
+fi
+
+command mkdir -p -- "$1" && builtin cd -- "$1"

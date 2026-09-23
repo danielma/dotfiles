@@ -1,0 +1,10 @@
+local -a editor
+
+if [[ -n ${INSIDE_EMACS:-} ]] && command -v emacsclient >/dev/null 2>&1; then
+  editor=(emacsclient -n)
+else
+  editor=("${(@Q)${(z)${EDITOR:-vi}}}")
+fi
+
+(( $# )) || set -- .
+command "${editor[@]}" "$@"

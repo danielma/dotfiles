@@ -1,0 +1,3 @@
+local root
+root=$(command git rev-parse --show-toplevel) || return
+builtin cd -- "$root"

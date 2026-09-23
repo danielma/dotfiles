@@ -2,6 +2,9 @@
 
 typeset -g DOTFILES_ZSH_DIR="$HOME/.dotfiles/zsh"
 
+fpath=("$DOTFILES_ZSH_DIR/functions" $fpath)
+autoload -Uz "$DOTFILES_ZSH_DIR"/functions/*(N.:t)
+
 source "$DOTFILES_ZSH_DIR/work.zsh"
 
 HISTFILE="$HOME/.zsh_history"
@@ -52,84 +55,3 @@ if [[ -z ${INSIDE_EMACS:-} ]] && command -v emacsclient >/dev/null 2>&1; then
 else
   export EDITOR=${EDITOR:-vi}
 fi
-
-be() {
-  command bundle exec "$@"
-}
-
-e() {
-  local -a editor
-
-  if [[ -n ${INSIDE_EMACS:-} ]] && command -v emacsclient >/dev/null 2>&1; then
-    editor=(emacsclient -n)
-  else
-    editor=("${(@Q)${(z)${EDITOR:-vi}}}")
-  fi
-
-  (( $# )) || set -- .
-  command "${editor[@]}" "$@"
-}
-
-ew() {
-  command emacs -nw . "$@"
-}
-
-gd() {
-  command git diff "$@"
-}
-
-gl() {
-  command git pull --prune "$@"
-}
-
-glog() {
-  command git log --oneline --graph --decorate "$@"
-}
-
-groot() {
-  local root
-  root=$(command git rev-parse --show-toplevel) || return
-  builtin cd -- "$root"
-}
-
-gs() {
-  command git status -sb "$@"
-}
-
-gws() {
-  if ! command -v fzf >/dev/null 2>&1; then
-    print -u2 'gws: fzf is required'
-    return 127
-  fi
-
-  local worktree
-  worktree=$(command git worktree list --porcelain |
-    command sed -n 's/^worktree //p' |
-    command fzf) || return
-  builtin cd -- "$worktree"
-}
-
-l() {
-  if command -v eza >/dev/null 2>&1; then
-    command eza "$@"
-  else
-    command ls "$@"
-  fi
-}
-
-md() {
-  if (( $# != 1 )); then
-    print -u2 'usage: md directory'
-    return 2
-  fi
-
-  command mkdir -p -- "$1" && builtin cd -- "$1"
-}
-
-rc() {
-  command rails console "$@"
-}
-
-up() {
-  builtin cd ..
-}

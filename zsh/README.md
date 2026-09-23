@@ -3,6 +3,10 @@
 Zsh is the login and interactive shell. This directory contains its environment,
 completion, prompt, keybinding, and work configuration.
 
+Reusable shell helpers live as one-file-per-function in `functions/`. The
+interactive configuration adds that directory to `fpath` and autoloads every
+regular file there on first use.
+
 The bootstrap script links `zshenv.symlink` and `zshrc.symlink` to `~/.zshenv`
 and `~/.zshrc`. The interactive configuration explicitly loads `work.zsh`,
 `completion.zsh`, and `prompt.zsh`; adding another `*.zsh` file does not load it
