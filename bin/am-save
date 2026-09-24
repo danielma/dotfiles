@@ -2,7 +2,7 @@
 #
 # Save the current Apple Music track to this month's playlist.
 
-playlist_name=$(date '+%B %Y Tracks')
+playlist_name=$(date '+%Y-%m %B Monthly Tracks')
 
 osascript - "$playlist_name" <<'APPLESCRIPT'
 on run argv
