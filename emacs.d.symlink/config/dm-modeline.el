@@ -9,7 +9,7 @@
 (require 'project)
 
 (defface doom-modeline-project-dir
-  '((t (:inherit mode-line-emphasis)))
+  '((t (:inherit (font-lock-string-face bold))))
   "Project directory face supplied by Doom themes.")
 
 (defface doom-modeline-buffer-path
@@ -17,7 +17,7 @@
   "Buffer path face supplied by Doom themes.")
 
 (defface doom-modeline-buffer-file
-  '((t (:inherit mode-line-emphasis)))
+  '((t (:inherit (font-lock-keyword-face bold))))
   "Buffer file face supplied by Doom themes.")
 
 (defface doom-modeline-buffer-modified

@@ -21,6 +21,14 @@
     (should buffer-position)
     (should (< project-position buffer-position))))
 
+(ert-deftest dm-modeline-distinguishes-project-and-buffer-faces ()
+  (dm-modeline-apply-faces)
+  (should (eq project-mode-line-face 'doom-modeline-project-dir))
+  (should (eq (face-attribute 'mode-line-buffer-id :inherit nil nil)
+              'doom-modeline-buffer-file))
+  (should-not (equal (face-attribute 'doom-modeline-project-dir :inherit nil nil)
+                     (face-attribute 'doom-modeline-buffer-file :inherit nil nil))))
+
 (ert-deftest dm-modeline-replaces-vc-status-with-git-branch ()
   (let ((format (default-value 'mode-line-format)))
     (should-not (member '(vc-mode vc-mode) format))
