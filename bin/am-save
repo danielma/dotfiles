@@ -41,7 +41,16 @@ on run argv
 			error "Added the song to the library, but could not find its library copy."
 		end if
 
-		duplicate item 1 of librarySongs to destinationPlaylist
+		set librarySong to item 1 of librarySongs
+		set songDatabaseID to database ID of librarySong
+		set savedSongs to every track of destinationPlaylist whose database ID is songDatabaseID
+
+		if savedSongs is not {} then
+			return "Already saved “" & songName & "” by " & songArtist & ¬
+				" to “" & playlistName & "”"
+		end if
+
+		duplicate librarySong to destinationPlaylist
 
 		return "Saved “" & songName & "” by " & songArtist & ¬
 			" to “" & playlistName & "”"
