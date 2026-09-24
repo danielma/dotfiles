@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# Save the current Apple Music track to this month's playlist.
+
+playlist_name=$(date '+%B %Y Tracks')
+
+osascript - "$playlist_name" <<'APPLESCRIPT'
+on run argv
+	set playlistName to item 1 of argv
+
+	tell application "Music"
+		if player state is stopped then
+			error "Music has no current track."
+		end if
+
+		set currentSong to current track
+		set songName to name of currentSong
+		set songArtist to artist of currentSong
+		set songAlbum to album of currentSong
+		set matchingPlaylists to every user playlist whose name is playlistName
+
+		if matchingPlaylists is {} then
+			set destinationPlaylist to make new user playlist with properties {name:playlistName}
+		else
+			set destinationPlaylist to item 1 of matchingPlaylists
+		end if
+
+		set librarySongs to every track of library playlist 1 whose name is songName and artist is songArtist and album is songAlbum
+
+		if librarySongs is {} then
+			duplicate currentSong to source "Library"
+
+			repeat 40 times
+				delay 0.25
+				set librarySongs to every track of library playlist 1 whose name is songName and artist is songArtist and album is songAlbum
+				if librarySongs is not {} then exit repeat
+			end repeat
+		end if
+
+		if librarySongs is {} then
+			error "Added the song to the library, but could not find its library copy."
+		end if
+
+		duplicate item 1 of librarySongs to destinationPlaylist
+
+		return "Saved “" & songName & "” by " & songArtist & ¬
+			" to “" & playlistName & "”"
+	end tell
+end run
+APPLESCRIPT
