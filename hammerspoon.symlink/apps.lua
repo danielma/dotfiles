@@ -14,6 +14,7 @@ local appHotkeys = {
    S = "com.tinyspeck.slackmacgap",
    T = "com.linear",
    W = "md.obsidian",
+   Z = "us.zoom.xos",
 }
 
 for key, bundleID in pairs(appHotkeys) do
