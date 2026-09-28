@@ -4,6 +4,8 @@ claude
 configstore
 gatsby
 gh
+herdr/*
+!herdr/config.toml
 heroku
 htop
 hub
