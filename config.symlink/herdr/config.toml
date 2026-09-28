@@ -5,3 +5,22 @@ agent_panel_scope = "all"
 
 [theme]
 name = "catppuccin-latte"
+
+# Cmd bindings assume herdr runs in kitty (see ../kitty/kitty.conf). Ghostty
+# claims these keys itself, so in Ghostty these actions have no shortcut.
+# Everything not listed keeps its ctrl+b prefix default.
+[keys]
+toggle_sidebar = "cmd+b"
+new_tab = "cmd+t"
+switch_tab = "cmd+1..9"
+close_pane = "cmd+w"
+split_vertical = "cmd+d"
+split_horizontal = "cmd+shift+d"
+zoom = "cmd+shift+enter"
+focus_pane_left = "cmd+alt+left"
+focus_pane_right = "cmd+alt+right"
+focus_pane_up = "cmd+alt+up"
+focus_pane_down = "cmd+alt+down"
+new_workspace = "cmd+n"
+workspace_picker = "cmd+p"
+open_notification_target = "cmd+o"
