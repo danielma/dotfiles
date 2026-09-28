@@ -9,12 +9,21 @@
 (defvar dm-light-theme 'doom-opera-light)
 (defvar dm-dark-theme 'doom-gruvbox)
 
+(defun dm-apply-terminal-default-colors ()
+  "Apply the current Doom theme's default colors to the terminal frame."
+  (unless (display-graphic-p)
+    (set-background-color (doom-color 'bg))
+    (set-foreground-color (doom-color 'fg))))
+
+(add-hook 'window-setup-hook #'dm-apply-terminal-default-colors)
+
 (defun dm-apply-theme (appearance)
   "Apply theme based on APPEARANCE ('light or 'dark)."
   (mapc #'disable-theme custom-enabled-themes)
   (pcase appearance
     ('light (load-theme dm-light-theme t))
     ('dark (load-theme dm-dark-theme t)))
+  (dm-apply-terminal-default-colors)
   (dm-modeline-apply-faces))
 
 (defun dm-system-appearance-changed (appearance)
