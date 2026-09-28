@@ -17,7 +17,7 @@ light_name = "catppuccin-latte"
 [keys]
 toggle_sidebar = "cmd+b"
 new_tab = "cmd+t"
-switch_tab = "cmd+1..9"
+switch_tab = ["cmd+1..9", "ctrl+1..9"]
 # Kitty may report these as either the shifted symbol or shift+bracket, so
 # bind both spellings.
 next_tab = ["cmd+}", "cmd+shift+]"]
