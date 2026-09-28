@@ -3,6 +3,10 @@ onboarding = false
 [ui]
 agent_panel_scope = "all"
 
+[ui.toast]
+delivery = "terminal"
+delay_seconds = 1
+
 [theme]
 name = "catppuccin"
 # Follow the host terminal's appearance (kitty follows macOS; see
