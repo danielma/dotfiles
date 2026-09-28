@@ -18,6 +18,10 @@ light_name = "catppuccin-latte"
 toggle_sidebar = "cmd+b"
 new_tab = "cmd+t"
 switch_tab = "cmd+1..9"
+# Kitty may report these as either the shifted symbol or shift+bracket, so
+# bind both spellings.
+next_tab = ["cmd+}", "cmd+shift+]"]
+previous_tab = ["cmd+{", "cmd+shift+["]
 close_pane = "cmd+w"
 split_vertical = "cmd+d"
 split_horizontal = "cmd+shift+d"
