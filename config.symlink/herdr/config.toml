@@ -4,7 +4,12 @@ onboarding = false
 agent_panel_scope = "all"
 
 [theme]
-name = "catppuccin-latte"
+name = "catppuccin"
+# Follow the host terminal's appearance (kitty follows macOS; see
+# ../kitty/*-theme.auto.conf). Requires herdr >= 0.9.0.
+auto_switch = true
+dark_name = "catppuccin"
+light_name = "catppuccin-latte"
 
 # Cmd bindings assume herdr runs in kitty (see ../kitty/kitty.conf). Ghostty
 # claims these keys itself, so in Ghostty these actions have no shortcut.
