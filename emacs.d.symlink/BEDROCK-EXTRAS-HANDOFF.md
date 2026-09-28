@@ -39,7 +39,7 @@ deleted after all retained behavior moved into its owning modules.
   duplicate from the Bedrock extra. Do not create a second source of truth.
 - Do not activate an extra until every active form in it has been reviewed.
 
-Use standard shell syntax in documentation, even though Daniel uses fish
+Use standard shell syntax in documentation, even though Daniel uses zsh
 interactively.
 
 ## Current decisions and ownership
