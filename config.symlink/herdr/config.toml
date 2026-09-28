@@ -22,6 +22,8 @@ switch_tab = ["cmd+1..9", "ctrl+1..9"]
 # bind both spellings.
 next_tab = ["cmd+}", "cmd+shift+]"]
 previous_tab = ["cmd+{", "cmd+shift+["]
+next_agent = "cmd+]"
+previous_agent = "cmd+["
 close_pane = "cmd+w"
 split_vertical = "cmd+d"
 split_horizontal = "cmd+shift+d"
