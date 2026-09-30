@@ -8,6 +8,7 @@ local appHotkeys = {
    G = "app.supabit.supacode",
    H = "com.culturedcode.ThingsMac",
    I = "com.apple.Music",
+   K = "net.kovidgoyal.kitty",
    L = "com.cron.electron",
    M = "com.apple.MobileSMS",
    N = "notion.id",
