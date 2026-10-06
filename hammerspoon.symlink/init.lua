@@ -1,5 +1,8 @@
 local hyper = {"ctrl", "alt", "cmd"}
 
+local herdrConfig = os.getenv("HOME") .. "/.dotfiles/config.symlink/herdr/config.toml"
+hs.execute(string.format("/bin/launchctl setenv HERDR_CONFIG_PATH %q", herdrConfig))
+
 local modules = {
   "reload",
   "window",
