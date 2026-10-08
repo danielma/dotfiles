@@ -1,0 +1,10 @@
+id = "dma.worktree-setup"
+name = "Worktree Setup"
+version = "0.1.0"
+min_herdr_version = "0.9.0"
+description = "Run per-repo setup scripts when Herdr creates a worktree"
+platforms = ["macos"]
+
+[[events]]
+on = "worktree.created"
+command = ["zsh", "on-create.zsh"]
