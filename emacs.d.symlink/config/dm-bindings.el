@@ -65,6 +65,7 @@
 	       ;; ("C-:" . execute-extended-command)
 	       ("C-." . execute-extended-command)
          ("C-h C-f" . find-function)
+         ("M-o" . other-window)
          ("s-}" . tab-bar-switch-to-next-tab)
          ("s-{" . tab-bar-switch-to-prev-tab)
          ("s-[" . previous-buffer)
