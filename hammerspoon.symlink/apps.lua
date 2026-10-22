@@ -2,7 +2,7 @@ local hyper = {"ctrl", "alt", "cmd", "shift"}
 
 local appHotkeys = {
    ["1"] = "com.1password.1password",
-   C = "company.thebrowser.Browser",
+   C = "company.thebrowser.dia",
    D = "com.kapeli.dash-setapp",
    E = "org.gnu.Emacs",
    G = "app.supabit.supacode",
