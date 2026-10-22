@@ -1,0 +1,3 @@
+#!/bin/sh
+
+branch=$(git branch --format='%(refname:short)' --sort=-committerdate | grep -vxF "$(git branch --show-current)" | fzf) && [ -n "$branch" ] && git switch "$branch"
