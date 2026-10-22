@@ -52,3 +52,4 @@ developers and code I want to encourage. Act according to these ideals
 
 - I generally don't like early returns. I almost always prefer `if {} else {}` blocks for readability
 - I don't like trailing conditionals (`expr if condition`). Use `condition && expr` for simple nil guards, or full `if/else` blocks
+- When you have a list of items for me to work through (findings, review comments, questions, options, TODOs), go through them one at a time, no matter how short the list, unless I ask for the full list. Start with a brief summary of what's ahead (e.g. "5 review comments, 2 blocking") with no per-item details, then present only the first item and wait for my response before moving to the next. For purely informational lists, give the same brief summary and offer to go through them one at a time.

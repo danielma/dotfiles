@@ -2,9 +2,12 @@ onboarding = false
 
 [ui]
 agent_panel_scope = "all"
+status_indicators = "dots"
+tab_bar_position = "top"
+hide_tab_bar_when_single_tab = true
 
 [ui.toast]
-delivery = "terminal"
+delivery = "system"
 delay_seconds = 1
 
 [theme]
