@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -eu
+
+die() {
+  printf '%s\n' "$*" >&2
+  exit 1
+}
+
+git rev-parse --is-inside-work-tree >/dev/null 2>&1 ||
+  die "mergemetostaging must be run inside a Git worktree"
+
+if [ -n "$(git status --porcelain)" ]; then
+  printf '%s\n' "Nope! You have changes" >&2
+  git status -sb >&2
+  exit 1
+fi
+
+current_branch=$(git symbolic-ref --quiet --short HEAD) ||
+  die "mergemetostaging cannot run from a detached HEAD"
+
+git fetch origin staging
+
+if git show-ref --verify --quiet refs/heads/staging; then
+  git switch staging
+else
+  git switch --create staging --track origin/staging
+fi
+
+git reset --hard origin/staging
+git merge --no-edit "$current_branch"
+git push origin staging
