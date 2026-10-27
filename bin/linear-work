@@ -422,6 +422,18 @@ class LinearWork
     [output, status]
   end
 
+  def herdr_creation_ids(output)
+    response = JSON.parse(output)
+    workspace_id = dig(response, "result", "workspace", "workspace_id")
+    pane_id = dig(response, "result", "root_pane", "pane_id")
+
+    return nil if workspace_id.to_s.empty? || pane_id.to_s.empty?
+
+    [workspace_id, pane_id]
+  rescue JSON::ParserError
+    nil
+  end
+
   def claude_command(prompt)
     ["claude", *CLAUDE_ARGS, prompt]
   end

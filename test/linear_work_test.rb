@@ -24,4 +24,25 @@ class LinearWorkTest < Minitest::Test
 
     refute @linear_work.send(:worktree_list_includes?, output, worktree_id)
   end
+
+  def test_extracts_workspace_and_pane_ids_from_herdr_creation_output
+    output = JSON.generate(
+      "result" => {
+        "workspace" => { "workspace_id" => "w1B" },
+        "root_pane" => { "pane_id" => "w1B:p1" }
+      }
+    )
+
+    assert_equal ["w1B", "w1B:p1"], @linear_work.send(:herdr_creation_ids, output)
+  end
+
+  def test_rejects_herdr_creation_output_without_both_ids
+    output = JSON.generate("result" => { "workspace" => { "workspace_id" => "w1B" } })
+
+    assert_nil @linear_work.send(:herdr_creation_ids, output)
+  end
+
+  def test_rejects_invalid_herdr_creation_json
+    assert_nil @linear_work.send(:herdr_creation_ids, "not json")
+  end
 end
