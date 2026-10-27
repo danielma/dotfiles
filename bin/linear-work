@@ -4,8 +4,6 @@ require "json"
 require "net/http"
 require "open3"
 require "optparse"
-require "securerandom"
-require "tmpdir"
 require "uri"
 require "openssl"
 
@@ -14,8 +12,6 @@ class LinearWork
   API_URL = ENV.fetch("LINEAR_API_URL", "https://api.linear.app/graphql")
   API_KEY_REFERENCE = "op://Employee/Linear PAT/credential".freeze
   CLAUDE_ARGS = ["--permission-mode", "plan", "--model", "opus"].freeze
-  SUPACODE_WORKTREE_READY_TIMEOUT = 5.0
-  SUPACODE_WORKTREE_READY_INTERVAL = 0.5
 
   ISSUE_QUERY = <<~GRAPHQL
     query LinearWorkIssue($issue: String!) {
@@ -69,9 +65,7 @@ class LinearWork
       worktree: false,
       dry_run: false,
       base: nil,
-      repo: nil,
-      location: nil,
-      name: nil
+      path: nil
     }
   end
 
@@ -80,15 +74,14 @@ class LinearWork
     issue = fetch_issue(issue_key)
     branch = branch_name(issue)
     prompt = prompt_for_issue(issue)
-    supacode_branch = slugify(branch)
-    supacode_title = issue["identifier"].to_s.empty? ? issue_key : issue["identifier"]
+    issue_identifier = issue["identifier"].to_s.empty? ? issue_key : issue["identifier"]
 
     if @options[:dry_run]
       puts "Branch: #{branch}"
       puts
       puts prompt
     elsif @options[:worktree]
-      start_supacode_worktree(branch, prompt, supacode_branch, supacode_title)
+      start_herdr_worktree(branch, prompt, issue_identifier)
     else
       start_current_worktree(branch, prompt)
     end
@@ -105,29 +98,21 @@ class LinearWork
         Examples:
           linear-work CCA-123
           linear-work --worktree CCA-123
-          linear-work --worktree --base origin/main --repo <supacode-repo-id> CCA-123
+          linear-work --worktree --base origin/main --path ../worktrees/cca-123 CCA-123
 
         Options:
       USAGE
 
-      opts.on("-w", "--worktree", "Create a Supacode worktree before starting Claude.") do
+      opts.on("-w", "--worktree", "Create a Herdr worktree before starting Claude.") do
         @options[:worktree] = true
       end
 
-      opts.on("--base REF", "Base ref passed to Supacode when creating a worktree.") do |value|
+      opts.on("--base REF", "Base ref passed to Herdr when creating a worktree.") do |value|
         @options[:base] = value
       end
 
-      opts.on("--repo ID", "Supacode repository ID. Defaults to $SUPACODE_REPO_ID.") do |value|
-        @options[:repo] = value
-      end
-
-      opts.on("--location PATH", "Parent directory for the Supacode worktree.") do |value|
-        @options[:location] = value
-      end
-
-      opts.on("--name NAME", "Supacode worktree folder name.") do |value|
-        @options[:name] = value
+      opts.on("--path PATH", "Exact path for the Herdr worktree.") do |value|
+        @options[:path] = value
       end
 
       opts.on("--dry-run", "Print the branch and prompt without changing anything.") do
@@ -311,108 +296,61 @@ class LinearWork
     exit system(*claude_command(prompt))
   end
 
-  def start_supacode_worktree(branch, prompt, supacode_branch, supacode_title)
-    require_command "supacode"
+  def start_herdr_worktree(branch, prompt, issue_identifier)
+    require_command "herdr"
     require_command "claude"
 
-    prompt_file = write_prompt_file(prompt)
-    runner_file = write_supacode_runner(branch, prompt_file)
+    stdout, stderr, status = Open3.capture3(*herdr_worktree_command(branch, issue_identifier))
+    unless status.success?
+      warn_command_output(stdout, stderr)
+      die "Herdr worktree creation failed"
+    end
+
+    workspace_id, pane_id = herdr_creation_ids(stdout)
+    die "Herdr worktree creation did not return workspace and pane IDs" unless workspace_id && pane_id
+
+    agent_name = slugify(issue_identifier)[0, 32]
+    output, agent_status = capture_command(herdr_agent_start_command(agent_name, pane_id))
+
+    unless agent_status.success?
+      warn output unless output.empty?
+      die "Herdr worktree #{workspace_id} was created, but starting Claude failed"
+    end
+
+    prompt_output, prompt_status = capture_command([
+      "herdr", "agent", "prompt", agent_name, prompt
+    ])
+
+    unless prompt_status.success?
+      warn prompt_output unless prompt_output.empty?
+      die "Claude started in Herdr worktree #{workspace_id}, but submitting the prompt failed"
+    end
+
+    puts "Started #{issue_identifier} in Herdr workspace #{workspace_id}"
+  end
+
+  def herdr_worktree_command(branch, label)
     args = [
-      "supacode", "repo", "worktree-new",
-      "--branch", supacode_branch
+      "herdr", "worktree", "create",
+      "--cwd", Dir.pwd,
+      "--branch", branch,
+      "--label", label,
+      "--focus"
     ]
 
     args.concat(["--base", @options[:base]]) if @options[:base]
-    args.concat(["--repo", @options[:repo]]) if @options[:repo]
-    args.concat(["--location", @options[:location]]) if @options[:location]
-
-    worktree_id, output, status = capture_worktree_creation(args)
-    unless status.success?
-      cleanup_files(prompt_file, runner_file)
-      warn output unless output.empty?
-      die "Supacode worktree creation failed"
-    end
-
-    if worktree_id.nil?
-      cleanup_files(prompt_file, runner_file)
-      warn output unless output.empty?
-      die "Supacode worktree creation did not return a worktree ID"
-    end
-
-    puts output unless output.empty?
-
-    unless wait_for_supacode_worktree(worktree_id)
-      cleanup_files(prompt_file, runner_file)
-      die "Supacode worktree was created, but did not become ready: #{worktree_id}"
-    end
-
-    set_supacode_worktree_title(worktree_id, supacode_title, prompt_file, runner_file)
-
-    tab_output, tab_status = capture_command([
-      "supacode", "tab", "new",
-      "--worktree", worktree_id,
-      "--input", runner_file
-    ])
-
-    unless tab_status.success?
-      cleanup_files(prompt_file, runner_file)
-      warn tab_output unless tab_output.empty?
-      die "Supacode worktree was created, but starting Claude failed for worktree target: #{worktree_id}"
-    end
-
-    puts tab_output unless tab_output.empty?
+    args.concat(["--path", @options[:path]]) if @options[:path]
+    args
   end
 
-  def set_supacode_worktree_title(worktree_id, title, prompt_file, runner_file)
-    output, status = capture_command([
-      "supacode", "worktree", "appearance",
-      "--worktree", worktree_id,
-      "--title", title
-    ])
-
-    return if status.success?
-
-    cleanup_files(prompt_file, runner_file)
-    warn output unless output.empty?
-    die "Supacode worktree was created, but setting its title failed for worktree target: #{worktree_id}"
-  end
-
-  def wait_for_supacode_worktree(worktree_id)
-    deadline = monotonic_time + SUPACODE_WORKTREE_READY_TIMEOUT
-
-    loop do
-      return true if supacode_worktree_ready?(worktree_id)
-      return false if monotonic_time >= deadline
-
-      sleep SUPACODE_WORKTREE_READY_INTERVAL
-    end
-  end
-
-  def supacode_worktree_ready?(worktree_id)
-    output, status = capture_command(["supacode", "worktree", "list", "--timeout", "1"])
-
-    status.success? && worktree_list_includes?(output, worktree_id)
-  end
-
-  def worktree_list_includes?(output, worktree_id)
-    candidates = [worktree_id, URI.encode_www_form_component(worktree_id)].uniq
-
-    worktree_ids = output.lines.map { |line| line.split("\t", 2).first.strip }
-
-    candidates.any? { |candidate| !candidate.empty? && worktree_ids.include?(candidate) }
-  end
-
-  def capture_worktree_creation(args)
-    stdout, stderr, status = Open3.capture3(*args)
-    output = [stdout, stderr].reject(&:empty?).join
-
-    [worktree_id_from_output(stdout), output, status]
-  end
-
-  def worktree_id_from_output(output)
-    lines = output.lines.map(&:strip).reject(&:empty?)
-
-    lines.one? ? lines.first : nil
+  def herdr_agent_start_command(agent_name, pane_id)
+    [
+      "herdr", "agent", "start", agent_name,
+      "--kind", "claude",
+      "--pane", pane_id,
+      "--timeout", "300000",
+      "--", *CLAUDE_ARGS
+    ]
   end
 
   def capture_command(args)
@@ -438,46 +376,9 @@ class LinearWork
     ["claude", *CLAUDE_ARGS, prompt]
   end
 
-  def monotonic_time
-    Process.clock_gettime(Process::CLOCK_MONOTONIC)
-  end
-
-  def write_prompt_file(prompt)
-    path = File.join(Dir.tmpdir, "linear-work-prompt-#{SecureRandom.hex(8)}")
-    File.write(path, prompt)
-    path
-  end
-
-  def write_supacode_runner(branch, prompt_file)
-    path = File.join(Dir.tmpdir, "linear-work-runner-#{SecureRandom.hex(8)}.rb")
-    File.write(path, <<~RUBY)
-      #!/usr/bin/env ruby
-
-      require "fileutils"
-
-      branch = #{branch.dump}
-      prompt_file = #{prompt_file.dump}
-      runner_file = #{path.dump}
-      status = 0
-
-      if system("git", "co", "-b", branch)
-        prompt = File.read(prompt_file)
-        status = system("claude", *#{CLAUDE_ARGS.inspect}, prompt) ? 0 : ($?.exitstatus || 1)
-      else
-        status = $?.exitstatus || 1
-      end
-
-      FileUtils.rm_f([prompt_file, runner_file])
-      exit status
-    RUBY
-    File.chmod(0o755, path)
-    path
-  end
-
-  def cleanup_files(*paths)
-    paths.each do |path|
-      File.delete(path) if path && File.exist?(path)
-    end
+  def warn_command_output(stdout, stderr)
+    warn stdout unless stdout.empty?
+    warn stderr unless stderr.empty?
   end
 
   def require_command(command)
