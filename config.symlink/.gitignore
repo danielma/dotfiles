@@ -6,6 +6,12 @@ gatsby
 gh
 herdr/*
 !herdr/config.toml
+herdr-app/*
+!herdr-app/keys.json
+!herdr-app/settings.json
+!herdr-app/themes/
+herdr-app/themes/*
+!herdr-app/themes/catppuccin*.json
 heroku
 htop
 hub
