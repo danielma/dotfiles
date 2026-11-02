@@ -41,4 +41,6 @@ focus_pane_up = "cmd+alt+up"
 focus_pane_down = "cmd+alt+down"
 new_workspace = "cmd+n"
 workspace_picker = "cmd+p"
+previous_workspace = ["cmd+(", "cmd+shift+9"]
+next_workspace = ["cmd+)", "cmd+shift+0"]
 open_notification_target = "cmd+o"
