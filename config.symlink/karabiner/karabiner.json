@@ -7,7 +7,6 @@
                 "rules": [
                     {
                         "description": "Colemak Mod-DHm (matrix / ortho keyboards)",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -75,18 +74,10 @@
                             },
                             {
                                 "from": {
-                                    "key_code": "s",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "r" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
                                     "key_code": "d",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "key_code": "s" }],
+                                "to": [{ "key_code": "r" }],
                                 "type": "basic"
                             },
                             {
@@ -169,7 +160,8 @@
                                 "to": [{ "key_code": "h" }],
                                 "type": "basic"
                             }
-                        ]
+                        ],
+                        "enabled": false
                     },
                     {
                         "description": "Change caps_lock to command+control+option+shift.",
@@ -412,14 +404,6 @@
                             },
                             {
                                 "from": {
-                                    "key_code": "s",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "s" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
                                     "key_code": "d",
                                     "modifiers": { "optional": ["any"] }
                                 },
@@ -506,7 +490,8 @@
                                 "to": [{ "key_code": "h" }],
                                 "type": "basic"
                             }
-                        ]
+                        ],
+                        "enabled": true
                     },
                     {
                         "description": "Change caps_lock to command+control+option+shift.",
