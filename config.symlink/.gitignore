@@ -11,6 +11,11 @@ herdr-app/*
 !herdr-app/layouts/
 herdr-app/layouts/*
 !herdr-app/layouts/dma.json
+!herdr-app/mods/
+herdr-app/mods/*
+!herdr-app/mods/linear/
+herdr-app/mods/*/jsconfig.json
+herdr-app/mods/*/*.d.ts
 !herdr-app/settings.json
 !herdr-app/themes/
 herdr-app/themes/*
