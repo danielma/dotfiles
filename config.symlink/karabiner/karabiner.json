@@ -2025,7 +2025,7 @@
                 "rules": [
                     {
                         "description": "Colemak Mod-DHm (matrix / ortho keyboards)",
-                        "enabled": false,
+                        "enabled": true,
                         "manipulators": [
                             {
                                 "from": {
