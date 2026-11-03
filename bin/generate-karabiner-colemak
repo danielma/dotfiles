@@ -1,0 +1,44 @@
+#!/bin/sh
+
+set -eu
+
+repository_root=$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)
+configuration="$repository_root/config.symlink/karabiner/karabiner.json"
+source_rule="$repository_root/config.symlink/karabiner/assets/complex_modifications/colemak_dhm.js"
+karabiner_cli="/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"
+temporary_directory=$(mktemp -d "${TMPDIR:-/tmp}/karabiner-colemak.XXXXXX")
+
+cleanup() {
+  rm -rf "$temporary_directory"
+}
+
+trap cleanup EXIT HUP INT TERM
+
+"$karabiner_cli" --eval-js-to-json "$source_rule" > "$temporary_directory/rule.json"
+
+jq --slurpfile rule "$temporary_directory/rule.json" '
+  .profiles |= map(
+    if .name == "Default profile" then
+      .complex_modifications.rules |= map(
+        if .description == "Colemak Mod-DHm (matrix / ortho keyboards)"
+        then $rule[0] + { enabled: false }
+        else .
+        end
+      )
+    elif .name == "Default profile (CMK)" then
+      .complex_modifications.rules |= map(
+        if .description == "Colemak Mod-DHm (matrix / ortho keyboards)"
+        then $rule[0] + { enabled: true }
+        else .
+        end
+      )
+    else .
+    end
+  )
+' "$configuration" > "$temporary_directory/karabiner.json"
+
+"$karabiner_cli" --format-json "$temporary_directory/karabiner.json"
+jq empty "$temporary_directory/karabiner.json"
+cp "$temporary_directory/karabiner.json" "$configuration"
+
+printf 'Updated %s\n' "$configuration"
