@@ -8,6 +8,9 @@ herdr/*
 !herdr/config.toml
 herdr-app/*
 !herdr-app/keys.json
+!herdr-app/layouts/
+herdr-app/layouts/*
+!herdr-app/layouts/dma.json
 !herdr-app/settings.json
 !herdr-app/themes/
 herdr-app/themes/*
