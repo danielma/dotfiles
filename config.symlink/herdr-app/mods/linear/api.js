@@ -1,15 +1,37 @@
 // Linear API access shared by the panel and the new-issue dialog.
-import { home, appHome, readTextFile } from "herdr";
+import { home, appHome, readTextFile, exec } from "herdr";
 import { API_URL, ISSUES_QUERY, PAGE_SIZE, MAX_PAGES, parseConfig, linearError, parseIssues, nextCursor } from "./linear.js";
 import { shellEnv } from "./env.js";
 
-export const NO_KEY = "No Linear API key. Add it to ~/.config/herdr-app/linear.json or set LINEAR_API_KEY.";
+export const NO_KEY = "No Linear API key. Add it to ~/.config/herdr-app/linear.json or 1Password.";
+
+const OP_REFERENCE = "op://Employee/Linear PAT/credential";
 
 export async function loadConfig() {
   const text = await readTextFile(`${appHome()}/linear.json`).catch(() => null);
   const config = parseConfig(text, home());
-  if (!config.apiKey && !config.error) config.apiKey = await shellEnv("LINEAR_API_KEY");
+  if (!config.apiKey && !config.error) {
+    const fromOp = await (opKey ??= readOpKey());
+    if (fromOp.apiKey) {
+      config.apiKey = fromOp.apiKey;
+    } else {
+      opKey = null; // so the next load asks 1Password again
+      config.error = fromOp.error;
+    }
+  }
   return { ...config, ...(await (personal ??= loadPersonal())) };
+}
+
+// Read once: the panel and status bar reload their config every minute or two, and `op` is slow
+// (and may ask to unlock 1Password).
+let opKey = null;
+async function readOpKey() {
+  const result = await exec("op", ["read", OP_REFERENCE]).catch((e) => ({ code: 1, stderr: String(e.message ?? e) }));
+  if (result.code === 0) {
+    return { apiKey: result.stdout.trim() };
+  } else {
+    return { error: `Couldn't read the Linear API key from 1Password: ${result.stderr.trim()}` };
+  }
 }
 
 // Read once: the panel reloads its config every minute, and a login shell is slow to start.
