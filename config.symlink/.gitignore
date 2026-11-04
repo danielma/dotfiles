@@ -16,6 +16,9 @@ herdr-app/mods/*
 !herdr-app/mods/linear/
 herdr-app/mods/*/jsconfig.json
 herdr-app/mods/*/*.d.ts
+!herdr-app/mods-disabled/
+herdr-app/mods-disabled/*/jsconfig.json
+herdr-app/mods-disabled/*/*.d.ts
 !herdr-app/settings.json
 !herdr-app/themes/
 herdr-app/themes/*
