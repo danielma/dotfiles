@@ -14,6 +14,7 @@ herdr-app/layouts/*
 !herdr-app/mods/
 herdr-app/mods/*
 !herdr-app/mods/linear/
+!herdr-app/mods/dma-tabs/
 herdr-app/mods/*/jsconfig.json
 herdr-app/mods/*/*.d.ts
 !herdr-app/mods-disabled/
