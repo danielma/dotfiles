@@ -2,12 +2,80 @@
 
 set -euo pipefail
 
+CACHE_TTL_SECONDS="${GITHUB_REPO_CHOOSER_CACHE_TTL_SECONDS:-14400}"
+CACHE_DIR="${alfred_workflow_cache:-${XDG_CACHE_HOME:-$HOME/.cache}/github-repo-choices}"
+CACHE_FILE="$CACHE_DIR/repos.json"
+LAST_REFRESH_ATTEMPT_FILE="$CACHE_DIR/last-refresh-attempt"
+REFRESH_LOCK_DIR="$CACHE_DIR/refresh.lock"
+SCRIPT_PATH="$(cd "$(dirname "$0")" && pwd)/$(basename "$0")"
+HAS_REFRESH_LOCK=0
+
 log() {
   printf '%s\n' "$*" >&2
 }
 
 status() {
   log "STATUS: $*"
+}
+
+modified_at() {
+  stat -f %m "$1" 2>/dev/null || stat -c %Y "$1" 2>/dev/null
+}
+
+cache_is_valid() {
+  [ -f "$CACHE_FILE" ] && jq -e 'type == "array"' "$CACHE_FILE" >/dev/null 2>&1
+}
+
+cache_is_fresh() {
+  cache_is_valid || return 1
+
+  now="$(date +%s)"
+  cached_at="$(modified_at "$CACHE_FILE")" || return 1
+  [ $((now - cached_at)) -lt "$CACHE_TTL_SECONDS" ]
+}
+
+refresh_is_due() {
+  cache_is_fresh && return 1
+
+  if cache_is_valid && [ -f "$LAST_REFRESH_ATTEMPT_FILE" ]; then
+    now="$(date +%s)"
+    attempted_at="$(modified_at "$LAST_REFRESH_ATTEMPT_FILE")" || return 0
+    [ $((now - attempted_at)) -ge "$CACHE_TTL_SECONDS" ]
+    return $?
+  fi
+
+  return 0
+}
+
+write_cache() {
+  mkdir -p "$CACHE_DIR"
+  temporary_cache="$CACHE_FILE.tmp.$$"
+  printf '%s\n' "$1" > "$temporary_cache"
+  mv "$temporary_cache" "$CACHE_FILE"
+}
+
+lock_is_stale() {
+  [ -d "$REFRESH_LOCK_DIR" ] || return 1
+
+  now="$(date +%s)"
+  locked_at="$(modified_at "$REFRESH_LOCK_DIR")" || return 1
+  [ $((now - locked_at)) -ge 3600 ]
+}
+
+acquire_refresh_lock() {
+  mkdir -p "$CACHE_DIR"
+
+  if lock_is_stale; then
+    rmdir "$REFRESH_LOCK_DIR" 2>/dev/null || true
+  fi
+
+  if mkdir "$REFRESH_LOCK_DIR" 2>/dev/null; then
+    HAS_REFRESH_LOCK=1
+    touch "$LAST_REFRESH_ATTEMPT_FILE"
+    return 0
+  fi
+
+  return 1
 }
 
 format_choices() {
@@ -19,7 +87,6 @@ format_choices() {
       ;;
     alfred)
       jq '{
-        cache: { seconds: 14400, loosereload: true },
         items: map({
           uid: .text,
           title: .text,
@@ -73,7 +140,79 @@ build_choices() {
   '
 }
 
+refresh_cache() {
+  status "Refreshing GitHub repos"
+
+  if choices_json="$(build_choices)" && printf '%s' "$choices_json" | jq -e 'type == "array"' >/dev/null; then
+    write_cache "$choices_json"
+    return 0
+  fi
+
+  log "ERROR: Could not refresh GitHub repo choices"
+  return 1
+}
+
+refresh_cache_with_lock() {
+  if ! acquire_refresh_lock; then
+    status "GitHub repo refresh already in progress"
+    return 1
+  fi
+
+  refresh_cache
+}
+
+start_background_refresh() {
+  refresh_is_due || return 0
+
+  status "Refreshing GitHub repos in background"
+  refresh_log="${GITHUB_REPO_CHOOSER_REFRESH_LOG:-/dev/null}"
+  nohup "$SCRIPT_PATH" --refresh-only </dev/null >"$refresh_log" 2>&1 &
+}
+
+wait_for_cache() {
+  attempts=30
+
+  while [ "$attempts" -gt 0 ]; do
+    cache_is_valid && return 0
+    sleep 1
+    attempts=$((attempts - 1))
+  done
+
+  return 1
+}
+
+load_choices() {
+  if cache_is_valid; then
+    if cache_is_fresh; then
+      status "Using cached GitHub repos"
+    else
+      status "Using stale GitHub repo cache"
+      start_background_refresh
+    fi
+
+    loaded_choices_json="$(cat "$CACHE_FILE")"
+    return 0
+  fi
+
+  if refresh_cache_with_lock || wait_for_cache; then
+    loaded_choices_json="$(cat "$CACHE_FILE")"
+    return 0
+  fi
+
+  log "ERROR: No GitHub repo cache is available"
+  return 1
+}
+
+cleanup() {
+  if [ "$HAS_REFRESH_LOCK" -eq 1 ]; then
+    rmdir "$REFRESH_LOCK_DIR" 2>/dev/null || true
+  fi
+}
+
+trap cleanup EXIT
+
 output_format="default"
+refresh_only=0
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -84,19 +223,29 @@ while [ "$#" -gt 0 ]; do
       output_format="${1#--format=}"
       shift
       ;;
+    --refresh-only)
+      refresh_only=1
+      shift
+      ;;
     *)
       break
       ;;
   esac
 done
 
+if [ "$refresh_only" -eq 1 ]; then
+  refresh_is_due || exit 0
+  refresh_cache_with_lock
+  exit $?
+fi
+
 if [ "$#" -gt 0 ]; then
   log "ERROR: Unsupported arguments: $*"
   exit 1
 fi
 
-if choices_json="$(build_choices)"; then
-  printf '%s\n' "$choices_json" | format_choices "$output_format"
+if load_choices; then
+  printf '%s\n' "$loaded_choices_json" | format_choices "$output_format"
   exit 0
 fi
 
