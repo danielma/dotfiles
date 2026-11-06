@@ -62,6 +62,22 @@ function shifted(lines, shift) {
 }
 
 const within = (item, index) => index >= item.index && index < item.end;
+// Where a todo dragged onto `to` lands. Dragging up, it goes just above
+// `to`, as its sibling. Dragging down, it goes just below the `to` row:
+// as its first child when it has children, or its next sibling when not.
+function landingOf(items, from, to) {
+  if (to.index > from.index) {
+    const child = items.find((item) => item.index > to.index && within(to, item.index));
+    if (child) {
+      return { down: true, at: child.index, indent: child.indent, depth: child.depth };
+    } else {
+      return { down: true, at: to.end, indent: to.indent, depth: to.depth };
+    }
+  } else {
+    return { down: false, at: to.index, indent: to.indent, depth: to.depth };
+  }
+}
+
 const siblingBefore = (items, item) => items.findLast((other) => other.index < item.index && other.depth <= item.depth);
 const parentOf = (items, item) => items.findLast((other) => other.index < item.index && other.depth < item.depth);
 const canIndent = (items, item) => siblingBefore(items, item)?.depth === item.depth;
@@ -164,14 +180,11 @@ export default class Todo extends View {
     cx.notify();
   }
 
-  // Moves an item with its children: below the target and its children
-  // when dragging down, above the target when dragging up. Either way it
-  // lands as the target's sibling, at the target's depth.
-  move(from, to, cx) {
+  // Moves an item with its children to a landing, at the landing's depth.
+  move(from, landing, cx) {
     this.write((lines) => {
-      const block = shifted(lines.slice(from.index, from.end), to.indent - from.indent), rest = lines.filter((_line, i) => !within(from, i));
-      const at = to.index > from.index ? to.end - block.length : to.index;
-      rest.splice(at, 0, ...block);
+      const block = shifted(lines.slice(from.index, from.end), landing.indent - from.indent), rest = lines.filter((_line, i) => !within(from, i));
+      rest.splice(landing.down ? landing.at - block.length : landing.at, 0, ...block);
       return rest;
     }, cx);
   }
@@ -184,12 +197,12 @@ export default class Todo extends View {
     }
   }
 
-  drop(item, cx) {
+  drop(item, items, cx) {
     const from = this.pressed, over = this.over;
     this.pressed = null;
     this.over = null;
     if (from !== null && over === item.index && !within(from, item.index)) {
-      this.move(from, item, cx);
+      this.move(from, landingOf(items, from, item), cx);
     } else {
       cx.notify();
     }
@@ -207,8 +220,7 @@ export default class Todo extends View {
     const items = itemsIn(this.text), open = items.filter((item) => !item.done).length;
     const dragging = this.pressed !== null;
     const target = dragging && !within(this.pressed, this.over) ? items.find((item) => item.index === this.over) : null;
-    const down = Boolean(target) && target.index > this.pressed.index;
-    const landing = down ? items.findLast((item) => item.index < target.end) : target;
+    const landing = target && landingOf(items, this.pressed, target);
     const nestButton = (id, icon, enabled, click) => div().id(id).size(16).flex_none().flex().items_center().justify_center().rounded(4)
       .text_color(t.dim).when(!enabled, (el) => el.opacity(0.3))
       .when(enabled, (el) => el.cursor_pointer().hover((s) => s.text_color(t.foreground).bg(t.hover)).on_click((_e, cx) => click(cx)))
@@ -216,8 +228,8 @@ export default class Todo extends View {
     const row = (item) => h_flex().id(`todo-${item.index}`).relative().min_h(28).flex_none().pl(8 + item.depth * 20).pr(8).py(4).gap(8).items_start().rounded(7)
       .hover((s) => s.bg(t.hover))
       .when(Boolean(target) && within(this.pressed, item.index), (el) => el.opacity(0.5))
-      .when(landing === item, (el) => el.child(
-        div().absolute().left(8 + target.depth * 20).right(0).h(2).bg(t.accent).when(down, (line) => line.bottom(0)).when(!down, (line) => line.top(0))))
+      .when(target === item, (el) => el.child(
+        div().absolute().left(8 + landing.depth * 20).right(0).h(2).bg(t.accent).when(landing.down, (line) => line.bottom(0)).when(!landing.down, (line) => line.top(0))))
       .on_mouse_down("left", (_e, cx) => {
         this.pressed = item;
         this.over = item.index;
@@ -229,7 +241,7 @@ export default class Todo extends View {
           cx.notify();
         }
       })
-      .on_mouse_up("left", (_e, cx) => this.drop(item, cx))
+      .on_mouse_up("left", (_e, cx) => this.drop(item, items, cx))
       .on_hover((hovered, cx) => this.hover(item, hovered, cx))
       .child(div().id(`check-${item.index}`).mt(2).size(14).flex_none().rounded(4).border_1().cursor_pointer()
         .border_color(item.done ? t.accent : t.input).bg(item.done ? t.accent : t.background)
