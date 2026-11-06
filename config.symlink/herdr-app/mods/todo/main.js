@@ -165,11 +165,11 @@ export default class Todo extends View {
   }
 
   // Moves an item with its children: below the target and its children
-  // when dragging down, above the target when dragging up. Indents stay as
-  // they were, so a moved item may nest under a new parent.
+  // when dragging down, above the target when dragging up. Either way it
+  // lands as the target's sibling, at the target's depth.
   move(from, to, cx) {
     this.write((lines) => {
-      const block = lines.slice(from.index, from.end), rest = lines.filter((_line, i) => !within(from, i));
+      const block = shifted(lines.slice(from.index, from.end), to.indent - from.indent), rest = lines.filter((_line, i) => !within(from, i));
       const at = to.index > from.index ? to.end - block.length : to.index;
       rest.splice(at, 0, ...block);
       return rest;
@@ -217,7 +217,7 @@ export default class Todo extends View {
       .hover((s) => s.bg(t.hover))
       .when(Boolean(target) && within(this.pressed, item.index), (el) => el.opacity(0.5))
       .when(landing === item, (el) => el.child(
-        div().absolute().left(0).right(0).h(2).bg(t.accent).when(down, (line) => line.bottom(0)).when(!down, (line) => line.top(0))))
+        div().absolute().left(8 + target.depth * 20).right(0).h(2).bg(t.accent).when(down, (line) => line.bottom(0)).when(!down, (line) => line.top(0))))
       .on_mouse_down("left", (_e, cx) => {
         this.pressed = item;
         this.over = item.index;
