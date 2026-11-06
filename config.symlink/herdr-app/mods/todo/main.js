@@ -130,9 +130,13 @@ export default class Todo extends View {
         div().absolute().left(0).right(0).h(2).bg(t.accent)
           .when(this.pressed < item.index, (line) => line.bottom(0))
           .when(this.pressed > item.index, (line) => line.top(0))))
-      .on_mouse_down("left", () => { this.pressed = item.index; this.over = item.index; })
+      .on_mouse_down("left", (_e, cx) => {
+        this.pressed = item.index;
+        this.over = item.index;
+        cx.notify();
+      })
       .on_mouse_move((_e, cx) => {
-        if (dragging && this.over !== item.index) {
+        if (this.pressed !== null && this.over !== item.index) {
           this.over = item.index;
           cx.notify();
         }
