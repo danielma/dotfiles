@@ -21,6 +21,8 @@ export default class Todo extends View {
   init(_props, cx) {
     this.text = null;
     this.typing = false;
+    this.pressed = null;
+    this.over = null;
     this.input = InputState.new({ placeholder: "Add a todo" });
     this.input.on("submit", (_e, cx) => this.add(cx));
     this.input.on("focus", (_e, cx) => { this.typing = true; cx.notify(); });
@@ -81,6 +83,35 @@ export default class Todo extends View {
     this.write((lines) => lines.filter((_line, i) => i !== item.index), cx);
   }
 
+  // Lands the dragged line where the target was: below it when dragging
+  // down, above it when dragging up.
+  move(from, to, cx) {
+    this.write((lines) => {
+      const rest = lines.filter((_line, i) => i !== from);
+      rest.splice(to, 0, lines[from]);
+      return rest;
+    }, cx);
+  }
+
+  cancelDrag(cx) {
+    if (this.pressed !== null) {
+      this.pressed = null;
+      this.over = null;
+      cx.notify();
+    }
+  }
+
+  drop(item, cx) {
+    const from = this.pressed, over = this.over;
+    this.pressed = null;
+    this.over = null;
+    if (from !== null && over === item.index && from !== item.index) {
+      this.move(from, item.index, cx);
+    } else {
+      cx.notify();
+    }
+  }
+
   render(cx) {
     const t = theme(), space = spaces().find((s) => s.active) ?? null;
     if (space?.id !== this.space?.id) {
@@ -91,8 +122,22 @@ export default class Todo extends View {
       this.space = space;
     }
     const items = itemsIn(this.text), open = items.filter((item) => !item.done).length;
-    const row = (item) => h_flex().id(`todo-${item.index}`).min_h(28).flex_none().px(8).py(4).gap(8).items_start().rounded(7)
+    const dragging = this.pressed !== null;
+    const row = (item) => h_flex().id(`todo-${item.index}`).relative().min_h(28).flex_none().px(8).py(4).gap(8).items_start().rounded(7)
       .hover((s) => s.bg(t.hover))
+      .when(this.pressed === item.index && this.over !== item.index, (el) => el.opacity(0.5))
+      .when(dragging && this.over === item.index && this.pressed !== item.index, (el) => el.child(
+        div().absolute().left(0).right(0).h(2).bg(t.accent)
+          .when(this.pressed < item.index, (line) => line.bottom(0))
+          .when(this.pressed > item.index, (line) => line.top(0))))
+      .on_mouse_down("left", () => { this.pressed = item.index; this.over = item.index; })
+      .on_mouse_move((_e, cx) => {
+        if (dragging && this.over !== item.index) {
+          this.over = item.index;
+          cx.notify();
+        }
+      })
+      .on_mouse_up("left", (_e, cx) => this.drop(item, cx))
       .child(div().id(`check-${item.index}`).mt(2).size(14).flex_none().rounded(4).border_1().cursor_pointer()
         .border_color(item.done ? t.accent : t.input).bg(item.done ? t.accent : t.background)
         .flex().items_center().justify_center().text_size(10).text_color(t.accent_foreground)
@@ -101,6 +146,8 @@ export default class Todo extends View {
       .child(div().id(`remove-${item.index}`).flex_none().text_color(t.dim).cursor_pointer().hover((s) => s.text_color(t.foreground))
         .on_click((_e, cx) => this.remove(item, cx)).child(svg("mods/pane/close.svg").size(12)));
     return v_flex().id("todo").size_full().min_h(0).rounded(10).overflow_hidden().bg(t.background).border_1().border_color(t.border).text_color(t.foreground).text_size(13)
+      .on_mouse_up("left", (_e, cx) => this.cancelDrag(cx))
+      .on_mouse_down_out((_e, cx) => this.cancelDrag(cx))
       .child(h_flex().h(42).flex_none().px(14).gap(8).items_center().border_b(1).border_color(t.border)
         .child(div().font_semibold().child("Todo"))
         .child(div().px(5).py(1).rounded(4).border_1().border_color(t.border).text_size(10).text_color(t.muted).child(`${open} open`))
