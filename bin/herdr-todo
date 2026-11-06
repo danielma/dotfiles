@@ -1,0 +1,52 @@
+#!/bin/zsh
+#
+# The todo list for the Herdr space this terminal belongs to (the `todo` mod's
+# panel). It's a Markdown checklist: read it, or edit it in place.
+#
+#   herdr-todo          print the list
+#   herdr-todo path     print the list's file
+#   herdr-todo space    print the space id
+
+set -euo pipefail
+
+home="${HERDR_APP_HOME:-$HOME/.config/herdr-app}"
+
+# Sub-agents started with `hc run` carry no herdr labels; their parent does.
+space_of() {
+  local terminal="$1" info space parent
+  info="$(hc get "$terminal" --json)"
+  space="$(jq -r '.labels["herdr.space"] // empty' <<< "$info")"
+  parent="$(jq -r '.parent // empty' <<< "$info")"
+  if [[ -n "$space" ]]; then
+    print -r -- "$space"
+  elif [[ -n "$parent" ]]; then
+    space_of "$parent"
+  else
+    print -u2 "herdr-todo: terminal $terminal isn't in a Herdr space"
+    return 1
+  fi
+}
+
+if [[ -z "${HC_TERMINAL_ID:-}" ]]; then
+  print -u2 "herdr-todo: not in a Herdr terminal (no HC_TERMINAL_ID)"
+  exit 1
+else
+  space="$(space_of "$HC_TERMINAL_ID")"
+  file="$home/todos/${space//\//__}.md"
+
+  case "${1:-show}" in
+    show)
+      if [[ -f "$file" ]]; then
+        cat "$file"
+      else
+        print "(no todos yet: $file)"
+      fi
+      ;;
+    path) print -r -- "$file" ;;
+    space) print -r -- "$space" ;;
+    *)
+      print -u2 "usage: herdr-todo [show|path|space]"
+      exit 1
+      ;;
+  esac
+fi
