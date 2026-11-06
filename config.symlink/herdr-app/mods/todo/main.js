@@ -48,6 +48,10 @@ function itemsIn(text) {
 }
 
 const within = (item, index) => index >= item.index && index < item.end;
+const siblingBefore = (items, item) => items.findLast((other) => other.index < item.index && other.depth <= item.depth);
+const parentOf = (items, item) => items.findLast((other) => other.index < item.index && other.depth < item.depth);
+const canIndent = (items, item) => siblingBefore(items, item)?.depth === item.depth;
+const canOutdent = (items, item) => Boolean(parentOf(items, item));
 
 export default class Todo extends View {
   init(_props, cx) {
@@ -55,6 +59,7 @@ export default class Todo extends View {
     this.typing = false;
     this.pressed = null;
     this.over = null;
+    this.hovered = null;
     this.input = InputState.new({ placeholder: "Add a todo" });
     this.input.on("submit", (_e, cx) => this.add(cx));
     this.input.on("focus", (_e, cx) => { this.typing = true; cx.notify(); });
@@ -115,6 +120,37 @@ export default class Todo extends View {
     this.write((lines) => lines.filter((_line, i) => !within(item, i)), cx);
   }
 
+  // Nests an item, with its children, under the sibling above it.
+  indent(item, items, cx) {
+    if (canIndent(items, item)) {
+      this.write((lines) => lines.map((line, i) => within(item, i) && line.trim() ? `  ${line}` : line), cx);
+    }
+  }
+
+  // Lifts an item, with its children, to its parent's level, landing just
+  // after the parent's children so the siblings below it stay where they are.
+  outdent(item, items, cx) {
+    const parent = parentOf(items, item);
+    if (parent) {
+      const shift = item.indent - parent.indent;
+      this.write((lines) => {
+        const block = lines.slice(item.index, item.end).map((line) => line.slice(Math.min(shift, indentOf(line))));
+        const rest = lines.filter((_line, i) => !within(item, i));
+        rest.splice(parent.end - block.length, 0, ...block);
+        return rest;
+      }, cx);
+    }
+  }
+
+  hover(item, hovered, cx) {
+    if (hovered) {
+      this.hovered = item.index;
+    } else if (this.hovered === item.index) {
+      this.hovered = null;
+    }
+    cx.notify();
+  }
+
   // Moves an item with its children: below the target and its children
   // when dragging down, above the target when dragging up. Indents stay as
   // they were, so a moved item may nest under a new parent.
@@ -160,6 +196,10 @@ export default class Todo extends View {
     const target = dragging && !within(this.pressed, this.over) ? items.find((item) => item.index === this.over) : null;
     const down = Boolean(target) && target.index > this.pressed.index;
     const landing = down ? items.findLast((item) => item.index < target.end) : target;
+    const nestButton = (id, icon, enabled, click) => div().id(id).size(16).flex_none().flex().items_center().justify_center().rounded(4)
+      .text_color(t.dim).when(!enabled, (el) => el.opacity(0.3))
+      .when(enabled, (el) => el.cursor_pointer().hover((s) => s.text_color(t.foreground).bg(t.hover)).on_click((_e, cx) => click(cx)))
+      .child(svg(icon).size(12));
     const row = (item) => h_flex().id(`todo-${item.index}`).relative().min_h(28).flex_none().pl(8 + item.depth * 20).pr(8).py(4).gap(8).items_start().rounded(7)
       .hover((s) => s.bg(t.hover))
       .when(Boolean(target) && within(this.pressed, item.index), (el) => el.opacity(0.5))
@@ -177,11 +217,15 @@ export default class Todo extends View {
         }
       })
       .on_mouse_up("left", (_e, cx) => this.drop(item, cx))
+      .on_hover((hovered, cx) => this.hover(item, hovered, cx))
       .child(div().id(`check-${item.index}`).mt(2).size(14).flex_none().rounded(4).border_1().cursor_pointer()
         .border_color(item.done ? t.accent : t.input).bg(item.done ? t.accent : t.background)
         .flex().items_center().justify_center().text_size(10).text_color(t.accent_foreground)
         .on_click((_e, cx) => this.toggle(item, cx)).child(item.done ? "✓" : ""))
       .child(div().flex_1().min_w(0).text_color(item.done ? t.dim : t.foreground).when(item.done, (el) => el.line_through()).child(item.text))
+      .child(h_flex().flex_none().gap(2).when(this.hovered !== item.index || dragging, (el) => el.invisible())
+        .child(nestButton(`outdent-${item.index}`, "mods/todo/outdent.svg", canOutdent(items, item), (cx) => this.outdent(item, items, cx)))
+        .child(nestButton(`indent-${item.index}`, "mods/todo/indent.svg", canIndent(items, item), (cx) => this.indent(item, items, cx))))
       .child(div().id(`remove-${item.index}`).flex_none().text_color(t.dim).cursor_pointer().hover((s) => s.text_color(t.foreground))
         .on_click((_e, cx) => this.remove(item, cx)).child(svg("mods/pane/close.svg").size(12)));
     return v_flex().id("todo").size_full().min_h(0).rounded(10).overflow_hidden().bg(t.background).border_1().border_color(t.border).text_color(t.foreground).text_size(13)
