@@ -10,25 +10,44 @@ const fileFor = (space) => `${folder()}/${space.id.replaceAll("/", "__")}.md`;
 const header = (space) =>
   `<!-- Herdr todo list for the space "${space.name}" (${space.id}). One "- [ ] item" per line; "- [x]" is done; indent two spaces to nest. -->\n`;
 
+const indentOf = (line) => /^\s*/.exec(line)[0].length;
+
+// An item owns the lines below it that are indented past it (its children,
+// and theirs), so it ends at the next line that isn't. Blank lines between
+// children don't end it, but trailing ones aren't its own.
+function endOf(lines, index, indent) {
+  let end = index + 1;
+  while (end < lines.length && (!lines[end].trim() || indentOf(lines[end]) > indent)) {
+    end++;
+  }
+  while (end > index + 1 && !lines[end - 1].trim()) {
+    end--;
+  }
+  return end;
+}
+
 // An item's depth counts the items above it that it's indented under, so
 // any consistent indent nests (two spaces, four, or a tab).
 function itemsIn(text) {
-  const ancestors = [];
-  return (text ?? "").split("\n").flatMap((line, index) => {
-    const match = ITEM.exec(line);
-    if (match) {
-      const indent = match[1].length;
+  const lines = (text ?? "").split("\n"), ancestors = [];
+  return lines.flatMap((line, index) => {
+    const match = ITEM.exec(line), indent = indentOf(line);
+    if (line.trim()) {
       while (ancestors.length && ancestors.at(-1) >= indent) {
         ancestors.pop();
       }
+    }
+    if (match) {
       const depth = ancestors.length;
       ancestors.push(indent);
-      return [{ index, indent, depth, done: match[3] !== " ", text: match[5] }];
+      return [{ index, end: endOf(lines, index, indent), indent, depth, done: match[3] !== " ", text: match[5] }];
     } else {
       return [];
     }
   });
 }
+
+const within = (item, index) => index >= item.index && index < item.end;
 
 export default class Todo extends View {
   init(_props, cx) {
@@ -93,15 +112,17 @@ export default class Todo extends View {
   }
 
   remove(item, cx) {
-    this.write((lines) => lines.filter((_line, i) => i !== item.index), cx);
+    this.write((lines) => lines.filter((_line, i) => !within(item, i)), cx);
   }
 
-  // Lands the dragged line where the target was: below it when dragging
-  // down, above it when dragging up.
+  // Moves an item with its children: below the target and its children
+  // when dragging down, above the target when dragging up. Indents stay as
+  // they were, so a moved item may nest under a new parent.
   move(from, to, cx) {
     this.write((lines) => {
-      const rest = lines.filter((_line, i) => i !== from);
-      rest.splice(to, 0, lines[from]);
+      const block = lines.slice(from.index, from.end), rest = lines.filter((_line, i) => !within(from, i));
+      const at = to.index > from.index ? to.end - block.length : to.index;
+      rest.splice(at, 0, ...block);
       return rest;
     }, cx);
   }
@@ -118,8 +139,8 @@ export default class Todo extends View {
     const from = this.pressed, over = this.over;
     this.pressed = null;
     this.over = null;
-    if (from !== null && over === item.index && from !== item.index) {
-      this.move(from, item.index, cx);
+    if (from !== null && over === item.index && !within(from, item.index)) {
+      this.move(from, item, cx);
     } else {
       cx.notify();
     }
@@ -136,15 +157,16 @@ export default class Todo extends View {
     }
     const items = itemsIn(this.text), open = items.filter((item) => !item.done).length;
     const dragging = this.pressed !== null;
+    const target = dragging && !within(this.pressed, this.over) ? items.find((item) => item.index === this.over) : null;
+    const down = Boolean(target) && target.index > this.pressed.index;
+    const landing = down ? items.findLast((item) => item.index < target.end) : target;
     const row = (item) => h_flex().id(`todo-${item.index}`).relative().min_h(28).flex_none().pl(8 + item.depth * 20).pr(8).py(4).gap(8).items_start().rounded(7)
       .hover((s) => s.bg(t.hover))
-      .when(this.pressed === item.index && this.over !== item.index, (el) => el.opacity(0.5))
-      .when(dragging && this.over === item.index && this.pressed !== item.index, (el) => el.child(
-        div().absolute().left(0).right(0).h(2).bg(t.accent)
-          .when(this.pressed < item.index, (line) => line.bottom(0))
-          .when(this.pressed > item.index, (line) => line.top(0))))
+      .when(Boolean(target) && within(this.pressed, item.index), (el) => el.opacity(0.5))
+      .when(landing === item, (el) => el.child(
+        div().absolute().left(0).right(0).h(2).bg(t.accent).when(down, (line) => line.bottom(0)).when(!down, (line) => line.top(0))))
       .on_mouse_down("left", (_e, cx) => {
-        this.pressed = item.index;
+        this.pressed = item;
         this.over = item.index;
         cx.notify();
       })
