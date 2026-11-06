@@ -147,6 +147,13 @@
                       "content": {
                         "mod": "linear"
                       }
+                    },
+                    {
+                      "id": "todo",
+                      "type": "block",
+                      "content": {
+                        "mod": "todo"
+                      }
                     }
                   ],
                   "active": "files"
