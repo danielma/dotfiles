@@ -223,7 +223,7 @@ export default class Todo extends View {
         .flex().items_center().justify_center().text_size(10).text_color(t.accent_foreground)
         .on_click((_e, cx) => this.toggle(item, cx)).child(item.done ? "✓" : ""))
       .child(div().flex_1().min_w(0).text_color(item.done ? t.dim : t.foreground).when(item.done, (el) => el.line_through()).child(item.text))
-      .child(h_flex().flex_none().gap(2).when(this.hovered !== item.index || dragging, (el) => el.invisible())
+      .child(h_flex().flex_none().gap(2).when(this.hovered !== item.index || Boolean(target), (el) => el.invisible())
         .child(nestButton(`outdent-${item.index}`, "mods/todo/outdent.svg", canOutdent(items, item), (cx) => this.outdent(item, items, cx)))
         .child(nestButton(`indent-${item.index}`, "mods/todo/indent.svg", canIndent(items, item), (cx) => this.indent(item, items, cx))))
       .child(div().id(`remove-${item.index}`).flex_none().text_color(t.dim).cursor_pointer().hover((s) => s.text_color(t.foreground))
