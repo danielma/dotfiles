@@ -4,16 +4,29 @@ import { View, div, svg } from "gpui-kit";
 import { v_flex, h_flex, InputState, Input } from "gpui-base";
 import { spaces, exec, readTextFile, writeTextFile, watchFolder, theme, appHome } from "herdr";
 
-const ITEM = /^(\s*[-*] \[)([ xX])(\] )(.*)$/;
+const ITEM = /^(\s*)([-*] \[)([ xX])(\] )(.*)$/;
 const folder = () => `${appHome()}/todos`;
 const fileFor = (space) => `${folder()}/${space.id.replaceAll("/", "__")}.md`;
 const header = (space) =>
-  `<!-- Herdr todo list for the space "${space.name}" (${space.id}). One "- [ ] item" per line; "- [x]" is done. -->\n`;
+  `<!-- Herdr todo list for the space "${space.name}" (${space.id}). One "- [ ] item" per line; "- [x]" is done; indent two spaces to nest. -->\n`;
 
+// An item's depth counts the items above it that it's indented under, so
+// any consistent indent nests (two spaces, four, or a tab).
 function itemsIn(text) {
+  const ancestors = [];
   return (text ?? "").split("\n").flatMap((line, index) => {
     const match = ITEM.exec(line);
-    return match ? [{ index, done: match[2] !== " ", text: match[4] }] : [];
+    if (match) {
+      const indent = match[1].length;
+      while (ancestors.length && ancestors.at(-1) >= indent) {
+        ancestors.pop();
+      }
+      const depth = ancestors.length;
+      ancestors.push(indent);
+      return [{ index, indent, depth, done: match[3] !== " ", text: match[5] }];
+    } else {
+      return [];
+    }
   });
 }
 
@@ -76,7 +89,7 @@ export default class Todo extends View {
 
   toggle(item, cx) {
     this.write((lines) => lines.map((line, i) =>
-      i === item.index ? line.replace(ITEM, (_m, a, mark, b, rest) => `${a}${mark === " " ? "x" : " "}${b}${rest}`) : line), cx);
+      i === item.index ? line.replace(ITEM, (_m, indent, a, mark, b, rest) => `${indent}${a}${mark === " " ? "x" : " "}${b}${rest}`) : line), cx);
   }
 
   remove(item, cx) {
@@ -123,7 +136,7 @@ export default class Todo extends View {
     }
     const items = itemsIn(this.text), open = items.filter((item) => !item.done).length;
     const dragging = this.pressed !== null;
-    const row = (item) => h_flex().id(`todo-${item.index}`).relative().min_h(28).flex_none().px(8).py(4).gap(8).items_start().rounded(7)
+    const row = (item) => h_flex().id(`todo-${item.index}`).relative().min_h(28).flex_none().pl(8 + item.depth * 20).pr(8).py(4).gap(8).items_start().rounded(7)
       .hover((s) => s.bg(t.hover))
       .when(this.pressed === item.index && this.over !== item.index, (el) => el.opacity(0.5))
       .when(dragging && this.over === item.index && this.pressed !== item.index, (el) => el.child(
