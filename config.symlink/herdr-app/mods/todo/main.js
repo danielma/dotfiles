@@ -47,6 +47,20 @@ function itemsIn(text) {
   });
 }
 
+// Moves lines right (a positive shift) or left by that many columns, never
+// past their own indent. Blank lines stay blank.
+function shifted(lines, shift) {
+  return lines.map((line) => {
+    if (!line.trim()) {
+      return line;
+    } else if (shift > 0) {
+      return `${" ".repeat(shift)}${line}`;
+    } else {
+      return line.slice(Math.min(-shift, indentOf(line)));
+    }
+  });
+}
+
 const within = (item, index) => index >= item.index && index < item.end;
 const siblingBefore = (items, item) => items.findLast((other) => other.index < item.index && other.depth <= item.depth);
 const parentOf = (items, item) => items.findLast((other) => other.index < item.index && other.depth < item.depth);
@@ -123,7 +137,7 @@ export default class Todo extends View {
   // Nests an item, with its children, under the sibling above it.
   indent(item, items, cx) {
     if (canIndent(items, item)) {
-      this.write((lines) => lines.map((line, i) => within(item, i) && line.trim() ? `  ${line}` : line), cx);
+      this.write((lines) => [...lines.slice(0, item.index), ...shifted(lines.slice(item.index, item.end), 2), ...lines.slice(item.end)], cx);
     }
   }
 
@@ -132,9 +146,8 @@ export default class Todo extends View {
   outdent(item, items, cx) {
     const parent = parentOf(items, item);
     if (parent) {
-      const shift = item.indent - parent.indent;
       this.write((lines) => {
-        const block = lines.slice(item.index, item.end).map((line) => line.slice(Math.min(shift, indentOf(line))));
+        const block = shifted(lines.slice(item.index, item.end), parent.indent - item.indent);
         const rest = lines.filter((_line, i) => !within(item, i));
         rest.splice(parent.end - block.length, 0, ...block);
         return rest;
