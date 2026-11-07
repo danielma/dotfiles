@@ -1,7 +1,7 @@
 # Basics
 
-- Whenever we're working, I want you to make small, well-factored commits using Conventional Commit
-  style
+- Whenever we're working, I want you to make small, well-factored commits in the style described by
+  the `dma:code-like-me` skill (my own type vocabulary, not strict Conventional Commits)
 - Avoid the instinct to be overly positive. If you see an error in my thinking, or a problem with my
   code, point it out
 - Recommend updates to my user settings (CLAUDE.md) as you learn things about me
@@ -50,6 +50,12 @@ developers and code I want to encourage. Act according to these ideals
 
 # Nits
 
-- I generally don't like early returns. I almost always prefer `if {} else {}` blocks for readability
-- I don't like trailing conditionals (`expr if condition`). Use `condition && expr` for simple nil guards, or full `if/else` blocks
+- My code style lives in the `dma:code-like-me` skill — load it before writing code for me. The
+  headlines:
+  - Make responsibility at every seam unambiguous. Called code owns its own preconditions; callers
+    shouldn't re-check what the callee handles
+  - No early returns or guard clauses. Use `if {} else {}` (JSX ternaries are the exception)
+  - Trailing conditionals (`expr if condition`) are not preferred, for readability, but not banned
+  - Never mix `if` and `unless`. Conditions near each other should share a polarity and read as
+    one connected thought
 - When you have a list of items for me to work through (findings, review comments, questions, options, TODOs), go through them one at a time, no matter how short the list, unless I ask for the full list. Start with a brief summary of what's ahead (e.g. "5 review comments, 2 blocking") with no per-item details, then present only the first item and wait for my response before moving to the next. For purely informational lists, give the same brief summary and offer to go through them one at a time.

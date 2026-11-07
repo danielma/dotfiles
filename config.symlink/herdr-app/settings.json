@@ -3,5 +3,8 @@
   "sounds": {
     "enabled": true
   },
+  "font_size": 14.0,
+  "font_ligatures": false,
+  "ui_font": "SF Pro",
   "minimum_contrast": 1.0
 }
