@@ -1,0 +1,101 @@
+;;; dm-meow-test.el --- Tests for dm-meow -*- lexical-binding: t; -*-
+
+;;; Code:
+
+(require 'ert)
+(require 'cl-lib)
+
+(add-to-list 'load-path
+             (expand-file-name
+              "../config"
+              (file-name-directory (or load-file-name buffer-file-name))))
+(require 'dm-meow)
+
+(defun dm-meow-test--layout-bindings (layout)
+  "Return the Meow binding groups configured for LAYOUT."
+  (let (motion leader normal)
+    (cl-letf (((symbol-function 'meow-thing-register) #'ignore)
+              ((symbol-function 'meow-motion-define-key)
+               (lambda (&rest bindings) (setq motion bindings)))
+              ((symbol-function 'meow-leader-define-key)
+               (lambda (&rest bindings) (setq leader bindings)))
+              ((symbol-function 'meow-normal-define-key)
+               (lambda (&rest bindings) (setq normal bindings))))
+      (dm-meow-setup layout))
+    (list motion leader normal)))
+
+(ert-deftest dm-meow-qwerty-setup-defines-qwerty-bindings ()
+  (pcase-let ((`(,motion ,leader ,normal)
+               (dm-meow-test--layout-bindings 'qwerty)))
+    (should (eq (alist-get "j" motion nil nil #'string=) #'meow-next))
+    (should (eq (alist-get "k" motion nil nil #'string=) #'meow-prev))
+    (should (eq (alist-get "b" leader nil nil #'string=)
+                dm-buffer-command-map-qwerty))
+    (should (eq (alist-get ":" normal nil nil #'string=)
+                #'execute-extended-command))
+    (should (eq (alist-get ";" normal nil nil #'string=) #'meow-reverse))
+    (should (eq (alist-get "p" normal nil nil #'string=) #'meow-yank))))
+
+(ert-deftest dm-meow-colemak-setup-keeps-bindings-under-the-same-fingers ()
+  (pcase-let* ((`(,qwerty-motion ,qwerty-leader ,qwerty-normal)
+                (dm-meow-test--layout-bindings 'qwerty))
+               (`(,colemak-motion ,colemak-leader ,colemak-normal)
+                (dm-meow-test--layout-bindings 'colemak))
+               (normal-positions
+                '((":" . "o") (";" . "O")
+                  ("b" . "v") ("B" . "V")
+                  ("d" . "r") ("D" . "R")
+                  ("e" . "f") ("E" . "F")
+                  ("f" . "t") ("h" . "m") ("H" . "M")
+                  ("i" . "u") ("I" . "U")
+                  ("j" . "n") ("J" . "N")
+                  ("k" . "e") ("K" . "E")
+                  ("l" . "i") ("L" . "I")
+                  ("m" . "h") ("n" . "k")
+                  ("o" . "y") ("O" . "Y") ("p" . ":")
+                  ("r" . "p") ("R" . "P") ("t" . "b")
+                  ("u" . "l") ("U" . "L") ("v" . "d")
+                  ("y" . "j") ("Y" . "J"))))
+    (dolist (binding qwerty-normal)
+      (let* ((qwerty-key (car binding))
+             (colemak-key (or (alist-get qwerty-key normal-positions
+                                         nil nil #'string=)
+                              qwerty-key)))
+        (should (eq (cdr binding)
+                    (alist-get colemak-key colemak-normal
+                               nil nil #'string=)))))
+    (should (eq (alist-get "j" qwerty-motion nil nil #'string=)
+                (alist-get "n" colemak-motion nil nil #'string=)))
+    (should (eq (alist-get "k" qwerty-motion nil nil #'string=)
+                (alist-get "e" colemak-motion nil nil #'string=)))
+    (should (eq (alist-get "b" qwerty-leader nil nil #'string=)
+                dm-buffer-command-map-qwerty))
+    (should (eq (alist-get "v" colemak-leader nil nil #'string=)
+                dm-buffer-command-map-colemak))
+    (should (equal (alist-get "p" qwerty-leader nil nil #'string=) "C-x p"))
+    (should (equal (alist-get ":" colemak-leader nil nil #'string=) "C-x p"))
+    (should (eq (lookup-key dm-buffer-command-map-colemak (kbd "e"))
+                #'kill-current-buffer))
+    (should (eq (lookup-key dm-snippet-command-map-colemak (kbd "u"))
+                #'yas-insert-snippet))
+    (should (eq (lookup-key dm-snippet-command-map-colemak (kbd "k"))
+                #'yas-new-snippet))
+    (should (eq (lookup-key dm-snippet-command-map-colemak (kbd "d"))
+                #'yas-visit-snippet-file))))
+
+(ert-deftest dm-meow-colemak-setup-uses-customized-qmk-layout ()
+  (dm-meow-test--layout-bindings 'colemak)
+  (should (equal (assq '<AD10> meow-cheatsheet-layout)
+                 '(<AD10> ":" ";")))
+  (should (equal (assq '<AC02> meow-cheatsheet-layout)
+                 '(<AC02> "s" "S")))
+  (should (equal (assq '<AC03> meow-cheatsheet-layout)
+                 '(<AC03> "r" "R")))
+  (should (equal (assq '<AC10> meow-cheatsheet-layout)
+                 '(<AC10> "o" "O"))))
+
+(ert-deftest dm-meow-setup-rejects-unknown-layouts ()
+  (should-error (dm-meow-test--layout-bindings 'dvorak)
+                :type 'user-error))
+
+;;; dm-meow-test.el ends here
