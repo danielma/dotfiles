@@ -7,6 +7,7 @@
                 "rules": [
                     {
                         "description": "Colemak Mod-DHm (matrix / ortho keyboards)",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -160,8 +161,7 @@
                                 "to": [{ "key_code": "h" }],
                                 "type": "basic"
                             }
-                        ],
-                        "enabled": false
+                        ]
                     },
                     {
                         "description": "Change caps_lock to command+control+option+shift.",
@@ -490,8 +490,7 @@
                                 "to": [{ "key_code": "h" }],
                                 "type": "basic"
                             }
-                        ],
-                        "enabled": true
+                        ]
                     },
                     {
                         "description": "Change caps_lock to command+control+option+shift.",
@@ -613,6 +612,14 @@
                     },
                     "ignore": true,
                     "ignore_vendor_events": true
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 16385,
+                        "vendor_id": 12346
+                    },
+                    "ignore": true
                 }
             ],
             "fn_function_keys": [
