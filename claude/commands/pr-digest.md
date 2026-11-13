@@ -14,7 +14,7 @@ Arguments: $ARGUMENTS (optional — a duration like `24h`, `48h`, `7d`. Default:
 
 3. Fetch PRs from both repos created since the cutoff:
    ```
-   gh pr list --repo planningcenter/home-mobile --state all --search "created:>=<cutoff>" --json number,title,author,createdAt,state --limit 100
+   gh pr list --repo planningcenter/planning-center-app --state all --search "created:>=<cutoff>" --json number,title,author,createdAt,state --limit 100
    gh pr list --repo planningcenter/ChurchCenterApp --state all --search "created:>=<cutoff>" --json number,title,author,createdAt,state --limit 100
    ```
 
@@ -24,7 +24,7 @@ Arguments: $ARGUMENTS (optional — a duration like `24h`, `48h`, `7d`. Default:
 
 **PR Digest — last [duration]** (since [human-readable date])
 
-**home-mobile** · [N PRs]
+**planning-center-app** · [N PRs]
 - #751 `joeltjames` — feat: visual rebrand to Planning Center ✓ merged
 - #750 `joeltjames` — feat: extract dashboard Home tab · open
 - #749 `someuser` — fix: crash on launch · open
@@ -32,7 +32,7 @@ Arguments: $ARGUMENTS (optional — a duration like `24h`, `48h`, `7d`. Default:
 **ChurchCenterApp** · [N PRs]
 - #1234 `anotheruser` — feat: new feature · open
 
-*[total] PRs opened across both repos. Run `/brief-pr home-mobile#751` to dive into one.*
+*[total] PRs opened across both repos. Run `/brief-pr planning-center-app#751` to dive into one.*
 
 ---
 
