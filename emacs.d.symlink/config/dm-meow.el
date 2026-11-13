@@ -18,27 +18,16 @@
   (consult-line "=")
   (meow-mark-symbol 0))
 
-(defvar-keymap dm-buffer-command-map-qwerty
-  :doc "QWERTY keymap for buffer commands under the Meow leader key."
+(defvar-keymap dm-buffer-command-map
+  :doc "Keymap for buffer commands under the Meow leader key."
   "k" #'kill-current-buffer
   "s" #'consult-buffer)
 
-(defvar-keymap dm-buffer-command-map-colemak
-  :doc "Colemak keymap for buffer commands under the Meow leader key."
-  "e" #'kill-current-buffer
-  "s" #'consult-buffer)
-
-(defvar-keymap dm-snippet-command-map-qwerty
-  :doc "QWERTY keymap for snippet commands under the Meow leader key."
+(defvar-keymap dm-snippet-command-map
+  :doc "Keymap for snippet commands under the Meow leader key."
   "i" #'yas-insert-snippet
   "n" #'yas-new-snippet
   "v" #'yas-visit-snippet-file)
-
-(defvar-keymap dm-snippet-command-map-colemak
-  :doc "Colemak keymap for snippet commands under the Meow leader key."
-  "u" #'yas-insert-snippet
-  "k" #'yas-new-snippet
-  "d" #'yas-visit-snippet-file)
 
 (defconst dm-meow-cheatsheet-layout-colemak
   '((<TLDE> "`" "~")
@@ -64,6 +53,23 @@
   "Configure Meow for keyboard LAYOUT, either `qwerty' or `colemak'."
   (meow-thing-register 'arrow '(pair ("<") (">")) '(pair ("<") (">")))
   (add-to-list 'meow-char-thing-table '(?a . arrow))
+  (meow-leader-define-key
+   (cons "b" dm-buffer-command-map)
+   (cons "s" dm-snippet-command-map)
+   '("p" . "C-x p")
+   '("w" . "C-x w")
+   ;; Use SPC (0-9) for digit arguments.
+   '("1" . meow-digit-argument)
+   '("2" . meow-digit-argument)
+   '("3" . meow-digit-argument)
+   '("4" . meow-digit-argument)
+   '("5" . meow-digit-argument)
+   '("6" . meow-digit-argument)
+   '("7" . meow-digit-argument)
+   '("8" . meow-digit-argument)
+   '("9" . meow-digit-argument)
+   '("0" . meow-digit-argument)
+   '("?" . meow-cheatsheet))
 
   (pcase layout
     ('qwerty
@@ -73,23 +79,6 @@
       '("j" . meow-next)
       '("k" . meow-prev)
       '("<escape>" . ignore))
-     (meow-leader-define-key
-      (cons "b" dm-buffer-command-map-qwerty)
-      (cons "s" dm-snippet-command-map-qwerty)
-      '("p" . "C-x p")
-      '("w" . "C-x w")
-      ;; Use SPC (0-9) for digit arguments.
-      '("1" . meow-digit-argument)
-      '("2" . meow-digit-argument)
-      '("3" . meow-digit-argument)
-      '("4" . meow-digit-argument)
-      '("5" . meow-digit-argument)
-      '("6" . meow-digit-argument)
-      '("7" . meow-digit-argument)
-      '("8" . meow-digit-argument)
-      '("9" . meow-digit-argument)
-      '("0" . meow-digit-argument)
-      '("?" . meow-cheatsheet))
      (meow-normal-define-key
       '("0" . meow-expand-0)
       '("1" . meow-expand-1)
@@ -165,23 +154,6 @@
       '("n" . meow-next)
       '("e" . meow-prev)
       '("<escape>" . ignore))
-     (meow-leader-define-key
-      (cons "v" dm-buffer-command-map-colemak)
-      (cons "s" dm-snippet-command-map-colemak)
-      '(":" . "C-x p")
-      '("w" . "C-x w")
-      ;; Use SPC (0-9) for digit arguments.
-      '("1" . meow-digit-argument)
-      '("2" . meow-digit-argument)
-      '("3" . meow-digit-argument)
-      '("4" . meow-digit-argument)
-      '("5" . meow-digit-argument)
-      '("6" . meow-digit-argument)
-      '("7" . meow-digit-argument)
-      '("8" . meow-digit-argument)
-      '("9" . meow-digit-argument)
-      '("0" . meow-digit-argument)
-      '("?" . meow-cheatsheet))
      (meow-normal-define-key
       '("0" . meow-expand-0)
       '("1" . meow-expand-1)
