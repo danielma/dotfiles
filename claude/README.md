@@ -47,6 +47,8 @@ developers and code I want to encourage. Act according to these ideals
 # Git
 
 - My branch prefix is `dma/` — always use `dma/` when suggesting or creating branches (e.g. `dma/my-feature`)
+- When you post a comment, reply, or review on my behalf (GitHub, Slack, Linear, etc.), open by
+  saying it's Claude responding for me
 
 # Nits
 
