@@ -38,8 +38,8 @@
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 
-(if (not (display-graphic-p))
-    (menu-bar-mode -1))
+(unless (display-graphic-p)
+  (set-frame-parameter nil 'menu-bar-lines 0))
 
 ;; These settings apply to *all* frames.
 (setq default-frame-alist '(

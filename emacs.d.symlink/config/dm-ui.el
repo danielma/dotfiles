@@ -18,6 +18,15 @@
       (with-selected-frame frame
         (xterm-mouse-mode 1)))))
 
+(defun dm-hide-menu-bar-in-terminal-frame (&optional frame)
+  "Hide the menu bar in terminal FRAMEs."
+  (when-let* ((frame (or frame (selected-frame))))
+    (unless (display-graphic-p frame)
+      (set-frame-parameter frame 'menu-bar-lines 0))))
+
+(dm-hide-menu-bar-in-terminal-frame)
+(add-hook 'after-make-frame-functions #'dm-hide-menu-bar-in-terminal-frame)
+
 (defvar dm-default-interprogram-cut-function interprogram-cut-function
   "Clipboard backend to use when terminal clipboard integration is not needed.")
 
